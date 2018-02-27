@@ -1,5 +1,8 @@
 {
   "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true,
     "es6": true
   },
   "parserOptions": {
@@ -11,5 +14,8 @@
     "plugin:react/recommended",
     "airbnb"
   ],
-  "plugins": [ "react" ]
+  "plugins": [ "react" ],
+  "rules": {
+    "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }]
+  }
 }
