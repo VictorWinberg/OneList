@@ -1,15 +1,21 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+
 import './index.css';
 import App from './App';
+import reducers from './reducers';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const store = createStore(reducers);
+
+render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 registerServiceWorker();
 
 if (module.hot) {
   module.hot.accept('./App', () => {
     const NextApp = require('./App').default;
-    ReactDOM.render(<NextApp />, document.getElementById('root'));
+    render(<Provider store={store}><NextApp /></Provider>, document.getElementById('root'));
   });
 }
