@@ -3,11 +3,11 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+// import 'semantic-ui-css/semantic.min.css';
 
 import App from './containers/App';
 import reducers from './reducers';
 import registerServiceWorker from './registerServiceWorker';
-import './index.css';
 
 const store = createStore(reducers, composeWithDevTools());
 

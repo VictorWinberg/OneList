@@ -1,15 +1,18 @@
 import React from 'react';
+import { Container, Segment, Header, Image } from 'semantic-ui-react';
 
 const App = () => (
-  <div className="App">
-    <header className="App-header">
-      <img src="logo.svg" className="App-logo" alt="logo" />
-      <h1 className="App-title">Welcome to React</h1>
-    </header>
-    <p className="App-intro">
+  <Container textAlign="center" fluid>
+    <Segment inverted>
+      <Image src="logo.svg" size="small" centered />
+      <Header as="h2" textAlign="center">
+        Welcome to React
+      </Header>
+    </Segment>
+    <p>
       To get started, edit <code>src/containers/App.js</code> and save to reload.
     </p>
-  </div>
+  </Container>
 );
 
 export default App;
