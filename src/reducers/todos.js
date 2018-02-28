@@ -1,4 +1,4 @@
-import { ADD_TODO, TOGGLE_TODO } from '../constants';
+import { ADD_TODO, TOGGLE_TODO } from '../constants/todos';
 
 let todoIndex = 0;
 

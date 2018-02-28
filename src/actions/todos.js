@@ -2,7 +2,7 @@ import {
   ADD_TODO,
   TOGGLE_TODO,
   SET_VISIBILITY_FILTER,
-} from '../constants';
+} from '../constants/todos';
 
 export const addTodo = text => ({
   type: ADD_TODO,
