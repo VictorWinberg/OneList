@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "ProjectManager",
+  "name": "A Create React App Project with Redux",
   "icons": [
     {
       "src": "favicon.ico",

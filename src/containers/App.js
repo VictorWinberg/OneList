@@ -1,5 +1,12 @@
 import React from 'react';
-import { Container, Segment, Header, Image } from 'semantic-ui-react';
+import {
+  Container,
+  Header,
+  Segment,
+  Image,
+} from 'semantic-ui-react';
+
+import TodoListContainer from './TodoListContainer';
 
 const App = () => (
   <Container textAlign="center" fluid>
@@ -12,6 +19,7 @@ const App = () => (
     <p>
       To get started, edit <code>src/containers/App.js</code> and save to reload.
     </p>
+    <TodoListContainer />
   </Container>
 );
 
