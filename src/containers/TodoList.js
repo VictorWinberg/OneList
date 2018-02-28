@@ -1,10 +1,6 @@
 import { connect } from 'react-redux';
 
-import {
-  SHOW_ALL,
-  SHOW_COMPLETED,
-  SHOW_ACTIVE,
-} from '../constants/filter';
+import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/filter';
 
 import { toggleTodo } from '../actions/todos';
 import TodoList from '../components/TodoList';
@@ -30,7 +26,4 @@ const mapDispatchToProps = {
   onTodoClick: toggleTodo,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TodoList);
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);

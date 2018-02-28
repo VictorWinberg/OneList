@@ -12,11 +12,15 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "airbnb"
+    "airbnb",
+    "prettier",
+    "prettier/react",
+    "prettier/standard",
   ],
   "plugins": [ "react" ],
   "rules": {
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
     "comma-dangle": ["error", "always-multiline", { "functions": "never" }],
+    "quotes": ["error", "single", { "avoidEscape": true }],
   }
 }

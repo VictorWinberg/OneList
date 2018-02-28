@@ -10,13 +10,23 @@ import registerServiceWorker from './registerServiceWorker';
 
 const store = createStore(reducers, composeWithDevTools());
 
-render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
 registerServiceWorker();
 
 if (module.hot) {
   module.hot.accept('./containers/App', () => {
     // eslint-disable-next-line global-require
     const NextApp = require('./containers/App').default;
-    render(<Provider store={store}><NextApp /></Provider>, document.getElementById('root'));
+    render(
+      <Provider store={store}>
+        <NextApp />
+      </Provider>,
+      document.getElementById('root')
+    );
   });
 }

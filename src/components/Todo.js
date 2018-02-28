@@ -4,11 +4,7 @@ import PropTypes from 'prop-types';
 
 const Todo = ({ text, completed, onClick }) => (
   <List.Item>
-    <Checkbox
-      label={text}
-      checked={completed}
-      onClick={onClick}
-    />
+    <Checkbox label={text} checked={completed} onClick={onClick} />
   </List.Item>
 );
 

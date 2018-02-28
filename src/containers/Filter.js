@@ -13,9 +13,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
 });
 
-const Filter = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Button);
+const Filter = connect(mapStateToProps, mapDispatchToProps)(Button);
 
 export default Filter;
