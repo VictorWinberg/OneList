@@ -27,9 +27,7 @@ const mapDispatchToProps = {
   onTodoClick: toggleTodo,
 };
 
-const TodoListContainer = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(TodoList);
-
-export default TodoListContainer;
