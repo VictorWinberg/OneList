@@ -1,6 +1,6 @@
 {
-  "short_name": "ProjectManager",
-  "name": "A Create React App Project with Redux",
+  "short_name": "ShoppingList",
+  "name": "Working Environment, Project",
   "icons": [
     {
       "src": "favicon.ico",

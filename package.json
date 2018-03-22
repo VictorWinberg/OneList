@@ -18,7 +18,6 @@
   "bugs": {
     "url": "https://github.com/VictorWinberg/shopping-list/issues"
   },
-  "homepage": "https://github.com/VictorWinberg/shopping-list#readme",
   "dependencies": {
     "express": "^4.16.2",
     "prop-types": "^15.6.1",
