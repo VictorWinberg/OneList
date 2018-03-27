@@ -1,8 +1,4 @@
-import {
-  ADD_TODO,
-  TOGGLE_TODO,
-  SET_VISIBILITY_FILTER,
-} from '../constants/todos';
+import { ADD_TODO, TOGGLE_TODO } from '../constants/todos';
 
 export const addTodo = text => ({
   type: ADD_TODO,
@@ -12,9 +8,4 @@ export const addTodo = text => ({
 export const toggleTodo = id => ({
   type: TOGGLE_TODO,
   id,
-});
-
-export const setVisibilityFilter = filter => ({
-  type: SET_VISIBILITY_FILTER,
-  filter,
 });

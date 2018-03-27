@@ -1,5 +1,4 @@
-import { SET_VISIBILITY_FILTER } from '../constants/todos';
-import { SHOW_ALL } from '../constants/filter';
+import { SET_VISIBILITY_FILTER, SHOW_ALL } from '../constants/filter';
 
 const filter = (state = SHOW_ALL, action) => {
   switch (action.type) {
