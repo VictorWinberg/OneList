@@ -5,6 +5,7 @@ import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/filter';
 
 import TodoList from './TodoList';
 import Filter from './Filter';
+import NewTodo from './NewTodo';
 
 const App = () => (
   <Container textAlign="center" fluid>
@@ -18,10 +19,11 @@ const App = () => (
       To get started, edit <code>src/containers/App.js</code> and save to
       reload.
     </p>
-    <TodoList />
     <Filter filter={SHOW_ALL}>{SHOW_ALL}</Filter>
     <Filter filter={SHOW_COMPLETED}>{SHOW_COMPLETED}</Filter>
     <Filter filter={SHOW_ACTIVE}>{SHOW_ACTIVE}</Filter>
+    <TodoList />
+    <NewTodo />
   </Container>
 );
 
