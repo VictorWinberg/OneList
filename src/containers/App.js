@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Header, Segment, Image } from 'semantic-ui-react';
+import { Container, Header, Grid, Segment, Image } from 'semantic-ui-react';
 
 import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/filter';
 
@@ -23,7 +23,11 @@ const App = () => (
     <Filter filter={SHOW_COMPLETED}>{SHOW_COMPLETED}</Filter>
     <Filter filter={SHOW_ACTIVE}>{SHOW_ACTIVE}</Filter>
     <TodoList />
-    <NewTodo />
+    <Grid centered>
+      <Grid.Row>
+        <NewTodo />
+      </Grid.Row>
+    </Grid>
   </Container>
 );
 
