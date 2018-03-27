@@ -5,11 +5,14 @@ import PropTypes from 'prop-types';
 const NewTodo = ({ onNewTodoClick }) => (
   <Segment>
     <Input
+      placeholder="New todo..."
+      onKeyPress={e => {
+        if (e.key === 'Enter') onNewTodoClick(e.target.value);
+      }}
       action={{
         content: 'Add',
         onClick: e => onNewTodoClick(e.target.previousSibling.value),
       }}
-      placeholder="New todo..."
     />
   </Segment>
 );
