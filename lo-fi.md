@@ -7,7 +7,7 @@
 | Tilldela och skapa kategori | :white_check_mark: | :white_check_mark: `placeholder` | :x: `placeholder` | :white_check_mark: focus? | :white_check_mark: |
 | Navigering | :white_check_mark: | :white_check_mark: | :x: `Dela` | :x: `Dela` | :white_check_mark: |
 | Kategorier | :white_check_mark: | :white_check_mark:| :white_check_mark:| :white_check_mark: | :white_check_mark: |
-| Dela | :white_check_mark: | :white_check_mark: vilken? | :x: | :x: | :white_check_mark: |
+| Dela | :white_check_mark: | :white_check_mark: vilken? | :x: | :x: vilken? | :white_check_mark: |
 | Ta bort vara | :x: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
 ### Hanna
