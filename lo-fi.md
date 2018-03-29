@@ -1,15 +1,14 @@
 ## Lo fi användartestning
 
-| Testfall | Hanna | Nora | Tobbe | Anton |
-| ---- | --- | --- | --- | --- |
-| Lägga till vara | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | Saknade `ADD` |
-| Inhandlade varor | `Delete` otydlig | Skippar `delete` | `Delete` otydlig | Skippar `delete` |
-| Tilldela och skapa kategori | :heavy_check_mark: | Tog bort `placeholder` | Såg `placeholder` som `value` | Saknade `focus` |
-| Navigering | :heavy_check_mark: | :heavy_check_mark: | `Dela` via `Kategorier` | `Dela` via `Kategorier` |
-| Kategorier | :heavy_check_mark: | :heavy_check_mark:| :heavy_check_mark:| :heavy_check_mark: |
-| Dela | :heavy_check_mark: | Vilken `inköpslista`? | :x: | :x: |
-| Ta bort vara (autocorrect) | :x: | :x: | :heavy_check_mark: | :heavy_check_mark: |
-| Ta bort vara (edit) | :x: | :x: | :x: | :x: |
+| Testfall | Hanna | Nora | Tobbe | Anton | Handledare |
+| -------- | ----- | ---- | ----- | ----- | ---------- |
+| Lägga till vara | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: `ADD`? | :white_check_mark: `ADD`? |
+| Inhandlade varor | :x: otydlig | :x: skippar | :x: otydlig | :x: skippar | :x: ångra |
+| Tilldela och skapa kategori | :white_check_mark: | :white_check_mark: `placeholder` | :x: `placeholder` | :white_check_mark: focus? | :white_check_mark: |
+| Navigering | :white_check_mark: | :white_check_mark: | :x: `Dela` | :x: `Dela` | :white_check_mark: |
+| Kategorier | :white_check_mark: | :white_check_mark:| :white_check_mark:| :white_check_mark: | :white_check_mark: |
+| Dela | :white_check_mark: | :white_check_mark: vilken? | :x: | :x: vilken? | :white_check_mark: |
+| Ta bort vara | :x: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
 ### Hanna
 - Inte naturligt att klicka delete
@@ -39,3 +38,12 @@
  - Dela för specifik kategori -igen
  - Naturlig delete för autocorrect
  - Inte naturligt att ta bort finns för varan
+
+### Handledare
+ - Saknade `ADD`
+ - Saknar antal `+` och `-` för vara
+ - Delete inhandlat för att ångra
+ - `inhandlat` till `varokorg`
+ - Sortera kategori: dra på namnet inte på `icon`
+ - Naturlig delete för autocorrect
+  - Edit på kategorier
