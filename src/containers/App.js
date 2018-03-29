@@ -10,15 +10,11 @@ import NewTodo from './NewTodo';
 const App = () => (
   <Container textAlign="center" fluid>
     <Segment inverted>
-      <Image src="logo.svg" size="small" centered />
+      <Image src="icons/wishlist.svg" size="small" centered />
       <Header as="h2" textAlign="center">
-        Welcome to React
+        ShoppingList
       </Header>
     </Segment>
-    <p>
-      To get started, edit <code>src/containers/App.js</code> and save to
-      reload.
-    </p>
     <Filter filter={SHOW_ALL}>{SHOW_ALL}</Filter>
     <Filter filter={SHOW_COMPLETED}>{SHOW_COMPLETED}</Filter>
     <Filter filter={SHOW_ACTIVE}>{SHOW_ACTIVE}</Filter>
