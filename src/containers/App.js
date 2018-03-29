@@ -9,10 +9,10 @@ import NewTodo from './NewTodo';
 
 const App = () => (
   <Container textAlign="center" fluid>
-    <Segment inverted>
+    <Segment>
       <Image src="icons/wishlist.svg" size="small" centered />
       <Header as="h2" textAlign="center">
-        ShoppingList
+        OneList - Shopping List
       </Header>
     </Segment>
     <Filter filter={SHOW_ALL}>{SHOW_ALL}</Filter>
