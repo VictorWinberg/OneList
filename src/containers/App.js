@@ -10,7 +10,7 @@ import NewTodo from './NewTodo';
 const App = () => (
   <Container textAlign="center" fluid>
     <Segment>
-      <Image src="icons/wishlist.svg" size="small" centered />
+      <Image src="icons/onelist.svg" size="small" centered />
       <Header as="h2" textAlign="center">
         OneList - Shopping List
       </Header>
