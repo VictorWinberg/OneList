@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Header, Grid, Segment, Image } from 'semantic-ui-react';
+import { Container, Header, Image } from 'semantic-ui-react';
 
 import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/filter';
 
@@ -8,22 +8,20 @@ import Filter from './Filter';
 import NewTodo from './NewTodo';
 
 const App = () => (
-  <Container textAlign="center" fluid>
-    <Segment>
-      <Image src="icons/onelist.svg" size="small" centered />
-      <Header as="h2" textAlign="center">
-        OneList - Shopping List
-      </Header>
-    </Segment>
+  <Container
+    style={{
+      margin: '1em',
+      height: '-webkit-fill-available',
+      backgroundImage: 'url("lofi.png")',
+    }}
+  >
+    <Header as="h2">OneList - Shopping List</Header>
+    <Image src="icons/onelist.svg" size="small" centered />
     <Filter filter={SHOW_ALL}>{SHOW_ALL}</Filter>
     <Filter filter={SHOW_COMPLETED}>{SHOW_COMPLETED}</Filter>
     <Filter filter={SHOW_ACTIVE}>{SHOW_ACTIVE}</Filter>
     <TodoList />
-    <Grid centered>
-      <Grid.Row>
-        <NewTodo />
-      </Grid.Row>
-    </Grid>
+    <NewTodo />
   </Container>
 );
 
