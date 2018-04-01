@@ -10,25 +10,25 @@ module.exports = (app, passport) => {
     return res.redirect('/');
   };
 
-  app.get('/user', (req, res) => {
+  app.get('/__/user', (req, res) => {
     res.send(req.user || {});
   });
 
-  app.get('/logout', (req, res) => {
+  app.get('/__/logout', (req, res) => {
     req.logout();
     res.redirect('/');
   });
 
   app.get(
-    '/auth/google',
+    '/__/auth/google',
     passport.authenticate('google', { scope: ['profile', 'email'] })
   );
 
   // the callback after google has authenticated the user
   app.get(
-    '/auth/google/callback',
+    '/__/auth/google/callback',
     passport.authenticate('google', {
-      successRedirect: '/',
+      successRedirect: '/__/user',
       failureRedirect: '/',
     })
   );
