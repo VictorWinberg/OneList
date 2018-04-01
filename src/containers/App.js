@@ -12,11 +12,11 @@ const App = () => (
     style={{
       margin: '1em',
       height: '-webkit-fill-available',
-      backgroundImage: 'url("lofi.png")',
+      backgroundImage: 'url("/lofi.png")',
     }}
   >
     <Header as="h2">OneList - Shopping List</Header>
-    <Image src="icons/onelist.svg" size="small" centered />
+    <Image src="/icons/onelist.svg" size="small" centered />
     <Filter filter={SHOW_ALL}>{SHOW_ALL}</Filter>
     <Filter filter={SHOW_COMPLETED}>{SHOW_COMPLETED}</Filter>
     <Filter filter={SHOW_ACTIVE}>{SHOW_ACTIVE}</Filter>
