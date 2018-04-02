@@ -23,7 +23,6 @@ module.exports = passport => {
       {
         clientID: googleAuth.clientID,
         clientSecret: googleAuth.clientSecret,
-        callbackURL: googleAuth.callbackURL,
       },
       (token, refreshToken, profile, done) => {
         // make the code asynchronous
