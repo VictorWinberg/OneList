@@ -1,15 +1,14 @@
 import React from 'react';
-import { List } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 import Todo from './Todo';
 
 const TodoList = ({ todos, onTodoClick }) => (
-  <List relaxed>
+  <ul>
     {todos.map(todo => (
       <Todo key={todo.id} {...todo} onClick={() => onTodoClick(todo.id)} />
     ))}
-  </List>
+  </ul>
 );
 
 TodoList.propTypes = {
