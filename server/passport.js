@@ -1,9 +1,10 @@
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const mysql = require('mysql');
+const { Client } = require('pg');
 
 const { databaseUrl, googleAuth } = require('../env');
 
-const connection = mysql.createConnection(databaseUrl);
+const client = new Client(databaseUrl);
+client.connect();
 
 module.exports = passport => {
   // used to serialize the user for the session
@@ -13,7 +14,7 @@ module.exports = passport => {
 
   // used to deserialize the user
   passport.deserializeUser((id, done) => {
-    connection.query('SELECT * FROM users WHERE id = ? ', [id], (err, rows) => {
+    client.query('SELECT * FROM users WHERE id = $1', [id], (err, { rows }) => {
       done(err, rows[0]);
     });
   });
@@ -30,11 +31,9 @@ module.exports = passport => {
         process.nextTick(() => {
           const email = profile.emails[0].value; // pull the first email
 
-          connection.query(
-            'SELECT * FROM users WHERE email = ?',
-            [email],
-            (err, rows) => {
-              if (err) return done(err);
+          client
+            .query('SELECT * FROM users WHERE email = $1', [email])
+            .then(({ rows }) => {
               if (rows.length) {
                 // all is well, return successful user
                 return done(null, rows[0]);
@@ -46,21 +45,19 @@ module.exports = passport => {
                 email,
               };
 
-              const insertQuery =
-                'INSERT INTO users ( username, email ) values (?,?)';
-
-              return connection.query(
-                insertQuery,
-                [newUser.username, newUser.email],
-                (errInsert, rowsInsert) => {
-                  if (errInsert) return done(errInsert);
-                  newUser.id = rowsInsert.insertId;
+              return client
+                .query(
+                  'INSERT INTO users ( username, email ) values ($1, $2) RETURNING *',
+                  [newUser.username, newUser.email]
+                )
+                .then(res => {
+                  newUser.id = res.rows[0].id;
 
                   return done(null, newUser);
-                }
-              );
-            }
-          );
+                })
+                .catch(err => done(err));
+            })
+            .catch(err => done(err));
         });
       }
     )
