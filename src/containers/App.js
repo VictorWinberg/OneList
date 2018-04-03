@@ -10,11 +10,11 @@ import Header from '../components/Header';
 const App = () => (
   <div>
     <Header />
-    <TodoList />
     <NewTodo />
     <Filter filter={SHOW_ALL} />
     <Filter filter={SHOW_COMPLETED} />
     <Filter filter={SHOW_ACTIVE} />
+    <TodoList />
   </div>
 );
 
