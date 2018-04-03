@@ -8,27 +8,24 @@ class NewTodo extends Component {
     this.state = { todo: '' };
   }
 
-  handleSubmit() {
+  handleSubmit(event) {
     const { todo } = this.state;
     const { onNewTodoClick } = this.props;
 
     onNewTodoClick(todo);
     this.setState({ todo: '' });
+    event.preventDefault();
   }
 
   render() {
     const { todo } = this.state;
 
     return (
-      <form onSubmit={() => this.handleSubmit()}>
+      <form onSubmit={event => this.handleSubmit(event)}>
         <input
-          name="todo"
           value={todo}
           placeholder="New todo..."
-          action="Add"
-          onChange={(event, { name, value }) =>
-            this.setState({ [name]: value })
-          }
+          onChange={event => this.setState({ todo: event.target.value })}
         />
       </form>
     );

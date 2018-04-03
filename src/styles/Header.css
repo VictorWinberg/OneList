@@ -1,35 +1,43 @@
-ul {
+h1 {
+  color: #458fde;
+  display: inline;
+  font-size: 34px;
+  font-family: 'Antic Didone', serif;
+  margin: 0 0.5em;
+}
+
+nav ul {
+  border-bottom: #458fde solid 2px;
   list-style: none;
-  border-bottom: #458fde solid 1.5px;
   padding: 0;
   margin: 0;
   text-align: center;
   display: flex;
   justify-content: space-between;
-  font-size: 1.5em;
+  font-size: 20px;
 }
 
-li {
+nav li {
   display: block;
-  padding: 0.5em;
+  padding: 0 0.5em 0.5em 0.5em;
 }
 
 .top {
   display: inline-block;
+  margin: 0 1em;
 }
 
-h1 {
-  color: #458fde;
-  display: inline;
-  font-size: 2.5em;
-  font-family: 'Antic Didone', serif;
-  margin: 0 0.5em;
+.top img {
+  position: absolute;
+  top: 0.3em;
 }
 
 #settingicon {
-  position: absolute;
-  top: 1em;
-  right: 1em;
+  right: 0.5em;
+}
+
+#headericon {
+  left: 0.7em;
 }
 
 /*FONT: Antic Didone*/

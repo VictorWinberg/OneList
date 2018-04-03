@@ -20,11 +20,13 @@ function Header() {
           height="30px"
         />
       </div>
-      <ul>
-        <li>Inköpslista</li>
-        <li>Kategorier</li>
-        <li>Dela</li>
-      </ul>
+      <nav>
+        <ul>
+          <li>Inköpslista</li>
+          <li>Kategorier</li>
+          <li>Dela</li>
+        </ul>
+      </nav>
     </div>
   );
 }

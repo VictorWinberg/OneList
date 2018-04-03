@@ -3,7 +3,15 @@ import PropTypes from 'prop-types';
 
 const Todo = ({ text, completed, onClick }) => (
   <li>
-    <input type="checkbox" value={text} checked={completed} onClick={onClick} />
+    <label htmlFor="checkbox_id">
+      <input
+        type="checkbox"
+        id="checkbox_id"
+        checked={completed}
+        onChange={onClick}
+      />
+      {text}
+    </label>
   </li>
 );
 
