@@ -1,44 +1,52 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { getTranslate } from 'react-localize-redux';
 
 import '../styles/Header.css';
-// import PropTypes from 'prop-types';
 
-function Header() {
-  return (
-    <div>
-      <div className="top">
+const Header = ({ translate }) => (
+  <div>
+    <div className="top">
+      <img
+        id="headericon"
+        src="/icons/onelist.svg"
+        alt="Settings"
+        height="30px"
+      />
+      <h1>OneList</h1>
+      <Link to="/settings">
         <img
-          id="headericon"
-          src="/icons/onelist.svg"
+          id="settingicon"
+          src="/icons/settings_icon.png"
           alt="Settings"
           height="30px"
         />
-        <h1>OneList</h1>
-        <Link to="/settings">
-          <img
-            id="settingicon"
-            src="/icons/settings_icon.png"
-            alt="Settings"
-            height="30px"
-          />
-        </Link>
-      </div>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Inköpslista</Link>
-          </li>
-          <li>
-            <Link to="/categories">Kategorier</Link>
-          </li>
-          <li>
-            <Link to="/share">Dela</Link>
-          </li>
-        </ul>
-      </nav>
+      </Link>
     </div>
-  );
-}
+    <nav>
+      <ul>
+        <li>
+          <Link to="/">{translate('shoppinglist')}</Link>
+        </li>
+        <li>
+          <Link to="/categories">{translate('categories')}</Link>
+        </li>
+        <li>
+          <Link to="/share">{translate('share')}</Link>
+        </li>
+      </ul>
+    </nav>
+  </div>
+);
 
-export default Header;
+Header.propTypes = {
+  translate: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = state => ({
+  translate: getTranslate(state.locale),
+});
+
+export default connect(mapStateToProps)(Header);

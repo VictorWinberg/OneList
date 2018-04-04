@@ -4,12 +4,16 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { initialize, addTranslation } from 'react-localize-redux';
 
 import App from './containers/App';
 import reducers from './reducers';
+import translation from './translation';
 import registerServiceWorker from './registerServiceWorker';
 
 const store = createStore(reducers, composeWithDevTools());
+store.dispatch(initialize(['en', 'sv'], { defaultLanguage: 'sv' }));
+store.dispatch(addTranslation(translation));
 
 render(
   <Provider store={store}>
