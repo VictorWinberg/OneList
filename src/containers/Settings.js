@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
 
 import LanguageSelector from './LanguageSelector';
+import { logoutUser } from '../actions/user';
 
-const Settings = ({ translate, user }) => (
+const Settings = ({ translate, user, logout }) => (
   <div>
     <h1>{translate('settings.title')}</h1>
     <LanguageSelector />
@@ -13,7 +14,7 @@ const Settings = ({ translate, user }) => (
       <div>
         <p>{translate('user.welcome', user)}</p>
         <p>{translate('settings.body')}</p>
-        <a href="/__/logout">{translate('user.logout')}</a>
+        <button onClick={logout}>{translate('user.logout')}</button>
       </div>
     ) : (
       <div>
@@ -31,6 +32,7 @@ Settings.propTypes = {
     username: PropTypes.string,
     email: PropTypes.string,
   }).isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -38,4 +40,8 @@ const mapStateToProps = state => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps)(Settings);
+const mapDispatchToProps = {
+  logout: logoutUser,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);
