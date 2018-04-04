@@ -1,10 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getTranslate } from 'react-localize-redux';
-
-import '../styles/Header.css';
 
 const Header = ({ translate }) => (
   <div>
@@ -45,8 +41,4 @@ Header.propTypes = {
   translate: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  translate: getTranslate(state.locale),
-});
-
-export default connect(mapStateToProps)(Header);
+export default Header;
