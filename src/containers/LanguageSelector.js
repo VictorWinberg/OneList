@@ -35,14 +35,14 @@ LanguageSelector.propTypes = {
       code: PropTypes.string.isRequired,
     })
   ).isRequired,
-  setLanguage: PropTypes.func.isRequired,
   translate: PropTypes.func.isRequired,
+  setLanguage: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
+  currentLanguage: getActiveLanguage(state.locale),
   languages: getLanguages(state.locale),
   translate: getTranslate(state.locale),
-  currentLanguage: getActiveLanguage(state.locale),
 });
 
 const mapDispatchToProps = {

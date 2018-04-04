@@ -16,7 +16,7 @@ const store = createStore(
   reducers,
   composeWithDevTools(applyMiddleware(thunk))
 );
-store.dispatch(initialize(['en', 'sv'], { defaultLanguage: 'sv' }));
+store.dispatch(initialize(['en', 'sv']));
 store.dispatch(addTranslation(translation));
 
 render(
