@@ -6,6 +6,8 @@ const { databaseUrl, googleAuth } = require('../env');
 const client = new Client(databaseUrl);
 client.connect();
 
+const get = (p, o) => p.reduce((xs, x) => (xs && xs[x] ? xs[x] : null), o);
+
 module.exports = passport => {
   // used to serialize the user for the session
   passport.serializeUser((user, done) => {
@@ -29,7 +31,7 @@ module.exports = passport => {
         // make the code asynchronous
         // User.findOne won't fire until we have all our data back from Google
         process.nextTick(() => {
-          const email = profile.emails[0].value; // pull the first email
+          const email = get(['emails', 0, 'value'], profile); // pull the first email
 
           client
             .query('SELECT * FROM users WHERE email = $1', [email])
@@ -41,14 +43,16 @@ module.exports = passport => {
               // if there is no user with that username
               // create the user
               const newUser = {
-                username: profile.displayName,
                 email,
+                username: get(['displayName'], profile),
+                photo: get(['photos', 0, 'value'], profile),
+                language: get(['_json', 'language'], profile),
               };
 
               return client
                 .query(
-                  'INSERT INTO users ( username, email ) values ($1, $2) RETURNING *',
-                  [newUser.username, newUser.email]
+                  'INSERT INTO users ( email, username, photo, language ) values ($1, $2, $3, $4) RETURNING *',
+                  Object.keys(newUser).map(key => newUser[key])
                 )
                 .then(res => {
                   newUser.id = res.rows[0].id;
