@@ -24,13 +24,13 @@ const Header = ({ translate }) => (
     <nav>
       <ul>
         <li>
-          <Link to="/">{translate('shoppinglist')}</Link>
+          <Link to="/">{translate('nav.shoppinglist')}</Link>
         </li>
         <li>
-          <Link to="/categories">{translate('categories')}</Link>
+          <Link to="/categories">{translate('nav.categories')}</Link>
         </li>
         <li>
-          <Link to="/share">{translate('share')}</Link>
+          <Link to="/share">{translate('nav.share')}</Link>
         </li>
       </ul>
     </nav>
