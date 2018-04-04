@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const Todo = ({ text, completed, onClick }) => (
   <li>
@@ -12,6 +13,9 @@ const Todo = ({ text, completed, onClick }) => (
       />
       {text}
     </label>
+    <Link to="/">
+      <img id="editicon" src="/icons/edit_icon.png" alt="Edit" height="20px" />
+    </Link>
   </li>
 );
 

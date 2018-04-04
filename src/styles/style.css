@@ -85,6 +85,15 @@ input[type='text'] {
   padding: 0.5em 0;
 }
 
+#editicon {
+  float: right;
+  position: relative;
+  top: -0.6em;
+  cursor: pointer;
+  border: tomato solid 1px;
+  padding: 0.5em;
+}
+
 /*FONT: Antic Didone*/
 @font-face {
   font-family: 'Antic Didone';
