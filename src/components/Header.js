@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const Header = ({ translate }) => (
-  <div>
+  <div className="header">
     <div className="top">
       <img
         id="headericon"
