@@ -35,7 +35,7 @@ module.exports = (app, passport) => {
   // the callback after google has authenticated the user
   app.get('/__/auth/google/callback', (req, res, next) => {
     passport.authenticate('google', {
-      successRedirect: '/__/user',
+      successRedirect: '/',
       failureRedirect: '/',
       callbackURL: callback(req),
     })(req, res, next);

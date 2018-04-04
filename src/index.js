@@ -1,7 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { initialize, addTranslation } from 'react-localize-redux';
@@ -11,7 +12,10 @@ import reducers from './reducers';
 import translation from './translation';
 import registerServiceWorker from './registerServiceWorker';
 
-const store = createStore(reducers, composeWithDevTools());
+const store = createStore(
+  reducers,
+  compose(applyMiddleware(thunk), composeWithDevTools())
+);
 store.dispatch(initialize(['en', 'sv'], { defaultLanguage: 'sv' }));
 store.dispatch(addTranslation(translation));
 
