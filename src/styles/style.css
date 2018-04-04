@@ -74,14 +74,16 @@ input[type='text'] {
   outline: none;
 }
 
-#shoppingList {
+.shoppingList,
+.done {
   list-style: none;
   padding: 0;
   font-size: 18px;
 }
 
-#shoppingList li {
-  border: green solid 1px;
+.shoppingList li,
+.done li {
+  border-bottom: grey solid 0.5px;
   padding: 0.5em 0;
 }
 
@@ -90,8 +92,38 @@ input[type='text'] {
   position: relative;
   top: -0.6em;
   cursor: pointer;
-  border: tomato solid 1px;
   padding: 0.5em;
+}
+
+.done {
+  background-color: lightgrey;
+  border-radius: 25px;
+}
+
+.done h2 {
+  font-family: 'Antic Didone';
+  padding-left: 0.5em;
+  margin: 0.2em;
+  display: inline;
+}
+
+.done li {
+  text-decoration: line-through;
+}
+
+.removeDone {
+  float: right;
+  font-size: 20px;
+  border-radius: 20px;
+  margin: 0.5em;
+  box-shadow: 0px 1px 8px 0px #777;
+  padding: 0 1em;
+  cursor: pointer;
+}
+
+.hidden,
+.done #editicon {
+  visibility: hidden;
 }
 
 /*FONT: Antic Didone*/

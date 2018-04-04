@@ -6,6 +6,10 @@ module.exports = {
     categories: ['Categories', 'Kategorier'],
     share: ['Share', 'Dela'],
   },
+  shoppinglist: {
+    cart: ['Cart', 'Varukorg'],
+    remove: ['Done', 'Klar'],
+  },
   settings: {
     title: ['Settings', 'Inställningar'],
     body: [

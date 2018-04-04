@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { getTranslate } from 'react-localize-redux';
 
 import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/filter';
 
@@ -19,7 +20,9 @@ const filterTodos = (todos, filter) => {
 };
 
 const mapStateToProps = state => ({
-  todos: filterTodos(state.todos, state.filter),
+  todos: filterTodos(state.todos, SHOW_ACTIVE),
+  doneTodos: filterTodos(state.todos, SHOW_COMPLETED),
+  translate: getTranslate(state.locale),
 });
 
 const mapDispatchToProps = {
