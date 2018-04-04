@@ -22,5 +22,9 @@
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
     "comma-dangle": ["error", "always-multiline", { "functions": "never" }],
     "quotes": ["error", "single", { "avoidEscape": true }],
+    "jsx-a11y/anchor-is-valid": [ "error", {
+      "components": [ "Link" ],
+      "specialLink": [ "to" ]
+    }]
   }
 }

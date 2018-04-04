@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import App from './containers/App';
@@ -12,7 +13,9 @@ const store = createStore(reducers, composeWithDevTools());
 
 render(
   <Provider store={store}>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </Provider>,
   document.getElementById('root')
 );
@@ -24,7 +27,9 @@ if (module.hot) {
     const NextApp = require('./containers/App').default;
     render(
       <Provider store={store}>
-        <NextApp />
+        <Router>
+          <NextApp />
+        </Router>
       </Provider>,
       document.getElementById('root')
     );
