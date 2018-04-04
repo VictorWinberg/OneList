@@ -8,7 +8,7 @@ function Header() {
       <div className="top">
         <img
           id="headericon"
-          src="/icons/onelist-48x48.png"
+          src="/icons/onelist.svg"
           alt="Settings"
           height="30px"
         />
