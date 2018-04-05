@@ -1,5 +1,5 @@
 const express = require('express');
-const session = require('express-session');
+const session = require('cookie-session');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -25,13 +25,18 @@ app.use(
 app.use(bodyParser.json());
 
 // required for passport
-const { sessionSecret } = require('../env');
+const { sessionSecrets } = require('../env');
 
 app.use(
   session({
-    secret: sessionSecret,
-    resave: true,
-    saveUninitialized: true,
+    name: 'session',
+    keys: sessionSecrets,
+    // Cookie Options
+    httpOnly: true,
+    resave: false,
+    rolling: true,
+    saveUninitialized: false,
+    maxAge: 30 * 24 * 60 * 60 * 1000, // one month
   })
 ); // session secret
 app.use(passport.initialize());

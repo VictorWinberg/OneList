@@ -16,9 +16,13 @@ module.exports = passport => {
 
   // used to deserialize the user
   passport.deserializeUser((id, done) => {
-    client.query('SELECT * FROM users WHERE id = $1', [id], (err, { rows }) => {
-      done(err, rows[0]);
-    });
+    client.query(
+      'SELECT * FROM users WHERE id = $1',
+      [id || -1],
+      (err, { rows }) => {
+        done(err, rows[0]);
+      }
+    );
   });
 
   passport.use(
