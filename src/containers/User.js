@@ -41,7 +41,7 @@ const User = ({ user, translate, update, submit }) => (
       />
     </label>
     <LanguageSelector />
-    <button type="submit">Spara</button>
+    <button type="submit">{translate('user.submit')}</button>
   </form>
 );
 
