@@ -12,7 +12,7 @@ import '../styles/style.css';
 
 const App = () => (
   <div>
-    <Header />
+    <Route path="/" component={Header} />
     <Route exact path="/" component={Shopping} />
     <Route path="/categories" component={Categories} />
     <Route path="/share" component={Share} />

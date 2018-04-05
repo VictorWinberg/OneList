@@ -9,7 +9,7 @@ import { logoutUser } from '../actions/user';
 
 const Settings = ({ translate, user, logout }) => (
   <div>
-    <h1>{translate('settings.title')}</h1>
+    <h2>{translate('settings.title')}</h2>
     {user.email ? (
       <div>
         <p>{translate('settings.authenticated')}</p>

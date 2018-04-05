@@ -25,7 +25,7 @@ class NewTodo extends Component {
 
     return (
       <div className="search">
-        <form onSubmit={event => this.handleSubmit(event)}>
+        <form className="newForm" onSubmit={event => this.handleSubmit(event)}>
           <label htmlFor="newItem">
             <img
               className="add_icon"

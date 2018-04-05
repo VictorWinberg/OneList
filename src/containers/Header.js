@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
 
@@ -26,13 +26,13 @@ const Header = ({ translate }) => (
     <nav>
       <ul>
         <li>
-          <Link to="/">{translate('nav.shoppinglist')}</Link>
+          <NavLink exact to="/">{translate('nav.shoppinglist')}</NavLink>
         </li>
         <li>
-          <Link to="/categories">{translate('nav.categories')}</Link>
+          <NavLink to="/categories">{translate('nav.categories')}</NavLink>
         </li>
         <li>
-          <Link to="/share">{translate('nav.share')}</Link>
+          <NavLink to="/share">{translate('nav.share')}</NavLink>
         </li>
       </ul>
     </nav>
