@@ -1,4 +1,4 @@
-h1 {
+.top h1 {
   color: #458fde;
   display: inline;
   font-size: 34px;
@@ -8,15 +8,18 @@ h1 {
   left: 0.55em;
 }
 
+h2 {
+  color: #458fde;
+}
+
 nav ul {
   border-bottom: #458fde solid 2px;
   list-style: none;
-  padding: 0 0 0.3em 0;
-  margin: 0;
+  padding: 0em 0 0.3em 0;
+  margin: 0 0.5em;
   text-align: center;
   display: flex;
   justify-content: space-between;
-  font-size: 20px;
 }
 
 nav li {
@@ -24,8 +27,24 @@ nav li {
   padding: 0em;
 }
 
+nav a {
+  color: rgb(70, 70, 70);
+  font-size: 28px;
+  font-family: 'AmaticSC';
+  text-decoration: none;
+  font-weight: bold;
+  text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.3);
+}
+
+nav a:hover {
+  color: black;
+  cursor: pointer;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
 .top {
   display: inline-block;
+  margin: 0.5em 0.5em 0 0.5em;
 }
 
 .top img {
@@ -41,9 +60,15 @@ nav li {
   left: 0.4em;
 }
 
+.search,
+.header {
+  background-color: rgba(135, 206, 250, 0.5);
+  overflow: auto;
+}
+
 form {
   border: black solid 1px;
-  margin: 0.5em 0em;
+  margin: 0.5em 0.5em;
   box-shadow: 0px 1px 8px 0px #777;
   background-color: white;
 }
@@ -74,8 +99,9 @@ input[type='text'] {
   outline: none;
 }
 
-a {
-  color: black;
+body {
+  margin: 0;
+  padding: 0;
 }
 
 .shoppingList,
@@ -83,6 +109,7 @@ a {
   list-style: none;
   padding: 0;
   font-size: 18px;
+  margin: 0 0.5em;
 }
 
 .shoppingList li,
@@ -102,10 +129,13 @@ a {
 .done {
   background-color: lightgrey;
   border-radius: 10px;
+  overflow: auto;
+  width: calc(100% - 1em);
 }
 
 .done h2 {
   font-family: 'Antic Didone';
+  color: rgb(40, 40, 40);
   padding-left: 0.2em;
   display: inline;
 }
@@ -117,10 +147,10 @@ a {
 .removeDone {
   float: right;
   font-size: 20px;
-  border-radius: 20px;
-  margin: 0.5em;
+  border-radius: 5px;
   box-shadow: 0px 1px 8px 0px #777;
   padding: 0 1em;
+  margin: 0.2em;
   cursor: pointer;
 }
 
@@ -133,4 +163,10 @@ a {
 @font-face {
   font-family: 'Antic Didone';
   src: url('/fonts/AnticDidone-Regular.ttf');
+}
+
+/*FONT: PoorStory*/
+@font-face {
+  font-family: 'AmaticSC';
+  src: url('/fonts/AmaticSC-Regular.ttf');
 }

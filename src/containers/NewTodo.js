@@ -24,30 +24,32 @@ class NewTodo extends Component {
     const { todo } = this.state;
 
     return (
-      <form onSubmit={event => this.handleSubmit(event)}>
-        <label htmlFor="newItem">
+      <div className="search">
+        <form onSubmit={event => this.handleSubmit(event)}>
+          <label htmlFor="newItem">
+            <img
+              className="add_icon"
+              alt="add"
+              src="/icons/add_icon.png"
+              height="12px"
+            />
+          </label>
+          <input
+            id="newItem"
+            type="text"
+            value={todo}
+            autoComplete="off"
+            placeholder="New todo..."
+            onChange={event => this.setState({ todo: event.target.value })}
+          />
           <img
-            className="add_icon"
-            alt="add"
-            src="/icons/add_icon.png"
+            className="clear_icon"
+            alt="X"
+            src="/icons/clear_icon.png"
             height="12px"
           />
-        </label>
-        <input
-          id="newItem"
-          type="text"
-          value={todo}
-          autoComplete="off"
-          placeholder="New todo..."
-          onChange={event => this.setState({ todo: event.target.value })}
-        />
-        <img
-          className="clear_icon"
-          alt="X"
-          src="/icons/clear_icon.png"
-          height="12px"
-        />
-      </form>
+        </form>
+      </div>
     );
   }
 }
