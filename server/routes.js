@@ -22,7 +22,8 @@ module.exports = (app, passport, User) => {
 
   app.put('/__/user', isLoggedIn, (req, res) => {
     User.update(req.user.id, req.body, (err, user) => {
-      res.send(user || req.body);
+      if (err) return res.status(400).send(err);
+      return res.send(user);
     });
   });
 
