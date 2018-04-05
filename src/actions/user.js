@@ -12,9 +12,20 @@ export const updateUser = ({ target }) => ({
   value: target.value,
 });
 
-export const submitUser = event => dispatch => {
+export const submitUser = (event, user) => dispatch => {
   event.preventDefault();
   dispatch({ type: SUBMIT_USER });
+  return fetch('/__/user', {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify(user),
+  })
+    .then(response => response.json())
+    .then(json => dispatch({ type: RECIEVE_USER, user: json }));
 };
 
 export const logoutUser = () => dispatch => {
