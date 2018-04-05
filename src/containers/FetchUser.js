@@ -17,12 +17,12 @@ class FetchUser extends Component {
 
   componentWillReceiveProps(props) {
     const { user, languages, currentLanguage, setLanguage } = props;
+    const prevLanguage = this.props.user.language;
     if (
-      user.email &&
-      !user.isFetching &&
+      user.language &&
+      prevLanguage !== user.language &&
       currentLanguage !== user.language &&
-      languages.includes(user.language) &&
-      this.props.user.language !== user.language
+      languages.includes(user.language)
     ) {
       setLanguage(user.language);
     }
@@ -35,8 +35,6 @@ class FetchUser extends Component {
 
 FetchUser.propTypes = {
   user: PropTypes.shape({
-    email: PropTypes.string,
-    isFetching: PropTypes.bool,
     language: PropTypes.string,
   }).isRequired,
   currentLanguage: PropTypes.string.isRequired,
