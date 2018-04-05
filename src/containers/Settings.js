@@ -4,20 +4,21 @@ import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
 
 import LanguageSelector from './LanguageSelector';
+import User from './User';
 import { logoutUser } from '../actions/user';
 
 const Settings = ({ translate, user, logout }) => (
   <div>
     <h1>{translate('settings.title')}</h1>
-    <LanguageSelector />
     {user.email ? (
       <div>
-        <p>{translate('user.welcome', user)}</p>
         <p>{translate('settings.body')}</p>
+        <User />
         <button onClick={logout}>{translate('user.logout')}</button>
       </div>
     ) : (
       <div>
+        <LanguageSelector />
         <p>{translate('user.unauthenticated')}</p>
         <a href="/__/auth/google">{translate('user.login')}</a>
       </div>

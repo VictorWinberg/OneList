@@ -19,15 +19,14 @@ module.exports = {
     language: ['Change language: ', 'Ändra språk: '],
   },
   user: {
-    welcome: [
-      'Welcome ${username}! Nice email: ${email}. Predetermined language: ${language}.',
-      'Välkommen ${username}! Sjyst email: ${email}. Förbestämt språk: ${language}.',
-    ],
     unauthenticated: [
       'Please log in to see your settings.',
       'Vänligen logga in för att se dina inställningar.',
     ],
     login: ['Log In', 'Logga in'],
     logout: ['Logout', 'Logga ut'],
+    name: ['Name: ', 'Namn: '],
+    email: ['Email: ', 'Mail: '],
+    language: ['Lang: ', 'Språk: '],
   },
 };

@@ -1,4 +1,21 @@
-import { REQUEST_USER, RECIEVE_USER, LOGOUT_USER } from '../constants/user';
+import {
+  UPDATE_USER,
+  SUBMIT_USER,
+  REQUEST_USER,
+  RECIEVE_USER,
+  LOGOUT_USER,
+} from '../constants/user';
+
+export const updateUser = ({ target }) => ({
+  type: UPDATE_USER,
+  key: target.id,
+  value: target.value,
+});
+
+export const submitUser = event => dispatch => {
+  event.preventDefault();
+  dispatch({ type: SUBMIT_USER });
+};
 
 export const logoutUser = () => dispatch => {
   dispatch({ type: LOGOUT_USER });

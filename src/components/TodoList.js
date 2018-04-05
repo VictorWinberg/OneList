@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Todo from './Todo';
-// import Button from './Button'
 
 const TodoList = ({ todos, doneTodos, onTodoClick, translate }) => (
   <div>
