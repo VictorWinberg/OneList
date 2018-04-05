@@ -1,29 +1,15 @@
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const { Client } = require('pg');
 
-const { databaseUrl, googleAuth } = require('../env');
-
-const client = new Client(databaseUrl);
-client.connect();
+const { googleAuth } = require('../env');
 
 const get = (p, o) => p.reduce((xs, x) => (xs && xs[x] ? xs[x] : null), o);
 
-module.exports = passport => {
+module.exports = (passport, User) => {
   // used to serialize the user for the session
-  passport.serializeUser((user, done) => {
-    done(null, user.id);
-  });
+  passport.serializeUser((user, done) => done(null, user.id));
 
   // used to deserialize the user
-  passport.deserializeUser((id, done) => {
-    client.query(
-      'SELECT * FROM users WHERE id = $1',
-      [id || -1],
-      (err, { rows }) => {
-        done(err, rows[0]);
-      }
-    );
-  });
+  passport.deserializeUser((id, done) => User.getById(id, done));
 
   passport.use(
     new GoogleStrategy(
@@ -37,35 +23,24 @@ module.exports = passport => {
         process.nextTick(() => {
           const email = get(['emails', 0, 'value'], profile); // pull the first email
 
-          client
-            .query('SELECT * FROM users WHERE email = $1', [email])
-            .then(({ rows }) => {
-              if (rows.length) {
-                // all is well, return successful user
-                return done(null, rows[0]);
-              }
-              // if there is no user with that username
-              // create the user
-              const newUser = {
-                email,
-                username: get(['displayName'], profile),
-                photo: get(['photos', 0, 'value'], profile),
-                language: get(['_json', 'language'], profile),
-              };
+          User.getByEmail(email, (err, user) => {
+            if (err) return done(err);
 
-              return client
-                .query(
-                  'INSERT INTO users ( email, username, photo, language ) values ($1, $2, $3, $4) RETURNING *',
-                  Object.keys(newUser).map(key => newUser[key])
-                )
-                .then(res => {
-                  newUser.id = res.rows[0].id;
+            if (user) {
+              // all is well, return successful user
+              return done(null, user);
+            }
+            // if there is no user with that email
+            // create the user
+            const newUser = {
+              email,
+              username: get(['displayName'], profile),
+              photo: get(['photos', 0, 'value'], profile),
+              language: get(['_json', 'language'], profile),
+            };
 
-                  return done(null, newUser);
-                })
-                .catch(err => done(err));
-            })
-            .catch(err => done(err));
+            return User.create(newUser, done);
+          });
         });
       }
     )

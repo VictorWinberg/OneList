@@ -4,16 +4,22 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const path = require('path');
 
+const { Client } = require('pg');
 const passport = require('passport');
 
 const app = express();
 const port = 3004;
+const { databaseUrl } = require('../env');
 
 // serve static react build
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
 // connect to our database
-require('./passport')(passport);
+const client = new Client(databaseUrl);
+client.connect();
+
+const User = require('./models/user')(client);
+require('./passport')(passport, User);
 
 // set up our express application
 app.use(cookieParser()); // read cookies (needed for auth)
