@@ -7,7 +7,7 @@ import LanguageSelector from './LanguageSelector';
 import { updateUser, submitUser } from '../actions/user';
 
 const User = ({ user, translate, update, submit }) => (
-  <form onSubmit={submit}>
+  <form onSubmit={event => submit(event, user)}>
     <img src={user.photo} alt="profile" />
     <br />
     <label htmlFor="username">

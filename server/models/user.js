@@ -1,24 +1,43 @@
+const valid = key => ['username', 'email', 'photo', 'language'].includes(key);
+
+const entries = user => {
+  const keys = Object.keys(user).filter(valid);
+  const values = keys.map(key => user[key]);
+  return [keys, values];
+};
+
+const insertUser = user => {
+  const [keys, values] = entries(user);
+  const vals = values.map((v, i) => `$${i + 1}`);
+
+  return [
+    `INSERT INTO users ( ${keys} ) VALUES ( ${vals} ) RETURNING *`,
+    values,
+  ];
+};
+
+const updateUserByID = (id, user) => {
+  const [keys, values] = entries(user);
+  const set = keys.map((key, i) => `${key} = $${i + 1}`);
+
+  return [`UPDATE users SET ${set} WHERE id = ${id} RETURNING *`, values];
+};
+
 module.exports = client => ({
   create(newUser, done) {
-    const values = Object.keys(newUser).map(key => newUser[key]);
+    const [query, values] = insertUser(newUser);
 
     client
-      .query(
-        'INSERT INTO users ( email, username, photo, language ) values ($1, $2, $3, $4) RETURNING *',
-        values
-      )
+      .query(query, values)
       .then(({ rows }) => done(null, rows[0] || null))
       .catch(err => done(err));
   },
 
-  update(updatedUser, userId, done) {
-    const values = Object.keys(updatedUser).map(key => updatedUser[key]);
+  update(userId, updatedUser, done) {
+    const [query, values] = updateUserByID(userId, updatedUser);
 
     client
-      .query(
-        'UPDATE users SET email = $1, username = $2, photo = $3, language = $4 WHERE id = $5 RETURNING *',
-        values.concat[userId]
-      )
+      .query(query, values)
       .then(({ rows }) => done(null, rows[0] || null))
       .catch(err => done(err));
   },

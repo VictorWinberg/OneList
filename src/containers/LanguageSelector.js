@@ -19,7 +19,11 @@ const LanguageSelector = ({
     {languages
       .filter(language => language.code !== currentLanguage.code)
       .map(language => (
-        <button key={language.code} onClick={() => setLanguage(language.code)}>
+        <button
+          key={language.code}
+          type="button"
+          onClick={() => setLanguage(language.code)}
+        >
           {language.code}
         </button>
       ))}

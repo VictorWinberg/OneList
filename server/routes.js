@@ -1,6 +1,6 @@
 const path = require('path');
 
-module.exports = (app, passport) => {
+module.exports = (app, passport, User) => {
   // route middleware to make sure
   const isLoggedIn = (req, res, next) => {
     // if user is authenticated in the session, carry on
@@ -20,9 +20,18 @@ module.exports = (app, passport) => {
     res.send(req.user || {});
   });
 
+  app.put('/__/user', isLoggedIn, (req, res) => {
+    User.update(req.user.id, req.body, (err, user) => {
+      res.send(user || req.body);
+    });
+  });
+
   app.get('/__/logout', (req, res) => {
     req.logout();
-    res.redirect('/');
+    res.clearCookie('connect.sid');
+    req.session.destroy(() => {
+      res.redirect('/');
+    });
   });
 
   app.get('/__/auth/google', (req, res, next) => {

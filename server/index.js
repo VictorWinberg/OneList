@@ -49,6 +49,6 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
 // routes
-require('./routes.js')(app, passport);
+require('./routes.js')(app, passport, User);
 
 app.listen(port, () => console.log('ShoppingList app listening on port 3004!'));
