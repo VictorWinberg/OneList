@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
 
@@ -14,14 +14,14 @@ const Header = ({ translate }) => (
         height="30px"
       />
       <h1>OneList</h1>
-      <Link to="/settings">
+      <NavLink to="/settings">
         <img
           id="settingicon"
           src="/icons/settings_icon.png"
           alt="Settings"
           height="30px"
         />
-      </Link>
+      </NavLink>
     </div>
     <nav>
       <ul>
