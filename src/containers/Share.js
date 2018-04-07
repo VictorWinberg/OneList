@@ -1,13 +1,13 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 
-import List from './List';
+import ShareList from './ShareList';
 import New from './New';
 
 const Share = () => (
   <div>
     <New />
-    <List />
+    <ShareList />
   </div>
 );
 

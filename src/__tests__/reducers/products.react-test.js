@@ -14,11 +14,11 @@ describe('products reducer', () => {
     expect(products(undefined, { type: 'unexpected' })).toEqual([]);
   });
 
-  it('can handle ADD_TODO', () => {
+  it('can handle ADD_PRODUCT', () => {
     expect(products(undefined, addProduct('Test'))).toEqual(testProducts);
   });
 
-  it('can handle TOGGLE_TODO', () => {
+  it('can handle TOGGLE_PRODUCT', () => {
     expect(products(testProducts, toggleProduct(1))).toEqual(
       testProducts.map(product => ({ ...product, completed: true }))
     );

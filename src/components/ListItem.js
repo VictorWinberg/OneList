@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const Todo = ({ text, completed, onClick }) => (
+const ListItem = ({ text, completed, onClick }) => (
   <li>
     <label htmlFor="checkbox_id">
       <input
@@ -19,14 +19,14 @@ const Todo = ({ text, completed, onClick }) => (
   </li>
 );
 
-Todo.defaultProps = {
+ListItem.defaultProps = {
   completed: false,
 };
 
-Todo.propTypes = {
+ListItem.propTypes = {
   text: PropTypes.string.isRequired,
   completed: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
 };
 
-export default Todo;
+export default ListItem;

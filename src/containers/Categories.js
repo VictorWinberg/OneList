@@ -1,13 +1,13 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 
-import List from './List';
+import CategoryList from './CategoryList';
 import New from './New';
 
 const Categories = () => (
   <div>
     <New />
-    <List />
+    <CategoryList />
   </div>
 );
 
