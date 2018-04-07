@@ -3,7 +3,13 @@ import PropTypes from 'prop-types';
 
 import Todo from './Todo';
 
-const TodoList = ({ todos, doneTodos, onTodoClick, onRemoveProducts, translate }) => (
+const List = ({
+  todos,
+  doneTodos,
+  onTodoClick,
+  onRemoveProducts,
+  translate,
+}) => (
   <div>
     <ul className="shoppingList">
       {todos.map(todo => (
@@ -12,7 +18,9 @@ const TodoList = ({ todos, doneTodos, onTodoClick, onRemoveProducts, translate }
     </ul>
     <ul className={doneTodos.length ? 'done' : 'hidden'}>
       <h2>{translate('shoppinglist.cart')}</h2>
-      <button className="removeDone" onClick={onRemoveProducts}>{translate('shoppinglist.remove')}</button>
+      <button className="removeDone" onClick={onRemoveProducts}>
+        {translate('shoppinglist.remove')}
+      </button>
       {doneTodos.map(todo => (
         <Todo key={todo.id} {...todo} onClick={() => onTodoClick(todo.id)} />
       ))}
@@ -20,7 +28,7 @@ const TodoList = ({ todos, doneTodos, onTodoClick, onRemoveProducts, translate }
   </div>
 );
 
-TodoList.propTypes = {
+List.propTypes = {
   todos: PropTypes.arrayOf(
     PropTypes.shape({
       text: PropTypes.string.isRequired,
@@ -38,4 +46,4 @@ TodoList.propTypes = {
   translate: PropTypes.func.isRequired,
 };
 
-export default TodoList;
+export default List;

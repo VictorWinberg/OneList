@@ -4,7 +4,7 @@ import { getTranslate } from 'react-localize-redux';
 import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/filter';
 
 import { toggleProduct, removeProducts } from '../actions/products';
-import TodoList from '../components/TodoList';
+import List from '../components/List';
 
 const filterTodos = (todos, filter) => {
   switch (filter) {
@@ -30,4 +30,4 @@ const mapDispatchToProps = {
   onRemoveProducts: removeProducts,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
+export default connect(mapStateToProps, mapDispatchToProps)(List);
