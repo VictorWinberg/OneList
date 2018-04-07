@@ -30,7 +30,7 @@ nav li {
 nav a {
   color: rgb(70, 70, 70);
   font-size: 28px;
-  font-family: 'AmaticSC';
+  font-family: 'AmaticSC', 'Arial Narrow', Arial, sans-serif;
   text-decoration: none;
   text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.3);
 }

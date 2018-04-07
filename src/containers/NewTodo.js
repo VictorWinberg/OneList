@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { addTodo } from '../actions/todos';
+import { addProduct } from '../actions/products';
 
 class NewTodo extends Component {
   constructor(props) {
@@ -59,7 +59,7 @@ NewTodo.propTypes = {
 };
 
 const mapDispatchToProps = {
-  onNewTodoClick: addTodo,
+  onNewTodoClick: addProduct,
 };
 
 export default connect(null, mapDispatchToProps)(NewTodo);
