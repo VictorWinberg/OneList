@@ -4,5 +4,8 @@ node_js:
 cache:
   directories:
   - node_modules
+script:
+  - node server &
+  - npm test
 after_success:
   - bash <(curl -s https://codecov.io/bash) -e TRAVIS_NODE_VERSION

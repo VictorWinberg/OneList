@@ -3,19 +3,20 @@ const session = require('cookie-session');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const path = require('path');
+require('dotenv').config();
 
 const { Client } = require('pg');
 const passport = require('passport');
 
 const app = express();
 const port = 3004;
-const { databaseUrl } = require('../env');
+const { DATABASE_URL } = process.env;
 
 // serve static react build
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
 // connect to our database
-const client = new Client(databaseUrl);
+const client = new Client(DATABASE_URL);
 client.connect();
 
 const User = require('./models/user')(client);
@@ -31,12 +32,12 @@ app.use(
 app.use(bodyParser.json());
 
 // required for passport
-const { sessionSecrets } = require('../env');
+const { SESSION_SECRET_KEY1, SESSION_SECRET_KEY2 } = process.env;
 
 app.use(
   session({
     name: 'session',
-    keys: sessionSecrets,
+    keys: [SESSION_SECRET_KEY1, SESSION_SECRET_KEY2],
     // Cookie Options
     httpOnly: true,
     resave: false,

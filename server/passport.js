@@ -1,6 +1,6 @@
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
-const { googleAuth } = require('../env');
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
 
 const get = (p, o) => p.reduce((xs, x) => (xs && xs[x] ? xs[x] : null), o);
 
@@ -14,8 +14,8 @@ module.exports = (passport, User) => {
   passport.use(
     new GoogleStrategy(
       {
-        clientID: googleAuth.clientID,
-        clientSecret: googleAuth.clientSecret,
+        clientID: GOOGLE_CLIENT_ID,
+        clientSecret: GOOGLE_CLIENT_SECRET,
       },
       (token, refreshToken, profile, done) => {
         // make the code asynchronous
