@@ -21,7 +21,8 @@ export const fetchUser = () => dispatch => {
   dispatch({ type: REQUEST_USER });
   return fetch('/__/user', { credentials: 'include' })
     .then(response => response.json())
-    .then(user => dispatch({ type: RECIEVE_USER, user }));
+    .then(user => dispatch({ type: RECIEVE_USER, user }))
+    .catch(err => console.error(err));
 };
 
 export const submitUser = (event, user) => dispatch => {
