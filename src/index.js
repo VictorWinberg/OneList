@@ -19,7 +19,7 @@ const store = createStore(
 store.dispatch(initialize(['en', 'sv']));
 store.dispatch(addTranslation(translation));
 
-render(
+export default render(
   <Provider store={store}>
     <Router>
       <App />
