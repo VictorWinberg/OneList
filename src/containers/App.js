@@ -6,7 +6,7 @@ import Shopping from './Shopping';
 import Categories from './Categories';
 import Share from './Share';
 import Settings from './Settings';
-import FetchUser from './FetchUser';
+import SetLanguage from './SetLanguage';
 
 import '../styles/style.css';
 
@@ -17,7 +17,7 @@ const App = () => (
     <Route path="/categories" component={Categories} />
     <Route path="/share" component={Share} />
     <Route path="/settings" component={Settings} />
-    <FetchUser />
+    <SetLanguage />
   </div>
 );
 

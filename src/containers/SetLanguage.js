@@ -7,14 +7,7 @@ import {
   getActiveLanguage,
 } from 'react-localize-redux';
 
-import { fetchUser } from '../actions/user';
-
-class FetchUser extends Component {
-  componentDidMount() {
-    const { retrieveUser } = this.props;
-    retrieveUser();
-  }
-
+class SetLanguage extends Component {
   componentWillReceiveProps(props) {
     const { user, languages, currentLanguage, setLanguage } = props;
     const prevLanguage = this.props.user.language;
@@ -33,14 +26,13 @@ class FetchUser extends Component {
   }
 }
 
-FetchUser.propTypes = {
+SetLanguage.propTypes = {
   user: PropTypes.shape({
     language: PropTypes.string,
   }).isRequired,
   currentLanguage: PropTypes.string.isRequired,
   languages: PropTypes.arrayOf(PropTypes.string).isRequired,
   setLanguage: PropTypes.func.isRequired,
-  retrieveUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -51,7 +43,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   setLanguage: setActiveLanguage,
-  retrieveUser: fetchUser,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FetchUser);
+export default connect(mapStateToProps, mapDispatchToProps)(SetLanguage);
