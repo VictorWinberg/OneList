@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const ListItem = ({ text, completed, onClick }) => (
+const ListItem = ({ id, text, completed, onClick }) => (
   <li>
-    <label htmlFor="checkbox_id">
-      <input
-        type="checkbox"
-        id="checkbox_id"
-        checked={completed}
-        onChange={onClick}
-      />
+    <label
+      role="presentation"
+      onClick={onClick}
+      onKeyDown={onClick}
+      htmlFor={id}
+    >
+      <input type="checkbox" id={id} checked={completed} />
       {text}
     </label>
     <Link to="/">
@@ -24,6 +24,7 @@ ListItem.defaultProps = {
 };
 
 ListItem.propTypes = {
+  id: PropTypes.number.isRequired,
   text: PropTypes.string.isRequired,
   completed: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
