@@ -22,6 +22,5 @@ describe('products reducer', () => {
     expect(products(testProducts, toggleProduct(1))).toEqual(
       testProducts.map(product => ({ ...product, completed: true }))
     );
-    expect(products(testProducts, toggleProduct(2))).toEqual(testProducts);
   });
 });

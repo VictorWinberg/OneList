@@ -19,16 +19,16 @@ const products = (state = [], action) => {
           completed: false,
         },
       ];
-    case TOGGLE_PRODUCT:
-      return state.map(product => {
-        if (product.id === action.id) {
-          return {
-            ...product,
-            completed: !product.completed,
-          };
-        }
-        return product;
-      });
+    case TOGGLE_PRODUCT: {
+      const toggled = state.filter(product => product.id === action.id)[0];
+      return [
+        ...state.filter(product => product.id !== action.id),
+        {
+          ...toggled,
+          completed: !toggled.completed,
+        },
+      ];
+    }
     case REMOVE_PRODUCT:
       return state.filter(product => product.id !== action.id);
     case REMOVE_PRODUCTS:
