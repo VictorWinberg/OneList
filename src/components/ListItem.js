@@ -5,13 +5,15 @@ import { Link } from 'react-router-dom';
 const ListItem = ({ id, text, completed, onClick }) => (
   <li>
     <label
+      className="container"
       role="presentation"
       onClick={onClick}
       onKeyDown={onClick}
       htmlFor={id}
     >
-      <input type="checkbox" id={id} checked={completed} />
+      <input readOnly type="checkbox" id={id} checked={completed} />
       {text}
+      <span className="checkmark" />
     </label>
     <Link to="/">
       <img id="editicon" src="/icons/edit_icon.png" alt="Edit" height="20px" />
