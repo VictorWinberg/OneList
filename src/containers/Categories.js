@@ -7,7 +7,7 @@ import { addCategory } from '../actions/categories';
 
 const Categories = () => (
   <div>
-    <New onAdd={addCategory}/>
+    <New view="categories" onAdd={addCategory}/>
     <CategoryList />
   </div>
 );

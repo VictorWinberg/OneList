@@ -7,7 +7,7 @@ import { addProduct } from '../actions/products';
 
 const Shopping = () => (
   <div>
-    <New onAdd={addProduct} />
+    <New view="shoppinglist" onAdd={addProduct} />
     <ProductList />
   </div>
 );

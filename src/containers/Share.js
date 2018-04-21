@@ -6,7 +6,7 @@ import New from './New';
 
 const Share = () => (
   <div>
-    <New />
+    <New view="share" />
     <ShareList />
   </div>
 );

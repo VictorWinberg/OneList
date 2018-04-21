@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { getTranslate } from 'react-localize-redux';
 
 class New extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class New extends Component {
 
   render() {
     const { item } = this.state;
+    const { translate, view } = this.props;
 
     return (
       <div className="search">
@@ -37,7 +39,7 @@ class New extends Component {
             type="text"
             value={item}
             autoComplete="off"
-            placeholder="New item..."
+            placeholder={translate(`${view}.input`)}
             onChange={event => this.setState({ item: event.target.value })}
           />
           <img
@@ -54,10 +56,16 @@ class New extends Component {
 
 New.propTypes = {
   onAddItem: PropTypes.func.isRequired,
+  translate: PropTypes.func.isRequired,
+  view: PropTypes.string.isRequired,
 };
+
+const mapStateToProps = state => ({
+  translate: getTranslate(state.locale),
+});
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onAddItem: item => dispatch(ownProps.onAdd(item)),
 });
 
-export default connect(null, mapDispatchToProps)(New);
+export default connect(mapStateToProps, mapDispatchToProps)(New);

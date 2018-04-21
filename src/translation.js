@@ -9,6 +9,13 @@ module.exports = {
   shoppinglist: {
     cart: ['Cart', 'Varukorg'],
     remove: ['Done', 'Klar'],
+    input: ['New product...', 'Ny vara...'],
+  },
+  categories: {
+    input: ['New category...', 'Ny kategori...'],
+  },
+  share: {
+    input: ['New e-mail...', 'Ny e-mail...'],
   },
   settings: {
     title: ['Settings', 'Inställningar'],
