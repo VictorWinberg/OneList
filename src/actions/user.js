@@ -42,9 +42,8 @@ export const submitUser = (event, user) => dispatch => {
       throw response;
     })
     .then(json => dispatch({ type: RECIEVE_USER, user: json }))
-    .catch(err => err.json())
-    .then(err => {
-      console.log(err);
+    .catch(err => {
+      err.json().then(json => console.error(json));
       dispatch(fetchUser());
     });
 };

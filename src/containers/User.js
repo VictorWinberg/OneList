@@ -30,16 +30,6 @@ const User = ({ user, translate, update, submit }) => (
         onChange={update}
       />
     </label>
-    <label htmlFor="language">
-      {translate('user.language')}
-      <input
-        id="language"
-        type="text"
-        autoComplete="off"
-        value={user.language}
-        onChange={update}
-      />
-    </label>
     <LanguageSelector />
     <button type="submit">{translate('user.submit')}</button>
   </form>
