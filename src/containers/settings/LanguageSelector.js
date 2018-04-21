@@ -7,12 +7,14 @@ import {
   setActiveLanguage,
   getActiveLanguage,
 } from 'react-localize-redux';
+import { updateUser } from '../actions/user';
 
 const LanguageSelector = ({
   translate,
   languages,
   currentLanguage,
   setLanguage,
+  update,
 }) => (
   <p>
     {translate('settings.language')}
@@ -22,7 +24,10 @@ const LanguageSelector = ({
         <button
           key={language.code}
           type="button"
-          onClick={() => setLanguage(language.code)}
+          onClick={() =>
+            setLanguage(language.code) &&
+            update({ target: { id: 'language', value: language.code } })
+          }
         >
           {language.code}
         </button>
@@ -41,6 +46,7 @@ LanguageSelector.propTypes = {
   ).isRequired,
   translate: PropTypes.func.isRequired,
   setLanguage: PropTypes.func.isRequired,
+  update: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -51,6 +57,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   setLanguage: setActiveLanguage,
+  update: updateUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LanguageSelector);

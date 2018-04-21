@@ -42,14 +42,14 @@ class New extends Component {
             placeholder={translate(`${view}.input`)}
             onChange={event => this.setState({ item: event.target.value })}
           />
-          <span role="presentation" onClick= {() => this.setState({ item: '' })}>
-          <img
-            className="clear_icon"
-            alt="X"
-            src="/icons/clear_icon.png"
-            height="12px"
+          <span role="presentation" onClick={() => this.setState({ item: '' })}>
+            <img
+              className="clear_icon"
+              alt="X"
+              src="/icons/clear_icon.png"
+              height="12px"
             />
-            </span>
+          </span>
         </form>
       </div>
     );
