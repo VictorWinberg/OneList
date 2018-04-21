@@ -1,10 +1,15 @@
 import products from '../../reducers/products';
-import { addProduct, toggleProduct } from '../../actions/products';
+import {
+  addProduct,
+  toggleProduct,
+  removeProduct,
+  removeProducts,
+} from '../../actions/products';
 
-const testProducts = [
+const testProduct = [
   {
     id: 1,
-    text: 'Test',
+    text: 'Milk',
     completed: false,
   },
 ];
@@ -15,12 +20,29 @@ describe('products reducer', () => {
   });
 
   it('can handle ADD_PRODUCT', () => {
-    expect(products(undefined, addProduct('Test'))).toEqual(testProducts);
+    expect(products(undefined, addProduct('Milk'))).toEqual(testProduct);
   });
 
   it('can handle TOGGLE_PRODUCT', () => {
-    expect(products(testProducts, toggleProduct(1))).toEqual(
-      testProducts.map(product => ({ ...product, completed: true }))
+    expect(products(testProduct, toggleProduct(1))).toEqual(
+      testProduct.map(product => ({ ...product, completed: true }))
     );
+  });
+
+  it('can handle REMOVE_PRODUCT', () => {
+    expect(products(testProduct, removeProduct(1))).toEqual([]);
+  });
+
+  it('can handle REMOVE_PRODUCTS', () => {
+    expect(
+      products(
+        [
+          ...testProduct,
+          { id: 2, text: 'Apple', completed: true },
+          { id: 3, text: 'Pear', completed: true },
+        ],
+        removeProducts()
+      )
+    ).toEqual(testProduct);
   });
 });
