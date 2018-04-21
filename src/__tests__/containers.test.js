@@ -3,9 +3,9 @@ import renderer from 'react-test-renderer';
 import Index from '../index';
 import store from '../store';
 import Root from '../containers/Root';
-import Categories from '../containers/Categories';
-import Settings from '../containers/Settings';
-import Share from '../containers/Share';
+import Categories from '../containers/categories';
+import Settings from '../containers/settings';
+import Share from '../containers/share';
 
 describe('containers', () => {
   it('index renders without crashing', () => {

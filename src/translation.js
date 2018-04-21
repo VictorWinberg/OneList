@@ -2,11 +2,11 @@
 
 module.exports = {
   nav: {
-    shoppinglist: ['Shopping List', 'Inköpslista'],
+    products: ['Shopping List', 'Inköpslista'],
     categories: ['Categories', 'Kategorier'],
     share: ['Share', 'Dela'],
   },
-  shoppinglist: {
+  products: {
     cart: ['Cart', 'Varukorg'],
     remove: ['Done', 'Klar'],
     input: ['New product...', 'Ny vara...'],

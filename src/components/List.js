@@ -15,9 +15,9 @@ const List = ({ items, checked, onItemClick, onRemoveItems, translate }) => (
       ))}
     </ul>
     <ul className={checked.length ? 'done' : 'hidden'}>
-      <h2>{translate('shoppinglist.cart')}</h2>
+      <h2>{translate('products.cart')}</h2>
       <button className="removeDone" onClick={onRemoveItems}>
-        {translate('shoppinglist.remove')}
+        {translate('products.remove')}
       </button>
       {checked.map(item => (
         <ListItem

@@ -5,7 +5,7 @@ import { getTranslate } from 'react-localize-redux';
 
 import LanguageSelector from './LanguageSelector';
 import User from './User';
-import { logoutUser } from '../actions/user';
+import { logoutUser } from '../../actions/user';
 
 const Settings = ({ translate, user, logout }) => (
   <div>
