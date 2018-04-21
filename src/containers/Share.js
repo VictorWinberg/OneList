@@ -3,10 +3,11 @@ import React from 'react';
 
 import ShareList from './ShareList';
 import New from './New';
+import { addCollaborator } from '../actions/collaborators';
 
 const Share = () => (
   <div>
-    <New view="share" />
+    <New view="share" onAdd={addCollaborator} />
     <ShareList />
   </div>
 );

@@ -4,11 +4,8 @@ import { getTranslate } from 'react-localize-redux';
 import List from '../components/List';
 
 const mapStateToProps = state => ({
-  items: [
-    { id: 1, text: 'Alice Malmborg' },
-    { id: 2, text: 'William Clemens' },
-  ],
-  checked: [],
+  items: state.collaborators,
+  pending: [],
   translate: getTranslate(state.locale),
 });
 
