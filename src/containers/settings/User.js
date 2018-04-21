@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
 
 import LanguageSelector from './LanguageSelector';
-import { updateUser, submitUser } from '../actions/user';
+import { updateUser, submitUser } from '../../actions/user';
 
 const User = ({ user, translate, update, submit }) => (
   <form className="userform" onSubmit={event => submit(event, user)}>

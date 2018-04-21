@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
 
-import List from '../components/List';
+import List from '../../components/List';
 
 const mapStateToProps = state => ({
-  items: state.categories,
+  items: state.collaborators,
+  pending: [],
   translate: getTranslate(state.locale),
 });
 

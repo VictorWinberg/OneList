@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
 
-import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/filter';
+import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../../constants/filter';
 
-import { toggleProduct, removeProducts } from '../actions/products';
-import List from '../components/List';
+import { toggleProduct, removeProducts } from '../../actions/products';
+import List from '../../components/List';
 
 const filterProducts = (products, filter) => {
   switch (filter) {

@@ -26,7 +26,9 @@ const Header = ({ translate }) => (
     <nav>
       <ul>
         <li>
-          <NavLink exact to="/">{translate('nav.shoppinglist')}</NavLink>
+          <NavLink exact to="/">
+            {translate('nav.products')}
+          </NavLink>
         </li>
         <li>
           <NavLink to="/categories">{translate('nav.categories')}</NavLink>

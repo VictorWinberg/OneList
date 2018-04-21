@@ -2,8 +2,8 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 
 import ShareList from './ShareList';
-import New from './New';
-import { addCollaborator } from '../actions/collaborators';
+import New from '../common/New';
+import { addCollaborator } from '../../actions/collaborators';
 
 const Share = () => (
   <div>
