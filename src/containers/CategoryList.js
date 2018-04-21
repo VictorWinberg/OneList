@@ -4,12 +4,7 @@ import { getTranslate } from 'react-localize-redux';
 import List from '../components/List';
 
 const mapStateToProps = state => ({
-  items: [
-    { id: 1, text: 'Pasta & Ris' },
-    { id: 2, text: 'Mejeri' },
-    { id: 3, text: 'Frukt & Grönsaker' },
-  ],
-  checked: [],
+  items: state.categories,
   translate: getTranslate(state.locale),
 });
 

@@ -3,10 +3,11 @@ import React from 'react';
 
 import CategoryList from './CategoryList';
 import New from './New';
+import { addCategory } from '../actions/categories';
 
 const Categories = () => (
   <div>
-    <New />
+    <New onAdd={addCategory}/>
     <CategoryList />
   </div>
 );

@@ -30,6 +30,10 @@ const List = ({ items, checked, onItemClick, onRemoveItems, translate }) => (
   </div>
 );
 
+List.defaultProps = {
+  checked: [],
+};
+
 List.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
@@ -42,7 +46,7 @@ List.propTypes = {
       text: PropTypes.string.isRequired,
       completed: PropTypes.bool,
     })
-  ).isRequired,
+  ),
   onItemClick: PropTypes.func.isRequired,
   onRemoveItems: PropTypes.func.isRequired,
   translate: PropTypes.func.isRequired,
