@@ -2,26 +2,24 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { addProduct } from '../actions/products';
-
 class New extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { product: '' };
+    this.state = { item: '' };
   }
 
   handleSubmit(event) {
-    const { product } = this.state;
-    const { onNewProductClick } = this.props;
+    const { item } = this.state;
+    const { onAddItem } = this.props;
 
-    onNewProductClick(product);
-    this.setState({ product: '' });
+    onAddItem(item);
+    this.setState({ item: '' });
     event.preventDefault();
   }
 
   render() {
-    const { product } = this.state;
+    const { item } = this.state;
 
     return (
       <div className="search">
@@ -37,10 +35,10 @@ class New extends Component {
           <input
             id="newItem"
             type="text"
-            value={product}
+            value={item}
             autoComplete="off"
-            placeholder="New product..."
-            onChange={event => this.setState({ product: event.target.value })}
+            placeholder="New item..."
+            onChange={event => this.setState({ item: event.target.value })}
           />
           <img
             className="clear_icon"
@@ -55,11 +53,11 @@ class New extends Component {
 }
 
 New.propTypes = {
-  onNewProductClick: PropTypes.func.isRequired,
+  onAddItem: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = {
-  onNewProductClick: addProduct,
-};
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  onAddItem: item => dispatch(ownProps.onAdd(item)),
+});
 
 export default connect(null, mapDispatchToProps)(New);

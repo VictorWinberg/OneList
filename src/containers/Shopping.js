@@ -3,10 +3,11 @@ import React from 'react';
 
 import ProductList from './ProductList';
 import New from './New';
+import { addProduct } from '../actions/products';
 
 const Shopping = () => (
   <div>
-    <New />
+    <New onAdd={addProduct} />
     <ProductList />
   </div>
 );
