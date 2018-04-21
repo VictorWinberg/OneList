@@ -7,7 +7,7 @@ import {
   setActiveLanguage,
   getActiveLanguage,
 } from 'react-localize-redux';
-import { updateUser } from '../actions/user';
+import { updateUser } from '../../actions/user';
 
 const LanguageSelector = ({
   translate,
