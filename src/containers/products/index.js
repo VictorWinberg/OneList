@@ -7,7 +7,7 @@ import { addProduct } from '../../actions/products';
 
 const Products = () => (
   <div>
-    <New view="products" onAdd={addProduct} />
+    <New view="products" autosuggest onAdd={addProduct} />
     <ProductList />
   </div>
 );
