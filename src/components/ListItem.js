@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const ListItem = ({ id, text, completed, onClick }) => (
+const ListItem = ({ id, text, completed, onClick, linkTo }) => (
   <li>
     <label
       className="container"
@@ -15,7 +15,7 @@ const ListItem = ({ id, text, completed, onClick }) => (
       {text}
       <span className="checkmark" />
     </label>
-    <Link to={`/products/${id}`}>
+    <Link to={linkTo}>
       <img id="editicon" src="/icons/edit_icon.png" alt="Edit" height="20px" />
     </Link>
   </li>
@@ -30,6 +30,7 @@ ListItem.propTypes = {
   text: PropTypes.string.isRequired,
   completed: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
+  linkTo: PropTypes.string.isRequired,
 };
 
 export default ListItem;
