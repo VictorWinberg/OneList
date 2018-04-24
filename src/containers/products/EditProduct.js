@@ -1,20 +1,35 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import React from 'react';
 
 /*
 import ProductList from './ProductList';
 import New from '../common/New';
 import { addProduct } from '../../actions/products';
+const EditProduct = ({ name, category, categories }) => (
 */
 
 const EditProduct = ({ name, category, categories }) => (
   <div>
-    <p>
-      {name}
-      {category}
-      {categories}
-    </p>
+    <div className="title">{name}</div>
+    <div className="productWrapper">
+    <form>
+      <label className="productLabel" htmlFor="productName">Produktnamn:</label>
+      <input className="productInput" defaultValue={name}/>
+      <label className="productLabel" htmlFor="categories">Kategori:</label>
+      <select className="categorySelector" id="categories" selected={category}>
+        <option selected>
+          {category}
+        </option>
+        <option> Mejeri</option>
+        <option> Grönsaker</option>
+      </select>
+      <div className="editOptions">
+        <button className="doneProduct" type="submit"> Klar </button>
+        <button className="cancelProduct" type="submit" action="/"> Avbryt </button>
+      </div>
+    </form>
+    </div>
   </div>
 );
 
