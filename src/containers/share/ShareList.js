@@ -7,6 +7,7 @@ const mapStateToProps = state => ({
   items: state.collaborators,
   pending: [],
   translate: getTranslate(state.locale),
+  linkTo: id => `/share/${id}`,
 });
 
 const mapDispatchToProps = () => ({

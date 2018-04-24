@@ -3,11 +3,29 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
 
+import Autosuggest from './Autosuggest';
+
 class New extends Component {
   constructor(props) {
     super(props);
 
     this.state = { item: '' };
+  }
+
+  onChange(event, { method, newValue }) {
+    const { onAddItem } = this.props;
+
+    switch (method) {
+      case 'type':
+        this.setState({ item: newValue });
+        break;
+      case 'click':
+        onAddItem(newValue);
+        this.setState({ item: '' });
+        break;
+      default:
+        break;
+    }
   }
 
   handleSubmit(event) {
@@ -21,7 +39,25 @@ class New extends Component {
 
   render() {
     const { item } = this.state;
-    const { translate, view } = this.props;
+    const { translate, view, autosuggest } = this.props;
+
+    const inputfield = autosuggest ? (
+      <Autosuggest
+        id="newItem"
+        value={item}
+        placeholder={translate(`${view}.input`)}
+        onChange={(event, value) => this.onChange(event, value)}
+      />
+    ) : (
+      <input
+        id="newItem"
+        type="text"
+        value={item}
+        autoComplete="off"
+        placeholder={translate(`${view}.input`)}
+        onChange={event => this.setState({ item: event.target.value })}
+      />
+    );
 
     return (
       <div className="search">
@@ -34,14 +70,6 @@ class New extends Component {
               height="12px"
             />
           </label>
-          <input
-            id="newItem"
-            type="text"
-            value={item}
-            autoComplete="off"
-            placeholder={translate(`${view}.input`)}
-            onChange={event => this.setState({ item: event.target.value })}
-          />
           <span role="presentation" onClick={() => this.setState({ item: '' })}>
             <img
               className="clear_icon"
@@ -50,13 +78,19 @@ class New extends Component {
               height="12px"
             />
           </span>
+          {inputfield}
         </form>
       </div>
     );
   }
 }
 
+New.defaultProps = {
+  autosuggest: false,
+};
+
 New.propTypes = {
+  autosuggest: PropTypes.bool,
   onAddItem: PropTypes.func.isRequired,
   translate: PropTypes.func.isRequired,
   view: PropTypes.string.isRequired,

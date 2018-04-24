@@ -23,6 +23,7 @@ const mapStateToProps = state => ({
   items: filterProducts(state.products, SHOW_ACTIVE),
   checked: filterProducts(state.products, SHOW_COMPLETED),
   translate: getTranslate(state.locale),
+  linkTo: id => `/products/${id}`,
 });
 
 const mapDispatchToProps = {

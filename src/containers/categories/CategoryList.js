@@ -6,6 +6,7 @@ import List from '../../components/List';
 const mapStateToProps = state => ({
   items: state.categories,
   translate: getTranslate(state.locale),
+  linkTo: id => `/categories/${id}`,
 });
 
 const mapDispatchToProps = () => ({
