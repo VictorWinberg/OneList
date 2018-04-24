@@ -64,38 +64,38 @@ a.active img {
   left: 0.4em;
 }
 
-.title {
+.product .title {
   padding: 0.9em 0.5em;
   font-size: 20px;
 }
 
-.title,
+.product .title,
 .search,
 .header {
   background-color: rgba(135, 206, 250, 0.5);
   overflow: auto;
 }
 
-.newForm,
-.productInput,
-.categorySelector {
+.search form,
+.product #productName,
+.product #categories {
   border: black solid 1px;
   margin: 0.5em;
   box-shadow: 0px 1px 8px 0px #777;
   background-color: white;
 }
 
-.newForm img {
+.search img {
   margin-top: 0.8em;
   padding: 0em 0.5em;
   cursor: pointer;
 }
 
-.productWrapper {
+.product .wrapper {
   margin-top: 2em;
 }
 
-.productLabel {
+.product label span {
   font-family: 'PatrickHandSC';
   font-size: 22px;
   width: 125px;
@@ -106,8 +106,8 @@ a.active img {
   margin: 0;
 }
 
-.productInput,
-.categorySelector {
+.product #productName,
+.product #categories {
   width: calc(100% - 125px - 2em);
   font-size: 16px;
   padding: 0.5em 0em;
@@ -116,11 +116,11 @@ a.active img {
   float: left;
 }
 
-.productInput {
+.product #productName {
   text-indent: 0.3em;
 }
 
-.editOptions button {
+.product button {
   font-family: 'PatrickHandSC';
   font-size: 20px;
   border: solid black 1px;
@@ -129,12 +129,13 @@ a.active img {
   position: absolute;
   bottom: 0.5em;
 }
-.cancelProduct {
+
+.product .cancelBtn {
   background-color: lightcoral;
   left: 0.5em;
 }
 
-.doneProduct {
+.product .doneBtn {
   background-color: lightgreen;
   right: 0.5em;
 }
@@ -267,7 +268,7 @@ body {
   text-decoration: line-through;
 }
 
-.removeDone {
+.removeBtn {
   float: right;
   font-family: 'PatrickHandSC';
   font-size: 20px;

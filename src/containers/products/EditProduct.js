@@ -10,25 +10,29 @@ const EditProduct = ({ name, category, categories }) => (
 */
 
 const EditProduct = ({ name, category, categories }) => (
-  <div>
+  <div className="product">
     <div className="title">{name}</div>
-    <div className="productWrapper">
-    <form>
-      <label className="productLabel" htmlFor="productName">Produktnamn:</label>
-      <input className="productInput" defaultValue={name}/>
-      <label className="productLabel" htmlFor="categories">Kategori:</label>
-      <select className="categorySelector" id="categories" selected={category}>
-        <option selected>
-          {category}
-        </option>
-        <option> Mejeri</option>
-        <option> Grönsaker</option>
-      </select>
-      <div className="editOptions">
-        <button className="doneProduct" type="submit"> Klar </button>
-        <button className="cancelProduct" type="submit" action="/"> Avbryt </button>
-      </div>
-    </form>
+    <div className="wrapper">
+      <form>
+        <label htmlFor="productName">
+          <span>Produktnamn:</span>
+          <input id="productName" defaultValue={name} />
+        </label>
+        <label htmlFor="categories">
+          <span>Kategori:</span>
+          <select id="categories" selected={category}>
+            <option selected>{category}</option>
+            <option>Mejeri</option>
+            <option>Grönsaker</option>
+          </select>
+        </label>
+        <button className="doneBtn" type="submit">
+          Klar
+        </button>
+        <button className="cancelBtn" type="submit" action="/">
+          Avbryt
+        </button>
+      </form>
     </div>
   </div>
 );

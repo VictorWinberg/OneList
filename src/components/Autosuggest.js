@@ -13,7 +13,7 @@ class Autosuggest extends Component {
 
   render() {
     const { suggestions } = this.state;
-    const { value, placeholder, getSuggestions, onChange } = this.props;
+    const { id, value, placeholder, getSuggestions, onChange } = this.props;
 
     return (
       <ReactAutosuggest
@@ -28,13 +28,14 @@ class Autosuggest extends Component {
         getSectionSuggestions={section => section.products}
         renderSuggestion={suggestion => <div>{suggestion}</div>}
         renderSectionTitle={section => <strong>{section.category}</strong>}
-        inputProps={{ value, placeholder, onChange }}
+        inputProps={{ id, value, placeholder, onChange }}
       />
     );
   }
 }
 
 Autosuggest.propTypes = {
+  id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,

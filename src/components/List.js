@@ -26,7 +26,7 @@ const List = ({
     </ul>
     <ul className={checked.length ? 'done' : 'hidden'}>
       <h2>{translate('products.cart')}</h2>
-      <button className="removeDone" onClick={onRemoveItems}>
+      <button className="removeBtn" onClick={onRemoveItems}>
         {translate('products.remove')}
       </button>
       {checked.map(item => li(item, onItemClick, linkTo))}
