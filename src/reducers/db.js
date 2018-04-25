@@ -1,3 +1,7 @@
+import { reject } from 'lodash/collection';
+
+import { REMOVE_DB_PRODUCT, REMOVE_DB_CATEGORY } from '../constants/db';
+
 const initialState = {
   products: {
     '1': { id: 1, name: 'Butter', category: 1 },
@@ -25,6 +29,16 @@ const initialState = {
 
 const db = (state = initialState, action) => {
   switch (action.type) {
+    case REMOVE_DB_PRODUCT:
+      return {
+        ...state,
+        products: reject(state.products, ['name', action.name]),
+      };
+    case REMOVE_DB_CATEGORY:
+      return {
+        ...state,
+        categories: reject(state.categories, ['name', action.name]),
+      };
     default:
       return state;
   }

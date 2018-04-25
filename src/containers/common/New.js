@@ -12,16 +12,20 @@ class New extends Component {
     this.state = { item: '' };
   }
 
-  onChange(event, { method, newValue }) {
-    const { onAddItem } = this.props;
+  onChange({ target }, { method, newValue }) {
+    const { onAddItem, onRemoveItem } = this.props;
 
     switch (method) {
       case 'type':
         this.setState({ item: newValue });
         break;
       case 'click':
-        onAddItem(newValue);
-        this.setState({ item: '' });
+        if (target.name === 'delete') {
+          onRemoveItem(newValue);
+        } else {
+          onAddItem(newValue);
+          this.setState({ item: '' });
+        }
         break;
       default:
         break;
@@ -65,7 +69,7 @@ class New extends Component {
             <img
               className="clear-icon"
               alt="X"
-              src="/icons/clear_icon.png"
+              src="/icons/clear.svg"
               height="12px"
             />
           </span>
@@ -73,7 +77,7 @@ class New extends Component {
             <img
               className="add-icon"
               alt="add"
-              src="/icons/add_icon.png"
+              src="/icons/add.svg"
               height="12px"
             />
             {inputfield}
@@ -90,6 +94,7 @@ New.defaultProps = {
 New.propTypes = {
   autosuggest: PropTypes.bool,
   onAddItem: PropTypes.func.isRequired,
+  onRemoveItem: PropTypes.func.isRequired,
   translate: PropTypes.func.isRequired,
   view: PropTypes.string.isRequired,
 };
@@ -98,8 +103,9 @@ const mapStateToProps = state => ({
   translate: getTranslate(state.locale),
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  onAddItem: item => dispatch(ownProps.onAdd(item)),
+const mapDispatchToProps = (dispatch, { onAdd, onRemove }) => ({
+  onAddItem: item => onAdd && dispatch(onAdd(item)),
+  onRemoveItem: item => onRemove && dispatch(onRemove(item)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(New);
