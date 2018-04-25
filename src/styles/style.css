@@ -126,7 +126,7 @@ a.active img {
   border: solid black 1px;
   border-radius: 3px;
   width: calc(50% - 0.75em);
-  position: absolute;
+  position: fixed;
   bottom: 0.5em;
 }
 
