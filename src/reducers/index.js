@@ -6,6 +6,7 @@ import categories from './categories';
 import collaborators from './collaborators';
 import filter from './filter';
 import user from './user';
+import db from './db';
 
 export default combineReducers({
   locale: localeReducer,
@@ -14,4 +15,5 @@ export default combineReducers({
   collaborators,
   filter,
   user,
+  db,
 });
