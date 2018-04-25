@@ -16,7 +16,7 @@ const EditProduct = ({ name, category, categories }) => (
       <form>
         <label htmlFor="productName">
           <span>Produktnamn:</span>
-          <input id="productName" defaultValue={name} />
+          <input id="productName" autoComplete="off" defaultValue={name} />
         </label>
         <label htmlFor="categories">
           <span>Kategori:</span>

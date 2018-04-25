@@ -76,7 +76,14 @@ a.active img {
   overflow: auto;
 }
 
-.search form,
+#newItem {
+  font-size: 16px;
+  position: static;
+  width: calc(100% - 1em);
+  text-indent: 1.5em;
+}
+
+#newItem,
 .product #productName,
 .product #categories {
   border: black solid 1px;
@@ -87,8 +94,9 @@ a.active img {
 
 .search img {
   margin-top: 0.8em;
-  padding: 0em 0.5em;
+  padding: 0.4em 0.5em;
   cursor: pointer;
+  position: absolute;
 }
 
 .product .wrapper {
@@ -150,11 +158,11 @@ a.active img {
 }
 
 .add_icon {
-  float: left;
+  left: 0.5em;
 }
 
 .clear_icon {
-  float: right;
+  right: 0.5em;
 }
 
 input[type='text'] {
