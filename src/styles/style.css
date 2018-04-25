@@ -72,7 +72,7 @@ a.active img {
 .product .title,
 .search,
 .header {
-  background-color: rgba(135, 206, 250, 0.5);
+  background-color: #c3e6fc;
   overflow: auto;
 }
 
@@ -92,7 +92,10 @@ a.active img {
 }
 
 .product .wrapper {
-  margin-top: 2em;
+  padding-top: 1em;
+  clear: both;
+  overflow: auto;
+  background-color: white;
 }
 
 .product label span {
@@ -108,16 +111,20 @@ a.active img {
 
 .product #productName,
 .product #categories {
-  width: calc(100% - 125px - 2em);
   font-size: 16px;
-  padding: 0.5em 0em;
+  padding: 0.5em 0;
   margin: 0.5em 0;
   border-radius: 4px;
   float: left;
 }
 
 .product #productName {
+  width: calc(100% - 125px - 2em);
   text-indent: 0.3em;
+}
+
+.product #categories {
+  width: calc(100% - 125px - 1.89em);
 }
 
 .product button {
@@ -126,8 +133,10 @@ a.active img {
   border: solid black 1px;
   border-radius: 3px;
   width: calc(50% - 0.75em);
-  position: fixed;
-  bottom: 0.5em;
+  position: absolute;
+  margin: 0.5em 0;
+  bottom: 0;
+  z-index: -2;
 }
 
 .product .cancelBtn {
@@ -221,9 +230,11 @@ input[type='text'] {
   outline: none;
 }
 
-body {
+body,
+html {
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 
 .shoppingList,

@@ -26,11 +26,12 @@ const EditProduct = ({ name, category, categories }) => (
             <option>Grönsaker</option>
           </select>
         </label>
-        <button className="doneBtn" type="submit">
-          Klar
-        </button>
+        {categories}
         <button className="cancelBtn" type="submit" action="/">
           Avbryt
+        </button>
+        <button className="doneBtn" type="submit">
+          Klar
         </button>
       </form>
     </div>
