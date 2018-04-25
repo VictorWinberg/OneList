@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const ListItem = ({ id, text, completed, onClick, linkTo }) => (
   <li>
     <label
-      className="container"
+      className="item-label"
       role="presentation"
       onClick={onClick}
       onKeyDown={onClick}

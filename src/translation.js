@@ -11,6 +11,9 @@ module.exports = {
     remove: ['Done', 'Klar'],
     input: ['New product...', 'Ny vara...'],
   },
+  edit: {
+    edit: ['Edit', 'Redigera'],
+  },
   categories: {
     input: ['New category...', 'Ny kategori...'],
   },

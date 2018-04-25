@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import React from 'react';
+import { getTranslate } from 'react-localize-redux';
 
 /*
 import ProductList from './ProductList';
@@ -9,9 +10,9 @@ import { addProduct } from '../../actions/products';
 const EditProduct = ({ name, category, categories }) => (
 */
 
-const EditProduct = ({ name, category, categories }) => (
+const EditProduct = ({ name, category, categories, translate }) => (
   <div className="product">
-    <div className="title">{name}</div>
+    <div className="title"><b>{translate('edit.edit')}: </b>{name}</div>
     <div className="wrapper">
       <form>
         <label htmlFor="productName">
@@ -46,6 +47,7 @@ EditProduct.propTypes = {
   name: PropTypes.string.isRequired,
   category: PropTypes.string,
   categories: PropTypes.arrayOf(PropTypes.string).isRequired,
+  translate: PropTypes.func.isRequired,
 };
 
 const getProduct = (products, id) => {
@@ -61,11 +63,12 @@ const mapStateToProps = (state, ownProps) => {
     state.products,
     parseInt(ownProps.match.params.id, 10)
   );
-
+  
   return {
     name: product.text,
     category: product.category,
     categories: state.categories.map(category => category.text),
+    translate: getTranslate(state.locale),
   };
 };
 
