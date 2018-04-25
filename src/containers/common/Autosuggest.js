@@ -1,37 +1,25 @@
 import { connect } from 'react-redux';
+import { flow, groupBy, mergeWith, filter, map, values } from 'lodash/fp';
 
 import Autosuggest from '../../components/Autosuggest';
 
-const sections = [
-  {
-    category: 'Dairy',
-    products: ['Butter', 'Cheese', 'Yoghurt', 'Milk'],
-  },
-  {
-    category: 'Pasta',
-    products: ['Penne', 'Spaghetti', 'Macaroni', 'Tortellini', 'Tagliatelle'],
-  },
-  {
-    category: 'Fruit and Vegetables',
-    products: ['Apple', 'Avocado', 'Pear', 'Banana', 'Carrot', 'Pineapple'],
-  },
-];
+const getSuggestions = (value, db) => {
+  const search = ({ name }) => name.match(new RegExp(value, 'i'));
 
-const getSuggestions = value => {
-  const inputValue = value.trim().toLowerCase();
-
-  return sections
-    .map(({ category, products }) => ({
-      category,
-      products: products.filter(product =>
-        product.toLowerCase().includes(inputValue)
-      ),
-    }))
-    .filter(item => item.products.length);
+  return flow(
+    filter(search),
+    groupBy('category'),
+    mergeWith((category, products) => ({
+      products: map('name', products),
+      category: category.name,
+    }))(db.categories),
+    filter('products.length'),
+    values
+  )(db.products);
 };
 
-const mapStateToProps = () => ({
-  getSuggestions,
+const mapStateToProps = state => ({
+  getSuggestions: value => getSuggestions(value, state.db),
 });
 
 export default connect(mapStateToProps)(Autosuggest);
