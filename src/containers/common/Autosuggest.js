@@ -10,10 +10,10 @@ const getSuggestions = (value, db) => {
     filter(search),
     groupBy('category'),
     mergeWith((category, products) => ({
-      products: map('name', products),
-      category: category.name,
+      title: category.name,
+      suggestions: map('name', products),
     }))(db.categories),
-    filter('products.length'),
+    filter('suggestions.length'),
     values
   )(db.products);
 };

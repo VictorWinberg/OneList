@@ -25,9 +25,19 @@ class Autosuggest extends Component {
         }
         onSuggestionsClearRequested={() => this.setState({ suggestions: [] })}
         getSuggestionValue={suggestion => suggestion}
-        getSectionSuggestions={section => section.products}
-        renderSuggestion={suggestion => <div>{suggestion}</div>}
-        renderSectionTitle={section => <strong>{section.category}</strong>}
+        getSectionSuggestions={section => section.suggestions}
+        renderSuggestion={suggestion => (
+          <div>
+            {suggestion}
+            <img
+              name="delete"
+              src="icons/delete.svg"
+              alt="Delete"
+              height="16px"
+            />
+          </div>
+        )}
+        renderSectionTitle={section => <strong>{section.title}</strong>}
         inputProps={{ id, value, placeholder, onChange }}
       />
     );

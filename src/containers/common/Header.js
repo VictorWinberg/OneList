@@ -17,9 +17,9 @@ const Header = ({ translate }) => (
       <NavLink to="/settings">
         <img
           id="settingicon"
-          src="/icons/settings_icon.png"
+          src="/icons/settings.svg"
           alt="Settings"
-          height="30px"
+          height="28px"
         />
       </NavLink>
     </div>

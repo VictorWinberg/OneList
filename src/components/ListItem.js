@@ -16,7 +16,7 @@ const ListItem = ({ id, text, completed, onClick, linkTo }) => (
       <span className="checkmark" />
     </label>
     <Link to={linkTo}>
-      <img id="editicon" src="/icons/edit_icon.png" alt="Edit" height="20px" />
+      <img id="editicon" src="/icons/pen-select.svg" alt="Edit" height="20px" />
     </Link>
   </li>
 );
