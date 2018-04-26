@@ -89,7 +89,6 @@ nav a.active img {
 .search-form,
 .header {
   background-color: #c3e6fc;
-  overflow: auto;
 }
 
 .search-form input,
@@ -101,11 +100,25 @@ nav a.active img {
   background-color: white;
 }
 
-.search-form img {
+.search-form .clear-icon,
+.search-form .add-icon {
   margin-top: 0.8em;
   padding: 0.4em 0.5em;
   cursor: pointer;
   position: absolute;
+}
+
+.suggestions {
+  padding: 0.2em 0.5em;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.suggestions span {
+  font-size: 18px;
+}
+
+.delete-icon {
+  float: right;
 }
 
 .product .wrapper {
