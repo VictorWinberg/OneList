@@ -15,6 +15,10 @@ describe('categories reducer', () => {
     ]);
   });
 
+  it('can handle ADD_CATEGORY for None', () => {
+    expect(categories(undefined, addCategory(''))).toEqual([]);
+  });
+
   it('can handle REMOVE_CATEGORY', () => {
     expect(
       categories(

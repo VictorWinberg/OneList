@@ -23,6 +23,10 @@ describe('products reducer', () => {
     expect(products(undefined, addProduct('Milk'))).toEqual(testProduct);
   });
 
+  it('can handle ADD_PRODUCT for None', () => {
+    expect(products(undefined, addProduct(''))).toEqual([]);
+  });
+
   it('can handle TOGGLE_PRODUCT', () => {
     expect(products(testProduct, toggleProduct(1))).toEqual(
       testProduct.map(product => ({ ...product, completed: true }))

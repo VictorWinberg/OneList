@@ -25,6 +25,10 @@ describe('collaborators reducer', () => {
     );
   });
 
+  it('can handle ADD_COLLABORATOR for None', () => {
+    expect(collaborators(undefined, addCollaborator(''))).toEqual([]);
+  });
+
   it('can handle TOGGLE_COLLABORATOR', () => {
     expect(collaborators(testCollaborator, toggleCollaborator(1))).toEqual(
       testCollaborator.map(product => ({ ...product, pending: false }))

@@ -10,6 +10,7 @@ let collaboratorIndex = 0;
 const collaborators = (state = [], action) => {
   switch (action.type) {
     case ADD_COLLABORATOR:
+      if (!action.text) return state;
       collaboratorIndex += 1;
       return [
         ...state,

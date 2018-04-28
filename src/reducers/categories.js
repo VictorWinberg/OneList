@@ -5,6 +5,7 @@ let categoryIndex = 0;
 const categories = (state = [], action) => {
   switch (action.type) {
     case ADD_CATEGORY:
+      if (!action.text) return state;
       categoryIndex += 1;
       return [
         ...state,

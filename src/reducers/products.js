@@ -10,6 +10,7 @@ let productIndex = 0;
 const products = (state = [], action) => {
   switch (action.type) {
     case ADD_PRODUCT:
+      if (!action.text) return state;
       productIndex += 1;
       return [
         ...state,
