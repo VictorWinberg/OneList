@@ -16,11 +16,11 @@ const EditProduct = ({ name, category, categories, translate }) => (
     <div className="wrapper">
       <form>
         <label htmlFor="productName">
-          <span>Produktnamn:</span>
+          <span>{translate('edit.name')}:</span>
           <input id="productName" autoComplete="off" defaultValue={name} />
         </label>
         <label htmlFor="categories">
-          <span>Kategori:</span>
+          <span>{translate('edit.category')}:</span>
           <select id="categories" selected={category}>
             <option selected>{category}</option>
             <option>Mejeri</option>
