@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
+import { get, find } from 'lodash/fp';
+import { toInteger } from 'lodash/lang';
 
 import CategorySelect from './CategorySelect';
 
@@ -38,17 +40,12 @@ EditProduct.propTypes = {
   translate: PropTypes.func.isRequired,
 };
 
-const getProduct = (products, id) => {
-  const found = products.filter(product => product.id === id);
-  return found.length > 0 ? found[0] : {};
-};
-
-const mapStateToProps = (state, ownProps) => {
-  const id = parseInt(ownProps.match.params.id, 10);
+const mapStateToProps = (state, { match }) => {
+  const id = toInteger(match.params.id);
 
   return {
     id,
-    name: getProduct(state.products, id).text,
+    name: get('text', find({ id }, state.products)),
     translate: getTranslate(state.locale),
   };
 };

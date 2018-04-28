@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
+import { get, find, map as fmap } from 'lodash/fp';
 
 class CategorySelect extends Component {
   constructor(props) {
@@ -46,19 +47,10 @@ CategorySelect.propTypes = {
   translate: PropTypes.func.isRequired,
 };
 
-const getProduct = (products, id) => {
-  const found = products.filter(product => product.id === id);
-  return found.length > 0 ? found[0] : {};
-};
-
-const mapStateToProps = (state, ownProps) => {
-  const product = getProduct(state.products, ownProps.id);
-
-  return {
-    category: product.category,
-    categories: state.categories.map(category => category.text),
-    translate: getTranslate(state.locale),
-  };
-};
+const mapStateToProps = (state, { id }) => ({
+  category: get('category', find({ id }, state.products)),
+  categories: fmap('text', state.categories),
+  translate: getTranslate(state.locale),
+});
 
 export default connect(mapStateToProps)(CategorySelect);
