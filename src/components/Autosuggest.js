@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactAutosuggest from 'react-autosuggest';
+import deleteicon from '../assets/icons/delete.svg';
 
 class Autosuggest extends Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class Autosuggest extends Component {
             <img
               className="delete-icon"
               name="delete"
-              src="icons/delete.svg"
+              src={deleteicon}
               alt="Delete"
               height="18px"
             />

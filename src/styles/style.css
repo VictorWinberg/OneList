@@ -72,7 +72,7 @@ nav a.active img {
 }
 
 .search-form input {
-  font-size: 16px;
+  font-size: 20px;
   position: static;
   width: calc(100% - 1em);
   padding: 0.4em 0;
@@ -103,7 +103,7 @@ nav a.active img {
 .search-form .clear-icon,
 .search-form .add-icon {
   margin-top: 0.8em;
-  padding: 0.4em 0.5em;
+  padding: 0.7em 0.5em;
   cursor: pointer;
   position: absolute;
 }
@@ -317,22 +317,22 @@ nav a.active img {
 /*FONT: Antic Didone*/
 @font-face {
   font-family: 'Antic Didone';
-  src: url('/fonts/AnticDidone-Regular.ttf');
+  src: url('../assets/fonts/AnticDidone-Regular.ttf');
 }
 
 /*FONT: AmaticSC*/
 @font-face {
   font-family: 'AmaticSC';
-  src: url('/fonts/AmaticSC-Regular.ttf');
+  src: url('../assets/fonts/AmaticSC-Regular.ttf');
 }
 
 /*FONT: PatrickHandSC*/
 @font-face {
   font-family: 'PatrickHandSC';
-  src: url('/fonts/PatrickHandSC-Regular.ttf');
+  src: url('../assets/fonts/PatrickHandSC-Regular.ttf');
 }
-/*FONT: */
+/*FONT: Quicksand*/
 @font-face {
   font-family: 'Quicksand';
-  src: url('/fonts/Quicksand-Regular.ttf');
+  src: url('../assets/fonts/Quicksand-Regular.ttf');
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import penselecticon from '../assets/icons/pen-select.svg';
 
 const ListItem = ({ id, text, completed, onClick, linkTo }) => (
   <li>
@@ -16,7 +17,7 @@ const ListItem = ({ id, text, completed, onClick, linkTo }) => (
       <span className="checkmark" />
     </label>
     <Link to={linkTo}>
-      <img id="editicon" src="/icons/pen-select.svg" alt="Edit" height="20px" />
+      <img id="editicon" src={penselecticon} alt="Edit" height="20px" />
     </Link>
   </li>
 );

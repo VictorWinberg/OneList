@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
+import addicon from '../../assets/icons/add.svg';
+import clearicon from '../../assets/icons/clear.svg';
 
 import Autosuggest from './Autosuggest';
 
@@ -64,25 +66,18 @@ class New extends Component {
     );
 
     return (
-        <form className="search-form" onSubmit={event => this.handleSubmit(event)}>
-          <span role="presentation" onClick={() => this.setState({ item: '' })}>
-            <img
-              className="clear-icon"
-              alt="X"
-              src="/icons/clear.svg"
-              height="12px"
-            />
-          </span>
-          <label htmlFor="newItem">
-            <img
-              className="add-icon"
-              alt="add"
-              src="/icons/add.svg"
-              height="12px"
-            />
-            {inputfield}
-          </label>
-        </form>
+      <form
+        className="search-form"
+        onSubmit={event => this.handleSubmit(event)}
+      >
+        <span role="presentation" onClick={() => this.setState({ item: '' })}>
+          <img className="clear-icon" alt="X" src={clearicon} height="12px" />
+        </span>
+        <label htmlFor="newItem">
+          <img className="add-icon" alt="add" src={addicon} height="12px" />
+          {inputfield}
+        </label>
+      </form>
     );
   }
 }
