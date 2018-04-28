@@ -205,10 +205,10 @@ nav a.active img {
   cursor: pointer;
 }
 
-/* On mouse-over, add a grey background color */
+/* On mouse-over, add a grey background color
 .item-label:hover input ~ .checkmark {
   background-color: #ccc;
-}
+}*/
 
 /* When the checkbox is checked, add a blue background */
 .item-label input:checked ~ .checkmark {
