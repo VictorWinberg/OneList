@@ -4,9 +4,8 @@ import { Link } from 'react-router-dom';
 import penselecticon from '../assets/icons/pen-select.svg';
 
 const ListItem = ({ id, text, completed, onClick, linkTo }) => (
-  <li>
+  <li className="listitem">
     <label
-      className="item-label"
       role="presentation"
       onClick={onClick}
       onKeyDown={onClick}

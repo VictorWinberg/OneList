@@ -14,7 +14,7 @@ const Products = () => (
       onAdd={addProduct}
       onRemove={removeProduct}
     />
-    <ProductList />
+    <ProductList view="products" />
   </div>
 );
 

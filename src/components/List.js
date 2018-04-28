@@ -19,15 +19,16 @@ const List = ({
   onRemoveItems,
   linkTo,
   translate,
+  view,
 }) => (
-  <div>
-    <ul className="shoppingList">
+  <div className={view}>
+    <ul className="active">
       {items.map(item => li(item, onItemClick, linkTo))}
     </ul>
     <ul className={checked.length ? 'done' : 'hidden'}>
-      <h2>{translate('products.cart')}</h2>
+      <h2>{translate(`${view}.cart`)}</h2>
       <button className="removeBtn" onClick={onRemoveItems}>
-        {translate('products.remove')}
+        {translate(`${view}.remove`)}
       </button>
       {checked.map(item => li(item, onItemClick, linkTo))}
     </ul>
@@ -55,6 +56,7 @@ List.propTypes = {
   onRemoveItems: PropTypes.func.isRequired,
   linkTo: PropTypes.func.isRequired,
   translate: PropTypes.func.isRequired,
+  view: PropTypes.string.isRequired,
 };
 
 export default List;
