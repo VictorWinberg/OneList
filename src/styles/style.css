@@ -248,11 +248,6 @@ nav a.active img {
 
 /* Create a custom checkbox */
 .products .checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 20px;
-  width: 20px;
   background-color: #eee;
 }
 
@@ -302,6 +297,26 @@ nav a.active img {
 .hidden,
 .products .done img {
   visibility: hidden;
+}
+
+.categories .checkmark,
+.products .checkmark,
+.share .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+}
+
+.categories .checkmark {
+  background-image: url('../assets/icons/reorder.svg');
+  background-size: contain;
+}
+
+.share .checkmark {
+  background-image: url('../assets/icons/user.svg');
+  background-size: contain;
 }
 
 :focus {

@@ -8,7 +8,7 @@ import { addCollaborator } from '../../actions/collaborators';
 const Share = () => (
   <div>
     <New view="share" onAdd={addCollaborator} />
-    <ShareList />
+    <ShareList view="share" />
   </div>
 );
 
