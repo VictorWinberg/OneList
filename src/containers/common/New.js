@@ -66,10 +66,7 @@ class New extends Component {
     );
 
     return (
-      <form
-        className="search-form"
-        onSubmit={event => this.handleSubmit(event)}
-      >
+      <form className="search-form" onSubmit={evt => this.handleSubmit(evt)}>
         <span role="presentation" onClick={() => this.setState({ item: '' })}>
           <img className="clear-icon" alt="X" src={clearicon} height="12px" />
         </span>
