@@ -13,6 +13,8 @@ module.exports = {
   },
   edit: {
     edit: ['Edit', 'Redigera'],
+    name: ['Name', 'Namn'],
+    category: ['Category', 'Kategori'],
   },
   categories: {
     input: ['New category...', 'Ny kategori...'],
