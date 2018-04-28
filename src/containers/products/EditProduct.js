@@ -1,18 +1,16 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import React from 'react';
 import { getTranslate } from 'react-localize-redux';
 
-/*
-import ProductList from './ProductList';
-import New from '../common/New';
-import { addProduct } from '../../actions/products';
-const EditProduct = ({ name, category, categories }) => (
-*/
+import CategorySelect from './CategorySelect';
 
-const EditProduct = ({ name, category, categories, translate }) => (
+const EditProduct = ({ id, name, translate }) => (
   <div className="product">
-    <div className="title"><b>{translate('edit.edit')}: </b>{name}</div>
+    <div className="title">
+      <b>{translate('edit.edit')}: </b>
+      {name}
+    </div>
     <div className="wrapper">
       <form>
         <label htmlFor="productName">
@@ -21,13 +19,8 @@ const EditProduct = ({ name, category, categories, translate }) => (
         </label>
         <label htmlFor="categories">
           <span>{translate('edit.category')}:</span>
-          <select id="categories" selected={category}>
-            <option selected>{category}</option>
-            <option>Mejeri</option>
-            <option>Grönsaker</option>
-          </select>
+          <CategorySelect id={id} />
         </label>
-        {categories}
         <button className="cancelBtn" type="submit" action="/">
           Avbryt
         </button>
@@ -39,35 +32,23 @@ const EditProduct = ({ name, category, categories, translate }) => (
   </div>
 );
 
-EditProduct.defaultProps = {
-  category: 'Uncategorized',
-};
-
 EditProduct.propTypes = {
+  id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
-  category: PropTypes.string,
-  categories: PropTypes.arrayOf(PropTypes.string).isRequired,
   translate: PropTypes.func.isRequired,
 };
 
 const getProduct = (products, id) => {
   const found = products.filter(product => product.id === id);
-  if (found.length > 0) {
-    return found[0];
-  }
-  return {};
+  return found.length > 0 ? found[0] : {};
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const product = getProduct(
-    state.products,
-    parseInt(ownProps.match.params.id, 10)
-  );
-  
+  const id = parseInt(ownProps.match.params.id, 10);
+
   return {
-    name: product.text,
-    category: product.category,
-    categories: state.categories.map(category => category.text),
+    id,
+    name: getProduct(state.products, id).text,
     translate: getTranslate(state.locale),
   };
 };
