@@ -6,7 +6,7 @@ import { get, find } from 'lodash/fp';
 import { toInteger } from 'lodash/lang';
 
 import { editCategory } from '../../actions/categories';
-import CategoryColors from '../products/CategoryColors';
+import CategoryColors from './CategoryColors';
 
 const EditCategory = ({ id, category, translate, onSubmit, history }) => (
   <div className="category">
