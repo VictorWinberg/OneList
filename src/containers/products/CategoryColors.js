@@ -11,7 +11,24 @@ class CategoryColors extends Component {
     this.state = { btnColor: '#d9d9d9' };
   }
 
+  renderColorList (colors){
+    return(
+    colors.map(color => (
+      <li
+        role="presentation"
+        onClick={() => this.setState({ btnColor: color.name})} 
+        style={{ backgroundColor: color.name}}
+      />
+    )))
+  }
+  
   render() {
+    const colors = [
+    { name: '#ffc2b3' }, { name: '#ffb3b3' }, { name: '#ffb3d9' }, { name: '#f0c2e0' }, 
+    { name: '#ffb3ff' }, { name: '#d9b3ff' }, { name: '#c2c2f0' }, { name: '#b3b3ff' }, 
+    { name: '#b3d9ff' }, { name: '#b3e6ff' }, { name: '#b3ffff' }, { name: '#b3ffd9' }, 
+    { name: '#b3ffcc' }, { name: '#e6ffb3' }, { name: '#ffffb3' }, { name: '#ffe0b3' }];
+
     const { btnColor } = this.state;
     const { translate } = this.props;
     const { open } = this.state;
@@ -36,59 +53,12 @@ class CategoryColors extends Component {
         <div>
           {btn}
           <ul className="color-list">
-            <li role="presentation"
-              onClick={() => this.setState({ btnColor: '#ffc2b3' })} 
-              style={{ backgroundColor: '#ffc2b3' }} />
-            <li role="presentation"
-              onClick={() => this.setState({ btnColor: '#ffb3b3' })} 
-              style={{ backgroundColor: '#ffb3b3' }} />
-            <li role="presentation"
-              onClick={() => this.setState({ btnColor: '#ffb3d9' })}
-              style={{ backgroundColor: '#ffb3d9' }} />
-            <li role="presentation"
-              onClick={() => this.setState({ btnColor: '#f0c2e0' })}
-              style={{ backgroundColor: '#f0c2e0' }} />
-            <li role="presentation"
-              onClick={() => this.setState({ btnColor: '#ffb3ff' })}
-              style={{ backgroundColor: '#ffb3ff' }} />
-            <li role="presentation"
-              onClick={() => this.setState({ btnColor: '#d9b3ff' })}
-              style={{ backgroundColor: '#d9b3ff' }} />
-            <li role="presentation"
-              onClick={() => this.setState({ btnColor: '#c2c2f0' })}
-              style={{ backgroundColor: '#c2c2f0' }} />
-            <li role="presentation"
-              onClick={() => this.setState({ btnColor: '#b3b3ff' })}
-              style={{ backgroundColor: '#b3b3ff' }} />
-            <li role="presentation"
-              onClick={() => this.setState({ btnColor: '#b3d9ff' })}
-              style={{ backgroundColor: '#b3d9ff' }} />
-            <li role="presentation"
-              onClick={() => this.setState({ btnColor: '#b3e6ff' })}
-              style={{ backgroundColor: '#b3e6ff' }} />
-            <li role="presentation"
-              onClick={() => this.setState({ btnColor: '#b3ffff' })}
-              style={{ backgroundColor: '#b3ffff' }} />
-            <li role="presentation"
-              onClick={() => this.setState({ btnColor: '#b3ffd9' })}
-              style={{ backgroundColor: '#b3ffd9' }} />
-            <li role="presentation"
-              onClick={() => this.setState({ btnColor: '#b3ffcc' })}
-              style={{ backgroundColor: '#b3ffcc' }} />
-            <li role="presentation"
-              onClick={() => this.setState({ btnColor: '#e6ffb3' })}
-              style={{ backgroundColor: '#e6ffb3' }} />
-            <li role="presentation"
-              onClick={() => this.setState({ btnColor: '#ffffb3' })}
-              style={{ backgroundColor: '#ffffb3' }} />
-            <li role="presentation"
-            onClick={() => this.setState({ btnColor: '#ffe0b3' })}
-            style={{ backgroundColor: '#ffe0b3' }} />
+            {this.renderColorList(colors)}
           </ul>
         </div>
       );
     }
-
+    
     return <div> {btn} </div>;
   }
 }
