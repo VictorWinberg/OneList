@@ -16,6 +16,8 @@ module.exports = {
     name: ['Name', 'Namn'],
     category: ['Category', 'Kategori'],
     color: ['Color', 'Färg'],
+    cancel: ['Cancel', 'Avbryt'],
+    save: ['Save', 'Spara'],
   },
   categories: {
     input: ['New category...', 'Ny kategori...'],

@@ -15,25 +15,33 @@ class CategorySelect extends Component {
     const { select } = this.state;
     const { category, categories, translate } = this.props;
 
-    if (select) {
-      return (
-        <select
-          id="categories"
-          defaultValue={category}
-          onChange={({ target }) =>
-            this.setState({
-              select: target.selectedIndex < target.options.length - 1,
-            })
-          }
-        >
-          <option value="">{translate('categories.uncategorized')}</option>
-          {categories.map(c => <option key={c}>{c}</option>)}
-          <option>{translate('categories.input')}</option>
-        </select>
-      );
-    }
-
-    return <input placeholder={translate('categories.input')} />;
+    return (
+      <label htmlFor="category">
+        <span>{translate('edit.category')}:</span>
+        {select ? (
+          <select
+            id="category"
+            name="category"
+            defaultValue={category}
+            onChange={({ target }) =>
+              this.setState({
+                select: target.selectedIndex < target.options.length - 1,
+              })
+            }
+          >
+            <option value="">{translate('categories.uncategorized')}</option>
+            {categories.map(c => <option key={c}>{c}</option>)}
+            <option>{translate('categories.input')}</option>
+          </select>
+        ) : (
+          <input
+            id="category"
+            name="categories"
+            placeholder={translate('categories.input')}
+          />
+        )}
+      </label>
+    );
   }
 }
 

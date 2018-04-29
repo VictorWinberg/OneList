@@ -1,5 +1,6 @@
 import {
   ADD_PRODUCT,
+  EDIT_PRODUCT,
   TOGGLE_PRODUCT,
   REMOVE_PRODUCT,
   REMOVE_PRODUCTS,
@@ -20,6 +21,10 @@ const products = (state = [], action) => {
           completed: false,
         },
       ];
+    case EDIT_PRODUCT:
+      return state.map(
+        product => (product.id === action.id ? action : product)
+      );
     case TOGGLE_PRODUCT: {
       const toggled = state.filter(product => product.id === action.id)[0];
       return [

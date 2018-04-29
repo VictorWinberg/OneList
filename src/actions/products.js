@@ -1,5 +1,6 @@
 import {
   ADD_PRODUCT,
+  EDIT_PRODUCT,
   TOGGLE_PRODUCT,
   REMOVE_PRODUCT,
   REMOVE_PRODUCTS,
@@ -8,6 +9,13 @@ import {
 export const addProduct = text => ({
   type: ADD_PRODUCT,
   text,
+});
+
+export const editProduct = ({ id, text, category }) => ({
+  type: EDIT_PRODUCT,
+  id,
+  text,
+  category,
 });
 
 export const toggleProduct = id => ({

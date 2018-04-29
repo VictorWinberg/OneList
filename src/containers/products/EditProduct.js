@@ -5,29 +5,52 @@ import { getTranslate } from 'react-localize-redux';
 import { get, find } from 'lodash/fp';
 import { toInteger } from 'lodash/lang';
 
+import { addCategory } from '../../actions/categories';
+import { editProduct } from '../../actions/products';
 import CategorySelect from './CategorySelect';
 
-const EditProduct = ({ id, name, translate }) => (
+const handleSubmit = (event, id, history) => dispatch => {
+  const data = new FormData(event.target);
+  const [text, category, categories] = [
+    'productName',
+    'category',
+    'categories',
+  ].map(name => data.get(name));
+
+  if (categories) dispatch(addCategory(categories));
+
+  dispatch(editProduct({ id, text, category: category || categories }));
+  event.preventDefault();
+  history.push('/');
+};
+
+const EditProduct = ({ id, name, translate, onSubmit, history }) => (
   <div className="product">
     <div className="title">
       <b>{translate('edit.edit')}: </b>
       {name}
     </div>
     <div className="wrapper">
-      <form>
+      <form onSubmit={evt => onSubmit(evt, id, history)}>
         <label htmlFor="productName">
           <span>{translate('edit.name')}:</span>
-          <input id="productName" autoComplete="off" defaultValue={name} />
+          <input
+            id="productName"
+            name="productName"
+            autoComplete="off"
+            defaultValue={name}
+          />
         </label>
-        <label htmlFor="categories">
-          <span>{translate('edit.category')}:</span>
-          <CategorySelect id={id} />
-        </label>
-        <button className="cancelBtn" type="submit" action="/">
-          Avbryt
+        <CategorySelect id={id} />
+        <button
+          className="cancelBtn"
+          type="button"
+          onClick={() => history.push('/')}
+        >
+          {translate('edit.cancel')}
         </button>
         <button className="doneBtn" type="submit">
-          Klar
+          {translate('edit.save')}
         </button>
       </form>
     </div>
@@ -38,6 +61,8 @@ EditProduct.propTypes = {
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   translate: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  history: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, { match }) => {
@@ -50,4 +75,8 @@ const mapStateToProps = (state, { match }) => {
   };
 };
 
-export default connect(mapStateToProps)(EditProduct);
+const mapDispatchToProps = {
+  onSubmit: handleSubmit,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditProduct);

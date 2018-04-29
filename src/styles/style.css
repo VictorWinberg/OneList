@@ -186,7 +186,6 @@ nav a.active img {
   position: absolute;
   margin: 0.5em 0;
   bottom: 0;
-  z-index: -2;
 }
 
 .cancelBtn {
