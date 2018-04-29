@@ -19,6 +19,7 @@ module.exports = {
   },
   categories: {
     input: ['New category...', 'Ny kategori...'],
+    uncategorized: ['Uncategorized', 'Okategoriserad'],
   },
   share: {
     input: ['New e-mail...', 'Ny e-mail...'],
