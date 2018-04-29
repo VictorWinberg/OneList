@@ -54,15 +54,15 @@ EditProduct.propTypes = {
 
 const handleSubmit = (event, id, history) => dispatch => {
   const data = new FormData(event.target);
-  const [text, category, categories] = [
+  const [name, category, categories] = [
     'productName',
     'category',
     'categories',
-  ].map(name => data.get(name));
+  ].map(type => data.get(type));
 
   if (categories) dispatch(addCategory(categories));
 
-  dispatch(editProduct({ id, text, category: category || categories }));
+  dispatch(editProduct({ id, name, category: category || categories }));
   event.preventDefault();
   history.push('/');
 };
@@ -72,7 +72,7 @@ const mapStateToProps = (state, { match }) => {
 
   return {
     id,
-    name: get('text', find({ id }, state.products)),
+    name: get('name', find({ id }, state.products)),
     translate: getTranslate(state.locale),
   };
 };

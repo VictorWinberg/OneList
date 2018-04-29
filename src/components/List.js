@@ -6,7 +6,9 @@ import ListItem from './ListItem';
 const li = (item, onItemClick, linkTo) => (
   <ListItem
     key={item.id}
-    {...item}
+    id={item.id}
+    value={item.value}
+    checked={item.checked}
     onClick={() => onItemClick(item.id)}
     linkTo={linkTo(item.id)}
   />
@@ -42,14 +44,14 @@ List.defaultProps = {
 List.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
-      text: PropTypes.string.isRequired,
-      completed: PropTypes.bool,
+      value: PropTypes.string.isRequired,
+      checked: PropTypes.bool,
     })
   ).isRequired,
   checked: PropTypes.arrayOf(
     PropTypes.shape({
-      text: PropTypes.string.isRequired,
-      completed: PropTypes.bool,
+      value: PropTypes.string.isRequired,
+      checked: PropTypes.bool,
     })
   ),
   onItemClick: PropTypes.func.isRequired,

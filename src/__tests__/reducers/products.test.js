@@ -9,8 +9,8 @@ import {
 const testProduct = [
   {
     id: 1,
-    text: 'Milk',
-    completed: false,
+    name: 'Milk',
+    checked: false,
   },
 ];
 
@@ -29,7 +29,7 @@ describe('products reducer', () => {
 
   it('can handle TOGGLE_PRODUCT', () => {
     expect(products(testProduct, toggleProduct(1))).toEqual(
-      testProduct.map(product => ({ ...product, completed: true }))
+      testProduct.map(product => ({ ...product, checked: true }))
     );
   });
 
@@ -42,8 +42,8 @@ describe('products reducer', () => {
       products(
         [
           ...testProduct,
-          { id: 2, text: 'Apple', completed: true },
-          { id: 3, text: 'Pear', completed: true },
+          { id: 2, name: 'Apple', checked: true },
+          { id: 3, name: 'Pear', checked: true },
         ],
         removeProducts()
       )

@@ -10,7 +10,7 @@ describe('categories reducer', () => {
     expect(categories(undefined, addCategory('Vegetables'))).toEqual([
       {
         id: 1,
-        text: 'Vegetables',
+        name: 'Vegetables',
       },
     ]);
   });
@@ -25,11 +25,11 @@ describe('categories reducer', () => {
         [
           {
             id: 1,
-            text: 'Vegetables',
+            name: 'Vegetables',
           },
           {
             id: 2,
-            text: 'Meat',
+            name: 'Meat',
           },
         ],
         removeCategory(1)
@@ -37,7 +37,7 @@ describe('categories reducer', () => {
     ).toEqual([
       {
         id: 2,
-        text: 'Meat',
+        name: 'Meat',
       },
     ]);
   });
