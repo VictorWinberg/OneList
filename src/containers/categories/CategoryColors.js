@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
 import { get, find } from 'lodash/fp';
-import addicon from '../../assets/icons/dropdown.svg';
+
+import dropdownicon from '../../assets/icons/dropdown.svg';
 
 class CategoryColors extends Component {
   constructor(props) {
@@ -57,7 +58,12 @@ class CategoryColors extends Component {
           style={{ backgroundColor: color }}
         >
           {translate('edit.selectColor')}
-          <img className="add-icon" alt="add" src={addicon} height="12px" />
+          <img
+            className="add-icon"
+            alt="add"
+            src={dropdownicon}
+            height="12px"
+          />
         </button>
         {open ? (
           <ul className="color-list">{this.renderColorList(colors)}</ul>
