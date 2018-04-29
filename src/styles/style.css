@@ -107,7 +107,7 @@ nav a.active img {
 .product input,
 .product select,
 .category input,
-.category select {
+#color-btn {
   border: black solid 1px;
   box-shadow: 0px 1px 8px 0px #777;
   background-color: white;
@@ -157,7 +157,7 @@ nav a.active img {
 .product input,
 .product select,
 .category input,
-.category select {
+#color-btn {
   font-size: 16px;
   padding: 0.5em 0;
   margin: 0.5em 0;
@@ -166,18 +166,26 @@ nav a.active img {
 }
 
 .product input,
-.category input {
+.category input,
+#color-btn {
   width: calc(100% - 120px - 2em);
   text-indent: 0.3em;
 }
 
 .product select,
-.category select {
+#color-btn {
   width: calc(100% - 120px - 1.89em);
+  cursor: pointer;
 }
 
-.product button,
-.category button {
+#color-btn img {
+  float: right;
+  margin: 0.2em 0.5em 0 0;
+}
+
+.doneBtn,
+.cancelBtn {
+  cursor: pointer;
   padding: 0.2em 0;
   font-family: 'PatrickHandSC';
   font-size: 22px;
@@ -344,6 +352,7 @@ nav a.active img {
 }
 
 .color-list li {
+  cursor: pointer;
   width: 2em;
   height: 2em;
   display: inline-block;
