@@ -89,13 +89,15 @@ nav a.active img {
   text-indent: 1.5em;
 }
 
-.product .title {
+.product .title,
+.category .title {
   font-family: 'Quicksand', sans-serif;
   padding: 0.5em 0.5em;
   font-size: 20px;
 }
 
 .product .title,
+.category .title,
 .search-form,
 .header {
   background-color: #c3e6fc;
@@ -103,7 +105,9 @@ nav a.active img {
 
 .search-form input,
 .product input,
-.product select {
+.product select,
+.category input,
+.category select {
   border: black solid 1px;
   box-shadow: 0px 1px 8px 0px #777;
   background-color: white;
@@ -130,14 +134,16 @@ nav a.active img {
   float: right;
 }
 
-.product .wrapper {
+.product .wrapper,
+.category .wrapper {
   padding-top: 1em;
   clear: both;
   overflow: auto;
   background-color: white;
 }
 
-.product label span {
+.product label span,
+.category label span {
   font-family: 'Quicksand', sans-serif;
   font-size: 20px;
   width: 120px;
@@ -148,7 +154,9 @@ nav a.active img {
 }
 
 .product input,
-.product select {
+.product select,
+.category input,
+.category select {
   font-size: 16px;
   padding: 0.5em 0;
   margin: 0.5em 0;
@@ -156,16 +164,19 @@ nav a.active img {
   float: left;
 }
 
-.product input {
-  width: calc(100% - 125px - 2em);
+.product input,
+.category input {
+  width: calc(100% - 120px - 2em);
   text-indent: 0.3em;
 }
 
-.product select {
-  width: calc(100% - 125px - 1.89em);
+.product select,
+.category select {
+  width: calc(100% - 120px - 1.89em);
 }
 
-.product button {
+.product button,
+.category button {
   padding: 0.2em 0;
   font-family: 'PatrickHandSC';
   font-size: 22px;
@@ -178,12 +189,12 @@ nav a.active img {
   z-index: -2;
 }
 
-.product .cancelBtn {
+.cancelBtn {
   background-color: lightcoral;
   left: 0.5em;
 }
 
-.product .doneBtn {
+.doneBtn {
   background-color: lightgreen;
   right: 0.5em;
 }
@@ -317,6 +328,26 @@ nav a.active img {
 .share .checkmark {
   background-image: url('../assets/icons/user.svg');
   background-size: contain;
+}
+
+.color-list {
+  border: black solid 1px;
+  clear: both;
+  float: right;
+  margin: -0.48em 0.6em 0 0;
+  border-radius: 4px;
+  box-shadow: 0px 1px 8px 0px #777;
+  width: calc(100% - 120px - 1.85em);
+  z-index: -1;
+}
+
+.color-list li {
+  margin: 0.5em;
+  height: 2em;
+  float: left;
+  border-radius: 50%;
+  text-align: center;
+  width: calc((100% / 4) - 1em);
 }
 
 :focus {

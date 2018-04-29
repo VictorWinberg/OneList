@@ -15,6 +15,7 @@ module.exports = {
     edit: ['Edit', 'Redigera'],
     name: ['Name', 'Namn'],
     category: ['Category', 'Kategori'],
+    color: ['Color', 'Färg'],
   },
   categories: {
     input: ['New category...', 'Ny kategori...'],

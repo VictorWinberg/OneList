@@ -3,13 +3,6 @@ import { connect } from 'react-redux';
 import React from 'react';
 import { getTranslate } from 'react-localize-redux';
 
-/*
-import ProductList from './ProductList';
-import New from '../common/New';
-import { addProduct } from '../../actions/products';
-const EditProduct = ({ name, category, categories }) => (
-*/
-
 const EditProduct = ({ name, category, categories, translate }) => (
   <div className="product">
     <div className="title"><b>{translate('edit.edit')}: </b>{name}</div>
