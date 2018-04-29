@@ -17,6 +17,7 @@ class CategoryColors extends Component {
   renderColorList(colors) {
     return colors.map(color => (
       <li
+        key={color}
         role="presentation"
         onClick={() => this.setState({ color })}
         style={{ backgroundColor: color }}
@@ -53,7 +54,6 @@ class CategoryColors extends Component {
         <button
           type="button"
           id="color-btn"
-          name="color"
           onClick={() => this.setState({ open: !open })}
           style={{ backgroundColor: color }}
         >
@@ -65,6 +65,7 @@ class CategoryColors extends Component {
             height="12px"
           />
         </button>
+        <input name="color" type="hidden" value={color} />
         {open ? (
           <ul className="color-list">{this.renderColorList(colors)}</ul>
         ) : null}
