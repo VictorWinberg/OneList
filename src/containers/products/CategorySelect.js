@@ -37,6 +37,7 @@ class CategorySelect extends Component {
           <input
             id="category"
             name="categories"
+            autoComplete="off"
             placeholder={translate('categories.input')}
           />
         )}
