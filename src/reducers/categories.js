@@ -1,4 +1,10 @@
-import { ADD_CATEGORY, REMOVE_CATEGORY } from '../constants/categories';
+import { omit } from 'lodash/fp';
+
+import {
+  ADD_CATEGORY,
+  EDIT_CATEGORY,
+  REMOVE_CATEGORY,
+} from '../constants/categories';
 
 let categoryIndex = 0;
 
@@ -14,6 +20,11 @@ const categories = (state = [], action) => {
           text: action.text,
         },
       ];
+    case EDIT_CATEGORY:
+      return state.map(
+        category =>
+          category.id === action.id ? omit('type', action) : category
+      );
     case REMOVE_CATEGORY:
       return state.filter(category => category.id !== action.id);
     default:

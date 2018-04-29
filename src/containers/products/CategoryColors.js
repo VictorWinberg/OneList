@@ -2,73 +2,81 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
+import { get, find } from 'lodash/fp';
 
 class CategoryColors extends Component {
   constructor(props) {
     super(props);
+    const { color } = props;
 
-    this.state = { open: false };
-    this.state = { btnColor: '#d9d9d9' };
+    this.state = { open: false, color };
   }
 
-  renderColorList (colors){
-    return(
-    colors.map(color => (
+  renderColorList(colors) {
+    return colors.map(color => (
       <li
         role="presentation"
-        onClick={() => this.setState({ btnColor: color.name})} 
-        style={{ backgroundColor: color.name}}
+        onClick={() => this.setState({ color })}
+        style={{ backgroundColor: color }}
       />
-    )))
+    ));
   }
-  
+
   render() {
     const colors = [
-    { name: '#ffc2b3' }, { name: '#ffb3b3' }, { name: '#ffb3d9' }, { name: '#f0c2e0' }, 
-    { name: '#ffb3ff' }, { name: '#d9b3ff' }, { name: '#c2c2f0' }, { name: '#b3b3ff' }, 
-    { name: '#b3d9ff' }, { name: '#b3e6ff' }, { name: '#b3ffff' }, { name: '#b3ffd9' }, 
-    { name: '#b3ffcc' }, { name: '#e6ffb3' }, { name: '#ffffb3' }, { name: '#ffe0b3' }];
+      '#ffc2b3',
+      '#ffb3b3',
+      '#ffb3d9',
+      '#f0c2e0',
+      '#ffb3ff',
+      '#d9b3ff',
+      '#c2c2f0',
+      '#b3b3ff',
+      '#b3d9ff',
+      '#b3e6ff',
+      '#b3ffff',
+      '#b3ffd9',
+      '#b3ffcc',
+      '#e6ffb3',
+      '#ffffb3',
+      '#ffe0b3',
+    ];
 
-    const { btnColor } = this.state;
+    const { open, color } = this.state;
     const { translate } = this.props;
-    const { open } = this.state;
-    const btn = (
-      <div>
+
+    return (
+      <label htmlFor="color">
+        <span>{translate('edit.color')}:</span>
         <select
           type="button"
+          id="color"
+          name="color"
           onClick={() => this.setState({ open: !open })}
-          autoComplete="off"
-          value="välj"
-          style={{ backgroundColor: btnColor}}
-          >
-          <option selected="selected">
-          {translate('edit.selectColor')}
-          </option>
+          style={{ backgroundColor: color }}
+        >
+          <option value={color}>{translate('edit.selectColor')}</option>
         </select>
-      </div>
+        {open ? (
+          <ul className="color-list">{this.renderColorList(colors)}</ul>
+        ) : null}
+      </label>
     );
-
-    if (open) {
-      return (
-        <div>
-          {btn}
-          <ul className="color-list">
-            {this.renderColorList(colors)}
-          </ul>
-        </div>
-      );
-    }
-    
-    return <div> {btn} </div>;
   }
 }
 
+CategoryColors.defaultProps = {
+  color: '#d9d9d9',
+};
+
 CategoryColors.propTypes = {
+  color: PropTypes.string,
   translate: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, { id }) => ({
+  color: get('color', find({ id }, state.categories)),
   translate: getTranslate(state.locale),
 });
 
-export default connect(mapStateToProps) (CategoryColors);
+export default connect(mapStateToProps)(CategoryColors);

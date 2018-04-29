@@ -2,29 +2,39 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import React from 'react';
 import { getTranslate } from 'react-localize-redux';
+import { get, find } from 'lodash/fp';
+import { toInteger } from 'lodash/lang';
+
+import { editCategory } from '../../actions/categories';
 import CategoryColors from '../products/CategoryColors';
 
-const EditCategory = ({ category, translate }) => (
+const EditCategory = ({ id, category, translate, onSubmit, history }) => (
   <div className="category">
     <div className="title">
       <b>{translate('edit.edit')}: </b>
       {category}
     </div>
     <div className="wrapper">
-      <form>
+      <form onSubmit={evt => onSubmit(evt, id, history)}>
         <label htmlFor="categoryName">
           <span>{translate('edit.category')}:</span>
-          <input id="categoryName" autoComplete="off" defaultValue={category} />
+          <input
+            id="categoryName"
+            name="categoryName"
+            autoComplete="off"
+            defaultValue={category}
+          />
         </label>
-        <label htmlFor="categories">
-          <span>{translate('edit.color')}:</span>
-          <CategoryColors/>
-        </label>
-        <button className="cancelBtn" type="submit" action="/">
-          Avbryt
+        <CategoryColors id={id} />
+        <button
+          className="cancelBtn"
+          type="button"
+          onClick={() => history.push('/categories')}
+        >
+          {translate('edit.cancel')}
         </button>
         <button className="doneBtn" type="submit">
-          Klar
+          {translate('edit.save')}
         </button>
       </form>
     </div>
@@ -36,28 +46,36 @@ EditCategory.defaultProps = {
 };
 
 EditCategory.propTypes = {
+  id: PropTypes.number.isRequired,
   category: PropTypes.string,
   translate: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
-const getCategory = (categories, id) => {
-  const found = categories.filter(category => category.id === id);
-  if (found.length > 0) {
-    return found[0];
-  }
-  return {};
+const handleSubmit = (event, id, history) => dispatch => {
+  const data = new FormData(event.target);
+  const [text, color] = ['categoryName', 'color'].map(name => data.get(name));
+
+  dispatch(editCategory({ id, text, color }));
+  event.preventDefault();
+  history.push('/categories');
 };
 
-const mapStateToProps = (state, ownProps) => {
-  const category = getCategory(
-    state.categories,
-    parseInt(ownProps.match.params.id, 10)
-  );
+const mapStateToProps = (state, { match }) => {
+  const id = toInteger(match.params.id);
 
   return {
-    category: category.text,
+    id,
+    category: get('text', find({ id }, state.categories)),
     translate: getTranslate(state.locale),
   };
 };
 
-export default connect(mapStateToProps)(EditCategory);
+const mapDispatchToProps = {
+  onSubmit: handleSubmit,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditCategory);

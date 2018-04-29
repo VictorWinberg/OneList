@@ -9,21 +9,6 @@ import { addCategory } from '../../actions/categories';
 import { editProduct } from '../../actions/products';
 import CategorySelect from './CategorySelect';
 
-const handleSubmit = (event, id, history) => dispatch => {
-  const data = new FormData(event.target);
-  const [text, category, categories] = [
-    'productName',
-    'category',
-    'categories',
-  ].map(name => data.get(name));
-
-  if (categories) dispatch(addCategory(categories));
-
-  dispatch(editProduct({ id, text, category: category || categories }));
-  event.preventDefault();
-  history.push('/');
-};
-
 const EditProduct = ({ id, name, translate, onSubmit, history }) => (
   <div className="product">
     <div className="title">
@@ -62,7 +47,24 @@ EditProduct.propTypes = {
   name: PropTypes.string.isRequired,
   translate: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  history: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+const handleSubmit = (event, id, history) => dispatch => {
+  const data = new FormData(event.target);
+  const [text, category, categories] = [
+    'productName',
+    'category',
+    'categories',
+  ].map(name => data.get(name));
+
+  if (categories) dispatch(addCategory(categories));
+
+  dispatch(editProduct({ id, text, category: category || categories }));
+  event.preventDefault();
+  history.push('/');
 };
 
 const mapStateToProps = (state, { match }) => {

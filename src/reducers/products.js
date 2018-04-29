@@ -1,3 +1,5 @@
+import { omit } from 'lodash/fp';
+
 import {
   ADD_PRODUCT,
   EDIT_PRODUCT,
@@ -23,7 +25,7 @@ const products = (state = [], action) => {
       ];
     case EDIT_PRODUCT:
       return state.map(
-        product => (product.id === action.id ? action : product)
+        product => (product.id === action.id ? omit('type', action) : product)
       );
     case TOGGLE_PRODUCT: {
       const toggled = state.filter(product => product.id === action.id)[0];
