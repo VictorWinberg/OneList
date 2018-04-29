@@ -6,15 +6,15 @@ import {
   REMOVE_PRODUCTS,
 } from '../constants/products';
 
-export const addProduct = text => ({
+export const addProduct = name => ({
   type: ADD_PRODUCT,
-  text,
+  name,
 });
 
-export const editProduct = ({ id, text, category }) => ({
+export const editProduct = ({ id, name, category }) => ({
   type: EDIT_PRODUCT,
   id,
-  text,
+  name,
   category,
 });
 

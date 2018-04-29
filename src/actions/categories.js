@@ -4,15 +4,15 @@ import {
   REMOVE_CATEGORY,
 } from '../constants/categories';
 
-export const addCategory = text => ({
+export const addCategory = name => ({
   type: ADD_CATEGORY,
-  text,
+  name,
 });
 
-export const editCategory = ({ id, text, color }) => ({
+export const editCategory = ({ id, name, color }) => ({
   type: EDIT_CATEGORY,
   id,
-  text,
+  name,
   color,
 });
 

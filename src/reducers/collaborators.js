@@ -10,13 +10,13 @@ let collaboratorIndex = 0;
 const collaborators = (state = [], action) => {
   switch (action.type) {
     case ADD_COLLABORATOR:
-      if (!action.text) return state;
+      if (!action.email) return state;
       collaboratorIndex += 1;
       return [
         ...state,
         {
           id: collaboratorIndex,
-          text: action.text,
+          email: action.email,
           pending: true,
         },
       ];

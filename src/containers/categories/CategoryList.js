@@ -4,7 +4,10 @@ import { getTranslate } from 'react-localize-redux';
 import List from '../../components/List';
 
 const mapStateToProps = state => ({
-  items: state.categories,
+  items: state.categories.map(category => ({
+    ...category,
+    value: category.name,
+  })),
   translate: getTranslate(state.locale),
   linkTo: id => `/categories/${id}`,
 });

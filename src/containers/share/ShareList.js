@@ -4,8 +4,10 @@ import { getTranslate } from 'react-localize-redux';
 import List from '../../components/List';
 
 const mapStateToProps = state => ({
-  items: state.collaborators,
-  pending: [],
+  items: state.collaborators.map(collaborator => ({
+    ...collaborator,
+    value: collaborator.email,
+  })),
   translate: getTranslate(state.locale),
   linkTo: id => `/share/${id}`,
 });

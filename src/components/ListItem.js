@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import penselecticon from '../assets/icons/pen-select.svg';
 
-const ListItem = ({ id, text, completed, onClick, linkTo }) => (
+const ListItem = ({ id, value, checked, onClick, linkTo }) => (
   <li className="listitem">
     <label
       role="presentation"
@@ -11,8 +11,8 @@ const ListItem = ({ id, text, completed, onClick, linkTo }) => (
       onKeyDown={onClick}
       htmlFor={id}
     >
-      <input readOnly type="checkbox" id={id} checked={completed} />
-      {text}
+      <input readOnly type="checkbox" id={id} checked={checked} />
+      {value}
       <span className="checkmark" />
     </label>
     <Link to={linkTo}>
@@ -22,13 +22,13 @@ const ListItem = ({ id, text, completed, onClick, linkTo }) => (
 );
 
 ListItem.defaultProps = {
-  completed: false,
+  checked: false,
 };
 
 ListItem.propTypes = {
   id: PropTypes.number.isRequired,
-  text: PropTypes.string.isRequired,
-  completed: PropTypes.bool,
+  value: PropTypes.string.isRequired,
+  checked: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
   linkTo: PropTypes.string.isRequired,
 };

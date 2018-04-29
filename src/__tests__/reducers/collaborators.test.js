@@ -9,7 +9,7 @@ import {
 const testCollaborator = [
   {
     id: 1,
-    text: 'First User',
+    email: 'First User',
     pending: true,
   },
 ];
@@ -38,10 +38,10 @@ describe('collaborators reducer', () => {
   it('can handle REMOVE_CATEGORY', () => {
     expect(
       collaborators(
-        [...testCollaborator, { id: 2, text: 'Second User' }],
+        [...testCollaborator, { id: 2, email: 'Second User' }],
         removeCollaborator(1)
       )
-    ).toEqual([{ id: 2, text: 'Second User' }]);
+    ).toEqual([{ id: 2, email: 'Second User' }]);
   });
 
   it('can handle REMOVE_COLLABORATORS', () => {
@@ -49,11 +49,11 @@ describe('collaborators reducer', () => {
       collaborators(
         [
           ...testCollaborator,
-          { id: 2, text: 'Second User', pending: true },
-          { id: 3, text: 'Third User', pending: false },
+          { id: 2, email: 'Second User', pending: true },
+          { id: 3, email: 'Third User', pending: false },
         ],
         removeCollaborators()
       )
-    ).toEqual([{ id: 3, text: 'Third User', pending: false }]);
+    ).toEqual([{ id: 3, email: 'Third User', pending: false }]);
   });
 });

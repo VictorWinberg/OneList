@@ -57,9 +57,9 @@ EditCategory.propTypes = {
 
 const handleSubmit = (event, id, history) => dispatch => {
   const data = new FormData(event.target);
-  const [text, color] = ['categoryName', 'color'].map(name => data.get(name));
+  const [name, color] = ['categoryName', 'color'].map(type => data.get(type));
 
-  dispatch(editCategory({ id, text, color }));
+  dispatch(editCategory({ id, name, color }));
   event.preventDefault();
   history.push('/categories');
 };
@@ -69,7 +69,7 @@ const mapStateToProps = (state, { match }) => {
 
   return {
     id,
-    category: get('text', find({ id }, state.categories)),
+    category: get('name', find({ id }, state.categories)),
     translate: getTranslate(state.locale),
   };
 };
