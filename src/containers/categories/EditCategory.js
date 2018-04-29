@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import React from 'react';
 import { getTranslate } from 'react-localize-redux';
+import CategoryColors from '../products/CategoryColors';
 
 const EditCategory = ({ category, translate }) => (
   <div className="category">
@@ -17,25 +18,7 @@ const EditCategory = ({ category, translate }) => (
         </label>
         <label htmlFor="categories">
           <span>{translate('edit.color')}:</span>
-          <input id="categoryName" autoComplete="off" defaultValue="VÄLJ" readOnly/>
-          <ul className="color-list">
-            <li style={{ backgroundColor: '#ffc2b3'}}/>
-            <li style={{ backgroundColor: '#ffb3b3'}}/>
-            <li style={{ backgroundColor: '#ffb3d9'}}/>
-            <li style={{ backgroundColor: '#f0c2e0'}}/>
-            <li style={{ backgroundColor: '#ffb3ff'}}/>
-            <li style={{ backgroundColor: '#d9b3ff'}}/>
-            <li style={{ backgroundColor: '#c2c2f0'}}/>
-            <li style={{ backgroundColor: '#b3b3ff'}}/>
-            <li style={{ backgroundColor: '#b3d9ff'}}/>
-            <li style={{ backgroundColor: '#b3e6ff'}}/>
-            <li style={{ backgroundColor: '#b3ffff'}}/>
-            <li style={{ backgroundColor: '#b3ffd9'}}/>
-            <li style={{ backgroundColor: '#b3ffcc'}}/>
-            <li style={{ backgroundColor: '#e6ffb3'}}/>
-            <li style={{ backgroundColor: '#ffffb3'}}/>
-            <li style={{ backgroundColor: '#ffe0b3'}}/>
-          </ul>
+          <CategoryColors/>
         </label>
         <button className="cancelBtn" type="submit" action="/">
           Avbryt

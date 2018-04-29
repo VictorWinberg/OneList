@@ -16,6 +16,7 @@ module.exports = {
     name: ['Name', 'Namn'],
     category: ['Category', 'Kategori'],
     color: ['Color', 'Färg'],
+    selectColor:['Select a color...', 'Välj färg...'],
   },
   categories: {
     input: ['New category...', 'Ny kategori...'],

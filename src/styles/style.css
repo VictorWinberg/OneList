@@ -111,6 +111,7 @@ nav a.active img {
   border: black solid 1px;
   box-shadow: 0px 1px 8px 0px #777;
   background-color: white;
+  text-align: left;
 }
 
 .search-form .clear-icon,
@@ -180,9 +181,10 @@ nav a.active img {
   padding: 0.2em 0;
   font-family: 'PatrickHandSC';
   font-size: 22px;
-  border: solid black 1px;
   border-radius: 3px;
   width: calc(50% - 0.75em);
+  border: black solid 1px;
+  box-shadow: 3px 3px 5px #888;
   position: absolute;
   margin: 0.5em 0;
   bottom: 0;
@@ -190,12 +192,12 @@ nav a.active img {
 }
 
 .cancelBtn {
-  background-color: lightcoral;
+  background-color: rgba(249, 72, 72, 0.6);
   left: 0.5em;
 }
 
 .doneBtn {
-  background-color: lightgreen;
+  background-color: rgba(163, 226, 97, 0.6);
   right: 0.5em;
 }
 
@@ -331,6 +333,7 @@ nav a.active img {
 }
 
 .color-list {
+  background-color: white;
   border: black solid 1px;
   clear: both;
   float: right;
@@ -345,7 +348,7 @@ nav a.active img {
   width: 2em;
   height: 2em;
   display: inline-block;
-  box-shadow: 2px 2px 5px #888888;
+  box-shadow: 1px 1px 5px #888888;
   border-radius: 35%;
   margin: 0.25em;
   padding: 0;

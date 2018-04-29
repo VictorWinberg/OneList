@@ -71,8 +71,8 @@ class New extends Component {
           <img className="clear-icon" alt="X" src={clearicon} height="12px" />
         </span>
         <label htmlFor="newItem">
-          <img className="add-icon" alt="add" src={addicon} height="12px" />
-          {inputfield}
+        <img className="add-icon" alt="add" src={addicon} height="12px" />
+          {inputfield}  
         </label>
       </form>
     );
