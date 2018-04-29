@@ -14,23 +14,14 @@ class New extends Component {
     this.state = { item: '' };
   }
 
-  onChange({ target }, { method, newValue }) {
+  onSelect({ target }, { suggestion }) {
     const { onAddItem, onRemoveItem } = this.props;
 
-    switch (method) {
-      case 'type':
-        this.setState({ item: newValue });
-        break;
-      case 'click':
-        if (target.name === 'delete') {
-          onRemoveItem(newValue);
-        } else {
-          onAddItem(newValue);
-          this.setState({ item: '' });
-        }
-        break;
-      default:
-        break;
+    if (target.name === 'delete') {
+      onRemoveItem(suggestion);
+    } else {
+      onAddItem(suggestion);
+      this.setState({ item: '' });
     }
   }
 
@@ -52,7 +43,10 @@ class New extends Component {
         id="newItem"
         value={item}
         placeholder={translate(`${view}.input`)}
-        onChange={(event, value) => this.onChange(event, value)}
+        onSelect={(evt, values) => this.onSelect(evt, values)}
+        onChange={({ target }, { method }) => {
+          if (method === 'type') this.setState({ item: target.value });
+        }}
       />
     ) : (
       <input
@@ -61,7 +55,7 @@ class New extends Component {
         value={item}
         autoComplete="off"
         placeholder={translate(`${view}.input`)}
-        onChange={event => this.setState({ item: event.target.value })}
+        onChange={({ target }) => this.setState({ item: target.value })}
       />
     );
 
@@ -71,8 +65,8 @@ class New extends Component {
           <img className="clear-icon" alt="X" src={clearicon} height="12px" />
         </span>
         <label htmlFor="newItem">
-        <img className="add-icon" alt="add" src={addicon} height="12px" />
-          {inputfield}  
+          <img className="add-icon" alt="add" src={addicon} height="12px" />
+          {inputfield}
         </label>
       </form>
     );

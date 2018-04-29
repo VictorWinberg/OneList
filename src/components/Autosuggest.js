@@ -14,13 +14,21 @@ class Autosuggest extends Component {
 
   render() {
     const { suggestions } = this.state;
-    const { id, value, placeholder, getSuggestions, onChange } = this.props;
+    const {
+      id,
+      value,
+      placeholder,
+      onSelect,
+      onChange,
+      getSuggestions,
+    } = this.props;
 
     return (
       <ReactAutosuggest
         multiSection
         highlightFirstSuggestion
         suggestions={suggestions}
+        onSuggestionSelected={onSelect}
         onSuggestionsFetchRequested={info =>
           this.setState({ suggestions: getSuggestions(info.value) })
         }
@@ -50,6 +58,7 @@ Autosuggest.propTypes = {
   id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
+  onSelect: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   getSuggestions: PropTypes.func.isRequired,
 };
