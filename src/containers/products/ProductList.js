@@ -4,15 +4,15 @@ import { getTranslate } from 'react-localize-redux';
 import { toggleProduct, removeProducts } from '../../actions/products';
 import List from '../../components/List';
 
-const showChecked = (products, isChecked) =>
-  products.filter(item => item.checked === isChecked).map(item => ({
-    ...item,
-    value: item.name,
+const filtered = (products, isChecked) =>
+  products.filter(({ checked }) => checked === isChecked).map(product => ({
+    ...product,
+    value: product.name,
   }));
 
 const mapStateToProps = state => ({
-  items: showChecked(state.products, false),
-  checked: showChecked(state.products, true),
+  items: filtered(state.products, false),
+  checked: filtered(state.products, true),
   translate: getTranslate(state.locale),
   linkTo: id => `/products/${id}`,
 });
