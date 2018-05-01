@@ -26,7 +26,10 @@
     "url": "https://github.com/VictorWinberg/shopping-list/issues"
   },
   "jest": {
-    "collectCoverageFrom": ["src/**/*.js", "!src/registerServiceWorker.js"]
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/registerServiceWorker.js"
+    ]
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -41,6 +44,7 @@
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-autosuggest": "^9.3.4",
+    "react-beautiful-dnd": "^7.1.2",
     "react-dom": "^16.2.0",
     "react-localize-redux": "^2.16.0",
     "react-redux": "^5.0.7",

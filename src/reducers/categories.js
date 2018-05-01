@@ -4,6 +4,7 @@ import {
   ADD_CATEGORY,
   EDIT_CATEGORY,
   REMOVE_CATEGORY,
+  REORDER_CATEGORY,
 } from '../constants/categories';
 
 let categoryIndex = 0;
@@ -27,6 +28,14 @@ const categories = (state = [], action) => {
       }));
     case REMOVE_CATEGORY:
       return state.filter(category => category.id !== action.id);
+    case REORDER_CATEGORY: {
+      const { startIndex, endIndex } = action;
+      const newState = [...state];
+      const [removed] = newState.splice(startIndex, 1);
+      newState.splice(endIndex, 0, removed);
+
+      return newState;
+    }
     default:
       return state;
   }
