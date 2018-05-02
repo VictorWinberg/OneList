@@ -23,13 +23,14 @@ const ListItem = ({ id, value, checked, onClick, linkTo }) => (
 
 ListItem.defaultProps = {
   checked: false,
+  onClick: null,
 };
 
 ListItem.propTypes = {
   id: PropTypes.number.isRequired,
   value: PropTypes.string.isRequired,
   checked: PropTypes.bool,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   linkTo: PropTypes.string.isRequired,
 };
 

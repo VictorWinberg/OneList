@@ -1,20 +1,18 @@
 import { connect } from 'react-redux';
-import { getTranslate } from 'react-localize-redux';
 
-import List from '../../components/List';
+import DnDList from '../../components/DnDList';
+import { reorderCategory } from '../../actions/categories';
 
 const mapStateToProps = state => ({
   items: state.categories.map(category => ({
     ...category,
     value: category.name,
   })),
-  translate: getTranslate(state.locale),
   linkTo: id => `/categories/${id}`,
 });
 
-const mapDispatchToProps = () => ({
-  onItemClick: () => console.log('Not implemented'),
-  onRemoveItems: () => console.log('Not implemented'),
-});
+const mapDispatchToProps = {
+  onItemReorder: reorderCategory,
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(List);
+export default connect(mapStateToProps, mapDispatchToProps)(DnDList);
