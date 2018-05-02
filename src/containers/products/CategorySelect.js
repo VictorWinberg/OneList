@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
-import { get, find } from 'lodash/fp';
+import { get, getOr, find, maxBy } from 'lodash/fp';
 
 class CategorySelect extends Component {
   constructor(props) {
@@ -30,16 +30,27 @@ class CategorySelect extends Component {
             }
           >
             <option value="">{translate('categories.uncategorized')}</option>
-            {categories.map(c => <option key={c}>{c}</option>)}
+            {categories.map(({ id, name }) => (
+              <option key={id} value={id}>
+                {name}
+              </option>
+            ))}
             <option>{translate('categories.input')}</option>
           </select>
         ) : (
-          <input
-            id="category"
-            name="categories"
-            autoComplete="off"
-            placeholder={translate('categories.input')}
-          />
+          <div>
+            <input
+              id="category"
+              name="newCategory"
+              autoComplete="off"
+              placeholder={translate('categories.input')}
+            />
+            <input
+              name="category"
+              type="hidden"
+              value={1 + getOr(0, 'id', maxBy('id', categories))}
+            />
+          </div>
         )}
       </label>
     );
@@ -52,13 +63,18 @@ CategorySelect.defaultProps = {
 
 CategorySelect.propTypes = {
   category: PropTypes.string,
-  categories: PropTypes.arrayOf(PropTypes.string).isRequired,
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ).isRequired,
   translate: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, { id }) => ({
   category: get('category', find({ id }, state.products)),
-  categories: state.categories.map(category => category.name),
+  categories: state.categories,
   translate: getTranslate(state.locale),
 });
 

@@ -1,25 +1,37 @@
 import { connect } from 'react-redux';
-import { flow, groupBy, mergeWith, filter, map, values } from 'lodash/fp';
+import {
+  flow,
+  mergeWith,
+  groupBy,
+  filter,
+  map,
+  zipObject,
+  getOr,
+  values,
+} from 'lodash/fp';
+import { getTranslate } from 'react-localize-redux';
 
 import Autosuggest from '../../components/Autosuggest';
 
-const getSuggestions = (value, db) => {
+const getSuggestions = (value, state) => {
   const search = ({ name }) => name.match(new RegExp(value, 'i'));
+
+  const uncategorized = getTranslate(state.locale)('categories.uncategorized');
 
   return flow(
     filter(search),
     groupBy('category'),
     mergeWith((category, products) => ({
-      title: category.name,
+      title: getOr(uncategorized, 'name', category),
       suggestions: map('name', products),
-    }))(db.categories),
+    }))(zipObject(map('id', state.categories), state.categories)),
     filter('suggestions.length'),
     values
-  )(db.products);
+  )(state.products);
 };
 
 const mapStateToProps = state => ({
-  getSuggestions: value => getSuggestions(value, state.db),
+  getSuggestions: value => getSuggestions(value, state),
 });
 
 export default connect(mapStateToProps)(Autosuggest);

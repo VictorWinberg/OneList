@@ -54,15 +54,15 @@ EditProduct.propTypes = {
 
 const handleSubmit = (event, id, history) => dispatch => {
   const data = new FormData(event.target);
-  const [name, category, categories] = [
+  const [name, category, newCategory] = [
     'productName',
     'category',
-    'categories',
+    'newCategory',
   ].map(type => data.get(type));
 
-  if (categories) dispatch(addCategory(categories));
+  if (newCategory) dispatch(addCategory(newCategory));
 
-  dispatch(editProduct({ id, name, category: category || categories }));
+  dispatch(editProduct({ id, name, category }));
   event.preventDefault();
   history.push('/');
 };
