@@ -18,9 +18,9 @@ class New extends Component {
     const { onAddItem, onRemoveItem } = this.props;
 
     if (target.name === 'delete') {
-      onRemoveItem(suggestion);
+      onRemoveItem(suggestion.id);
     } else {
-      onAddItem(suggestion);
+      onAddItem(suggestion.name);
       this.setState({ item: '' });
     }
   }
@@ -90,8 +90,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch, { onAdd, onRemove }) => ({
-  onAddItem: item => onAdd && dispatch(onAdd(item)),
-  onRemoveItem: item => onRemove && dispatch(onRemove(item)),
+  onAddItem: name => onAdd && dispatch(onAdd(name)),
+  onRemoveItem: id => onRemove && dispatch(onRemove(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(New);

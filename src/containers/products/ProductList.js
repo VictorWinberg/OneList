@@ -5,10 +5,12 @@ import { toggleProduct, removeProducts } from '../../actions/products';
 import List from '../../components/List';
 
 const filtered = (products, isChecked) =>
-  products.filter(({ checked }) => checked === isChecked).map(product => ({
-    ...product,
-    value: product.name,
-  }));
+  products
+    .filter(({ active, checked }) => active && checked === isChecked)
+    .map(product => ({
+      ...product,
+      value: product.name,
+    }));
 
 const mapStateToProps = state => ({
   items: filtered(state.products, false),

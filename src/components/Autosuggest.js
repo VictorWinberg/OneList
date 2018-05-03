@@ -37,7 +37,7 @@ class Autosuggest extends Component {
         getSectionSuggestions={section => section.suggestions}
         renderSuggestion={suggestion => (
           <div className="suggestions">
-            <span>{suggestion}</span>
+            <span>{suggestion.name}</span>
             <img
               className="delete-icon"
               name="delete"

@@ -23,7 +23,7 @@ const getSuggestions = (value, state) => {
     groupBy('category'),
     mergeWith((category, products) => ({
       title: getOr(uncategorized, 'name', category),
-      suggestions: map('name', products),
+      suggestions: products,
     }))(zipObject(map('id', state.categories), state.categories)),
     filter('suggestions.length'),
     values

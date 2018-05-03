@@ -20,6 +20,7 @@ const products = (state = [], action) => {
         {
           id: productIndex,
           name: action.name,
+          active: true,
           checked: false,
         },
       ];
@@ -41,7 +42,9 @@ const products = (state = [], action) => {
     case REMOVE_PRODUCT:
       return state.filter(product => product.id !== action.id);
     case REMOVE_PRODUCTS:
-      return state.filter(product => !product.checked);
+      return state.map(
+        product => (product.checked ? { ...product, active: false } : product)
+      );
     default:
       return state;
   }

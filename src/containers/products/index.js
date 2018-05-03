@@ -1,10 +1,8 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 
 import ProductList from './ProductList';
 import New from '../common/New';
-import { addProduct } from '../../actions/products';
-import { removeProduct } from '../../actions/db';
+import { addProduct, removeProduct } from '../../actions/products';
 
 const Products = () => (
   <div>
