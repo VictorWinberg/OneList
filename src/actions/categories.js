@@ -5,7 +5,7 @@ import {
   REORDER_CATEGORY,
 } from '../constants/categories';
 
-export const addCategory = name => ({
+export const addCategory = ({ name }) => ({
   type: ADD_CATEGORY,
   name,
 });

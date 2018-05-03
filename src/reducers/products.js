@@ -1,4 +1,4 @@
-import { omit } from 'lodash/fp';
+import { find, omit } from 'lodash/fp';
 
 import {
   ADD_PRODUCT,
@@ -12,18 +12,33 @@ let productIndex = 0;
 
 const products = (state = [], action) => {
   switch (action.type) {
-    case ADD_PRODUCT:
-      if (!action.name) return state;
+    case ADD_PRODUCT: {
+      const { name, category } = action;
+      if (!name) return state;
+      const exists = find({ name }, state);
+      if (exists) {
+        return [
+          ...state.filter(product => product.id !== exists.id),
+          {
+            ...exists,
+            active: true,
+            checked: false,
+          },
+        ];
+      }
+
       productIndex += 1;
       return [
         ...state,
         {
           id: productIndex,
-          name: action.name,
+          name,
+          category,
           active: true,
           checked: false,
         },
       ];
+    }
     case EDIT_PRODUCT:
       return state.map(product => ({
         ...product,

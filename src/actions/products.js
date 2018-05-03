@@ -6,9 +6,10 @@ import {
   REMOVE_PRODUCTS,
 } from '../constants/products';
 
-export const addProduct = name => ({
+export const addProduct = ({ name, category }) => ({
   type: ADD_PRODUCT,
   name,
+  category,
 });
 
 export const editProduct = ({ id, name, category }) => ({

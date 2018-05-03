@@ -7,7 +7,7 @@ describe('categories reducer', () => {
   });
 
   it('can handle ADD_CATEGORY', () => {
-    expect(categories(undefined, addCategory('Vegetables'))).toEqual([
+    expect(categories(undefined, addCategory({ name: 'Vegetables' }))).toEqual([
       {
         id: 1,
         name: 'Vegetables',
@@ -16,7 +16,7 @@ describe('categories reducer', () => {
   });
 
   it('can handle ADD_CATEGORY for None', () => {
-    expect(categories(undefined, addCategory(''))).toEqual([]);
+    expect(categories(undefined, addCategory({}))).toEqual([]);
   });
 
   it('can handle REMOVE_CATEGORY', () => {

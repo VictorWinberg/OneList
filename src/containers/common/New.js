@@ -11,7 +11,7 @@ class New extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { item: '' };
+    this.state = { name: '' };
   }
 
   onSelect({ target }, { suggestion }) {
@@ -20,48 +20,48 @@ class New extends Component {
     if (target.name === 'delete') {
       onRemoveItem(suggestion.id);
     } else {
-      onAddItem(suggestion.name);
-      this.setState({ item: '' });
+      onAddItem(suggestion);
+      this.setState({ name: '' });
     }
   }
 
   handleSubmit(event) {
-    const { item } = this.state;
+    const { name } = this.state;
     const { onAddItem } = this.props;
 
-    onAddItem(item);
-    this.setState({ item: '' });
+    onAddItem({ name, category: null });
+    this.setState({ name: '' });
     event.preventDefault();
   }
 
   render() {
-    const { item } = this.state;
+    const { name } = this.state;
     const { translate, view, autosuggest } = this.props;
 
     const inputfield = autosuggest ? (
       <Autosuggest
         id="newItem"
-        value={item}
+        value={name}
         placeholder={translate(`${view}.input`)}
         onSelect={(evt, values) => this.onSelect(evt, values)}
         onChange={({ target }, { method }) => {
-          if (method === 'type') this.setState({ item: target.value });
+          if (method === 'type') this.setState({ name: target.value });
         }}
       />
     ) : (
       <input
         id="newItem"
         type="text"
-        value={item}
+        value={name}
         autoComplete="off"
         placeholder={translate(`${view}.input`)}
-        onChange={({ target }) => this.setState({ item: target.value })}
+        onChange={({ target }) => this.setState({ name: target.value })}
       />
     );
 
     return (
       <form className="search-form" onSubmit={evt => this.handleSubmit(evt)}>
-        <span role="presentation" onClick={() => this.setState({ item: '' })}>
+        <span role="presentation" onClick={() => this.setState({ name: '' })}>
           <img className="clear-icon" alt="X" src={clearicon} height="12px" />
         </span>
         <label htmlFor="newItem">
@@ -90,7 +90,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch, { onAdd, onRemove }) => ({
-  onAddItem: name => onAdd && dispatch(onAdd(name)),
+  onAddItem: item => onAdd && dispatch(onAdd(item)),
   onRemoveItem: id => onRemove && dispatch(onRemove(id)),
 });
 

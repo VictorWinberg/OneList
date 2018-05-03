@@ -10,7 +10,9 @@ const testProduct = [
   {
     id: 1,
     name: 'Milk',
+    active: true,
     checked: false,
+    category: null,
   },
 ];
 
@@ -20,11 +22,13 @@ describe('products reducer', () => {
   });
 
   it('can handle ADD_PRODUCT', () => {
-    expect(products(undefined, addProduct('Milk'))).toEqual(testProduct);
+    expect(
+      products(undefined, addProduct({ name: 'Milk', category: null }))
+    ).toEqual(testProduct);
   });
 
   it('can handle ADD_PRODUCT for None', () => {
-    expect(products(undefined, addProduct(''))).toEqual([]);
+    expect(products(undefined, addProduct({}))).toEqual([]);
   });
 
   it('can handle TOGGLE_PRODUCT', () => {
@@ -47,6 +51,10 @@ describe('products reducer', () => {
         ],
         removeProducts()
       )
-    ).toEqual(testProduct);
+    ).toEqual([
+      ...testProduct,
+      { id: 2, name: 'Apple', checked: true, active: false },
+      { id: 3, name: 'Pear', checked: true, active: false },
+    ]);
   });
 });
