@@ -26,7 +26,6 @@ class Autosuggest extends Component {
     return (
       <ReactAutosuggest
         multiSection
-        highlightFirstSuggestion
         suggestions={suggestions}
         onSuggestionSelected={onSelect}
         onSuggestionsFetchRequested={info =>
