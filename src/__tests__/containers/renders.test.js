@@ -1,11 +1,11 @@
 import renderer from 'react-test-renderer';
 
-import Index from '../index';
-import store from '../store';
-import Root from '../containers/Root';
-import Categories from '../containers/categories';
-import Settings from '../containers/settings';
-import Share from '../containers/share';
+import Index from '../../index';
+import store from '../../store';
+import Root from '../../containers/Root';
+import Categories from '../../containers/categories';
+import Settings from '../../containers/settings';
+import Share from '../../containers/share';
 
 describe('containers', () => {
   it('index renders without crashing', () => {

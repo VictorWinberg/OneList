@@ -90,8 +90,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch, { onAdd, onRemove }) => ({
-  onAddItem: item => onAdd && dispatch(onAdd(item)),
-  onRemoveItem: id => onRemove && dispatch(onRemove(id)),
+  onAddItem: item => dispatch(onAdd(item)),
+  onRemoveItem: id => dispatch(onRemove(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(New);
