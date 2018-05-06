@@ -37,7 +37,7 @@ module.exports = {
       'Please log in to see your settings.',
       'Vänligen logga in för att se dina inställningar.',
     ],
-    language: ['Change language: ', 'Ändra språk: '],
+    language: ['Language: ', 'Språk: '],
   },
   user: {
     login: ['Log In', 'Logga in'],

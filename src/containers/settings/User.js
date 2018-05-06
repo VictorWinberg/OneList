@@ -11,7 +11,7 @@ const User = ({ user, translate, update, submit }) => (
     <img src={user.photo} id="userphoto" alt="profile" />
     <br />
     <label htmlFor="username">
-      {translate('user.name')}
+    <span>{translate('user.name')}</span>
       <input
         id="username"
         type="text"
@@ -21,7 +21,7 @@ const User = ({ user, translate, update, submit }) => (
       />
     </label>
     <label htmlFor="email">
-      {translate('user.email')}
+    <span>{translate('user.email')}</span>   
       <input
         id="email"
         type="text"
@@ -31,7 +31,7 @@ const User = ({ user, translate, update, submit }) => (
       />
     </label>
     <LanguageSelector />
-    <button type="submit">{translate('user.submit')}</button>
+    <button className="saveBtn" type="submit">{translate('user.submit')}</button>
   </form>
 );
 

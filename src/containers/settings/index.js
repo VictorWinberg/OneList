@@ -8,13 +8,13 @@ import User from './User';
 import { logoutUser } from '../../actions/user';
 
 const Settings = ({ translate, user, logout }) => (
-  <div>
+  <div className="settings">
     <h2>{translate('settings.title')}</h2>
     {user.email ? (
       <div>
         <p>{translate('settings.authenticated')}</p>
         <User />
-        <button onClick={logout}>{translate('user.logout')}</button>
+        <button className="logoutBtn" onClick={logout}>{translate('user.logout')}</button>
       </div>
     ) : (
       <div>

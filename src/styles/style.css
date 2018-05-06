@@ -17,6 +17,8 @@ h1 {
 
 h2 {
   color: #458fde;
+  margin: 0.5em;
+  font-family: 'Quicksand', sans-serif;
 }
 
 ul {
@@ -28,6 +30,11 @@ ul {
 
 li {
   padding: 0.5em 0 0 0;
+}
+
+p {
+  font-family: 'Quicksand', sans-serif;
+  margin: 0.5em;
 }
 
 .top {
@@ -107,6 +114,8 @@ nav a.active {
 .product input,
 .product select,
 .category input,
+.settings input,
+.settings select,
 #color-btn {
   border: black solid 1px;
   box-shadow: 0px 1px 8px 0px #777;
@@ -144,7 +153,8 @@ nav a.active {
 }
 
 .product label span,
-.category label span {
+.category label span,
+.settings label span {
   font-family: 'Quicksand', sans-serif;
   font-size: 20px;
   width: 120px;
@@ -157,6 +167,8 @@ nav a.active {
 .product input,
 .product select,
 .category input,
+.settings input,
+.settings select,
 #color-btn {
   font-size: 16px;
   padding: 0.5em 0;
@@ -167,12 +179,14 @@ nav a.active {
 
 .product input,
 .category input,
+.settings input,
 #color-btn {
   width: calc(100% - 120px - 2em);
   text-indent: 0.3em;
 }
 
 .product select,
+.settings select,
 #color-btn {
   width: calc(100% - 120px - 1.89em);
   cursor: pointer;
@@ -184,7 +198,9 @@ nav a.active {
 }
 
 .doneBtn,
-.cancelBtn {
+.cancelBtn,
+.saveBtn,
+.logoutBtn {
   cursor: pointer;
   padding: 0.2em 0;
   font-family: 'PatrickHandSC';
@@ -206,6 +222,15 @@ nav a.active {
 .doneBtn {
   background-color: rgba(163, 226, 97, 0.6);
   right: 0.5em;
+}
+
+.saveBtn {
+  background-color: rgba(163, 226, 97, 0.6);
+  right: 0.5em;
+}
+.logoutBtn {
+  background-color: #c3e6fc;
+  left: 0.5em;
 }
 
 .add-icon {
@@ -291,7 +316,7 @@ nav a.active {
   color: white;
   font-family: 'PatrickHandSC';
   font-weight: normal;
-  margin-left: -0.2em;
+  margin: 0 0 0 -0.2em;
   display: inline;
 }
 
@@ -360,6 +385,15 @@ nav a.active {
   border-radius: 35%;
   margin: 0.25em;
   padding: 0;
+}
+
+.settings {
+  text-align: center;
+}
+
+.userform img {
+  border-radius: 50%;
+  margin: 0.5em;
 }
 
 :focus {

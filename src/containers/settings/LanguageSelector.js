@@ -9,43 +9,27 @@ import {
 } from 'react-localize-redux';
 import { updateUser } from '../../actions/user';
 
-const LanguageSelector = ({
-  translate,
-  languages,
-  currentLanguage,
-  setLanguage,
-  update,
-}) => (
-  <p>
-    {translate('settings.language')}
-    {languages
-      .filter(language => language.code !== currentLanguage.code)
-      .map(language => (
-        <button
-          key={language.code}
-          type="button"
-          onClick={() =>
-            setLanguage(language.code) &&
-            update({ target: { id: 'language', value: language.code } })
-          }
-        >
-          {language.code}
-        </button>
+const LanguageSelector = ({ translate, languages, update }) => (
+  <div>
+    <label htmlFor="land">
+      <span>{translate('settings.language')}</span>
+      <input name="lang" type="hidden" />
+    </label>
+    <select id="language" onChange={update}>
+      {languages.map(language => (
+        <option key={language.code}>{language.code}</option>
       ))}
-  </p>
+    </select>
+  </div>
 );
 
 LanguageSelector.propTypes = {
-  currentLanguage: PropTypes.shape({
-    code: PropTypes.string,
-  }).isRequired,
   languages: PropTypes.arrayOf(
     PropTypes.shape({
       code: PropTypes.string.isRequired,
     })
   ).isRequired,
   translate: PropTypes.func.isRequired,
-  setLanguage: PropTypes.func.isRequired,
   update: PropTypes.func.isRequired,
 };
 
@@ -53,6 +37,7 @@ const mapStateToProps = state => ({
   currentLanguage: getActiveLanguage(state.locale),
   languages: getLanguages(state.locale),
   translate: getTranslate(state.locale),
+  user: state.user,
 });
 
 const mapDispatchToProps = {

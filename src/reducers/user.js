@@ -14,6 +14,7 @@ const initialState = {
 const user = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_USER:
+      console.log(action, state)
       return { ...state, [action.key]: action.value };
     case SUBMIT_USER:
       return { ...state, isSubmitting: true };
