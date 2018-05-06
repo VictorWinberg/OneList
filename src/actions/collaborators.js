@@ -5,9 +5,9 @@ import {
   REMOVE_COLLABORATORS,
 } from '../constants/collaborators';
 
-export const addCollaborator = email => ({
+export const addCollaborator = ({ email, name }) => ({
   type: ADD_COLLABORATOR,
-  email,
+  email: email || name,
 });
 
 export const toggleCollaborator = id => ({

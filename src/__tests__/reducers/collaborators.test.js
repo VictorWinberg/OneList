@@ -20,13 +20,13 @@ describe('collaborators reducer', () => {
   });
 
   it('can handle ADD_COLLABORATOR', () => {
-    expect(collaborators(undefined, addCollaborator('First User'))).toEqual(
-      testCollaborator
-    );
+    expect(
+      collaborators(undefined, addCollaborator({ email: 'First User' }))
+    ).toEqual(testCollaborator);
   });
 
   it('can handle ADD_COLLABORATOR for None', () => {
-    expect(collaborators(undefined, addCollaborator(''))).toEqual([]);
+    expect(collaborators(undefined, addCollaborator({}))).toEqual([]);
   });
 
   it('can handle TOGGLE_COLLABORATOR', () => {
