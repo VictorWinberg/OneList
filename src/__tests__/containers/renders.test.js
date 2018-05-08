@@ -1,11 +1,25 @@
-import renderer from 'react-test-renderer';
+import React from 'react';
+import { mount } from 'enzyme';
+import configureStore from 'redux-mock-store';
 
 import Index from '../../index';
-import store from '../../store';
 import Root from '../../containers/Root';
 import Categories from '../../containers/categories';
 import Settings from '../../containers/settings';
 import Share from '../../containers/share';
+
+const mockStore = configureStore();
+const store = mockStore({
+  locale: {
+    languages: [{ code: 'en', active: true }],
+    translations: {},
+    options: {},
+  },
+  categories: [{ id: 1, name: 'Diary' }],
+  products: [{ id: 1, name: 'Milk', category: 1 }, { id: 2, name: 'Potato' }],
+  collaborators: [],
+  user: {},
+});
 
 describe('containers', () => {
   it('index renders without crashing', () => {
@@ -14,21 +28,21 @@ describe('containers', () => {
     ).toBeDefined();
   });
 
-  it('categories renders without crashing', () => {
+  it('categories renders DnDList with ListItem', () => {
     expect(
-      renderer.create(Root(Categories, store)).root.findByType(Categories)
-    ).toBeDefined();
+      mount(Root(Categories, store))
+        .find('DnDList')
+        .find('ListItem')
+        .find('label')
+        .get(0).props.children[1]
+    ).toEqual('Diary');
   });
 
   it('settings renders without crashing', () => {
-    expect(
-      renderer.create(Root(Settings, store)).root.findByType(Settings)
-    ).toBeDefined();
+    expect(mount(Root(Settings, store))).toBeDefined();
   });
 
   it('share renders without crashing', () => {
-    expect(
-      renderer.create(Root(Share, store)).root.findByType(Share)
-    ).toBeDefined();
+    expect(mount(Root(Share, store))).toBeDefined();
   });
 });

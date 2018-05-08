@@ -6,17 +6,16 @@ import configureStore from 'redux-mock-store';
 import New from '../../containers/common/New';
 
 const mockStore = configureStore();
-
 const store = mockStore({
   locale: {
     languages: [{ code: 'en', active: true }],
     translations: {},
   },
 });
+const context = { store };
 
 describe('New', () => {
   it('should add item', () => {
-    const context = { store };
     const component = shallow(
       <New view="test" onAdd={item => ({ type: 'ADD', ...item })} />,
       { context }
