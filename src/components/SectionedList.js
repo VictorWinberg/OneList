@@ -37,12 +37,7 @@ const SectionedList = ({
       <button className="removeBtn" onClick={onRemoveItems}>
         {translate(`${view}.remove`)}
       </button>
-      {checked.map(({ value, items }) => (
-        <div key={value}>
-          <b>{value}</b>
-          <ul>{items.map(item => li(item, onItemClick, linkTo))}</ul>
-        </div>
-      ))}
+      <ul>{checked.map(item => li(item, onItemClick, linkTo))}</ul>
     </ul>
   </div>
 );
