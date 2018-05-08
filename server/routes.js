@@ -39,6 +39,7 @@ module.exports = (app, passport, User) => {
     passport.authenticate('google', {
       scope: ['profile', 'email'],
       callbackURL: callback(req),
+      prompt: 'consent',
     })(req, res, next);
   });
 
