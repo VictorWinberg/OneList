@@ -243,13 +243,12 @@ nav a.active {
 
 .listitem {
   border-bottom: grey solid 0.5px;
-  margin: 0.2em 0;
+  padding: 0.5em 0;
 }
 
 /* Customize the label (the listitem label) */
 .listitem label {
   font-family: 'Quicksand', sans-serif;
-  float: left;
   width: calc(100% - 3.5em);
   position: relative;
   padding-left: 35px;
@@ -267,9 +266,8 @@ nav a.active {
 
 .listitem label ~ a img {
   cursor: pointer;
-  position: static;
-  margin-top: -0.2em;
-  padding: 0.2em 0.5em;
+  position: absolute;
+  right: 0.5em;
 }
 
 /* When the checkbox is checked, add a blue background */
@@ -359,8 +357,8 @@ nav a.active {
   position: absolute;
   top: 0;
   left: 0;
-  height: 20px;
-  width: 20px;
+  height: 27px;
+  width: 27px;
 }
 
 .categories .checkmark {
