@@ -26,7 +26,7 @@ const SectionedList = ({
   <div className={view}>
     {active.map(({ value, items }) => (
       <div key={value}>
-        <b>{value}</b>
+        <div className="section">{value}</div>
         <ul className="active">
           {items.map(item => li(item, onItemClick, linkTo))}
         </ul>

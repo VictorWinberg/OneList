@@ -243,10 +243,12 @@ nav a.active {
 
 .listitem {
   border-bottom: grey solid 0.5px;
+  margin: 0.2em 0;
 }
 
 /* Customize the label (the listitem label) */
 .listitem label {
+  font-family: 'Quicksand', sans-serif;
   float: left;
   width: calc(100% - 3.5em);
   position: relative;
@@ -301,6 +303,13 @@ nav a.active {
   content: '';
   position: absolute;
   display: none;
+}
+
+.section {
+  font-family: 'Quicksand', sans-serif;
+  padding: 0.2em 0.5em 0 0.5em;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .products .done {
