@@ -34,7 +34,7 @@ const categories = (state = [], action) => {
       const [removed] = newState.splice(startIndex, 1);
       newState.splice(endIndex, 0, removed);
 
-      return newState;
+      return newState.map((category, i) => ({ ...category, at: i }));
     }
     default:
       return state;

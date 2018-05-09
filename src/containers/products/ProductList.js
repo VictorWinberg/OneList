@@ -7,6 +7,7 @@ import {
   map,
   zipObject,
   getOr,
+  sortBy,
 } from 'lodash/fp';
 import { getTranslate } from 'react-localize-redux';
 
@@ -20,10 +21,12 @@ const sectioned = state => {
     filter({ active: true, checked: false }),
     groupBy('category'),
     mergeWith((category, products) => ({
+      ...category,
       value: getOr(uncategorized, 'name', category),
       items: map(product => ({ ...product, value: product.name }), products),
     }))(zipObject(map('id', state.categories), state.categories)),
-    filter('items.length')
+    filter('items.length'),
+    sortBy(['at', 'id'])
   )(state.products);
 };
 

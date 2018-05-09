@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
-import { get, getOr, find, maxBy } from 'lodash/fp';
+import { get, getOr, find, sortBy, maxBy } from 'lodash/fp';
 
 class CategorySelect extends Component {
   constructor(props) {
@@ -74,7 +74,7 @@ CategorySelect.propTypes = {
 
 const mapStateToProps = (state, { id }) => ({
   category: get('category', find({ id }, state.products)),
-  categories: state.categories,
+  categories: sortBy('name', state.categories),
   translate: getTranslate(state.locale),
 });
 
