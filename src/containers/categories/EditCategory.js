@@ -5,10 +5,17 @@ import { getTranslate } from 'react-localize-redux';
 import { get, find } from 'lodash/fp';
 import { toInteger } from 'lodash/lang';
 
-import { editCategory } from '../../actions/categories';
+import { editCategory, removeCategory } from '../../actions/categories';
 import CategoryColors from './CategoryColors';
 
-const EditCategory = ({ id, category, translate, onSubmit, history }) => (
+const EditCategory = ({
+  id,
+  category,
+  translate,
+  onRemove,
+  onSubmit,
+  history,
+}) => (
   <div className="category">
     <div className="title">
       <b>{translate('edit.edit')}: </b>
@@ -26,6 +33,15 @@ const EditCategory = ({ id, category, translate, onSubmit, history }) => (
           />
         </label>
         <CategoryColors id={id} />
+        <button
+          type="button"
+          onClick={() => {
+            onRemove(id);
+            history.push('/categories');
+          }}
+        >
+          {translate('edit.delete')}
+        </button>
         <button
           className="cancelBtn"
           type="button"
@@ -49,6 +65,7 @@ EditCategory.propTypes = {
   id: PropTypes.number.isRequired,
   category: PropTypes.string,
   translate: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
@@ -76,6 +93,7 @@ const mapStateToProps = (state, { match }) => {
 
 const mapDispatchToProps = {
   onSubmit: handleSubmit,
+  onRemove: removeCategory,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditCategory);
