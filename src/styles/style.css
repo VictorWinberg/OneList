@@ -203,7 +203,7 @@ nav a.active {
 .logoutBtn {
   cursor: pointer;
   padding: 0.2em 0;
-  font-family: 'PatrickHandSC';
+  font-family: 'Quicksand', sans-serif;
   font-size: 22px;
   border-radius: 3px;
   width: calc(50% - 0.75em);
@@ -315,15 +315,15 @@ nav a.active {
   border-radius: 5px 5px 0 0;
   overflow: auto;
   margin: 0.5em 0 0 0;
-  padding: 0 0.5em 0.5em 0.5em;
+  padding: 0 0.5em 0.5em 0em;
   color: white;
 }
 
 .products .done h2 {
   color: white;
-  font-family: 'PatrickHandSC';
+  font-family: 'Quicksand', sans-serif;
   font-weight: normal;
-  margin: 0 0 0 -0.2em;
+  margin: 0 0 0 0.3em;
   display: inline;
 }
 
@@ -333,7 +333,7 @@ nav a.active {
 
 .products .done button {
   float: right;
-  font-family: 'PatrickHandSC';
+  font-family: 'Quicksand', sans-serif;
   font-size: 20px;
   border-radius: 3px;
   border: none;
