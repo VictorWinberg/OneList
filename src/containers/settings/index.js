@@ -14,13 +14,17 @@ const Settings = ({ translate, user, logout }) => (
       <div>
         <p>{translate('settings.authenticated')}</p>
         <User />
-        <button className="logoutBtn" onClick={logout}>{translate('user.logout')}</button>
+        <button className="logoutBtn" onClick={logout}>
+          {translate('user.logout')}
+        </button>
       </div>
     ) : (
       <div>
         <LanguageSelector />
         <p>{translate('settings.unauthenticated')}</p>
-        <a href="/__/auth/google">{translate('user.login')}</a>
+        <a className="loginBtn" href="/__/auth/google">
+          {translate('user.login')}
+        </a>
       </div>
     )}
   </div>

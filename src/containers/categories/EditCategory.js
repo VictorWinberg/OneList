@@ -34,6 +34,7 @@ const EditCategory = ({
         </label>
         <CategoryColors id={id} />
         <button
+          className="deleteBtn"
           type="button"
           onClick={() => {
             onRemove(id);

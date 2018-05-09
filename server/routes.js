@@ -29,10 +29,9 @@ module.exports = (app, passport, User) => {
 
   app.get('/__/logout', (req, res) => {
     req.logout();
+    req.session = null;
     res.clearCookie('connect.sid');
-    req.session.destroy(() => {
-      res.redirect('/');
-    });
+    res.redirect('/');
   });
 
   app.get('/__/auth/google', (req, res, next) => {

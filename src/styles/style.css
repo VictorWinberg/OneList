@@ -200,6 +200,8 @@ nav a.active {
 .doneBtn,
 .cancelBtn,
 .saveBtn,
+.deleteBtn,
+.loginBtn,
 .logoutBtn {
   cursor: pointer;
   padding: 0.2em 0;
@@ -212,6 +214,13 @@ nav a.active {
   position: absolute;
   margin: 0.5em 0;
   bottom: 0;
+}
+
+.deleteBtn {
+  background-color: rgba(249, 72, 72, 0.6);
+  position: relative;
+  float: right;
+  right: 0.5em;
 }
 
 .cancelBtn {
@@ -228,6 +237,15 @@ nav a.active {
   background-color: rgba(163, 226, 97, 0.6);
   right: 0.5em;
 }
+
+.loginBtn {
+  background-color: #c3e6fc;
+  color: inherit;
+  text-decoration: none;
+  left: 0.5em;
+  width: calc(100% - 2 * 0.5em);
+}
+
 .logoutBtn {
   background-color: #c3e6fc;
   left: 0.5em;
