@@ -1,7 +1,8 @@
 import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 
-const mockStore = configureStore();
-export default mockStore({
+const mockStore = configureStore([thunk]);
+const store = mockStore({
   locale: {
     languages: [{ code: 'en', active: true }],
     translations: {},
@@ -16,3 +17,9 @@ export default mockStore({
   collaborators: [],
   user: {},
 });
+
+it('should have mockStore', () => {
+  expect(store).toBeDefined();
+});
+
+export default store;
