@@ -75,7 +75,7 @@ class CategoryColors extends Component {
 }
 
 CategoryColors.defaultProps = {
-  color: '#d9d9d9',
+  color: '#ccc',
 };
 
 CategoryColors.propTypes = {

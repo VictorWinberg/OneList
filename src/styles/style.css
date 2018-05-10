@@ -248,24 +248,24 @@ nav a.active {
 }
 
 .deleteBtn {
-  background-color: rgba(249, 72, 72, 0.6);
+  background-color: #fb9191;
   position: relative;
   float: right;
   right: 0.5em;
 }
 
 .cancelBtn {
-  background-color: rgba(249, 72, 72, 0.6);
+  background-color: #eeeba0;
   left: 0.5em;
 }
 
 .doneBtn {
-  background-color: rgba(163, 226, 97, 0.6);
+  background-color: #c8eea0;
   right: 0.5em;
 }
 
 .saveBtn {
-  background-color: rgba(163, 226, 97, 0.6);
+  background-color: #c8eea0;
   right: 0.5em;
 }
 

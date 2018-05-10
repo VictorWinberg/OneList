@@ -26,7 +26,7 @@ const ProductList = ({
   <div className={view}>
     <div>
       {active.map(({ value, color, items }) => (
-        <div key={value} style={{ borderLeft: `5px solid ${color || '#888'}` }}>
+        <div key={value} style={{ borderLeft: `5px solid ${color || '#ccc'}` }}>
           <div className="section">{value}</div>
           <ul className="active">
             {items.map(item => li(item, onItemClick, linkTo))}

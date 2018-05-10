@@ -29,7 +29,7 @@ const CategoryList = ({ view, items, linkTo, onItemReorder }) => (
                     {...provided.dragHandleProps}
                     style={{
                       ...provided.draggableProps.style,
-                      borderLeft: `5px solid ${item.color || '#888'}`,
+                      borderLeft: `5px solid ${item.color || '#ccc'}`,
                     }}
                   >
                     <ListItem
