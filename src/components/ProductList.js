@@ -14,7 +14,7 @@ const li = (item, onItemClick, linkTo) => (
   />
 );
 
-const SectionedList = ({
+const ProductList = ({
   active,
   checked,
   onItemClick,
@@ -44,7 +44,7 @@ const SectionedList = ({
   </div>
 );
 
-SectionedList.propTypes = {
+ProductList.propTypes = {
   active: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string.isRequired,
@@ -65,4 +65,4 @@ SectionedList.propTypes = {
   view: PropTypes.string.isRequired,
 };
 
-export default SectionedList;
+export default ProductList;

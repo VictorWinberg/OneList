@@ -12,7 +12,7 @@ import {
 import { getTranslate } from 'react-localize-redux';
 
 import { toggleProduct, removeProducts } from '../../actions/products';
-import SectionedList from '../../components/SectionedList';
+import ProductList from '../../components/ProductList';
 
 const sectioned = state => {
   const uncategorized = getTranslate(state.locale)('categories.uncategorized');
@@ -48,4 +48,4 @@ const mapDispatchToProps = {
   onRemoveItems: removeProducts,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SectionedList);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductList);

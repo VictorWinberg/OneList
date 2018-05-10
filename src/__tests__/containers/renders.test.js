@@ -15,8 +15,8 @@ describe('containers', () => {
     ).toBeDefined();
   });
 
-  it('products renders SectionedList with ListItem', () => {
-    const list = mount(Root(Products, store)).find('SectionedList');
+  it('Products renders ProductList with ListItem', () => {
+    const list = mount(Root(Products, store)).find('ProductList');
 
     expect(list.find('.section').text()).toEqual('Dairy');
     expect(
@@ -35,21 +35,21 @@ describe('containers', () => {
     ).toEqual('Potatoes');
   });
 
-  it('categories renders DnDList with ListItem', () => {
+  it('Categories renders CategoryList with ListItem', () => {
     expect(
       mount(Root(Categories, store))
-        .find('DnDList')
+        .find('CategoryList')
         .find('ListItem')
         .find('label')
         .text()
     ).toEqual('Dairy');
   });
 
-  it('settings renders without crashing', () => {
+  it('Settings renders without crashing', () => {
     expect(mount(Root(Settings, store))).toBeDefined();
   });
 
-  it('share renders without crashing', () => {
+  it('Share renders without crashing', () => {
     expect(mount(Root(Share, store))).toBeDefined();
   });
 });

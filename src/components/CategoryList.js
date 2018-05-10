@@ -4,7 +4,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import ListItem from './ListItem';
 
-const DnDList = ({ view, items, linkTo, onItemReorder }) => (
+const CategoryList = ({ view, items, linkTo, onItemReorder }) => (
   <div className={view}>
     <DragDropContext
       onDragEnd={({ source, destination }) => {
@@ -22,12 +22,15 @@ const DnDList = ({ view, items, linkTo, onItemReorder }) => (
             {items.map((item, index) => (
               <Draggable key={item.id} draggableId={item.id} index={index}>
                 {(provided, { isDragging }) => (
-                  <div 
+                  <div
                     className={isDragging ? 'isDragging' : null}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                    style={{...provided.draggableProps.style, borderLeft: `5px solid ${item.color || '#888'}` }}
+                    style={{
+                      ...provided.draggableProps.style,
+                      borderLeft: `5px solid ${item.color || '#888'}`,
+                    }}
                   >
                     <ListItem
                       id={item.id}
@@ -45,7 +48,7 @@ const DnDList = ({ view, items, linkTo, onItemReorder }) => (
   </div>
 );
 
-DnDList.propTypes = {
+CategoryList.propTypes = {
   view: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(
     PropTypes.shape({
@@ -57,4 +60,4 @@ DnDList.propTypes = {
   onItemReorder: PropTypes.func.isRequired,
 };
 
-export default DnDList;
+export default CategoryList;

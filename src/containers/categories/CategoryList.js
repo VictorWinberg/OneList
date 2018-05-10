@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import DnDList from '../../components/DnDList';
+import CategoryList from '../../components/CategoryList';
 import { reorderCategory } from '../../actions/categories';
 
 const mapStateToProps = state => ({
@@ -15,4 +15,4 @@ const mapDispatchToProps = {
   onItemReorder: reorderCategory,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DnDList);
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryList);
