@@ -119,6 +119,14 @@ nav a.active {
   text-indent: 1.5em;
 }
 
+.categories ul {
+  margin: 0;
+}
+
+.categories .listitem {
+  margin: 0.25em 0.5em;
+}
+
 .product .title,
 .category .title {
   font-family: 'Quicksand', sans-serif;
@@ -346,7 +354,8 @@ nav a.active {
 
 .section {
   font-family: 'Quicksand', sans-serif;
-  padding: 0.2em 0.5em 0 0.5em;
+  padding-left: 0.5em;
+  margin-top: 0.3em;
   font-size: 20px;
   font-weight: bold;
 }

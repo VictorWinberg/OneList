@@ -22,12 +22,12 @@ const DnDList = ({ view, items, linkTo, onItemReorder }) => (
             {items.map((item, index) => (
               <Draggable key={item.id} draggableId={item.id} index={index}>
                 {(provided, { isDragging }) => (
-                  <div
+                  <div 
                     className={isDragging ? 'isDragging' : null}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                    style={provided.draggableProps.style}
+                    style={{...provided.draggableProps.style, borderLeft: `5px solid ${item.color || '#888'}` }}
                   >
                     <ListItem
                       id={item.id}

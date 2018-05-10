@@ -24,14 +24,16 @@ const SectionedList = ({
   view,
 }) => (
   <div className={view}>
-    {active.map(({ value, items }) => (
-      <div key={value}>
-        <div className="section">{value}</div>
-        <ul className="active">
-          {items.map(item => li(item, onItemClick, linkTo))}
-        </ul>
-      </div>
-    ))}
+    <div>
+      {active.map(({ value, color, items }) => (
+        <div key={value} style={{ borderLeft: `5px solid ${color || '#888'}` }}>
+          <div className="section">{value}</div>
+          <ul className="active">
+            {items.map(item => li(item, onItemClick, linkTo))}
+          </ul>
+        </div>
+      ))}
+    </div>
     <ul className={checked.length ? 'done' : 'hidden'}>
       <h2>{translate(`${view}.cart`)}</h2>
       <button className="removeBtn" onClick={onRemoveItems}>
@@ -46,6 +48,7 @@ SectionedList.propTypes = {
   active: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string.isRequired,
+      color: PropTypes.string,
       items: PropTypes.array,
     })
   ).isRequired,
