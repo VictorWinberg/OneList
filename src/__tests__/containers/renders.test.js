@@ -2,7 +2,7 @@ import { mount } from 'enzyme';
 
 import Index from '../../index';
 import Root from '../../containers/Root';
-import store from '../store';
+import { store } from '../store';
 import Products from '../../containers/products';
 import Categories from '../../containers/categories';
 import Settings from '../../containers/settings';
@@ -18,7 +18,7 @@ describe('containers', () => {
   it('products renders SectionedList with ListItem', () => {
     const list = mount(Root(Products, store)).find('SectionedList');
 
-    expect(list.find('.section').text()).toEqual('Diary');
+    expect(list.find('.section').text()).toEqual('Dairy');
     expect(
       list
         .find('.active')
@@ -42,7 +42,7 @@ describe('containers', () => {
         .find('ListItem')
         .find('label')
         .text()
-    ).toEqual('Diary');
+    ).toEqual('Dairy');
   });
 
   it('settings renders without crashing', () => {
