@@ -1,8 +1,31 @@
 body,
-html {
+html,
+#root {
   margin: 0;
   padding: 0;
   height: 100%;
+}
+
+#root > div {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* main div comes after header */
+#root > div > :nth-child(2),
+.products {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.products > :nth-child(1) {
+  flex: 1;
+}
+
+.products > :nth-child(2) {
+  overflow: visible;
 }
 
 h1 {
@@ -331,7 +354,7 @@ nav a.active {
 .products .done {
   background-color: rgb(80, 80, 80);
   border-radius: 5px 5px 0 0;
-  overflow: auto;
+  /* overflow: auto; */
   margin: 0.5em 0 0 0;
   padding: 0 0.5em 0.5em 0em;
   color: white;
@@ -366,7 +389,7 @@ nav a.active {
 
 .hidden,
 .products .done img {
-  visibility: hidden;
+  display: none;
 }
 
 .categories .checkmark,
