@@ -1,24 +1,15 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
 
+import store from '../store';
 import New from '../../containers/common/New';
-
-const mockStore = configureStore();
-const store = mockStore({
-  locale: {
-    languages: [{ code: 'en', active: true }],
-    translations: {},
-  },
-});
-const context = { store };
 
 describe('New', () => {
   it('should add item', () => {
     const component = shallow(
       <New view="test" onAdd={item => ({ type: 'ADD', ...item })} />,
-      { context }
+      { context: { store } }
     ).dive();
     component.find('input').simulate('change', { target: { value: 'Milk' } });
     component.find('form').simulate('submit', { preventDefault() {} });

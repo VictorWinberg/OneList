@@ -1,25 +1,12 @@
-import React from 'react';
 import { mount } from 'enzyme';
-import configureStore from 'redux-mock-store';
 
 import Index from '../../index';
 import Root from '../../containers/Root';
+import store from '../store';
+import Products from '../../containers/products';
 import Categories from '../../containers/categories';
 import Settings from '../../containers/settings';
 import Share from '../../containers/share';
-
-const mockStore = configureStore();
-const store = mockStore({
-  locale: {
-    languages: [{ code: 'en', active: true }],
-    translations: {},
-    options: {},
-  },
-  categories: [{ id: 1, name: 'Diary' }],
-  products: [{ id: 1, name: 'Milk', category: 1 }, { id: 2, name: 'Potato' }],
-  collaborators: [],
-  user: {},
-});
 
 describe('containers', () => {
   it('index renders without crashing', () => {
@@ -28,13 +15,33 @@ describe('containers', () => {
     ).toBeDefined();
   });
 
+  it('products renders SectionedList with ListItem', () => {
+    const list = mount(Root(Products, store)).find('SectionedList');
+
+    expect(list.find('.section').text()).toEqual('Diary');
+    expect(
+      list
+        .find('.active')
+        .find('ListItem')
+        .find('label')
+        .text()
+    ).toEqual('Milk');
+    expect(
+      list
+        .find('.done')
+        .find('ListItem')
+        .find('label')
+        .text()
+    ).toEqual('Potatoes');
+  });
+
   it('categories renders DnDList with ListItem', () => {
     expect(
       mount(Root(Categories, store))
         .find('DnDList')
         .find('ListItem')
         .find('label')
-        .get(0).props.children[1]
+        .text()
     ).toEqual('Diary');
   });
 
