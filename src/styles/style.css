@@ -332,11 +332,11 @@ nav a.active {
 /* Style the checkmark/indicator */
 .products .checkmark:after {
   left: 6px;
-  top: 2px;
-  width: 5px;
-  height: 10px;
+  top: -2px;
+  width: 10px;
+  height: 20px;
   border: solid white;
-  border-width: 0 3px 3px 0;
+  border-width: 0 4px 4px 0;
   transform: rotate(45deg);
 }
 
