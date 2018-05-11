@@ -9,14 +9,14 @@ import {
 export const addProduct = ({ name, category }) => ({
   type: ADD_PRODUCT,
   name,
-  category,
+  category: category || '',
 });
 
 export const editProduct = ({ id, name, category }) => ({
   type: EDIT_PRODUCT,
   id,
   name,
-  category,
+  category: category || '',
 });
 
 export const toggleProduct = id => ({

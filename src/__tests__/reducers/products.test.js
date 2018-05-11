@@ -12,7 +12,7 @@ const testProduct = [
     name: 'Milk',
     active: true,
     checked: false,
-    category: null,
+    category: '',
   },
 ];
 
@@ -22,9 +22,9 @@ describe('products reducer', () => {
   });
 
   it('can handle ADD_PRODUCT', () => {
-    expect(
-      products(undefined, addProduct({ name: 'Milk', category: null }))
-    ).toEqual(testProduct);
+    expect(products(undefined, addProduct({ name: 'Milk' }))).toEqual(
+      testProduct
+    );
   });
 
   it('can handle ADD_PRODUCT for None', () => {
