@@ -9,6 +9,7 @@ import EditCategory from './categories/EditCategory';
 import Share from './share';
 import Settings from './settings';
 import SetLanguage from './settings/SetLanguage';
+import FetchDB from './settings/FetchDB';
 
 import '../styles/style.css';
 
@@ -22,6 +23,7 @@ const App = () => (
     <Route exact path="/share" component={Share} />
     <Route path="/settings" component={Settings} />
     <SetLanguage />
+    <FetchDB />
   </div>
 );
 

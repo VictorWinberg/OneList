@@ -51,6 +51,20 @@ module.exports = (app, passport, db) => {
     });
   });
 
+  app.get('/__/products', isLoggedIn, (req, res) => {
+    db.Product.getAll((err, products) => {
+      if (err) return res.status(400).send(err);
+      return res.send(products);
+    });
+  });
+
+  app.get('/__/categories', isLoggedIn, (req, res) => {
+    db.Category.getAll((err, categories) => {
+      if (err) return res.status(400).send(err);
+      return res.send(categories);
+    });
+  });
+
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
   });
