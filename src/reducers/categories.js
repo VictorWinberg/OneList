@@ -1,4 +1,4 @@
-import { omit } from 'lodash/fp';
+import { getOr, maxBy, omit } from 'lodash/fp';
 
 import {
   ADD_CATEGORY,
@@ -8,17 +8,14 @@ import {
   FETCH_CATEGORIES,
 } from '../constants/categories';
 
-let categoryIndex = 0;
-
 const categories = (state = [], action) => {
   switch (action.type) {
     case ADD_CATEGORY:
       if (!action.name) return state;
-      categoryIndex += 1;
       return [
         ...state,
         {
-          id: categoryIndex,
+          id: 1 + getOr(0, 'id', maxBy('id', state)),
           name: action.name,
         },
       ];

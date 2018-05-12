@@ -1,4 +1,4 @@
-import { find, omit } from 'lodash/fp';
+import { getOr, maxBy, find, omit } from 'lodash/fp';
 
 import {
   ADD_PRODUCT,
@@ -8,8 +8,6 @@ import {
   REMOVE_PRODUCTS,
   FETCH_PRODUCTS,
 } from '../constants/products';
-
-let productIndex = 0;
 
 const products = (state = [], action) => {
   switch (action.type) {
@@ -28,11 +26,10 @@ const products = (state = [], action) => {
         ];
       }
 
-      productIndex += 1;
       return [
         ...state,
         {
-          id: productIndex,
+          id: 1 + getOr(0, 'id', maxBy('id', state)),
           name,
           category,
           active: true,
