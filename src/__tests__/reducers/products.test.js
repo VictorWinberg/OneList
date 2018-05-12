@@ -12,7 +12,6 @@ const testProduct = [
     name: 'Milk',
     active: true,
     checked: false,
-    category: '',
   },
 ];
 

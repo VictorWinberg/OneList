@@ -1,4 +1,4 @@
-import { reject } from 'lodash/collection';
+import { reject } from 'lodash/fp';
 
 import { REMOVE_DB_PRODUCT, REMOVE_DB_CATEGORY } from '../constants/db';
 
@@ -32,12 +32,12 @@ const db = (state = initialState, action) => {
     case REMOVE_DB_PRODUCT:
       return {
         ...state,
-        products: reject(state.products, ['name', action.name]),
+        products: reject(['name', action.name], state.products),
       };
     case REMOVE_DB_CATEGORY:
       return {
         ...state,
-        categories: reject(state.categories, ['name', action.name]),
+        categories: reject(['name', action.name], state.categories),
       };
     default:
       return state;

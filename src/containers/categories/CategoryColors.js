@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
-import { get, find } from 'lodash/fp';
+import { find, get } from 'lodash/fp';
 
 import dropdownicon from '../../assets/icons/dropdown.svg';
 

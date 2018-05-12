@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
-import { get, find } from 'lodash/fp';
-import { toInteger } from 'lodash/lang';
+import { find, get, toInteger } from 'lodash/fp';
 
 import { addCategory } from '../../actions/categories';
 import { editProduct, removeProduct } from '../../actions/products';
@@ -71,12 +70,9 @@ const handleSubmit = (event, id, history) => dispatch => {
     'newCategory',
   ].map(type => data.get(type));
 
-  if (newCategory) {
-    dispatch(addCategory({ name: newCategory }));
-    dispatch(editProduct({ id, name, category }));
-  } else {
-    dispatch(editProduct({ id, name }));
-  }
+  if (newCategory) dispatch(addCategory({ name: newCategory }));
+
+  dispatch(editProduct({ id, name, category }));
 
   event.preventDefault();
   history.push('/');

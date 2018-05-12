@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
-import { get, getOr, find, sortBy, maxBy } from 'lodash/fp';
+import { find, get, getOr, maxBy, sortBy } from 'lodash/fp';
 
 class CategorySelect extends Component {
   constructor(props) {
@@ -45,6 +45,7 @@ class CategorySelect extends Component {
               autoComplete="off"
               placeholder={translate('categories.input')}
             />
+            {/* TODO: get category last_inserted_id instead */}
             <input
               name="category"
               type="hidden"

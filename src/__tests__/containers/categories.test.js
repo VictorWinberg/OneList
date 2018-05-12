@@ -49,7 +49,7 @@ describe('Categories', () => {
         type: 'EDIT_CATEGORY',
         id: 1,
         name: 'Dairies',
-        color: '#ffc2b3',
+        color: '#ff8080',
       },
     ]);
   });

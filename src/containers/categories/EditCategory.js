@@ -2,8 +2,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import React from 'react';
 import { getTranslate } from 'react-localize-redux';
-import { get, find } from 'lodash/fp';
-import { toInteger } from 'lodash/lang';
+import { find, get, toInteger } from 'lodash/fp';
 
 import { editCategory, removeCategory } from '../../actions/categories';
 import CategoryColors from './CategoryColors';

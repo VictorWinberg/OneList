@@ -1,30 +1,41 @@
 import { connect } from 'react-redux';
-import {
-  flow,
-  mergeWith,
-  groupBy,
-  filter,
-  map,
-  zipObject,
-  getOr,
-  sortBy,
-} from 'lodash/fp';
 import { getTranslate } from 'react-localize-redux';
+import {
+  filter,
+  find,
+  flow,
+  get,
+  getOr,
+  groupBy,
+  map,
+  mergeWith,
+  sortBy,
+  toInteger,
+  zipObject,
+} from 'lodash/fp';
 
 import { toggleProduct, removeProducts } from '../../actions/products';
 import ProductList from '../../components/ProductList';
 
+// TODO: Move some of this logic to a helpers function
+
 const sectioned = state => {
   const uncategorized = getTranslate(state.locale)('categories.uncategorized');
+  const getCategory = ({ category }) =>
+    get('name', find({ id: toInteger(category) }, state.categories));
 
   return flow(
     filter({ active: true, checked: false }),
-    groupBy('category'),
+    map(product => ({
+      ...product,
+      categoryName: getCategory(product),
+    })),
+    groupBy('categoryName'),
     mergeWith((category, products) => ({
       ...category,
       value: getOr(uncategorized, 'name', category),
       items: map(product => ({ ...product, value: product.name }), products),
-    }))(zipObject(map('id', state.categories), state.categories)),
+    }))(zipObject(map('name', state.categories), state.categories)),
     filter('items.length'),
     sortBy(['at', 'id'])
   )(state.products);
