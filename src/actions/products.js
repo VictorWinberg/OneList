@@ -4,6 +4,7 @@ import {
   TOGGLE_PRODUCT,
   REMOVE_PRODUCT,
   REMOVE_PRODUCTS,
+  FETCH_PRODUCTS,
 } from '../constants/products';
 
 export const addProduct = ({ name, category }) => ({
@@ -32,3 +33,9 @@ export const removeProduct = id => ({
 export const removeProducts = () => ({
   type: REMOVE_PRODUCTS,
 });
+
+export const fetchProducts = () => dispatch =>
+  fetch('/__/products', { credentials: 'include' })
+    .then(response => response.json())
+    .then(products => dispatch({ type: FETCH_PRODUCTS, products }))
+    .catch(err => console.error(err));

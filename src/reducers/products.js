@@ -6,6 +6,7 @@ import {
   TOGGLE_PRODUCT,
   REMOVE_PRODUCT,
   REMOVE_PRODUCTS,
+  FETCH_PRODUCTS,
 } from '../constants/products';
 
 let productIndex = 0;
@@ -60,6 +61,8 @@ const products = (state = [], action) => {
       return state.map(
         product => (product.checked ? { ...product, active: false } : product)
       );
+    case FETCH_PRODUCTS:
+      return action.products;
     default:
       return state;
   }

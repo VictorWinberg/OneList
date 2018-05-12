@@ -1,5 +1,8 @@
 module.exports = client => ({
   getAll(done) {
-    done(null, [{ id: 1, name: 'Milk', category: 1 }]);
+    client
+      .query('SELECT * FROM products')
+      .then(({ rows }) => done(null, rows))
+      .catch(err => done(err));
   },
 });

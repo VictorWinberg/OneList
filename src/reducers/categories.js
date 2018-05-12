@@ -5,6 +5,7 @@ import {
   EDIT_CATEGORY,
   REMOVE_CATEGORY,
   REORDER_CATEGORY,
+  FETCH_CATEGORIES,
 } from '../constants/categories';
 
 let categoryIndex = 0;
@@ -36,6 +37,8 @@ const categories = (state = [], action) => {
 
       return newState.map((category, i) => ({ ...category, at: i }));
     }
+    case FETCH_CATEGORIES:
+      return action.categories;
     default:
       return state;
   }

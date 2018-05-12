@@ -2,13 +2,13 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { fetchProducts, fetchCategories } from '../../actions/db';
+import { fetchProducts } from '../../actions/products';
+import { fetchCategories } from '../../actions/categories';
 
 class FetchDB extends Component {
   componentWillReceiveProps({ user, updateProducts, updateCategories }) {
     const { username } = user;
     if (username !== this.props.user.username) {
-      console.log('USER LOGGED IN');
       updateProducts();
       updateCategories();
     }

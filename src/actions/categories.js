@@ -3,6 +3,7 @@ import {
   EDIT_CATEGORY,
   REMOVE_CATEGORY,
   REORDER_CATEGORY,
+  FETCH_CATEGORIES,
 } from '../constants/categories';
 
 export const addCategory = ({ name }) => ({
@@ -27,3 +28,9 @@ export const reorderCategory = ({ startIndex, endIndex }) => ({
   startIndex,
   endIndex,
 });
+
+export const fetchCategories = () => dispatch =>
+  fetch('/__/categories', { credentials: 'include' })
+    .then(response => response.json())
+    .then(categories => dispatch({ type: FETCH_CATEGORIES, categories }))
+    .catch(err => console.error(err));
