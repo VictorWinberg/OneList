@@ -86,6 +86,27 @@ module.exports = (app, passport, db) => {
     });
   });
 
+  app.post('/__/categories', isLoggedIn, (req, res) => {
+    db.Category.create(req.body, (err, category) => {
+      if (err) return res.status(400).send(err);
+      return res.send(category);
+    });
+  });
+
+  app.put('/__/categories/:id', isLoggedIn, (req, res) => {
+    db.Category.update(req.params.id, req.body, (err, category) => {
+      if (err) return res.status(400).send(err);
+      return res.send(category);
+    });
+  });
+
+  app.delete('/__/categories/:id', isLoggedIn, (req, res) => {
+    db.Category.delete(req.params.id, (err, category) => {
+      if (err) return res.status(400).send(err);
+      return res.send(category);
+    });
+  });
+
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
   });

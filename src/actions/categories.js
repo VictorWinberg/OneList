@@ -6,22 +6,57 @@ import {
   FETCH_CATEGORIES,
 } from '../constants/categories';
 
-export const addCategory = ({ name }) => ({
-  type: ADD_CATEGORY,
-  name,
-});
+export const addCategory = ({ name }) => dispatch => {
+  fetch('/__/categories', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({ name }),
+  }).catch(err => console.error(err));
 
-export const editCategory = ({ id, name, color }) => ({
-  type: EDIT_CATEGORY,
-  id,
-  name,
-  color,
-});
+  return dispatch({
+    type: ADD_CATEGORY,
+    name,
+  });
+};
 
-export const removeCategory = id => ({
-  type: REMOVE_CATEGORY,
-  id,
-});
+export const editCategory = ({ id, name, color }) => dispatch => {
+  fetch(`/__/categories/${id}`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({ name, color }),
+  }).catch(err => console.error(err));
+
+  return dispatch({
+    type: EDIT_CATEGORY,
+    id,
+    name,
+    color,
+  });
+};
+
+export const removeCategory = id => dispatch => {
+  fetch(`/__/categories/${id}`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+  }).catch(err => console.error(err));
+
+  return dispatch({
+    type: REMOVE_CATEGORY,
+    id,
+  });
+};
 
 export const reorderCategory = ({ startIndex, endIndex }) => ({
   type: REORDER_CATEGORY,
