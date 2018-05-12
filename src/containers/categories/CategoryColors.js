@@ -27,22 +27,22 @@ class CategoryColors extends Component {
 
   render() {
     const colors = [
-      '#ffc2b3',
-      '#ffb3b3',
-      '#ffb3d9',
-      '#f0c2e0',
-      '#ffb3ff',
-      '#d9b3ff',
-      '#c2c2f0',
-      '#b3b3ff',
-      '#b3d9ff',
-      '#b3e6ff',
-      '#b3ffff',
-      '#b3ffd9',
-      '#b3ffcc',
-      '#e6ffb3',
-      '#ffffb3',
-      '#ffe0b3',
+      '#ff8080',
+      '#ff80b3',
+      '#ff80df',
+      '#ff80ff',
+      '#aa80ff',
+      '#8080ff',
+      '#80b3ff',
+      '#80ccff',
+      '#99e6e6',
+      '#80ffe5',
+      '#80ff80',
+      '#99e699',
+      '#bfff80',
+      '#dfff80',
+      '#ffe680',
+      '#ffbf80',
     ];
 
     const { open, color } = this.state;
