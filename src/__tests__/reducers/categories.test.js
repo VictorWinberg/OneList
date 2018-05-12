@@ -1,13 +1,17 @@
+import { store } from '../store';
 import categories from '../../reducers/categories';
 import { addCategory, removeCategory } from '../../actions/categories';
 
 describe('categories reducer', () => {
+  const { dispatch } = store;
   it('has a default state', () => {
     expect(categories(undefined, { type: 'unexpected' })).toEqual([]);
   });
 
   it('can handle ADD_CATEGORY', () => {
-    expect(categories(undefined, addCategory({ name: 'Vegetables' }))).toEqual([
+    expect(
+      categories(undefined, dispatch(addCategory({ name: 'Vegetables' })))
+    ).toEqual([
       {
         id: 1,
         name: 'Vegetables',
@@ -16,7 +20,7 @@ describe('categories reducer', () => {
   });
 
   it('can handle ADD_CATEGORY for None', () => {
-    expect(categories(undefined, addCategory({}))).toEqual([]);
+    expect(categories(undefined, dispatch(addCategory({})))).toEqual([]);
   });
 
   it('can handle REMOVE_CATEGORY', () => {
@@ -32,7 +36,7 @@ describe('categories reducer', () => {
             name: 'Meat',
           },
         ],
-        removeCategory(1)
+        dispatch(removeCategory(1))
       )
     ).toEqual([
       {

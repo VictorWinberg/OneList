@@ -1,3 +1,4 @@
+import { store } from '../store';
 import collaborators from '../../reducers/collaborators';
 import {
   addCollaborator,
@@ -15,22 +16,28 @@ const testCollaborator = [
 ];
 
 describe('collaborators reducer', () => {
+  const { dispatch } = store;
   it('has a default state', () => {
     expect(collaborators(undefined, { type: 'unexpected' })).toEqual([]);
   });
 
   it('can handle ADD_COLLABORATOR', () => {
     expect(
-      collaborators(undefined, addCollaborator({ email: 'First User' }))
+      collaborators(
+        undefined,
+        dispatch(addCollaborator({ email: 'First User' }))
+      )
     ).toEqual(testCollaborator);
   });
 
   it('can handle ADD_COLLABORATOR for None', () => {
-    expect(collaborators(undefined, addCollaborator({}))).toEqual([]);
+    expect(collaborators(undefined, dispatch(addCollaborator({})))).toEqual([]);
   });
 
   it('can handle TOGGLE_COLLABORATOR', () => {
-    expect(collaborators(testCollaborator, toggleCollaborator(1))).toEqual(
+    expect(
+      collaborators(testCollaborator, dispatch(toggleCollaborator(1)))
+    ).toEqual(
       testCollaborator.map(product => ({ ...product, pending: false }))
     );
   });
@@ -39,7 +46,7 @@ describe('collaborators reducer', () => {
     expect(
       collaborators(
         [...testCollaborator, { id: 2, email: 'Second User' }],
-        removeCollaborator(1)
+        dispatch(removeCollaborator(1))
       )
     ).toEqual([{ id: 2, email: 'Second User' }]);
   });
@@ -52,7 +59,7 @@ describe('collaborators reducer', () => {
           { id: 2, email: 'Second User', pending: true },
           { id: 3, email: 'Third User', pending: false },
         ],
-        removeCollaborators()
+        dispatch(removeCollaborators())
       )
     ).toEqual([{ id: 3, email: 'Third User', pending: false }]);
   });

@@ -8,12 +8,7 @@ import {
 } from '../constants/products';
 
 export const addProduct = ({ name, category }) => dispatch => {
-  dispatch({
-    type: ADD_PRODUCT,
-    name,
-    category,
-  });
-  return fetch('/__/products', {
+  fetch('/__/products', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -21,17 +16,17 @@ export const addProduct = ({ name, category }) => dispatch => {
     },
     credentials: 'include',
     body: JSON.stringify({ name, category }),
+  }).catch(err => console.error(err));
+
+  return dispatch({
+    type: ADD_PRODUCT,
+    name,
+    category,
   });
 };
 
 export const editProduct = ({ id, name, category }) => dispatch => {
-  dispatch({
-    type: EDIT_PRODUCT,
-    id,
-    name,
-    category,
-  });
-  return fetch(`/__/products/${id}`, {
+  fetch(`/__/products/${id}`, {
     method: 'PUT',
     headers: {
       Accept: 'application/json',
@@ -39,6 +34,13 @@ export const editProduct = ({ id, name, category }) => dispatch => {
     },
     credentials: 'include',
     body: JSON.stringify({ name, category: category || null }),
+  }).catch(err => console.error(err));
+
+  return dispatch({
+    type: EDIT_PRODUCT,
+    id,
+    name,
+    category,
   });
 };
 
@@ -48,17 +50,18 @@ export const toggleProduct = id => ({
 });
 
 export const removeProduct = id => dispatch => {
-  dispatch({
-    type: REMOVE_PRODUCT,
-    id,
-  });
-  return fetch(`/__/products/${id}`, {
+  fetch(`/__/products/${id}`, {
     method: 'DELETE',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
     credentials: 'include',
+  }).catch(err => console.error(err));
+
+  return dispatch({
+    type: REMOVE_PRODUCT,
+    id,
   });
 };
 
