@@ -7,28 +7,60 @@ import {
   FETCH_PRODUCTS,
 } from '../constants/products';
 
-export const addProduct = ({ name, category }) => ({
-  type: ADD_PRODUCT,
-  name,
-  category,
-});
+export const addProduct = ({ name, category }) => dispatch => {
+  dispatch({
+    type: ADD_PRODUCT,
+    name,
+    category,
+  });
+  return fetch('/__/products', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({ name, category }),
+  });
+};
 
-export const editProduct = ({ id, name, category }) => ({
-  type: EDIT_PRODUCT,
-  id,
-  name,
-  category,
-});
+export const editProduct = ({ id, name, category }) => dispatch => {
+  dispatch({
+    type: EDIT_PRODUCT,
+    id,
+    name,
+    category,
+  });
+  return fetch(`/__/products/${id}`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({ name, category: category || null }),
+  });
+};
 
 export const toggleProduct = id => ({
   type: TOGGLE_PRODUCT,
   id,
 });
 
-export const removeProduct = id => ({
-  type: REMOVE_PRODUCT,
-  id,
-});
+export const removeProduct = id => dispatch => {
+  dispatch({
+    type: REMOVE_PRODUCT,
+    id,
+  });
+  return fetch(`/__/products/${id}`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+  });
+};
 
 export const removeProducts = () => ({
   type: REMOVE_PRODUCTS,

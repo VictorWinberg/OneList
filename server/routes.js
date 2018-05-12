@@ -58,6 +58,27 @@ module.exports = (app, passport, db) => {
     });
   });
 
+  app.post('/__/products', isLoggedIn, (req, res) => {
+    db.Product.create(req.body, (err, product) => {
+      if (err) return res.status(400).send(err);
+      return res.send(product);
+    });
+  });
+
+  app.put('/__/products/:id', isLoggedIn, (req, res) => {
+    db.Product.update(req.params.id, req.body, (err, product) => {
+      if (err) return res.status(400).send(err);
+      return res.send(product);
+    });
+  });
+
+  app.delete('/__/products/:id', isLoggedIn, (req, res) => {
+    db.Product.delete(req.params.id, (err, product) => {
+      if (err) return res.status(400).send(err);
+      return res.send(product);
+    });
+  });
+
   app.get('/__/categories', isLoggedIn, (req, res) => {
     db.Category.getAll((err, categories) => {
       if (err) return res.status(400).send(err);
