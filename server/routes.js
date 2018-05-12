@@ -6,8 +6,7 @@ module.exports = (app, passport, db) => {
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated()) return next();
 
-    // if they aren't redirect them to the home page
-    return res.redirect('/');
+    return res.sendStatus(401);
   };
 
   const callback = req => {
@@ -65,11 +64,24 @@ module.exports = (app, passport, db) => {
     });
   });
 
+  app.put('/__/products', isLoggedIn, (req, res) => {
+    db.Product.inactivate((err, products) => {
+      if (err) return res.status(400).send(err);
+      return res.send(products);
+    });
+  });
+
   app.put('/__/products/:id', isLoggedIn, (req, res) => {
-    db.Product.update(req.params.id, req.body, (err, product) => {
+    const result = (err, product) => {
       if (err) return res.status(400).send(err);
       return res.send(product);
-    });
+    };
+
+    if (req.get('Type') === 'toggle') {
+      db.Product.toggle(req.params.id, result);
+    } else {
+      db.Product.update(req.params.id, req.body, result);
+    }
   });
 
   app.delete('/__/products/:id', isLoggedIn, (req, res) => {

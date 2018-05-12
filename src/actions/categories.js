@@ -7,15 +7,17 @@ import {
 } from '../constants/categories';
 
 export const addCategory = ({ name }) => dispatch => {
-  fetch('/__/categories', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include',
-    body: JSON.stringify({ name }),
-  }).catch(err => console.error(err));
+  if (name) {
+    fetch('/__/categories', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({ name }),
+    }).catch(err => console.error(err));
+  }
 
   return dispatch({
     type: ADD_CATEGORY,

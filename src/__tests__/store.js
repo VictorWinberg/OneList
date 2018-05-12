@@ -9,9 +9,9 @@ const state = {
   },
   categories: [{ id: 1, name: 'Dairy' }],
   products: [
-    { id: 1, name: 'Milk', category: 1, active: true, checked: false },
-    { id: 2, name: 'Potatoes', active: true, checked: true },
-    { id: 3, name: 'Butter', active: false },
+    { id: 1, name: 'Milk', category: 1, inactive: false, checked: false },
+    { id: 2, name: 'Potatoes', inactive: false, checked: true },
+    { id: 3, name: 'Butter', inactive: true },
   ],
   collaborators: [],
   user: {},

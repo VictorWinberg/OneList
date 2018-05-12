@@ -13,7 +13,7 @@ CREATE TABLE users (
 DROP TABLE IF EXISTS categories CASCADE;
 CREATE TABLE categories (
   id        SERIAL        NOT NULL,
-  name      VARCHAR(255)  NOT NULL,
+  name      VARCHAR(255)  NOT NULL UNIQUE,
   color     VARCHAR(255),
 
   PRIMARY KEY(id)
@@ -22,7 +22,9 @@ CREATE TABLE categories (
 DROP TABLE IF EXISTS products;
 CREATE TABLE products (
   id        SERIAL        NOT NULL,
-  name      VARCHAR(255)  NOT NULL,
+  name      VARCHAR(255)  NOT NULL UNIQUE,
+  inactive  BOOLEAN       DEFAULT FALSE,
+  checked   BOOLEAN       DEFAULT FALSE,
   category  INT,
 
   FOREIGN KEY(category) REFERENCES categories(id) ON DELETE SET NULL,

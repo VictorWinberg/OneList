@@ -4,15 +4,13 @@ import {
   addProduct,
   toggleProduct,
   removeProduct,
-  removeProducts,
+  inactivateProducts,
 } from '../../actions/products';
 
 const testProduct = [
   {
     id: 1,
     name: 'Milk',
-    active: true,
-    checked: false,
   },
 ];
 
@@ -42,7 +40,7 @@ describe('products reducer', () => {
     expect(products(testProduct, dispatch(removeProduct(1)))).toEqual([]);
   });
 
-  it('can handle REMOVE_PRODUCTS', () => {
+  it('can handle INACTIVATE_PRODUCTS', () => {
     expect(
       products(
         [
@@ -50,12 +48,12 @@ describe('products reducer', () => {
           { id: 2, name: 'Apple', checked: true },
           { id: 3, name: 'Pear', checked: true },
         ],
-        dispatch(removeProducts())
+        dispatch(inactivateProducts())
       )
     ).toEqual([
       ...testProduct,
-      { id: 2, name: 'Apple', checked: true, active: false },
-      { id: 3, name: 'Pear', checked: true, active: false },
+      { id: 2, name: 'Apple', checked: true, inactive: true },
+      { id: 3, name: 'Pear', checked: true, inactive: true },
     ]);
   });
 });

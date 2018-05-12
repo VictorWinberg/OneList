@@ -16,7 +16,10 @@ const products = (state = [], action) => {
       if (!name) return state;
       const exists = find({ name }, state);
       if (exists) {
-        return [...state.filter(product => product.id !== exists.id), exists];
+        return [
+          ...state.filter(product => product.id !== exists.id),
+          { ...exists, inactive: false, checked: false },
+        ];
       }
 
       return [

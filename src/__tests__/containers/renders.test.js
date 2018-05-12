@@ -17,7 +17,6 @@ describe('containers', () => {
 
   it('Products renders ProductList with ListItem', () => {
     const list = mount(Root(Products, store)).find('ProductList');
-
     expect(list.find('.section').text()).toEqual('Dairy');
     expect(
       list

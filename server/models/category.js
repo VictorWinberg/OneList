@@ -8,7 +8,7 @@ module.exports = client => ({
   },
 
   update(id, { name, color }, done) {
-    const sql = 'UPDATE categories SET name=$2, color=$3 WHERE id=$1';
+    const sql = 'UPDATE categories SET name = $2, color = $3 WHERE id = $1';
     client
       .query(sql, [id, name, color])
       .then(({ rows }) => done(null, rows[0] || null))
@@ -16,7 +16,7 @@ module.exports = client => ({
   },
 
   delete(id, done) {
-    const sql = 'DELETE FROM categories WHERE id=$1';
+    const sql = 'DELETE FROM categories WHERE id = $1';
     client
       .query(sql, [id])
       .then(({ rows }) => done(null, rows[0] || null))
