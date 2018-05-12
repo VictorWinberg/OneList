@@ -9,12 +9,13 @@ import {
   groupBy,
   map,
   mergeWith,
+  reject,
   sortBy,
   toInteger,
   zipObject,
 } from 'lodash/fp';
 
-import { toggleProduct, removeProducts } from '../../actions/products';
+import { toggleProduct, inactivateProducts } from '../../actions/products';
 import ProductList from '../../components/ProductList';
 
 // TODO: Move some of this logic to a helpers function
@@ -25,7 +26,8 @@ const sectioned = state => {
     get('name', find({ id: toInteger(category) }, state.categories));
 
   return flow(
-    filter({ active: true, checked: false }),
+    reject('inactive'),
+    reject('checked'),
     map(product => ({
       ...product,
       categoryName: getCategory(product),
@@ -43,7 +45,8 @@ const sectioned = state => {
 
 const checked = state =>
   flow(
-    filter({ active: true, checked: true }),
+    reject('inactive'),
+    filter('checked'),
     map(product => ({ ...product, value: product.name }))
   )(state.products);
 
@@ -56,7 +59,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   onItemClick: toggleProduct,
-  onRemoveItems: removeProducts,
+  onDoneClick: inactivateProducts,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductList);

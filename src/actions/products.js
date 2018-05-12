@@ -3,7 +3,7 @@ import {
   EDIT_PRODUCT,
   TOGGLE_PRODUCT,
   REMOVE_PRODUCT,
-  REMOVE_PRODUCTS,
+  INACTIVATE_PRODUCTS,
   FETCH_PRODUCTS,
 } from '../constants/products';
 
@@ -65,8 +65,8 @@ export const removeProduct = id => dispatch => {
   });
 };
 
-export const removeProducts = () => ({
-  type: REMOVE_PRODUCTS,
+export const inactivateProducts = () => ({
+  type: INACTIVATE_PRODUCTS,
 });
 
 export const fetchProducts = () => dispatch =>

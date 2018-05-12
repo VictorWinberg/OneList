@@ -18,7 +18,7 @@ const ProductList = ({
   active,
   checked,
   onItemClick,
-  onRemoveItems,
+  onDoneClick,
   linkTo,
   translate,
   view,
@@ -36,7 +36,7 @@ const ProductList = ({
     </div>
     <ul className={checked.length ? 'done' : 'hidden'}>
       <h2>{translate(`${view}.cart`)}</h2>
-      <button className="removeBtn" onClick={onRemoveItems}>
+      <button className="removeBtn" onClick={onDoneClick}>
         {translate(`${view}.remove`)}
       </button>
       <ul>{checked.map(item => li(item, onItemClick, linkTo))}</ul>
@@ -59,7 +59,7 @@ ProductList.propTypes = {
     })
   ).isRequired,
   onItemClick: PropTypes.func.isRequired,
-  onRemoveItems: PropTypes.func.isRequired,
+  onDoneClick: PropTypes.func.isRequired,
   linkTo: PropTypes.func.isRequired,
   translate: PropTypes.func.isRequired,
   view: PropTypes.string.isRequired,

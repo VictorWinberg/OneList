@@ -5,7 +5,7 @@ import {
   EDIT_PRODUCT,
   TOGGLE_PRODUCT,
   REMOVE_PRODUCT,
-  REMOVE_PRODUCTS,
+  INACTIVATE_PRODUCTS,
   FETCH_PRODUCTS,
 } from '../constants/products';
 
@@ -16,14 +16,7 @@ const products = (state = [], action) => {
       if (!name) return state;
       const exists = find({ name }, state);
       if (exists) {
-        return [
-          ...state.filter(product => product.id !== exists.id),
-          {
-            ...exists,
-            active: true,
-            checked: false,
-          },
-        ];
+        return [...state.filter(product => product.id !== exists.id), exists];
       }
 
       return [
@@ -32,8 +25,6 @@ const products = (state = [], action) => {
           id: 1 + getOr(0, 'id', maxBy('id', state)),
           name,
           category,
-          active: true,
-          checked: false,
         },
       ];
     }
@@ -54,9 +45,9 @@ const products = (state = [], action) => {
     }
     case REMOVE_PRODUCT:
       return state.filter(product => product.id !== action.id);
-    case REMOVE_PRODUCTS:
+    case INACTIVATE_PRODUCTS:
       return state.map(
-        product => (product.checked ? { ...product, active: false } : product)
+        product => (product.checked ? { ...product, inactive: true } : product)
       );
     case FETCH_PRODUCTS:
       return action.products;
