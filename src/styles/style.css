@@ -230,8 +230,8 @@ nav a.active {
 
 .doneBtn,
 .cancelBtn,
-.saveBtn,
 .deleteBtn,
+.saveBtn,
 .loginBtn,
 .logoutBtn {
   cursor: pointer;
@@ -239,7 +239,6 @@ nav a.active {
   font-family: 'Quicksand', sans-serif;
   font-size: 22px;
   border-radius: 3px;
-  width: calc(50% - 0.75em);
   border: black solid 1px;
   box-shadow: 3px 3px 5px #888;
   position: absolute;
@@ -247,16 +246,26 @@ nav a.active {
   bottom: 0;
 }
 
+.doneBtn,
+.cancelBtn,
+.deleteBtn {
+  width: calc((100% / 3) - 0.75em);
+}
+
+.saveBtn,
+.loginBtn,
+.logoutBtn {
+  width: calc(50% - 0.75em);
+}
+
 .deleteBtn {
   background-color: #fb9191;
-  position: relative;
-  float: right;
-  right: 0.5em;
+  left: 0.5em;
 }
 
 .cancelBtn {
   background-color: #eeeba0;
-  left: 0.5em;
+  left: calc((100% / 3) + (0.75em / 2));
 }
 
 .doneBtn {

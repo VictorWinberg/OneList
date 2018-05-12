@@ -6,10 +6,10 @@ import { get, find } from 'lodash/fp';
 import { toInteger } from 'lodash/lang';
 
 import { addCategory } from '../../actions/categories';
-import { editProduct } from '../../actions/products';
+import { editProduct, removeProduct } from '../../actions/products';
 import CategorySelect from './CategorySelect';
 
-const EditProduct = ({ id, name, translate, onSubmit, history }) => (
+const EditProduct = ({ id, name, translate, onRemove, onSubmit, history }) => (
   <div className="product">
     <div className="title">
       <b>{translate('edit.edit')}: </b>
@@ -27,6 +27,16 @@ const EditProduct = ({ id, name, translate, onSubmit, history }) => (
           />
         </label>
         <CategorySelect id={id} />
+        <button
+          className="deleteBtn"
+          type="button"
+          onClick={() => {
+            onRemove(id);
+            history.push('/');
+          }}
+        >
+          {translate('edit.delete')}
+        </button>
         <button
           className="cancelBtn"
           type="button"
@@ -46,6 +56,7 @@ EditProduct.propTypes = {
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   translate: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
@@ -83,6 +94,7 @@ const mapStateToProps = (state, { match }) => {
 
 const mapDispatchToProps = {
   onSubmit: handleSubmit,
+  onRemove: removeProduct,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProduct);

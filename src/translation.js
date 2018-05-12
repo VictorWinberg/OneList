@@ -19,7 +19,7 @@ module.exports = {
     selectColor: ['Select a color...', 'Välj färg...'],
     cancel: ['Cancel', 'Avbryt'],
     save: ['Save', 'Spara'],
-    delete: ['Delete this category', 'Radera denna categori'],
+    delete: ['Delete', 'Radera'],
   },
   categories: {
     input: ['New category...', 'Ny kategori...'],
