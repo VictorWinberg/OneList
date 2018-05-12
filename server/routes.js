@@ -1,6 +1,6 @@
 const path = require('path');
 
-module.exports = (app, passport, User) => {
+module.exports = (app, passport, db) => {
   // route middleware to make sure
   const isLoggedIn = (req, res, next) => {
     // if user is authenticated in the session, carry on
@@ -15,24 +15,6 @@ module.exports = (app, passport, User) => {
     const protocol = req.headers['x-forwarded-proto'] || req.protocol;
     return `${protocol}://${host}/__/auth/google/callback`;
   };
-
-  app.get('/__/user', (req, res) => {
-    res.send(req.user || {});
-  });
-
-  app.put('/__/user', isLoggedIn, (req, res) => {
-    User.update(req.user.id, req.body, (err, user) => {
-      if (err) return res.status(400).send(err);
-      return res.send(user);
-    });
-  });
-
-  app.get('/__/logout', (req, res) => {
-    req.logout();
-    req.session = null;
-    res.clearCookie('connect.sid');
-    res.redirect('/');
-  });
 
   app.get('/__/auth/google', (req, res, next) => {
     passport.authenticate('google', {
@@ -49,6 +31,24 @@ module.exports = (app, passport, User) => {
       failureRedirect: '/',
       callbackURL: callback(req),
     })(req, res, next);
+  });
+
+  app.get('/__/logout', (req, res) => {
+    req.logout();
+    req.session = null;
+    res.clearCookie('connect.sid');
+    res.redirect('/');
+  });
+
+  app.get('/__/user', (req, res) => {
+    res.send(req.user || {});
+  });
+
+  app.put('/__/user', isLoggedIn, (req, res) => {
+    db.User.update(req.user.id, req.body, (err, user) => {
+      if (err) return res.status(400).send(err);
+      return res.send(user);
+    });
   });
 
   app.get('*', (req, res) => {

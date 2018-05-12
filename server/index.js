@@ -19,7 +19,13 @@ app.use(express.static(path.resolve(__dirname, '..', 'build')));
 const client = new Client(DATABASE_URL);
 client.connect();
 
+// load models
 const User = require('./models/user')(client);
+const Category = require('./models/category')(client);
+const Product = require('./models/product')(client);
+
+const db = { User, Category, Product };
+
 require('./passport')(passport, User);
 
 // set up our express application
@@ -50,6 +56,6 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
 // routes
-require('./routes.js')(app, passport, User);
+require('./routes.js')(app, passport, db);
 
 app.listen(port, () => console.log('ShoppingList app listening on port 3004!'));
