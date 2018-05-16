@@ -8,6 +8,7 @@ import { updateUser, submitUser } from '../../actions/user';
 
 const User = ({ user, translate, update, submit }) => (
   <form className="userform" onSubmit={event => submit(event, user)}>
+  <div className="setting-wrapper">
     <img src={user.photo} id="userphoto" alt="profile" />
     <br />
     <label htmlFor="username">
@@ -31,6 +32,7 @@ const User = ({ user, translate, update, submit }) => (
       />
     </label>
     <LanguageSelector />
+    </div>
     <button className="saveBtn" type="submit">{translate('user.submit')}</button>
   </form>
 );

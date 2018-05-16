@@ -244,6 +244,7 @@ nav a.active {
   position: absolute;
   margin: 0.5em 0;
   bottom: 0;
+  z-index: -1;
 }
 
 .doneBtn,
@@ -403,6 +404,11 @@ nav a.active {
   cursor: pointer;
   background-color: #767676;
   color: white;
+}
+
+.setting-wrapper {
+  background-color: #fff;
+  overflow: auto;
 }
 
 .hidden,
