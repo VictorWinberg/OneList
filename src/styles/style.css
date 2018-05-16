@@ -373,9 +373,8 @@ nav a.active {
 .products .done {
   background-color: rgb(80, 80, 80);
   border-radius: 5px 5px 0 0;
-  /* overflow: auto; */
   margin: 0.5em 0 0 0;
-  padding: 0 0.5em 0.5em 0em;
+  padding: 0 0 0.5em 0em;
   color: white;
 }
 
@@ -383,7 +382,7 @@ nav a.active {
   color: white;
   font-family: 'Quicksand', sans-serif;
   font-weight: normal;
-  margin: 0 0 0 0.3em;
+  margin-left: 0.3em;
   display: inline;
 }
 
@@ -395,15 +394,20 @@ nav a.active {
   float: right;
   font-family: 'Quicksand', sans-serif;
   font-size: 20px;
-  border-radius: 3px;
-  border: none;
+  border-radius: 5px;
+  border: outset 2px white;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  padding: 0em;
-  width: calc((100% - 1em) / 2);
-  margin: 0.2em;
+  width: calc(100% / 3);
+  margin: 0.5em;
   cursor: pointer;
   background-color: #767676;
   color: white;
+}
+
+.product .done button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
 }
 
 .setting-wrapper {
