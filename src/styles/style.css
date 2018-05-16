@@ -404,12 +404,6 @@ nav a.active {
   color: white;
 }
 
-.product .done button:active {
-  background-color: #3e8e41;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
-
 .setting-wrapper {
   background-color: #fff;
   overflow: auto;
