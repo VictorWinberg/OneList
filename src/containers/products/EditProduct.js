@@ -72,7 +72,7 @@ const handleSubmit = (event, id, history) => dispatch => {
 
   if (newCategory) dispatch(addCategory({ name: newCategory }));
 
-  dispatch(editProduct({ id, name, category }));
+  dispatch(editProduct({ id, name, category: toInteger(category) }));
 
   event.preventDefault();
   history.push('/');

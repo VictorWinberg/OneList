@@ -49,7 +49,7 @@ describe('Products', () => {
         type: 'EDIT_PRODUCT',
         id: 2,
         name: 'Melody potatoes',
-        category: '2',
+        category: 2,
       },
     ]);
   });

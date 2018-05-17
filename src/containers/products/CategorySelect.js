@@ -29,7 +29,7 @@ class CategorySelect extends Component {
               })
             }
           >
-            <option value="">{translate('categories.uncategorized')}</option>
+            <option value="0">{translate('categories.uncategorized')}</option>
             {categories.map(({ id, name }) => (
               <option key={id} value={id}>
                 {name}
@@ -59,11 +59,11 @@ class CategorySelect extends Component {
 }
 
 CategorySelect.defaultProps = {
-  category: '',
+  category: 0,
 };
 
 CategorySelect.propTypes = {
-  category: PropTypes.string,
+  category: PropTypes.number,
   categories: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
