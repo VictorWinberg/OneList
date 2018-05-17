@@ -6,7 +6,7 @@ import {
   FETCH_CATEGORIES,
 } from '../constants/categories';
 
-export const addCategory = ({ name }) => dispatch => {
+export const addCategory = ({ name }, next) => dispatch => {
   if (name) {
     fetch('/__/categories', {
       method: 'POST',
@@ -16,7 +16,9 @@ export const addCategory = ({ name }) => dispatch => {
       },
       credentials: 'include',
       body: JSON.stringify({ name }),
-    }).catch(err => console.error(err));
+    })
+      .then(next)
+      .catch(err => console.error(err));
   }
 
   return dispatch({

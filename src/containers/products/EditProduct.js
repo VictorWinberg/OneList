@@ -70,9 +70,13 @@ const handleSubmit = (event, id, history) => dispatch => {
     'newCategory',
   ].map(type => data.get(type));
 
-  if (newCategory) dispatch(addCategory({ name: newCategory }));
+  const edit = editProduct({ id, name, category: toInteger(category) });
 
-  dispatch(editProduct({ id, name, category: toInteger(category) }));
+  if (newCategory) {
+    dispatch(addCategory({ name: newCategory }, () => dispatch(edit)));
+  } else {
+    dispatch(edit);
+  }
 
   event.preventDefault();
   history.push('/');
