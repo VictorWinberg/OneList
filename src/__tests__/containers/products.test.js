@@ -13,6 +13,7 @@ describe('Products', () => {
   beforeEach(() => {
     store = makeStore();
     history = [];
+    fetch.resetMocks();
     wrapper = mount(
       <Provider store={store}>
         <EditProduct
@@ -23,7 +24,9 @@ describe('Products', () => {
     );
   });
 
-  it('should edit a product with new category', () => {
+  it('should edit a product with new category', done => {
+    fetch.mockResponse('{}');
+
     wrapper.find('input').instance().value = 'Melody potatoes';
 
     wrapper
@@ -42,16 +45,19 @@ describe('Products', () => {
 
     wrapper.find('form').simulate('submit', { preventDefault() {} });
 
-    expect(history).toEqual(['/']);
-    expect(store.getActions()).toEqual([
-      { type: 'ADD_CATEGORY', name: 'Potatoes' },
-      {
-        type: 'EDIT_PRODUCT',
-        id: 2,
-        name: 'Melody potatoes',
-        category: 2,
-      },
-    ]);
+    setImmediate(() => {
+      expect(history).toEqual(['/']);
+      expect(store.getActions()).toEqual([
+        { type: 'ADD_CATEGORY', name: 'Potatoes' },
+        {
+          type: 'EDIT_PRODUCT',
+          id: 2,
+          name: 'Melody potatoes',
+          category: 2,
+        },
+      ]);
+      done();
+    });
   });
 
   it('should cancel on cancel button', () => {
