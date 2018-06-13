@@ -42,6 +42,8 @@ class CategorySelect extends Component {
             <input
               id="category"
               name="newCategory"
+              // eslint-disable-next-line
+              autoFocus
               autoComplete="off"
               placeholder={translate('categories.input')}
             />
