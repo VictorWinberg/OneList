@@ -1,10 +1,11 @@
-import { store } from '../store';
+import makeStore, { store } from '../store';
 import products from '../../reducers/products';
 import {
   addProduct,
   toggleProduct,
   removeProduct,
   inactivateProducts,
+  fetchProducts,
 } from '../../actions/products';
 
 const testProduct = [
@@ -55,5 +56,34 @@ describe('products reducer', () => {
       { id: 2, name: 'Apple', checked: true, inactive: true },
       { id: 3, name: 'Pear', checked: true, inactive: true },
     ]);
+  });
+
+  it('can handle FETCH_PRODUCTS', done => {
+    const mockStore = makeStore();
+    fetch.mockResponse(
+      JSON.stringify([
+        {
+          id: 1,
+          name: 'Milk',
+        },
+      ])
+    );
+
+    mockStore.dispatch(fetchProducts());
+
+    setImmediate(() => {
+      expect(mockStore.getActions()).toEqual([
+        {
+          type: 'FETCH_PRODUCTS',
+          products: [
+            {
+              id: 1,
+              name: 'Milk',
+            },
+          ],
+        },
+      ]);
+      done();
+    });
   });
 });
