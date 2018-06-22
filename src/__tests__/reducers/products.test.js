@@ -2,6 +2,7 @@ import makeStore, { store } from '../store';
 import products from '../../reducers/products';
 import {
   addProduct,
+  editProduct,
   toggleProduct,
   removeProduct,
   inactivateProducts,
@@ -85,5 +86,19 @@ describe('products reducer', () => {
       ]);
       done();
     });
+  });
+
+  it('can handle ERRORS', () => {
+    fetch.resetMocks();
+    fetch.mockReject('Error');
+
+    dispatch(addProduct({ name: 'Milk' }));
+    dispatch(editProduct({ id: 1, name: 'Milk' }));
+    dispatch(toggleProduct(1));
+    dispatch(removeProduct(1));
+    dispatch(inactivateProducts());
+    dispatch(fetchProducts());
+
+    expect(fetch.mock.calls.length).toEqual(6);
   });
 });

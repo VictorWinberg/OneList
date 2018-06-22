@@ -21,7 +21,7 @@ describe('user reducer', () => {
 
   beforeEach(() => {
     mockStore = makeStore();
-    fetch.mockResponse(JSON.stringify(testUser));
+    fetch.resetMocks();
   });
 
   it('has a default state', () => {
@@ -36,18 +36,19 @@ describe('user reducer', () => {
       updateUser({
         target: {
           id: 'username',
-          value: 'Jonny D',
+          value: 'Johnny D',
         },
       })
     );
 
     expect(user(testUser, action)).toEqual({
       ...testUser,
-      username: 'Jonny D',
+      username: 'Johnny D',
     });
   });
 
   it('can handle SUBMIT_USER', done => {
+    fetch.mockResponse(JSON.stringify(testUser));
     mockStore.dispatch(submitUser({ preventDefault() {} }, testUser));
 
     setImmediate(() => {
@@ -62,7 +63,41 @@ describe('user reducer', () => {
     });
   });
 
+  it('can handle SUBMIT_USER with error', done => {
+    fetch.mockResponses(
+      [
+        JSON.stringify({ error: 'Something went wrong' }),
+        {
+          status: 400,
+        },
+      ],
+      [
+        JSON.stringify(testUser),
+        {
+          status: 200,
+        },
+      ]
+    );
+
+    mockStore.dispatch(
+      submitUser({ preventDefault() {} }, { username: 'New' })
+    );
+
+    setImmediate(() => {
+      expect(mockStore.getActions()).toEqual([
+        { type: 'SUBMIT_USER' },
+        { type: 'REQUEST_USER' },
+        {
+          type: 'RECIEVE_USER',
+          user: testUser,
+        },
+      ]);
+      done();
+    });
+  });
+
   it('can handle REQUEST_USER and RECIEVE_USER', done => {
+    fetch.mockResponse(JSON.stringify(testUser));
     mockStore.dispatch(fetchUser());
 
     setImmediate(() => {
@@ -78,6 +113,7 @@ describe('user reducer', () => {
   });
 
   it('can handle LOGOUT_USER', done => {
+    fetch.mockResponse('{}');
     mockStore.dispatch(logoutUser());
 
     setImmediate(() => {
