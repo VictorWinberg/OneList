@@ -29,4 +29,41 @@ module.exports = client => ({
       .then(({ rows }) => done(null, rows))
       .catch(err => done(err));
   },
+
+  reorder({ startIndex, endIndex }, done) {
+    const begin = 'BEGIN TRANSACTION;';
+    const setTemp = `
+      UPDATE categories 
+      SET orderidx = 0
+      WHERE orderidx = ${startIndex};\n`;
+
+    let move = '';
+    // MOVE UP
+    if (startIndex - endIndex > 0) {
+      move = `
+        UPDATE categories
+        SET orderidx = (orderidx + 1)
+        WHERE orderidx > ${endIndex - 1} and orderidx > 0;`;
+    }
+    // MOVE DOWN
+    if (startIndex - endIndex < 0) {
+      move = `
+        UPDATE categories
+        SET orderidx = (orderidx - 1)
+        WHERE orderidx <= ${endIndex} and orderidx > 0;`;
+    }
+
+    const replaceTemp = `
+      UPDATE categories
+      SET orderidx = ${endIndex}
+      WHERE orderidx = 0;\n`;
+
+    const end = 'END TRANSACTION;';
+    const sql = begin + setTemp + move + replaceTemp + end;
+
+    client
+      .query(sql)
+      .then(() => done(null, null))
+      .catch(err => done(err));
+  },
 });

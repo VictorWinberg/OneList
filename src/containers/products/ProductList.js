@@ -39,7 +39,7 @@ const sectioned = state => {
       items: map(product => ({ ...product, value: product.name }), products),
     }))(zipObject(map('name', state.categories), state.categories)),
     filter('items.length'),
-    sortBy(['at', 'id'])
+    sortBy('orderidx')
   )(state.products);
 };
 

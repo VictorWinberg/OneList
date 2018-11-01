@@ -62,11 +62,23 @@ export const removeCategory = id => dispatch => {
   });
 };
 
-export const reorderCategory = ({ startIndex, endIndex }) => ({
-  type: REORDER_CATEGORY,
-  startIndex,
-  endIndex,
-});
+export const reorderCategory = ({ startIndex, endIndex }) => dispatch => {
+  fetch('/__/categories_reorder', {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({ startIndex, endIndex }),
+  }).catch(err => console.error(err));
+
+  return dispatch({
+    type: REORDER_CATEGORY,
+    startIndex,
+    endIndex,
+  });
+};
 
 export const fetchCategories = () => dispatch =>
   fetch('/__/categories', { credentials: 'include' })

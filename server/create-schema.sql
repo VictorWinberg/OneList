@@ -15,6 +15,7 @@ CREATE TABLE categories (
   id        SERIAL        NOT NULL,
   name      VARCHAR(255)  NOT NULL UNIQUE,
   color     VARCHAR(255),
+  orderidx  SERIAL        NOT NULL,
 
   PRIMARY KEY(id)
 );

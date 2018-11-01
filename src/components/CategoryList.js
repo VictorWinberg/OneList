@@ -10,8 +10,8 @@ const CategoryList = ({ view, items, linkTo, onItemReorder }) => (
       onDragEnd={({ source, destination }) => {
         if (destination) {
           onItemReorder({
-            startIndex: source.index,
-            endIndex: destination.index,
+            startIndex: items[source.index].orderidx,
+            endIndex: items[destination.index].orderidx,
           });
         }
       }}

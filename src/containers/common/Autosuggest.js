@@ -37,7 +37,7 @@ const getSuggestions = (value, state) => {
       suggestions: products,
     }))(zipObject(map('name', state.categories), state.categories)),
     filter('suggestions.length'),
-    sortBy(['at', 'id'])
+    sortBy('orderidx')
   )(state.products);
 };
 

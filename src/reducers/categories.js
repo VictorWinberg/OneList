@@ -1,4 +1,4 @@
-import { getOr, maxBy, omit } from 'lodash/fp';
+import { getOr, maxBy, omit, sortBy } from 'lodash/fp';
 
 import {
   ADD_CATEGORY,
@@ -28,14 +28,28 @@ const categories = (state = [], action) => {
       return state.filter(category => category.id !== action.id);
     case REORDER_CATEGORY: {
       const { startIndex, endIndex } = action;
-      const newState = [...state];
-      const [removed] = newState.splice(startIndex, 1);
-      newState.splice(endIndex, 0, removed);
 
-      return newState.map((category, i) => ({ ...category, at: i }));
+      const newState = [...state].map(item => {
+        // REPLACE
+        if (item.orderidx === startIndex) {
+          return { ...item, orderidx: endIndex };
+        }
+        // MOVE UP
+        if (startIndex - endIndex > 0 && item.orderidx > endIndex - 1) {
+          return { ...item, orderidx: item.orderidx + 1 };
+        }
+        // MOVE DOWN
+        if (startIndex - endIndex < 0 && item.orderidx <= endIndex) {
+          return { ...item, orderidx: item.orderidx - 1 };
+        }
+
+        return item;
+      });
+
+      return sortBy('orderidx', newState);
     }
     case FETCH_CATEGORIES:
-      return action.categories;
+      return sortBy('orderidx', action.categories);
     default:
       return state;
   }

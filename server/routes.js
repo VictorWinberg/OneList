@@ -118,6 +118,13 @@ module.exports = (app, passport, db) => {
     });
   });
 
+  app.put('/__/categories_reorder', isLoggedIn, (req, res) => {
+    db.Category.reorder(req.body, (err, categories) => {
+      if (err) return res.status(400).send(err);
+      return res.send(categories);
+    });
+  });
+
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
   });
