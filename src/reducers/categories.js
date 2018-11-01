@@ -35,16 +35,25 @@ const categories = (state = [], action) => {
           return { ...item, orderidx: endIndex };
         }
         // MOVE UP
-        if (startIndex - endIndex > 0 && item.orderidx > endIndex - 1) {
+        if (
+          startIndex - endIndex > 0 &&
+          item.orderidx < startIndex &&
+          item.orderidx >= endIndex
+        ) {
           return { ...item, orderidx: item.orderidx + 1 };
         }
         // MOVE DOWN
-        if (startIndex - endIndex < 0 && item.orderidx <= endIndex) {
+        if (
+          startIndex - endIndex < 0 &&
+          item.orderidx > startIndex &&
+          item.orderidx <= endIndex
+        ) {
           return { ...item, orderidx: item.orderidx - 1 };
         }
 
         return item;
       });
+      console.log(sortBy('orderidx', newState));
 
       return sortBy('orderidx', newState);
     }

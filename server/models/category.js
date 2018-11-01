@@ -43,14 +43,14 @@ module.exports = client => ({
       move = `
         UPDATE categories
         SET orderidx = (orderidx + 1)
-        WHERE orderidx > ${endIndex - 1} and orderidx > 0;`;
+        WHERE orderidx >= ${endIndex} AND orderidx < ${startIndex};\n`;
     }
     // MOVE DOWN
     if (startIndex - endIndex < 0) {
       move = `
         UPDATE categories
         SET orderidx = (orderidx - 1)
-        WHERE orderidx <= ${endIndex} and orderidx > 0;`;
+        WHERE orderidx <= ${endIndex} AND orderidx > ${startIndex};\n`;
     }
 
     const replaceTemp = `
