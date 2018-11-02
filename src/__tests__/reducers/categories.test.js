@@ -56,24 +56,26 @@ describe('categories reducer', () => {
           {
             id: 1,
             name: 'Vegetables',
+            orderidx: 1,
           },
           {
             id: 2,
             name: 'Meat',
+            orderidx: 2,
           },
         ],
-        dispatch(reorderCategory({ startIndex: 0, endIndex: 1 }))
+        dispatch(reorderCategory({ startIndex: 1, endIndex: 2 }))
       )
     ).toEqual([
       {
         id: 2,
         name: 'Meat',
-        at: 0,
+        orderidx: 1,
       },
       {
         id: 1,
         name: 'Vegetables',
-        at: 1,
+        orderidx: 2,
       },
     ]);
   });

@@ -53,7 +53,6 @@ const categories = (state = [], action) => {
 
         return item;
       });
-      console.log(sortBy('orderidx', newState));
 
       return sortBy('orderidx', newState);
     }

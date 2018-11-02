@@ -30,40 +30,50 @@ module.exports = client => ({
       .catch(err => done(err));
   },
 
-  reorder({ startIndex, endIndex }, done) {
-    const begin = 'BEGIN TRANSACTION;';
-    const setTemp = `
-      UPDATE categories 
-      SET orderidx = 0
-      WHERE orderidx = ${startIndex};\n`;
+  async reorder({ startIndex, endIndex }, done) {
+    try {
+      await client.query('BEGIN');
 
-    let move = '';
-    // MOVE UP
-    if (startIndex - endIndex > 0) {
-      move = `
+      await client.query(`
+        UPDATE categories
+        SET orderidx = 0
+        WHERE orderidx = ${startIndex};\n`);
+
+      // MOVE UP
+      if (startIndex - endIndex > 0) {
+        await client.query(`
         UPDATE categories
         SET orderidx = (orderidx + 1)
-        WHERE orderidx >= ${endIndex} AND orderidx < ${startIndex};\n`;
-    }
-    // MOVE DOWN
-    if (startIndex - endIndex < 0) {
-      move = `
+        WHERE orderidx >= ${endIndex} AND orderidx < ${startIndex};\n`);
+      }
+      // MOVE DOWN
+      if (startIndex - endIndex < 0) {
+        await client.query(`
         UPDATE categories
         SET orderidx = (orderidx - 1)
-        WHERE orderidx <= ${endIndex} AND orderidx > ${startIndex};\n`;
+        WHERE orderidx <= ${endIndex} AND orderidx > ${startIndex};\n`);
+      }
+
+      await client.query(`
+        UPDATE categories
+        SET orderidx = ${endIndex}
+        WHERE orderidx = 0;\n`);
+
+      const { rows: [{ unique }] } = await client.query(`
+        SELECT CASE WHEN
+        COUNT(DISTINCT orderidx) = COUNT(orderidx)
+        THEN 1 ELSE 0 END AS unique
+        FROM categories;`);
+
+      if (unique) {
+        await client.query('COMMIT');
+      } else {
+        await client.query('ROLLBACK');
+      }
+    } catch (error) {
+      await client.query('ROLLBACK');
+    } finally {
+      done(null, null);
     }
-
-    const replaceTemp = `
-      UPDATE categories
-      SET orderidx = ${endIndex}
-      WHERE orderidx = 0;\n`;
-
-    const end = 'END TRANSACTION;';
-    const sql = begin + setTemp + move + replaceTemp + end;
-
-    client
-      .query(sql)
-      .then(() => done(null, null))
-      .catch(err => done(err));
   },
 });
