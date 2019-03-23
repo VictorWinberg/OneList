@@ -1,4 +1,4 @@
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
 
@@ -15,31 +15,34 @@ module.exports = (passport, User) => {
     new GoogleStrategy(
       {
         clientID: GOOGLE_CLIENT_ID,
-        clientSecret: GOOGLE_CLIENT_SECRET,
+        clientSecret: GOOGLE_CLIENT_SECRET
       },
       (token, refreshToken, profile, done) => {
         // make the code asynchronous
         // User.findOne won't fire until we have all our data back from Google
         process.nextTick(() => {
-          const email = get(['emails', 0, 'value'], profile); // pull the first email
+          const email = get(["emails", 0, "value"], profile); // pull the first email
 
           User.getByEmail(email, (err, user) => {
             if (err) return done(err);
+            return done(null, user);
 
-            if (user) {
-              // all is well, return successful user
-              return done(null, user);
-            }
-            // if there is no user with that email
-            // create the user
-            const newUser = {
-              email,
-              username: get(['displayName'], profile),
-              photo: get(['photos', 0, 'value'], profile),
-              language: get(['_json', 'language'], profile),
-            };
+            // We don't want to create new users.
 
-            return User.create(newUser, done);
+            // if (user) {
+            //   // all is well, return successful user
+            //   return done(null, user);
+            // }
+            // // if there is no user with that email
+            // // create the user
+            // const newUser = {
+            //   email,
+            //   username: get(['displayName'], profile),
+            //   photo: get(['photos', 0, 'value'], profile),
+            //   language: get(['_json', 'language'], profile),
+            // };
+
+            // return User.create(newUser, done);
           });
         });
       }
