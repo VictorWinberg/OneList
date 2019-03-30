@@ -9,6 +9,7 @@ import {
   groupBy,
   map,
   mergeWith,
+  reject,
   sortBy,
   toInteger,
   zipObject,
@@ -25,6 +26,8 @@ const sectioned = state => {
     get('name', find({ id: toInteger(category) }, state.categories));
 
   return flow(
+    reject('inactive'),
+    reject('checked'),
     map(product => ({
       ...product,
       categoryName: getCategory(product),
@@ -40,9 +43,16 @@ const sectioned = state => {
   )(state.products);
 };
 
+const checked = state =>
+  flow(
+    reject('inactive'),
+    filter('checked'),
+    map(product => ({ ...product, value: product.name }))
+  )(state.products);
+
 const mapStateToProps = state => ({
   active: sectioned(state),
-  checked: [],
+  checked: checked(state),
   translate: getTranslate(state.locale),
   linkTo: id => `/products/${id}`,
 });
@@ -52,7 +62,4 @@ const mapDispatchToProps = {
   onDoneClick: inactivateProducts,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProductList);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductList);

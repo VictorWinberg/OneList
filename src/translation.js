@@ -2,11 +2,11 @@
 
 module.exports = {
   nav: {
-    products: ['Shopping List', 'Inköpslista'],
+    shoppinglist: ['Shopping List', 'Inköpslista'],
     categories: ['Categories', 'Kategorier'],
-    share: ['Share', 'Dela'],
+    products: ['Products', 'Varor'],
   },
-  products: {
+  shoppinglist: {
     cart: ['Cart', 'Varukorg'],
     remove: ['Done', 'Klar'],
     input: ['New product...', 'Ny vara...'],
@@ -25,8 +25,8 @@ module.exports = {
     input: ['New category...', 'Ny kategori...'],
     uncategorized: ['Uncategorized', 'Okategoriserad'],
   },
-  share: {
-    input: ['New e-mail...', 'Ny e-mail...'],
+  products: {
+    input: ['New product...', 'Ny vara...'],
   },
   settings: {
     title: ['Settings', 'Inställningar'],
