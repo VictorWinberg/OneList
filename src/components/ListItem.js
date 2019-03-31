@@ -5,13 +5,14 @@ import penselecticon from '../assets/icons/pen-select.svg';
 
 const ListItem = ({ id, value, checked, onClick, linkTo }) => (
   <li className="listitem">
-    <label
-      role="presentation"
-      onClick={onClick}
-      onKeyDown={onClick}
-      htmlFor={id}
-    >
-      <input readOnly type="checkbox" id={id} checked={checked} />
+    <label role="presentation" onKeyDown={onClick} htmlFor={id}>
+      <input
+        readOnly
+        id={id}
+        type="checkbox"
+        onClick={onClick}
+        checked={checked}
+      />
       {value}
       <span className="checkmark" />
     </label>
