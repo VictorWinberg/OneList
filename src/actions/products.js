@@ -1,7 +1,8 @@
 import {
   ADD_PRODUCT,
   EDIT_PRODUCT,
-  TOGGLE_PRODUCT,
+  TOGGLE_PRODUCT_CHECKED,
+  TOGGLE_PRODUCT_INACTIVE,
   REMOVE_PRODUCT,
   INACTIVATE_PRODUCTS,
   FETCH_PRODUCTS,
@@ -46,19 +47,36 @@ export const editProduct = ({ id, name, category }) => dispatch => {
   });
 };
 
-export const toggleProduct = id => dispatch => {
+export const toggleProductChecked = id => dispatch => {
   fetch(`/__/products/${id}`, {
     method: 'PUT',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      Type: 'toggle',
+      Type: 'toggle-checked',
     },
     credentials: 'include',
   }).catch(err => console.error(err));
 
   return dispatch({
-    type: TOGGLE_PRODUCT,
+    type: TOGGLE_PRODUCT_CHECKED,
+    id,
+  });
+};
+
+export const toggleProductInactive = id => dispatch => {
+  fetch(`/__/products/${id}`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Type: 'toggle-inactive',
+    },
+    credentials: 'include',
+  }).catch(err => console.error(err));
+
+  return dispatch({
+    type: TOGGLE_PRODUCT_INACTIVE,
     id,
   });
 };

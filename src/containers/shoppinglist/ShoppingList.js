@@ -15,7 +15,10 @@ import {
   zipObject,
 } from 'lodash/fp';
 
-import { toggleProduct, inactivateProducts } from '../../actions/products';
+import {
+  toggleProductChecked,
+  inactivateProducts,
+} from '../../actions/products';
 import ProductList from '../../components/ProductList';
 
 // TODO: Move some of this logic to a helpers function
@@ -58,8 +61,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  onItemClick: toggleProduct,
+  onItemClick: toggleProductChecked,
   onDoneClick: inactivateProducts,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductList);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProductList);

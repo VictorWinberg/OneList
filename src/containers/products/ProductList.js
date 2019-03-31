@@ -14,7 +14,7 @@ import {
   zipObject,
 } from 'lodash/fp';
 
-import { toggleProduct, inactivateProducts } from '../../actions/products';
+import { toggleProductInactive } from '../../actions/products';
 import ProductList from '../../components/ProductList';
 
 // TODO: Move some of this logic to a helpers function
@@ -27,6 +27,7 @@ const sectioned = state => {
   return flow(
     map(product => ({
       ...product,
+      checked: !product.inactive,
       categoryName: getCategory(product),
     })),
     groupBy('categoryName'),
@@ -48,8 +49,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  onItemClick: toggleProduct,
-  onDoneClick: inactivateProducts,
+  onItemClick: toggleProductInactive,
+  onDoneClick: () => null,
 };
 
 export default connect(

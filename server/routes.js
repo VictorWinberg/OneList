@@ -76,8 +76,10 @@ module.exports = (app, passport, db) => {
       return res.send(product);
     };
 
-    if (req.get('Type') === 'toggle') {
-      db.Product.toggle(req.params.id, result);
+    if (req.get('Type') === 'toggle-checked') {
+      db.Product.toggleChecked(req.params.id, result);
+    } else if (req.get('Type') === 'toggle-inactive') {
+      db.Product.toggleInactive(req.params.id, result);
     } else {
       db.Product.update(req.params.id, req.body, result);
     }

@@ -6,11 +6,6 @@ module.exports = {
     categories: ['Categories', 'Kategorier'],
     products: ['Products', 'Varor'],
   },
-  shoppinglist: {
-    cart: ['Cart', 'Varukorg'],
-    remove: ['Done', 'Klar'],
-    input: ['New product...', 'Ny vara...'],
-  },
   edit: {
     edit: ['Edit', 'Redigera'],
     name: ['Name', 'Namn'],
@@ -26,6 +21,8 @@ module.exports = {
     uncategorized: ['Uncategorized', 'Okategoriserad'],
   },
   products: {
+    cart: ['Cart', 'Varukorg'],
+    remove: ['Done', 'Klar'],
     input: ['New product...', 'Ny vara...'],
   },
   settings: {

@@ -1,7 +1,7 @@
 module.exports = client => ({
   create({ name, category }, done) {
     const sql = `
-      INSERT INTO products (name, category) VALUES ($1, $2) 
+      INSERT INTO products (name, category) VALUES ($1, $2)
       ON CONFLICT (name) DO UPDATE SET inactive = FALSE, checked = FALSE
       RETURNING *`;
     client
@@ -18,8 +18,16 @@ module.exports = client => ({
       .catch(err => done(err));
   },
 
-  toggle(id, done) {
+  toggleChecked(id, done) {
     const sql = 'UPDATE products SET checked = NOT checked WHERE id = $1';
+    client
+      .query(sql, [id])
+      .then(({ rows }) => done(null, rows[0] || null))
+      .catch(err => done(err));
+  },
+
+  toggleInactive(id, done) {
+    const sql = 'UPDATE products SET inactive = NOT inactive WHERE id = $1';
     client
       .query(sql, [id])
       .then(({ rows }) => done(null, rows[0] || null))

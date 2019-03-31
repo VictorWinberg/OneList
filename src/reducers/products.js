@@ -3,7 +3,8 @@ import { getOr, maxBy, find, omit } from 'lodash/fp';
 import {
   ADD_PRODUCT,
   EDIT_PRODUCT,
-  TOGGLE_PRODUCT,
+  TOGGLE_PRODUCT_CHECKED,
+  TOGGLE_PRODUCT_INACTIVE,
   REMOVE_PRODUCT,
   INACTIVATE_PRODUCTS,
   FETCH_PRODUCTS,
@@ -36,7 +37,7 @@ const products = (state = [], action) => {
         ...product,
         ...(product.id === action.id ? omit('type', action) : {}),
       }));
-    case TOGGLE_PRODUCT: {
+    case TOGGLE_PRODUCT_CHECKED: {
       const toggled = state.filter(product => product.id === action.id)[0];
       return [
         ...state.filter(product => product.id !== action.id),
@@ -46,11 +47,21 @@ const products = (state = [], action) => {
         },
       ];
     }
+    case TOGGLE_PRODUCT_INACTIVE: {
+      const toggled = state.filter(product => product.id === action.id)[0];
+      return [
+        ...state.filter(product => product.id !== action.id),
+        {
+          ...toggled,
+          inactive: !toggled.inactive,
+        },
+      ];
+    }
     case REMOVE_PRODUCT:
       return state.filter(product => product.id !== action.id);
     case INACTIVATE_PRODUCTS:
-      return state.map(
-        product => (product.checked ? { ...product, inactive: true } : product)
+      return state.map(product =>
+        product.checked ? { ...product, inactive: true } : product
       );
     case FETCH_PRODUCTS:
       return action.products;
