@@ -2,6 +2,7 @@ import React from 'react';
 
 import ProductList from './ProductList';
 import New from '../common/New';
+import Snackbar from '../common/Snackbar';
 import { addProduct, removeProduct } from '../../actions/products';
 
 const Products = () => (
@@ -12,6 +13,7 @@ const Products = () => (
       onAdd={addProduct}
       onRemove={removeProduct}
     />
+    <Snackbar />
     <ProductList view="products" />
   </div>
 );

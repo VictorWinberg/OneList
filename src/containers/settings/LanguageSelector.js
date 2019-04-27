@@ -9,7 +9,7 @@ import {
 } from 'react-localize-redux';
 import { updateUser } from '../../actions/user';
 
-const LanguageSelector = ({ translate, languages, update }) => (
+const LanguageSelector = ({ myLanguage, translate, languages, update }) => (
   <div>
     <label htmlFor="land">
       <span>{translate('settings.language')}</span>
@@ -17,13 +17,16 @@ const LanguageSelector = ({ translate, languages, update }) => (
     </label>
     <select id="language" onChange={update}>
       {languages.map(language => (
-        <option key={language.code}>{language.code}</option>
+        <option key={language.code} selected={myLanguage === language}>
+          {language.code}
+        </option>
       ))}
     </select>
   </div>
 );
 
 LanguageSelector.propTypes = {
+  myLanguage: PropTypes.string.isRequired,
   languages: PropTypes.arrayOf(
     PropTypes.shape({
       code: PropTypes.string.isRequired,
@@ -34,7 +37,7 @@ LanguageSelector.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  currentLanguage: getActiveLanguage(state.locale),
+  myLanguage: getActiveLanguage(state.locale),
   languages: getLanguages(state.locale),
   translate: getTranslate(state.locale),
   user: state.user,
@@ -45,4 +48,7 @@ const mapDispatchToProps = {
   update: updateUser,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LanguageSelector);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LanguageSelector);

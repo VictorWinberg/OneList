@@ -58,6 +58,7 @@ const mapStateToProps = state => ({
   checked: checked(state),
   translate: getTranslate(state.locale),
   linkTo: id => `/products/${id}`,
+  isLoggedIn: !!state.user.email,
 });
 
 const mapDispatchToProps = {

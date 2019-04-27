@@ -9,12 +9,12 @@ import {
 
 class SetLanguage extends Component {
   componentWillReceiveProps(props) {
-    const { user, languages, currentLanguage, setLanguage } = props;
+    const { user, languages, myLanguage, setLanguage } = props;
     const prevLanguage = this.props.user.language;
     if (
       user.language &&
       prevLanguage !== user.language &&
-      currentLanguage !== user.language &&
+      myLanguage !== user.language &&
       languages.includes(user.language)
     ) {
       setLanguage(user.language);
@@ -30,13 +30,13 @@ SetLanguage.propTypes = {
   user: PropTypes.shape({
     language: PropTypes.string,
   }).isRequired,
-  currentLanguage: PropTypes.string.isRequired,
+  myLanguage: PropTypes.string.isRequired,
   languages: PropTypes.arrayOf(PropTypes.string).isRequired,
   setLanguage: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  currentLanguage: getActiveLanguage(state.locale).code,
+  myLanguage: getActiveLanguage(state.locale).code,
   languages: getLanguages(state.locale).map(language => language.code),
   user: state.user,
 });
@@ -45,4 +45,7 @@ const mapDispatchToProps = {
   setLanguage: setActiveLanguage,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SetLanguage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SetLanguage);

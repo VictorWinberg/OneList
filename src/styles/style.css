@@ -33,7 +33,7 @@ h1 {
   display: inline;
   font-size: 34px;
   line-height: 34px;
-  font-family: 'Antic Didone', serif;
+  font-family: "Antic Didone", serif;
   position: relative;
   left: 0.55em;
 }
@@ -41,7 +41,7 @@ h1 {
 h2 {
   color: #458fde;
   margin: 0.5em;
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
 }
 
 ul {
@@ -56,7 +56,7 @@ li {
 }
 
 p {
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   margin: 0.5em;
 }
 
@@ -86,7 +86,7 @@ nav li {
 nav a {
   color: rgb(70, 70, 70);
   font-size: 28px;
-  font-family: 'AmaticSC', 'Arial Narrow', Arial, sans-serif;
+  font-family: "AmaticSC", "Arial Narrow", Arial, sans-serif;
   text-decoration: none;
   text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.3);
 }
@@ -119,6 +119,13 @@ nav a.active {
   text-indent: 1.5em;
 }
 
+#unauthenticated {
+  text-align: center;
+  color: #9f6000;
+  background: #feefb3;
+  padding: 0.25em 0;
+}
+
 .categories ul {
   margin: 0;
 }
@@ -129,7 +136,7 @@ nav a.active {
 
 .product .title,
 .category .title {
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   padding: 0.5em 0.5em;
   font-size: 20px;
 }
@@ -164,7 +171,7 @@ nav a.active {
 
 .suggestions {
   padding: 0.2em 0.5em;
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
 }
 
 .suggestions span {
@@ -186,7 +193,7 @@ nav a.active {
 .product label span,
 .category label span,
 .settings label span {
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   font-size: 20px;
   width: 120px;
   clear: both;
@@ -236,7 +243,7 @@ nav a.active {
 .logoutBtn {
   cursor: pointer;
   padding: 0.2em 0;
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   font-size: 22px;
   border-radius: 3px;
   border: black solid 1px;
@@ -306,7 +313,7 @@ nav a.active {
 
 /* Customize the label (the listitem label) */
 .listitem label {
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   width: calc(100% - 3.5em);
   position: relative;
   padding-left: 35px;
@@ -356,13 +363,13 @@ nav a.active {
 
 /* Create the checkmark/indicator (hidden when not checked) */
 .products .checkmark:after {
-  content: '';
+  content: "";
   position: absolute;
   display: none;
 }
 
 .section {
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   padding-left: 0.5em;
   margin-top: 0.3em;
   font-size: 20px;
@@ -379,7 +386,7 @@ nav a.active {
 
 .products .done h2 {
   color: white;
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   font-weight: normal;
   margin-left: 0.3em;
   display: inline;
@@ -391,7 +398,7 @@ nav a.active {
 
 .products .done button {
   float: right;
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   font-size: 20px;
   border-radius: 5px;
   border: outset 2px white;
@@ -426,12 +433,12 @@ nav a.active {
 }
 
 .categories .checkmark {
-  background-image: url('../assets/icons/reorder.svg');
+  background-image: url("../assets/icons/reorder.svg");
   background-size: contain;
 }
 
 .share .checkmark {
-  background-image: url('../assets/icons/user.svg');
+  background-image: url("../assets/icons/user.svg");
   background-size: contain;
 }
 
@@ -465,6 +472,7 @@ nav a.active {
 .userform img {
   border-radius: 50%;
   margin: 0.5em;
+  width: 50px;
 }
 
 :focus {
@@ -473,23 +481,23 @@ nav a.active {
 
 /*FONT: Antic Didone*/
 @font-face {
-  font-family: 'Antic Didone';
-  src: url('../assets/fonts/AnticDidone-Regular.ttf');
+  font-family: "Antic Didone";
+  src: url("../assets/fonts/AnticDidone-Regular.ttf");
 }
 
 /*FONT: AmaticSC*/
 @font-face {
-  font-family: 'AmaticSC';
-  src: url('../assets/fonts/AmaticSC-Regular.ttf');
+  font-family: "AmaticSC";
+  src: url("../assets/fonts/AmaticSC-Regular.ttf");
 }
 
 /*FONT: PatrickHandSC*/
 @font-face {
-  font-family: 'PatrickHandSC';
-  src: url('../assets/fonts/PatrickHandSC-Regular.ttf');
+  font-family: "PatrickHandSC";
+  src: url("../assets/fonts/PatrickHandSC-Regular.ttf");
 }
 /*FONT: Quicksand*/
 @font-face {
-  font-family: 'Quicksand';
-  src: url('../assets/fonts/Quicksand-Regular.ttf');
+  font-family: "Quicksand";
+  src: url("../assets/fonts/Quicksand-Regular.ttf");
 }

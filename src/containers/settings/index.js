@@ -5,12 +5,14 @@ import { getTranslate } from 'react-localize-redux';
 
 import LanguageSelector from './LanguageSelector';
 import User from './User';
+import Snackbar from '../common/Snackbar';
 import { logoutUser } from '../../actions/user';
 
-const Settings = ({ translate, user, logout }) => (
+const Settings = ({ translate, isLoggedIn, logout }) => (
   <div className="settings">
+    <Snackbar />
     <h2>{translate('settings.title')}</h2>
-    {user.email ? (
+    {isLoggedIn ? (
       <div>
         <p>{translate('settings.authenticated')}</p>
         <User />
@@ -32,21 +34,20 @@ const Settings = ({ translate, user, logout }) => (
 
 Settings.propTypes = {
   translate: PropTypes.func.isRequired,
-  user: PropTypes.shape({
-    id: PropTypes.number,
-    username: PropTypes.string,
-    email: PropTypes.string,
-  }).isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   translate: getTranslate(state.locale),
-  user: state.user,
+  isLoggedIn: !!state.user.email,
 });
 
 const mapDispatchToProps = {
   logout: logoutUser,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Settings);
