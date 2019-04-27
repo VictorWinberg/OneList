@@ -3,7 +3,8 @@ import products from '../../reducers/products';
 import {
   addProduct,
   editProduct,
-  toggleProduct,
+  toggleProductChecked,
+  toggleProductInactive,
   removeProduct,
   inactivateProducts,
   fetchProducts,
@@ -32,9 +33,14 @@ describe('products reducer', () => {
     expect(products(undefined, dispatch(addProduct({})))).toEqual([]);
   });
 
-  it('can handle TOGGLE_PRODUCT', () => {
-    expect(products(testProduct, dispatch(toggleProduct(1)))).toEqual(
+  it('can handle TOGGLE_PRODUCT_CHECKED', () => {
+    expect(products(testProduct, dispatch(toggleProductChecked(1)))).toEqual(
       testProduct.map(product => ({ ...product, checked: true }))
+    );
+  });
+  it('can handle TOGGLE_PRODUCT_INACTIVE', () => {
+    expect(products(testProduct, dispatch(toggleProductInactive(1)))).toEqual(
+      testProduct.map(product => ({ ...product, inactive: true }))
     );
   });
 
@@ -94,11 +100,12 @@ describe('products reducer', () => {
 
     dispatch(addProduct({ name: 'Milk' }));
     dispatch(editProduct({ id: 1, name: 'Milk' }));
-    dispatch(toggleProduct(1));
+    dispatch(toggleProductChecked(1));
+    dispatch(toggleProductInactive(1));
     dispatch(removeProduct(1));
     dispatch(inactivateProducts());
     dispatch(fetchProducts());
 
-    expect(fetch.mock.calls.length).toEqual(6);
+    expect(fetch.mock.calls.length).toEqual(7);
   });
 });

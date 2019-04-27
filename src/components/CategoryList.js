@@ -17,7 +17,7 @@ const CategoryList = ({ view, items, linkTo, onItemReorder }) => (
       }}
     >
       <Droppable droppableId="droppable">
-        {({ innerRef }) => (
+        {({ innerRef, placeholder }) => (
           <ul ref={innerRef}>
             {items.map((item, index) => (
               <Draggable key={item.id} draggableId={item.id} index={index}>
@@ -41,6 +41,7 @@ const CategoryList = ({ view, items, linkTo, onItemReorder }) => (
                 )}
               </Draggable>
             ))}
+            {placeholder}
           </ul>
         )}
       </Droppable>

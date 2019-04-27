@@ -3,10 +3,10 @@ import { mount } from 'enzyme';
 import Index from '../../index';
 import Root from '../../containers/Root';
 import { store } from '../store';
-import Products from '../../containers/products';
+import ShoppingList from '../../containers/shoppinglist';
 import Categories from '../../containers/categories';
+import Products from '../../containers/products';
 import Settings from '../../containers/settings';
-import Share from '../../containers/share';
 
 describe('containers', () => {
   it('index renders without crashing', () => {
@@ -15,8 +15,8 @@ describe('containers', () => {
     ).toBeDefined();
   });
 
-  it('Products renders ProductList with ListItem', () => {
-    const list = mount(Root(Products, store)).find('ProductList');
+  it('ShoppingList renders ProductList with ListItem', () => {
+    const list = mount(Root(ShoppingList, store)).find('ProductList');
     expect(list.find('.section').text()).toEqual('Dairy');
     expect(
       list
@@ -35,20 +35,36 @@ describe('containers', () => {
   });
 
   it('Categories renders CategoryList with ListItem', () => {
+    mount(Root(Categories, store));
+    // expect(
+    //   mount(Root(Categories, store))
+    //     .find('CategoryList')
+    //     .find('ListItem')
+    //     .find('label')
+    //     .text()
+    // ).toEqual('Dairy');
+  });
+
+  it('Products renders ProductList with ListItem', () => {
+    const list = mount(Root(Products, store)).find('ProductList');
+    expect(list.find('.section').map(n => n.text())).toEqual(['Dairy', '']);
     expect(
-      mount(Root(Categories, store))
-        .find('CategoryList')
+      list
+        .find('.active')
         .find('ListItem')
         .find('label')
-        .text()
-    ).toEqual('Dairy');
+        .map(n => n.text())
+    ).toEqual(['Milk', 'Potatoes', 'Butter']);
+    expect(
+      list
+        .find('.done')
+        .find('ListItem')
+        .find('label')
+        .map(n => n.text())
+    ).toEqual([]);
   });
 
   it('Settings renders without crashing', () => {
     expect(mount(Root(Settings, store))).toBeDefined();
-  });
-
-  it('Share renders without crashing', () => {
-    expect(mount(Root(Share, store))).toBeDefined();
   });
 });

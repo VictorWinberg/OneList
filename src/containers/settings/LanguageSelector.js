@@ -15,18 +15,22 @@ const LanguageSelector = ({ myLanguage, translate, languages, update }) => (
       <span>{translate('settings.language')}</span>
       <input name="lang" type="hidden" />
     </label>
-    <select id="language" onChange={update}>
+    <select id="language" defaultValue={myLanguage.code} onChange={update}>
       {languages.map(language => (
-        <option key={language.code} selected={myLanguage === language}>
-          {language.code}
-        </option>
+        <option key={language.code}>{language.code}</option>
       ))}
     </select>
   </div>
 );
 
+LanguageSelector.defaultProps = {
+  myLanguage: { code: 'en' },
+};
+
 LanguageSelector.propTypes = {
-  myLanguage: PropTypes.string.isRequired,
+  myLanguage: PropTypes.shape({
+    code: PropTypes.string.isRequired,
+  }),
   languages: PropTypes.arrayOf(
     PropTypes.shape({
       code: PropTypes.string.isRequired,
