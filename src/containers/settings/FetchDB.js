@@ -6,11 +6,21 @@ import { fetchProducts } from '../../actions/products';
 import { fetchCategories } from '../../actions/categories';
 
 class FetchDB extends Component {
+  constructor() {
+    super();
+    this.interval = null;
+  }
+
   componentWillReceiveProps({ user, updateProducts, updateCategories }) {
     const { username } = user;
     if (username !== this.props.user.username) {
-      updateProducts();
-      updateCategories();
+      const update = () => {
+        updateProducts();
+        updateCategories();
+      };
+      update();
+      clearInterval(this.interval);
+      this.interval = setInterval(update, 5000);
     }
   }
 
@@ -36,4 +46,7 @@ const mapDispatchToProps = {
   updateCategories: fetchCategories,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FetchDB);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FetchDB);
