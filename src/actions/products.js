@@ -8,21 +8,27 @@ import {
   FETCH_PRODUCTS,
 } from '../constants/products';
 
-export const addProduct = ({ name, category }) => dispatch => {
+export const addProduct = ({ name, category }) => async dispatch => {
+  let json = {};
   if (name) {
-    fetch('/__/products', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-      body: JSON.stringify({ name, category }),
-    }).catch(err => console.error(err));
+    try {
+      const res = await fetch('/__/products', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ name, category }),
+      });
+      json = await res.json();
+    } catch (err) {
+      console.error(err);
+    }
   }
-
   return dispatch({
     type: ADD_PRODUCT,
+    id: json.id,
     name,
     category,
   });

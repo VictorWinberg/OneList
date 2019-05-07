@@ -6,9 +6,10 @@ import {
   FETCH_CATEGORIES,
 } from '../constants/categories';
 
-export const addCategory = ({ name }, next) => dispatch => {
+export const addCategory = ({ name }, next) => async dispatch => {
+  let json = {};
   if (name) {
-    fetch('/__/categories', {
+    const res = await fetch('/__/categories', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -16,13 +17,13 @@ export const addCategory = ({ name }, next) => dispatch => {
       },
       credentials: 'include',
       body: JSON.stringify({ name }),
-    })
-      .then(next)
-      .catch(err => console.error(err));
+    });
+    json = await res.json();
+    if (next) await next(json);
   }
-
   return dispatch({
     type: ADD_CATEGORY,
+    id: json.id,
     name,
   });
 };

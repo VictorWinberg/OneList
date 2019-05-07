@@ -1,4 +1,4 @@
-import { getOr, maxBy, omit, sortBy } from 'lodash/fp';
+import { omit, sortBy } from 'lodash/fp';
 
 import {
   ADD_CATEGORY,
@@ -15,7 +15,7 @@ const categories = (state = [], action) => {
       return [
         ...state,
         {
-          id: 1 + getOr(0, 'id', maxBy('id', state)),
+          id: action.id,
           name: action.name,
         },
       ];

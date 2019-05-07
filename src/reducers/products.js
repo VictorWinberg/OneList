@@ -1,4 +1,4 @@
-import { getOr, maxBy, find, omit } from 'lodash/fp';
+import { find, omit } from 'lodash/fp';
 
 import {
   ADD_PRODUCT,
@@ -13,7 +13,7 @@ import {
 const products = (state = [], action) => {
   switch (action.type) {
     case ADD_PRODUCT: {
-      const { name, category } = action;
+      const { id, name, category } = action;
       if (!name) return state;
       const exists = find({ name }, state);
       if (exists) {
@@ -23,14 +23,7 @@ const products = (state = [], action) => {
         ];
       }
 
-      return [
-        ...state,
-        {
-          id: 1 + getOr(0, 'id', maxBy('id', state)),
-          name,
-          category,
-        },
-      ];
+      return [...state, { id, name, category }];
     }
     case EDIT_PRODUCT:
       return state.map(product => ({

@@ -14,10 +14,15 @@ describe('categories reducer', () => {
     expect(categories(undefined, { type: 'unexpected' })).toEqual([]);
   });
 
-  it('can handle ADD_CATEGORY', () => {
-    expect(
-      categories(undefined, dispatch(addCategory({ name: 'Vegetables' })))
-    ).toEqual([
+  it('can handle ADD_CATEGORY', async () => {
+    fetch.mockResponse(
+      JSON.stringify({
+        id: 1,
+        name: 'Vegetables',
+      })
+    );
+    const state = await dispatch(addCategory({ name: 'Vegetables' }));
+    expect(categories(undefined, state)).toEqual([
       {
         id: 1,
         name: 'Vegetables',

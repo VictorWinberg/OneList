@@ -25,7 +25,7 @@ describe('Products', () => {
   });
 
   it('should edit a product with new category', done => {
-    fetch.mockResponse('{}');
+    fetch.mockResponse('{"id": 1, "name": "Potatoes"}');
 
     wrapper.find('input').instance().value = 'Melody potatoes';
 
@@ -40,21 +40,20 @@ describe('Products', () => {
       .find('CategorySelect')
       .find('input')
       .first()
-      .instance().value =
-      'Potatoes';
+      .instance().value = 'Potatoes';
 
     wrapper.find('form').simulate('submit', { preventDefault() {} });
 
     setImmediate(() => {
       expect(history).toEqual(['/']);
       expect(store.getActions()).toEqual([
-        { type: 'ADD_CATEGORY', name: 'Potatoes' },
         {
           type: 'EDIT_PRODUCT',
           id: 2,
           name: 'Melody potatoes',
           category: 2,
         },
+        { type: 'ADD_CATEGORY', id: 1, name: 'Potatoes' },
       ]);
       done();
     });

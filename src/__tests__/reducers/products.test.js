@@ -23,10 +23,15 @@ describe('products reducer', () => {
     expect(products(undefined, { type: 'unexpected' })).toEqual([]);
   });
 
-  it('can handle ADD_PRODUCT', () => {
-    expect(products(undefined, dispatch(addProduct({ name: 'Milk' })))).toEqual(
-      testProduct
+  it('can handle ADD_PRODUCT', async () => {
+    fetch.mockResponse(
+      JSON.stringify({
+        id: 1,
+        name: 'Milk',
+      })
     );
+    const state = await dispatch(addProduct({ name: 'Milk' }));
+    expect(products(undefined, state)).toEqual(testProduct);
   });
 
   it('can handle ADD_PRODUCT for None', () => {
