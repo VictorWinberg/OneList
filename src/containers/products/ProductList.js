@@ -30,6 +30,7 @@ const sectioned = state => {
       checked: !product.inactive,
       categoryName: getCategory(product),
     })),
+    sortBy(({ name }) => name.toLowerCase()),
     groupBy('categoryName'),
     mergeWith((category, products) => ({
       ...category,
