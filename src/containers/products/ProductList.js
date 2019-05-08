@@ -34,6 +34,7 @@ const sectioned = state => {
     mergeWith((category, products) => ({
       ...category,
       value: getOr(uncategorized, 'name', category),
+      orderidx: getOr(0, 'orderidx', category),
       items: map(product => ({ ...product, value: product.name }), products),
     }))(zipObject(map('name', state.categories), state.categories)),
     filter('items.length'),
