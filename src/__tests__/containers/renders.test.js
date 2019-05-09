@@ -54,7 +54,7 @@ describe('containers', () => {
         .find('ListItem')
         .find('label')
         .map(n => n.text())
-    ).toEqual(['Milk', 'Potatoes', 'Butter']);
+    ).toEqual(['Milk', 'Butter', 'Potatoes']);
     expect(
       list
         .find('.done')
