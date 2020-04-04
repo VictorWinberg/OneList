@@ -34,7 +34,7 @@ export const addProduct = ({ name, category }) => async dispatch => {
   });
 };
 
-export const editProduct = ({ id, name, category }) => dispatch => {
+export const editProduct = ({ id, name, amount, unit, category }) => dispatch => {
   fetch(`/__/products/${id}`, {
     method: 'PUT',
     headers: {
@@ -42,13 +42,15 @@ export const editProduct = ({ id, name, category }) => dispatch => {
       'Content-Type': 'application/json',
     },
     credentials: 'include',
-    body: JSON.stringify({ name, category: category || null }),
+    body: JSON.stringify({ name, amount, unit, category: category || null }),
   }).catch(err => console.error(err));
 
   return dispatch({
     type: EDIT_PRODUCT,
     id,
     name,
+    amount,
+    unit,
     category,
   });
 };

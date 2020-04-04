@@ -328,7 +328,7 @@ nav a.active {
 /* Customize the label (the listitem label) */
 .listitem label {
   font-family: "Quicksand", sans-serif;
-  width: calc(100% - 3.5em);
+  width: calc(100% - 2em);
   position: relative;
   cursor: pointer;
   user-select: none;
