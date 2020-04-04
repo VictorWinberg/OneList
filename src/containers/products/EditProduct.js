@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
-import { find, get, toInteger } from 'lodash/fp';
+import { find, get, toInteger, toNumber } from 'lodash/fp';
 
 import { addCategory } from '../../actions/categories';
 import { editProduct, removeProduct } from '../../actions/products';
 import CategorySelect from './CategorySelect';
 
-const EditProduct = ({ id, name, translate, onRemove, onSubmit, history }) => (
+const EditProduct = ({ id, name, amount, unit, translate, onRemove, onSubmit, history }) => (
   <div className="product">
     <div className="title">
       <b>{translate('edit.edit')}: </b>
@@ -24,6 +24,29 @@ const EditProduct = ({ id, name, translate, onRemove, onSubmit, history }) => (
             autoComplete="off"
             defaultValue={name}
           />
+        </label>
+        <label htmlFor="productAmountText">
+          <span>{translate('edit.amount')}:</span>
+          <div>
+            <input
+              id="productAmountText"
+              type="number"
+              step=".01"
+              className="productAmountText"
+              placeholder={translate('edit.selectAmount')}
+              name="productAmountText"
+              autoComplete="off"
+              defaultValue={amount}
+            />
+            <input
+              id="productAmountUnit"
+              className="productAmountUnit"
+              placeholder={translate('edit.selectUnit')}
+              name="productAmountUnit"
+              autoComplete="off"
+              defaultValue={unit}
+            />
+          </div>
         </label>
         <CategorySelect id={id} />
         <button
@@ -51,9 +74,16 @@ const EditProduct = ({ id, name, translate, onRemove, onSubmit, history }) => (
   </div>
 );
 
+EditProduct.defaultProps = {
+  amount: null,
+  unit: null,
+}
+
 EditProduct.propTypes = {
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
+  amount: PropTypes.number,
+  unit: PropTypes.string,
   translate: PropTypes.func.isRequired,
   onRemove: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
@@ -64,13 +94,16 @@ EditProduct.propTypes = {
 
 const handleSubmit = (event, id, history) => dispatch => {
   const data = new FormData(event.target);
-  const [name, category, newCategory] = [
+
+  const [name, amount, unit, category, newCategory] = [
     'productName',
+    'productAmountText',
+    'productAmountUnit',
     'category',
     'newCategory',
   ].map(type => data.get(type));
 
-  const edit = editProduct({ id, name, category: toInteger(category) });
+  const edit = editProduct({ id, name, amount, unit, category: toInteger(category) });
 
   if (newCategory) {
     dispatch(addCategory({ name: newCategory }, () => dispatch(edit)));
@@ -84,10 +117,13 @@ const handleSubmit = (event, id, history) => dispatch => {
 
 const mapStateToProps = (state, { match }) => {
   const id = toInteger(match.params.id);
+  const product = find({ id }, state.products);
 
   return {
     id,
-    name: get('name', find({ id }, state.products)),
+    name: get('name', product),
+    amount: toNumber(get('amount', product)) || null,
+    unit: get('unit', product),
     translate: getTranslate(state.locale),
   };
 };

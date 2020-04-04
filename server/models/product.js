@@ -10,10 +10,10 @@ module.exports = client => ({
       .catch(err => done(err));
   },
 
-  update(id, { name, category }, done) {
-    const sql = 'UPDATE products SET name = $2, category = $3 WHERE id = $1';
+  update(id, { name, amount, unit, category }, done) {
+    const sql = 'UPDATE products SET name = $2, amount = $3, unit = $4, category = $5 WHERE id = $1';
     client
-      .query(sql, [id, name, category])
+      .query(sql, [id, name, amount, unit, category])
       .then(({ rows }) => done(null, rows[0] || null))
       .catch(err => done(err));
   },
