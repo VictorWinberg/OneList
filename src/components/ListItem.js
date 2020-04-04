@@ -14,8 +14,8 @@ const ListItem = ({ id, value, checked, onClick, linkTo }) => (
         checked={checked}
       />
       <span className="productText">{value}</span>
-      <span className="amountText">100 gram</span>
-      <span className="checkmark" />
+      {value && <span><span className="amountText">100 gram</span>
+        <span className="checkmark" /> </span>}
     </label>
     <Link to={linkTo}>
       <img id="editicon" src={penselecticon} alt="Edit" height="27px" />
