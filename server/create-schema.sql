@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS products;
 CREATE TABLE products (
   id        SERIAL        NOT NULL,
   name      VARCHAR(255)  NOT NULL UNIQUE,
-  amount    DECIMAL,
+  amount    DECIMAL       DEFAULT 0,
   unit      VARCHAR(50),
   inactive  BOOLEAN       DEFAULT FALSE,
   checked   BOOLEAN       DEFAULT FALSE,
