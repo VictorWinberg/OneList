@@ -1,0 +1,3 @@
+ALTER TABLE products
+ADD COLUMN amount DECIMAL,
+ADD COLUMN unit VARCHAR(50);
