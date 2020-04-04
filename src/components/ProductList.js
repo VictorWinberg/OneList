@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ListItem from './ListItem';
 
 const showAmount = (amount, unit) => {
-  if (amount !== '0') {
+  if (amount && amount !== '0') {
     return <span className="amountText">{amount.replace(/\./, ',')}{unit}</span>
   }
   return null;

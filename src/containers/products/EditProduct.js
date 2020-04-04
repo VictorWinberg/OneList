@@ -33,6 +33,7 @@ const EditProduct = ({ id, name, amount, unit, translate, onRemove, onSubmit, hi
               type="number"
               step=".01"
               className="productAmountText"
+              placeholder={translate('edit.selectAmount')}
               name="productAmountText"
               autoComplete="off"
               defaultValue={amount}
@@ -40,6 +41,7 @@ const EditProduct = ({ id, name, amount, unit, translate, onRemove, onSubmit, hi
             <input
               id="productAmountUnit"
               className="productAmountUnit"
+              placeholder={translate('edit.selectUnit')}
               name="productAmountUnit"
               autoComplete="off"
               defaultValue={unit}

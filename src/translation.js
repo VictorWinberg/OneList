@@ -10,6 +10,8 @@ module.exports = {
     edit: ['Edit', 'Redigera'],
     name: ['Name', 'Namn'],
     amount: ['Amount', 'Mängd'],
+    selectAmount: ['Amount', 'Mängd'],
+    selectUnit: ['Unit', 'Enhet'],
     category: ['Category', 'Kategori'],
     color: ['Color', 'Färg'],
     selectColor: ['Select a color...', 'Välj färg...'],
