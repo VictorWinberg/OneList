@@ -422,7 +422,8 @@ nav a.active {
 }
 
 .products .done button {
-  float: right;
+  position: absolute;
+  right: 0;
   font-family: "Quicksand", sans-serif;
   font-size: 20px;
   border-radius: 5px;
