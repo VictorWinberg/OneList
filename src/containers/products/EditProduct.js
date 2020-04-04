@@ -25,6 +25,25 @@ const EditProduct = ({ id, name, translate, onRemove, onSubmit, history }) => (
             defaultValue={name}
           />
         </label>
+        <label htmlFor="productName">
+          <span>{translate('edit.amount')}:</span>
+          <div>
+            <input
+              id="productAmountText"
+              className="productAmountText"
+              name="productName"
+              autoComplete="off"
+              defaultValue="100"
+            />
+            <input
+              id="productAmountUnit"
+              className="productAmountUnit"
+              name="productName"
+              autoComplete="off"
+              defaultValue="gram"
+            />
+          </div>
+        </label>
         <CategorySelect id={id} />
         <button
           className="deleteBtn"

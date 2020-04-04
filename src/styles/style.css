@@ -215,6 +215,19 @@ nav a.active {
   float: left;
 }
 
+.product .productAmountText{
+  width: calc((100% - 120px - 2em) * 0.6);
+  text-indent: 0.3em;
+  border-radius: 4px 0px 0px 4px;
+}
+  
+.product .productAmountUnit {
+  width: calc((100% - 120px - 2em) * 0.4);
+  text-indent: 0.3em;
+  border-radius: 0px 4px 4px 0px;
+}
+
+
 .product input,
 .category input,
 .settings input,
@@ -309,6 +322,7 @@ nav a.active {
 .listitem {
   border-bottom: grey solid 0.5px;
   padding: 0.5em 0;
+  display: flex;
 }
 
 /* Customize the label (the listitem label) */
@@ -316,10 +330,21 @@ nav a.active {
   font-family: "Quicksand", sans-serif;
   width: calc(100% - 3.5em);
   position: relative;
-  padding-left: 35px;
   cursor: pointer;
-  font-size: 22px;
   user-select: none;
+}
+
+.listitem .productText{
+  font-family: "Quicksand", sans-serif;
+  padding-left: 35px;
+  font-size: 22px;
+}
+
+.listitem .amountText{
+  font-family: "Quicksand", sans-serif;
+  color: rgba(0, 0, 0, 0.6);
+  padding-left: 10px;
+  font-size: 18px;
 }
 
 /* Hide the browser's default checkbox */
@@ -408,6 +433,8 @@ nav a.active {
   cursor: pointer;
   background-color: #767676;
   color: white;
+  position: absolute;
+  right: 0;
 }
 
 .setting-wrapper {
@@ -418,7 +445,8 @@ nav a.active {
 }
 
 .hidden,
-.products .done img {
+.products .done img,
+.products .done .amountText {
   display: none;
 }
 

@@ -13,7 +13,8 @@ const ListItem = ({ id, value, checked, onClick, linkTo }) => (
         onClick={onClick}
         checked={checked}
       />
-      {value}
+      <span className="productText">{value}</span>
+      <span className="amountText">100 gram</span>
       <span className="checkmark" />
     </label>
     <Link to={linkTo}>
