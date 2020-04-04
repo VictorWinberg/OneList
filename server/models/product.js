@@ -27,7 +27,7 @@ module.exports = client => ({
   },
 
   toggleInactive(id, done) {
-    const sql = 'UPDATE products SET inactive = NOT inactive WHERE id = $1';
+    const sql = 'UPDATE products SET inactive = NOT inactive, checked = FALSE WHERE id = $1';
     client
       .query(sql, [id])
       .then(({ rows }) => done(null, rows[0] || null))
