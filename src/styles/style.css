@@ -322,7 +322,6 @@ nav a.active {
 .listitem {
   border-bottom: grey solid 0.5px;
   padding: 0.5em 0;
-  display: flex;
 }
 
 /* Customize the label (the listitem label) */
@@ -331,6 +330,7 @@ nav a.active {
   width: calc(100% - 2em);
   position: relative;
   cursor: pointer;
+  font-size: 22px;
   user-select: none;
 }
 
@@ -433,8 +433,6 @@ nav a.active {
   cursor: pointer;
   background-color: #767676;
   color: white;
-  position: absolute;
-  right: 0;
 }
 
 .setting-wrapper {
