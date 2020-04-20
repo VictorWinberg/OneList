@@ -8,7 +8,16 @@ import { addCategory } from '../../actions/categories';
 import { editProduct, removeProduct } from '../../actions/products';
 import CategorySelect from './CategorySelect';
 
-const EditProduct = ({ id, name, amount, unit, translate, onRemove, onSubmit, history }) => (
+const EditProduct = ({
+  id,
+  name,
+  amount,
+  unit,
+  translate,
+  onRemove,
+  onSubmit,
+  history,
+}) => (
   <div className="product">
     <div className="title">
       <b>{translate('edit.edit')}: </b>
@@ -77,7 +86,7 @@ const EditProduct = ({ id, name, amount, unit, translate, onRemove, onSubmit, hi
 EditProduct.defaultProps = {
   amount: null,
   unit: null,
-}
+};
 
 EditProduct.propTypes = {
   id: PropTypes.number.isRequired,
@@ -103,7 +112,13 @@ const handleSubmit = (event, id, history) => dispatch => {
     'newCategory',
   ].map(type => data.get(type));
 
-  const edit = editProduct({ id, name, amount, unit, category: toInteger(category) });
+  const edit = editProduct({
+    id,
+    name,
+    amount: amount || 0,
+    unit,
+    category: toInteger(category),
+  });
 
   if (newCategory) {
     dispatch(addCategory({ name: newCategory }, () => dispatch(edit)));
@@ -133,4 +148,7 @@ const mapDispatchToProps = {
   onRemove: removeProduct,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditProduct);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditProduct);
