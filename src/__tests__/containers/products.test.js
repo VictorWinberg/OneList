@@ -27,7 +27,9 @@ describe('Products', () => {
   it('should edit a product with new category', done => {
     fetch.mockResponse('{"id": 1, "name": "Potatoes"}');
 
-    wrapper.find('input').instance().value = 'Melody potatoes';
+    wrapper.find('input#productName').instance().value = 'Melody potatoes';
+    wrapper.find('input#productAmountText').instance().value = '3';
+    wrapper.find('input#productAmountUnit').instance().value = 'kg';
 
     wrapper
       .find('CategorySelect')
@@ -52,6 +54,8 @@ describe('Products', () => {
           id: 2,
           name: 'Melody potatoes',
           category: 2,
+          amount: '3',
+          unit: 'kg',
         },
         { type: 'ADD_CATEGORY', id: 1, name: 'Potatoes' },
       ]);
