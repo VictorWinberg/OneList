@@ -48,4 +48,10 @@ module.exports = {
     language: ['Lang: ', 'Språk: '],
     submit: ['Save', 'Spara'],
   },
+  snackbar: {
+    unauthenticated: [
+      'You are not logged in. Please log in and try again.',
+      'Du är inte inloggad. Logga in och försök igen.'
+    ]
+  }
 };
