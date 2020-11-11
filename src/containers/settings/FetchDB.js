@@ -9,18 +9,25 @@ class FetchDB extends Component {
   constructor() {
     super();
     this.interval = null;
+    this.update = () => {};
   }
 
   componentWillReceiveProps({ user, updateProducts, updateCategories }) {
     const { username } = user;
-    if (username !== this.props.user.username) {
-      const update = () => {
-        updateProducts();
-        updateCategories();
-      };
-      update();
+    this.update = () => {
+      updateProducts();
+      updateCategories();
+    };
+
+    const intervalUpdate = () => {
       clearInterval(this.interval);
-      this.interval = setInterval(update, 5000);
+      this.interval = setInterval(this.update, 5000);
+    };
+
+    if (username !== this.props.user.username) {
+      this.update();
+      intervalUpdate();
+      window.onclick = intervalUpdate;
     }
   }
 
