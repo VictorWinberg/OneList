@@ -10,7 +10,7 @@ const showAmount = (amount, unit) => {
   return null;
 }
 
-const li = (item, onItemClick, linkTo) => (
+const li = (item, onItemClick, linkTo, backUrl) => (
   <ListItem
     key={item.id}
     id={item.id}
@@ -19,6 +19,7 @@ const li = (item, onItemClick, linkTo) => (
     checked={item.checked}
     onClick={() => onItemClick(item.id)}
     linkTo={linkTo(item.id)}
+    backUrl={backUrl}
   />
 );
 
@@ -28,6 +29,7 @@ const ProductList = ({
   onItemClick,
   onDoneClick,
   linkTo,
+  backUrl,
   translate,
   view,
 }) => (
@@ -37,7 +39,7 @@ const ProductList = ({
           <div key={value} style={{ borderLeft: `5px solid ${color || '#ccc'}` }}>
             <div className="section">{value}</div>
             <ul className="active">
-              {items.map(item => li(item, onItemClick, linkTo))}
+              {items.map(item => li(item, onItemClick, linkTo, backUrl))}
             </ul>
           </div>
         ))}
@@ -69,6 +71,7 @@ ProductList.propTypes = {
   onItemClick: PropTypes.func.isRequired,
   onDoneClick: PropTypes.func.isRequired,
   linkTo: PropTypes.func.isRequired,
+  backUrl: PropTypes.string.isRequired,
   translate: PropTypes.func.isRequired,
   view: PropTypes.string.isRequired,
 };

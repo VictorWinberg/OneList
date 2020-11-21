@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import penselecticon from '../assets/icons/pen-select.svg';
 
-const ListItem = ({ id, value, description, checked, onClick, linkTo }) => (
+const ListItem = ({ id, value, description, checked, onClick, linkTo, backUrl }) => (
   <li className="listitem">
     <label role="presentation" onKeyDown={onClick} htmlFor={id}>
       <input
@@ -17,7 +17,7 @@ const ListItem = ({ id, value, description, checked, onClick, linkTo }) => (
       {description}
       <span className="checkmark" />
     </label>
-    <Link to={linkTo}>
+    <Link to={{ pathname: linkTo, query: { backUrl } }}>
       <img id="editicon" src={penselecticon} alt="Edit" height="27px" />
     </Link>
   </li>

@@ -8,6 +8,8 @@ import { addCategory } from '../../actions/categories';
 import { editProduct, removeProduct } from '../../actions/products';
 import CategorySelect from './CategorySelect';
 
+const redirect = (history, location) => history.push((location.query || {}).backUrl || '/');
+
 const EditProduct = ({
   id,
   name,
@@ -17,6 +19,7 @@ const EditProduct = ({
   onRemove,
   onSubmit,
   history,
+  location,
 }) => (
   <div className="product">
     <div className="title">
@@ -24,7 +27,7 @@ const EditProduct = ({
       {name}
     </div>
     <div className="wrapper">
-      <form onSubmit={evt => onSubmit(evt, id, history)}>
+      <form onSubmit={evt => onSubmit(evt, id, history, location)}>
         <label htmlFor="productName">
           <span>{translate('edit.name')}:</span>
           <input
@@ -63,7 +66,7 @@ const EditProduct = ({
           type="button"
           onClick={() => {
             onRemove(id);
-            history.push('/');
+            redirect(history, location)
           }}
         >
           {translate('edit.delete')}
@@ -71,7 +74,7 @@ const EditProduct = ({
         <button
           className="cancelBtn"
           type="button"
-          onClick={() => history.push('/')}
+          onClick={() => redirect(history, location)}
         >
           {translate('edit.cancel')}
         </button>
@@ -84,13 +87,14 @@ const EditProduct = ({
 );
 
 EditProduct.defaultProps = {
+  name: '',
   amount: null,
   unit: null,
 };
 
 EditProduct.propTypes = {
   id: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   amount: PropTypes.number,
   unit: PropTypes.string,
   translate: PropTypes.func.isRequired,
@@ -99,9 +103,14 @@ EditProduct.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  location: PropTypes.shape({
+    query: PropTypes.shape({
+      backUrl: PropTypes.string,
+    }),
+  }).isRequired,
 };
 
-const handleSubmit = (event, id, history) => dispatch => {
+const handleSubmit = (event, id, history, location) => dispatch => {
   const data = new FormData(event.target);
 
   const [name, amount, unit, category, newCategory] = [
@@ -127,7 +136,7 @@ const handleSubmit = (event, id, history) => dispatch => {
   }
 
   event.preventDefault();
-  history.push('/');
+  redirect(history, location)
 };
 
 const mapStateToProps = (state, { match }) => {

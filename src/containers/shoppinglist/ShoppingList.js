@@ -60,6 +60,7 @@ const mapStateToProps = state => ({
   checked: checked(state),
   translate: getTranslate(state.locale),
   linkTo: id => `/products/${id}`,
+  backUrl: '/',
   isLoggedIn: !!state.user.email,
 });
 
