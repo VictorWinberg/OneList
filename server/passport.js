@@ -15,7 +15,7 @@ module.exports = (passport, User) => {
     new GoogleStrategy(
       {
         clientID: GOOGLE_CLIENT_ID,
-        clientSecret: GOOGLE_CLIENT_SECRET
+        clientSecret: GOOGLE_CLIENT_SECRET,
       },
       (token, refreshToken, profile, done) => {
         // make the code asynchronous

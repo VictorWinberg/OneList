@@ -10,7 +10,8 @@
     "test:watch": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "server": "nodemon server",
-    "db:pull": "pg_dump --format=c -h 192.168.0.80 -U vicnie onelist | pg_restore --clean --no-owner -h localhost -d onelist"
+    "env:pull": "scp git@192.168.0.100:www/onelist/.env .env",
+    "db:pull": "pg_dump --format=c -h 192.168.0.100 -U vicnie onelist | pg_restore --clean --no-owner -h localhost -d onelist"
   },
   "repository": {
     "type": "git",
