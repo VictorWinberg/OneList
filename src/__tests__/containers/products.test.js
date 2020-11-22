@@ -19,6 +19,7 @@ describe('Products', () => {
         <EditProduct
           match={{ params: { id: 2 } }}
           history={{ push: url => history.push(url) }}
+          location={{query: {}}}
         />
       </Provider>
     );
