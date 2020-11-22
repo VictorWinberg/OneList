@@ -17,7 +17,7 @@ jobs:
         node-version: [12.x]
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -33,7 +33,11 @@ jobs:
         run: npm test
 
       - run: ls
-  deploy:    
+      - uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: build
+  deploy:
     needs: build
 
     name: Deploy to Server
@@ -41,5 +45,8 @@ jobs:
     # if: ${{ github.event_name == 'push' }}
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: build
       - run: ls
