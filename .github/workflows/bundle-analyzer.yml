@@ -16,4 +16,3 @@ jobs:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         pattern: "./build/**/*.{js,css}"
         strip-hash: "\\b\\w{8}\\."
-    - run: ls
