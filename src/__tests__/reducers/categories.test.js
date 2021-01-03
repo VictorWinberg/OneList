@@ -16,10 +16,12 @@ describe('categories reducer', () => {
 
   it('can handle ADD_CATEGORY', async () => {
     fetch.mockResponse(
-      JSON.stringify([{
-        id: 1,
-        name: 'Vegetables',
-      }])
+      JSON.stringify([
+        {
+          id: 1,
+          name: 'Vegetables',
+        },
+      ])
     );
     const state = await dispatch(addCategory({ name: 'Vegetables' }));
     expect(categories(undefined, state)).toEqual([
@@ -32,6 +34,36 @@ describe('categories reducer', () => {
 
   it('can handle ADD_CATEGORY for None', () => {
     expect(categories(undefined, dispatch(addCategory({})))).toEqual([]);
+  });
+
+  it('can handle EDIT_CATEGORY', async () => {
+    fetch.mockResponse(
+      JSON.stringify([
+        {
+          id: 1,
+          name: 'Edit',
+          color: '#fff',
+        },
+      ])
+    );
+
+    expect(
+      categories(
+        [
+          {
+            id: 1,
+            name: 'Vegetables',
+          },
+        ],
+        await dispatch(editCategory({ id: 1, name: 'Edit', color: '#fff' }))
+      )
+    ).toEqual([
+      {
+        id: 1,
+        name: 'Edit',
+        color: '#fff',
+      },
+    ]);
   });
 
   it('can handle REORDER_CATEGORY', async () => {
@@ -65,7 +97,39 @@ describe('categories reducer', () => {
     ]);
   });
 
-  it('can handle FETCH_CATEGORIES', done => {
+  it('can handle REMOVE_CATEGORY', async () => {
+    fetch.mockResponse(
+      JSON.stringify([
+        {
+          id: 2,
+          name: 'Meat',
+        },
+      ])
+    );
+
+    expect(
+      categories(
+        [
+          {
+            id: 1,
+            name: 'Vegetables',
+          },
+          {
+            id: 2,
+            name: 'Meat',
+          },
+        ],
+        await dispatch(removeCategory(1))
+      )
+    ).toEqual([
+      {
+        id: 2,
+        name: 'Meat',
+      },
+    ]);
+  });
+
+  it('can handle FETCH_CATEGORIES', (done) => {
     const mockStore = makeStore();
     fetch.mockResponse(
       JSON.stringify([
