@@ -6,14 +6,14 @@ import addicon from '../../assets/icons/add.svg';
 import oneuser from '../../assets/icons/one-user.svg';
 import twousers from '../../assets/icons/two-users.svg';
 import clearicon from '../../assets/icons/clear.svg';
-
+import { toggleCollaboration } from '../../actions/user';
 import Autosuggest from './Autosuggest';
 
 class New extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { name: '', private: true};
+    this.state = { name: '' };
   }
 
   onSelect({ target }, { suggestion }) {
@@ -29,20 +29,16 @@ class New extends Component {
 
   handleSubmit(event) {
     const { name } = this.state;
-    const { onAddItem } = this.props;
+    const { onAddItem, isCollaboration, uid } = this.props;
 
-    onAddItem({ name, category: null });
+    onAddItem({ name, category: null, uid: isCollaboration ? null : uid });
     this.setState({ name: '' });
     event.preventDefault();
   }
 
-  toogleList() {
-    this.setState({private: !this.state.private})
-  }
-
   render() {
     const { name } = this.state;
-    const { translate, view, autosuggest } = this.props;
+    const { translate, view, autosuggest, onToggleCollaboration } = this.props;
 
     const inputfield = autosuggest ? (
       <Autosuggest
@@ -66,9 +62,9 @@ class New extends Component {
       );
 
     const toggle =
-      <div className={"toggle " + (autosuggest ? "" : "disabled")} onClick={() => this.toogleList()}>
-        <img className={"one-user " + (this.state.private ? "active" : "")} alt="1" src={oneuser} height="18px" />
-        <img className={"two-users " + (!this.state.private ? "active" : "")} alt="2" src={twousers} height="24px" />
+      <div className={"toggle " + (autosuggest ? "" : "disabled")} onClick={() => onToggleCollaboration()}>
+        <img className={"one-user " + (!this.props.isCollaboration ? "active" : "")} alt="1" src={oneuser} height="18px" />
+        <img className={"two-users " + (this.props.isCollaboration ? "active" : "")} alt="2" src={twousers} height="24px" />
       </div>
 
     return (
@@ -100,11 +96,14 @@ New.propTypes = {
 
 const mapStateToProps = state => ({
   translate: getTranslate(state.locale),
+  isCollaboration: state.user.isCollaboration,
+  uid: state.user.id
 });
 
 const mapDispatchToProps = (dispatch, { onAdd, onRemove }) => ({
   onAddItem: item => dispatch(onAdd(item)),
   onRemoveItem: id => dispatch(onRemove(id)),
+  onToggleCollaboration: () => dispatch(toggleCollaboration()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(New);
