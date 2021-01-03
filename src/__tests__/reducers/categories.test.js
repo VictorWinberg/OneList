@@ -67,6 +67,21 @@ describe('categories reducer', () => {
   });
 
   it('can handle REORDER_CATEGORY', async () => {
+    fetch.mockResponse(
+      JSON.stringify([
+        {
+          id: 2,
+          name: "Meat",
+          orderidx: 1,
+        },
+        {
+          id: 1,
+          name: "Vegetables",
+          orderidx: 2,
+        },
+      ])
+    );
+
     expect(
       categories(
         [
