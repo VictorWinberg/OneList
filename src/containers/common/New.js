@@ -38,7 +38,13 @@ class New extends Component {
 
   render() {
     const { name } = this.state;
-    const { translate, view, autosuggest, onToggleCollaboration } = this.props;
+    const {
+      translate,
+      view,
+      autosuggest,
+      isCollaboration,
+      onToggleCollaboration,
+    } = this.props;
 
     const inputfield = autosuggest ? (
       <Autosuggest
@@ -63,8 +69,8 @@ class New extends Component {
 
     const toggle =
       <div className={"toggle " + (autosuggest ? "" : "disabled")} onClick={() => onToggleCollaboration()}>
-        <img className={"one-user " + (!this.props.isCollaboration ? "active" : "")} alt="1" src={oneuser} height="18px" />
-        <img className={"two-users " + (this.props.isCollaboration ? "active" : "")} alt="2" src={twousers} height="24px" />
+        <img className={"one-user " + (!isCollaboration ? "active" : "")} alt="1" src={oneuser} height="18px" />
+        <img className={"two-users " + (isCollaboration ? "active" : "")} alt="2" src={twousers} height="24px" />
       </div>
 
     return (

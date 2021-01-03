@@ -27,9 +27,6 @@ CREATE TABLE products (
   amount    DECIMAL       DEFAULT 0,
   unit      VARCHAR(50),
 
-  -- inactive  BOOLEAN       DEFAULT FALSE, -- TODO: REMOVE
-  -- checked   BOOLEAN       DEFAULT FALSE, -- TODO: REMOVE
-
   category  INT,
 
   FOREIGN KEY(category) REFERENCES categories(id) ON DELETE SET NULL,
