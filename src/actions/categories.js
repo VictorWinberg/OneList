@@ -18,8 +18,6 @@ export const addCategory = ({ name }, next) => async (dispatch) => {
       return await dispatch(fetchCategories());
     } catch (err) {
       console.error(err);
-      console.error(err);
-      console.error(err);
     }
   }
 };
@@ -60,6 +58,12 @@ export const removeCategory = (id) => async (dispatch) => {
 export const reorderCategory = ({ startIndex, endIndex }) => async (
   dispatch
 ) => {
+  dispatch({
+    type: REORDER_CATEGORY,
+    startIndex,
+    endIndex,
+  });
+
   try {
     await fetch("/__/categories_reorder", {
       method: "PUT",
@@ -70,16 +74,10 @@ export const reorderCategory = ({ startIndex, endIndex }) => async (
       credentials: "include",
       body: JSON.stringify({ startIndex, endIndex }),
     });
-    await dispatch(fetchCategories());
+    return await dispatch(fetchCategories());
   } catch (err) {
     console.error(err);
   }
-
-  return dispatch({
-    type: REORDER_CATEGORY,
-    startIndex,
-    endIndex,
-  });
 };
 
 export const fetchCategories = () => async (dispatch) => {
