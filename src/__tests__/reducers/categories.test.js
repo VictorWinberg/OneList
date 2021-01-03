@@ -16,10 +16,10 @@ describe('categories reducer', () => {
 
   it('can handle ADD_CATEGORY', async () => {
     fetch.mockResponse(
-      JSON.stringify({
+      JSON.stringify([{
         id: 1,
         name: 'Vegetables',
-      })
+      }])
     );
     const state = await dispatch(addCategory({ name: 'Vegetables' }));
     expect(categories(undefined, state)).toEqual([
@@ -32,26 +32,6 @@ describe('categories reducer', () => {
 
   it('can handle ADD_CATEGORY for None', () => {
     expect(categories(undefined, dispatch(addCategory({})))).toEqual([]);
-  });
-
-  it('can handle EDIT_CATEGORY', () => {
-    expect(
-      categories(
-        [
-          {
-            id: 1,
-            name: 'Vegetables',
-          },
-        ],
-        dispatch(editCategory({ id: 1, name: 'Edit', color: '#fff' }))
-      )
-    ).toEqual([
-      {
-        id: 1,
-        name: 'Edit',
-        color: '#fff',
-      },
-    ]);
   });
 
   it('can handle REORDER_CATEGORY', () => {
@@ -81,29 +61,6 @@ describe('categories reducer', () => {
         id: 1,
         name: 'Vegetables',
         orderidx: 2,
-      },
-    ]);
-  });
-
-  it('can handle REMOVE_CATEGORY', () => {
-    expect(
-      categories(
-        [
-          {
-            id: 1,
-            name: 'Vegetables',
-          },
-          {
-            id: 2,
-            name: 'Meat',
-          },
-        ],
-        dispatch(removeCategory(1))
-      )
-    ).toEqual([
-      {
-        id: 2,
-        name: 'Meat',
       },
     ]);
   });

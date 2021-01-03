@@ -6,18 +6,22 @@ import {
 export const addCategory = ({ name }, next) => async dispatch => {
   let json = {};
   if (name) {
-    const res = await fetch('/__/categories', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-      body: JSON.stringify({ name }),
-    });
-    json = await res.json();
-    if (next) await next(json);
-    await dispatch(fetchCategories());
+    try {
+      const res = await fetch("/__/categories", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ name }),
+      });
+      json = await res.json();
+      if (next) await next(json);
+      return await dispatch(fetchCategories());
+    } catch (err) {
+     console.error(err); 
+    }
   }
 };
 

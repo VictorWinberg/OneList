@@ -44,14 +44,6 @@ describe('Categories', () => {
     wrapper.find('form').simulate('submit', { preventDefault() {} });
 
     expect(history).toEqual(['/categories']);
-    expect(store.getActions()).toEqual([
-      {
-        type: 'EDIT_CATEGORY',
-        id: 1,
-        name: 'Dairies',
-        color: '#ff8080',
-      },
-    ]);
   });
 
   it('should cancel on cancel button', () => {
@@ -65,6 +57,5 @@ describe('Categories', () => {
     wrapper.find('.deleteBtn').simulate('click');
 
     expect(history).toEqual(['/categories']);
-    expect(store.getActions()).toEqual([{ type: 'REMOVE_CATEGORY', id: 1 }]);
   });
 });
