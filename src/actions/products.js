@@ -1,37 +1,18 @@
-import {
-  ADD_PRODUCT,
-  EDIT_PRODUCT,
-  TOGGLE_PRODUCT_CHECKED,
-  TOGGLE_PRODUCT_INACTIVE,
-  REMOVE_PRODUCT,
-  INACTIVATE_PRODUCTS,
-  FETCH_PRODUCTS,
-} from '../constants/products';
+import { FETCH_PRODUCTS } from '../constants/products';
 
-export const addProduct = ({ name, category }) => async dispatch => {
-  let json = {};
+export const addProduct = ({ name, category }) => dispatch => {
   if (name) {
-    try {
-      const res = await fetch('/__/products', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({ name, category }),
-      });
-      json = await res.json();
-    } catch (err) {
-      console.error(err);
-    }
+    fetch('/__/products', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({ name, category }),
+    }).then(() => dispatch(fetchProducts()))
+      .catch(err => console.error(err));
   }
-  return dispatch({
-    type: ADD_PRODUCT,
-    id: json.id,
-    name,
-    category,
-  });
 };
 
 export const editProduct = ({ id, name, amount, unit, category }) => dispatch => {
@@ -43,16 +24,8 @@ export const editProduct = ({ id, name, amount, unit, category }) => dispatch =>
     },
     credentials: 'include',
     body: JSON.stringify({ name, amount, unit, category: category || null }),
-  }).catch(err => console.error(err));
-
-  return dispatch({
-    type: EDIT_PRODUCT,
-    id,
-    name,
-    amount,
-    unit,
-    category,
-  });
+  }).then(() => dispatch(fetchProducts()))
+    .catch(err => console.error(err));
 };
 
 export const toggleProductChecked = id => dispatch => {
@@ -64,29 +37,21 @@ export const toggleProductChecked = id => dispatch => {
       Type: 'toggle-checked',
     },
     credentials: 'include',
-  }).catch(err => console.error(err));
-
-  return dispatch({
-    type: TOGGLE_PRODUCT_CHECKED,
-    id,
-  });
+  }).then(() => dispatch(fetchProducts()))
+    .catch(err => console.error(err));
 };
 
 export const toggleProductInactive = id => dispatch => {
   fetch(`/__/products/${id}`, {
-    method: 'PUT',
+    method: "PUT",
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Type: 'toggle-inactive',
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Type: "toggle-inactive",
     },
-    credentials: 'include',
-  }).catch(err => console.error(err));
-
-  return dispatch({
-    type: TOGGLE_PRODUCT_INACTIVE,
-    id,
-  });
+    credentials: "include",
+  }).then(() => dispatch(fetchProducts()))
+    .catch((err) => console.error(err));
 };
 
 export const removeProduct = id => dispatch => {
@@ -97,12 +62,8 @@ export const removeProduct = id => dispatch => {
       'Content-Type': 'application/json',
     },
     credentials: 'include',
-  }).catch(err => console.error(err));
-
-  return dispatch({
-    type: REMOVE_PRODUCT,
-    id,
-  });
+  }).then(() => dispatch(fetchProducts()))
+    .catch(err => console.error(err));
 };
 
 export const inactivateProducts = () => dispatch => {
@@ -113,11 +74,8 @@ export const inactivateProducts = () => dispatch => {
       'Content-Type': 'application/json',
     },
     credentials: 'include',
-  }).catch(err => console.error(err));
-
-  return dispatch({
-    type: INACTIVATE_PRODUCTS,
-  });
+  }).then(() => dispatch(fetchProducts()))
+    .catch(err => console.error(err));
 };
 
 export const fetchProducts = () => dispatch =>

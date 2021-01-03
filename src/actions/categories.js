@@ -1,7 +1,4 @@
 import {
-  ADD_CATEGORY,
-  EDIT_CATEGORY,
-  REMOVE_CATEGORY,
   REORDER_CATEGORY,
   FETCH_CATEGORIES,
 } from '../constants/categories';
@@ -20,12 +17,8 @@ export const addCategory = ({ name }, next) => async dispatch => {
     });
     json = await res.json();
     if (next) await next(json);
+    await dispatch(fetchCategories());
   }
-  return dispatch({
-    type: ADD_CATEGORY,
-    id: json.id,
-    name,
-  });
 };
 
 export const editCategory = ({ id, name, color }) => dispatch => {
@@ -37,14 +30,8 @@ export const editCategory = ({ id, name, color }) => dispatch => {
     },
     credentials: 'include',
     body: JSON.stringify({ name, color }),
-  }).catch(err => console.error(err));
-
-  return dispatch({
-    type: EDIT_CATEGORY,
-    id,
-    name,
-    color,
-  });
+  }).then(() => dispatch(fetchCategories()))
+    .catch(err => console.error(err));
 };
 
 export const removeCategory = id => dispatch => {
@@ -55,12 +42,8 @@ export const removeCategory = id => dispatch => {
       'Content-Type': 'application/json',
     },
     credentials: 'include',
-  }).catch(err => console.error(err));
-
-  return dispatch({
-    type: REMOVE_CATEGORY,
-    id,
-  });
+  }).then(() => dispatch(fetchCategories()))
+    .catch(err => console.error(err));
 };
 
 export const reorderCategory = ({ startIndex, endIndex }) => dispatch => {
@@ -72,7 +55,8 @@ export const reorderCategory = ({ startIndex, endIndex }) => dispatch => {
     },
     credentials: 'include',
     body: JSON.stringify({ startIndex, endIndex }),
-  }).catch(err => console.error(err));
+  }).then(() => dispatch(fetchCategories()))
+    .catch(err => console.error(err));
 
   return dispatch({
     type: REORDER_CATEGORY,
