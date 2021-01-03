@@ -19,7 +19,9 @@ export const addProduct = ({ name, category }) => async (dispatch) => {
   }
 };
 
-export const editProduct = ({ id, name, amount, unit, category }) => async (dispatch) => {
+export const editProduct = ({ id, name, amount, unit, category }) => async (
+  dispatch
+) => {
   try {
     await fetch(`/__/products/${id}`, {
       method: "PUT",
@@ -102,8 +104,12 @@ export const inactivateProducts = () => async (dispatch) => {
   }
 };
 
-export const fetchProducts = () => (dispatch) =>
-  fetch("/__/products", { credentials: "include" })
-    .then((response) => response.json())
-    .then((products) => dispatch({ type: FETCH_PRODUCTS, products }))
-    .catch((err) => console.error(err));
+export const fetchProducts = () => async (dispatch) => {
+  try {
+    const res = await fetch("/__/products", { credentials: "include" });
+    const products = await res.json();
+    return dispatch({ type: FETCH_PRODUCTS, products });
+  } catch (err) {
+    console.error(err);
+  }
+};

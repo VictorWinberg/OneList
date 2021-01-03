@@ -34,7 +34,7 @@ describe('categories reducer', () => {
     expect(categories(undefined, dispatch(addCategory({})))).toEqual([]);
   });
 
-  it('can handle REORDER_CATEGORY', () => {
+  it('can handle REORDER_CATEGORY', async () => {
     expect(
       categories(
         [
@@ -49,7 +49,7 @@ describe('categories reducer', () => {
             orderidx: 2,
           },
         ],
-        dispatch(reorderCategory({ startIndex: 1, endIndex: 2 }))
+        await dispatch(reorderCategory({ startIndex: 1, endIndex: 2 }))
       )
     ).toEqual([
       {

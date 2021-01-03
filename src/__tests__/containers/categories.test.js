@@ -1,11 +1,11 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import { Provider } from 'react-redux';
+import React from "react";
+import { mount } from "enzyme";
+import { Provider } from "react-redux";
 
-import makeStore from '../store';
-import EditCategory from '../../containers/categories/EditCategory';
+import makeStore from "../store";
+import EditCategory from "../../containers/categories/EditCategory";
 
-describe('Categories', () => {
+describe("Categories", () => {
   let store;
   let wrapper;
   let history;
@@ -17,45 +17,53 @@ describe('Categories', () => {
       <Provider store={store}>
         <EditCategory
           match={{ params: { id: 1 } }}
-          history={{ push: url => history.push(url) }}
+          history={{ push: (url) => history.push(url) }}
         />
       </Provider>
     );
   });
 
-  it('should edit a category', () => {
+  it("should edit a category", async () => {
     wrapper
-      .find('input')
+      .find("input")
       .first()
-      .instance().value =
-      'Dairies';
+      .instance().value = "Dairies";
 
     wrapper
-      .find('CategoryColors')
-      .find('button')
-      .simulate('click');
+      .find("CategoryColors")
+      .find("button")
+      .simulate("click");
 
     wrapper
-      .find('CategoryColors')
-      .find('li')
+      .find("CategoryColors")
+      .find("li")
       .first()
-      .simulate('click');
+      .simulate("click");
 
-    wrapper.find('form').simulate('submit', { preventDefault() {} });
+    wrapper.find("form").simulate("submit", { preventDefault() {} });
 
-    expect(history).toEqual(['/categories']);
+    expect(history).toEqual(["/categories"]);
+    // expect(store.getActions()).toEqual([
+    //   {
+    //     type: "EDIT_CATEGORY",
+    //     id: 1,
+    //     name: "Dairies",
+    //     color: "#ff8080",
+    //   },
+    // ]);
   });
 
-  it('should cancel on cancel button', () => {
-    wrapper.find('.cancelBtn').simulate('click');
+  it("should cancel on cancel button", () => {
+    wrapper.find(".cancelBtn").simulate("click");
 
-    expect(history).toEqual(['/categories']);
+    expect(history).toEqual(["/categories"]);
     expect(store.getActions()).toEqual([]);
   });
 
-  it('should remove a category', () => {
-    wrapper.find('.deleteBtn').simulate('click');
+  it("should remove a category", async () => {
+    wrapper.find(".deleteBtn").simulate("click");
 
-    expect(history).toEqual(['/categories']);
+    expect(history).toEqual(["/categories"]);
+    // expect(store.getActions()).toEqual([{ type: 'REMOVE_CATEGORY', id: 1 }]);
   });
 });
