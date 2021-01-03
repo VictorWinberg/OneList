@@ -1,127 +1,115 @@
-import {
-  ADD_PRODUCT,
-  EDIT_PRODUCT,
-  TOGGLE_PRODUCT_CHECKED,
-  TOGGLE_PRODUCT_INACTIVE,
-  REMOVE_PRODUCT,
-  INACTIVATE_PRODUCTS,
-  FETCH_PRODUCTS,
-} from '../constants/products';
+import { FETCH_PRODUCTS } from "../constants/products";
 
-export const addProduct = ({ name, category }) => async dispatch => {
-  let json = {};
+export const addProduct = ({ name, category }) => async (dispatch) => {
   if (name) {
     try {
-      const res = await fetch('/__/products', {
-        method: 'POST',
+      await fetch("/__/products", {
+        method: "POST",
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
-        credentials: 'include',
+        credentials: "include",
         body: JSON.stringify({ name, category }),
       });
-      json = await res.json();
+      return await dispatch(fetchProducts());
     } catch (err) {
       console.error(err);
     }
   }
-  return dispatch({
-    type: ADD_PRODUCT,
-    id: json.id,
-    name,
-    category,
-  });
 };
 
-export const editProduct = ({ id, name, amount, unit, category }) => dispatch => {
-  fetch(`/__/products/${id}`, {
-    method: 'PUT',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include',
-    body: JSON.stringify({ name, amount, unit, category: category || null }),
-  }).catch(err => console.error(err));
-
-  return dispatch({
-    type: EDIT_PRODUCT,
-    id,
-    name,
-    amount,
-    unit,
-    category,
-  });
+export const editProduct = ({ id, name, amount, unit, category }) => async (
+  dispatch
+) => {
+  try {
+    await fetch(`/__/products/${id}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ name, amount, unit, category: category || null }),
+    });
+    return await dispatch(fetchProducts());
+  } catch (err) {
+    console.error(err);
+  }
 };
 
-export const toggleProductChecked = id => dispatch => {
-  fetch(`/__/products/${id}`, {
-    method: 'PUT',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Type: 'toggle-checked',
-    },
-    credentials: 'include',
-  }).catch(err => console.error(err));
-
-  return dispatch({
-    type: TOGGLE_PRODUCT_CHECKED,
-    id,
-  });
+export const toggleProductChecked = (id) => async (dispatch) => {
+  try {
+    await fetch(`/__/products/${id}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Type: "toggle-checked",
+      },
+      credentials: "include",
+    });
+    return await dispatch(fetchProducts());
+  } catch (err) {
+    console.error(err);
+  }
 };
 
-export const toggleProductInactive = id => dispatch => {
-  fetch(`/__/products/${id}`, {
-    method: 'PUT',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Type: 'toggle-inactive',
-    },
-    credentials: 'include',
-  }).catch(err => console.error(err));
-
-  return dispatch({
-    type: TOGGLE_PRODUCT_INACTIVE,
-    id,
-  });
+export const toggleProductInactive = (id) => async (dispatch) => {
+  try {
+    await fetch(`/__/products/${id}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Type: "toggle-inactive",
+      },
+      credentials: "include",
+    });
+    return await dispatch(fetchProducts());
+  } catch (err) {
+    console.error(err);
+  }
 };
 
-export const removeProduct = id => dispatch => {
-  fetch(`/__/products/${id}`, {
-    method: 'DELETE',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include',
-  }).catch(err => console.error(err));
-
-  return dispatch({
-    type: REMOVE_PRODUCT,
-    id,
-  });
+export const removeProduct = (id) => async (dispatch) => {
+  try {
+    await fetch(`/__/products/${id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+    return await dispatch(fetchProducts());
+  } catch (err) {
+    console.error(err);
+  }
 };
 
-export const inactivateProducts = () => dispatch => {
-  fetch('/__/products', {
-    method: 'PUT',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include',
-  }).catch(err => console.error(err));
-
-  return dispatch({
-    type: INACTIVATE_PRODUCTS,
-  });
+export const inactivateProducts = () => async (dispatch) => {
+  try {
+    await fetch("/__/products", {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+    return await dispatch(fetchProducts());
+  } catch (err) {
+    console.error(err);
+  }
 };
 
-export const fetchProducts = () => dispatch =>
-  fetch('/__/products', { credentials: 'include' })
-    .then(response => response.json())
-    .then(products => dispatch({ type: FETCH_PRODUCTS, products }))
-    .catch(err => console.error(err));
+export const fetchProducts = () => async (dispatch) => {
+  try {
+    const res = await fetch("/__/products", { credentials: "include" });
+    const products = await res.json();
+    return dispatch({ type: FETCH_PRODUCTS, products });
+  } catch (err) {
+    console.error(err);
+  }
+};

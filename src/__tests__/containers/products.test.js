@@ -26,7 +26,7 @@ describe('Products', () => {
   });
 
   it('should edit a product with new category', done => {
-    fetch.mockResponse('{"id": 1, "name": "Potatoes"}');
+    fetch.mockResponse('[{"id": 1, "name": "Data"}]');
 
     wrapper.find('input#productName').instance().value = 'Melody potatoes';
     wrapper.find('input#productAmountText').instance().value = '3';
@@ -51,14 +51,13 @@ describe('Products', () => {
       expect(history).toEqual(['/']);
       expect(store.getActions()).toEqual([
         {
-          type: 'EDIT_PRODUCT',
-          id: 2,
-          name: 'Melody potatoes',
-          category: 2,
-          amount: '3',
-          unit: 'kg',
+          type: 'FETCH_PRODUCTS',
+          products: [{ id: 1, name: 'Data' }],
         },
-        { type: 'ADD_CATEGORY', id: 1, name: 'Potatoes' },
+        {
+          type: 'FETCH_CATEGORIES',
+          categories: [{ id: 1, name: 'Data' }],
+        },
       ]);
       done();
     });

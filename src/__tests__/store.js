@@ -13,7 +13,6 @@ const state = {
     { id: 2, name: 'Potatoes', inactive: false, checked: true },
     { id: 3, name: 'Butter', inactive: true },
   ],
-  collaborators: [],
   user: {},
 };
 

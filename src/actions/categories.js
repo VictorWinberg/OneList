@@ -1,78 +1,79 @@
-import {
-  ADD_CATEGORY,
-  EDIT_CATEGORY,
-  REMOVE_CATEGORY,
-  REORDER_CATEGORY,
-  FETCH_CATEGORIES,
-} from '../constants/categories';
+import { REORDER_CATEGORY, FETCH_CATEGORIES } from "../constants/categories";
 
-export const addCategory = ({ name }, next) => async dispatch => {
+export const addCategory = ({ name }, next) => async (dispatch) => {
   let json = {};
   if (name) {
-    const res = await fetch('/__/categories', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-      body: JSON.stringify({ name }),
-    });
-    json = await res.json();
-    if (next) await next(json);
+    try {
+      const res = await fetch("/__/categories", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ name }),
+      });
+      json = await res.json();
+      if (next) await next(json);
+      return await dispatch(fetchCategories());
+    } catch (err) {
+      console.error(err);
+      console.error(err);
+      console.error(err);
+    }
   }
-  return dispatch({
-    type: ADD_CATEGORY,
-    id: json.id,
-    name,
-  });
 };
 
-export const editCategory = ({ id, name, color }) => dispatch => {
-  fetch(`/__/categories/${id}`, {
-    method: 'PUT',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include',
-    body: JSON.stringify({ name, color }),
-  }).catch(err => console.error(err));
-
-  return dispatch({
-    type: EDIT_CATEGORY,
-    id,
-    name,
-    color,
-  });
+export const editCategory = ({ id, name, color }) => async (dispatch) => {
+  try {
+    await fetch(`/__/categories/${id}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ name, color }),
+    });
+    return await dispatch(fetchCategories());
+  } catch (err) {
+    console.error(err);
+  }
 };
 
-export const removeCategory = id => dispatch => {
-  fetch(`/__/categories/${id}`, {
-    method: 'DELETE',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include',
-  }).catch(err => console.error(err));
-
-  return dispatch({
-    type: REMOVE_CATEGORY,
-    id,
-  });
+export const removeCategory = (id) => async (dispatch) => {
+  try {
+    await fetch(`/__/categories/${id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+    return await dispatch(fetchCategories());
+  } catch (err) {
+    console.error(err);
+  }
 };
 
-export const reorderCategory = ({ startIndex, endIndex }) => dispatch => {
-  fetch('/__/categories_reorder', {
-    method: 'PUT',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include',
-    body: JSON.stringify({ startIndex, endIndex }),
-  }).catch(err => console.error(err));
+export const reorderCategory = ({ startIndex, endIndex }) => async (
+  dispatch
+) => {
+  try {
+    await fetch("/__/categories_reorder", {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ startIndex, endIndex }),
+    });
+    await dispatch(fetchCategories());
+  } catch (err) {
+    console.error(err);
+  }
 
   return dispatch({
     type: REORDER_CATEGORY,
@@ -81,8 +82,12 @@ export const reorderCategory = ({ startIndex, endIndex }) => dispatch => {
   });
 };
 
-export const fetchCategories = () => dispatch =>
-  fetch('/__/categories', { credentials: 'include' })
-    .then(response => response.json())
-    .then(categories => dispatch({ type: FETCH_CATEGORIES, categories }))
-    .catch(err => console.error(err));
+export const fetchCategories = () => async (dispatch) => {
+  try {
+    const res = await fetch("/__/categories", { credentials: "include" });
+    const categories = await res.json();
+    return dispatch({ type: FETCH_CATEGORIES, categories });
+  } catch (err) {
+    console.error(err);
+  }
+};

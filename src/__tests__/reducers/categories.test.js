@@ -16,10 +16,12 @@ describe('categories reducer', () => {
 
   it('can handle ADD_CATEGORY', async () => {
     fetch.mockResponse(
-      JSON.stringify({
-        id: 1,
-        name: 'Vegetables',
-      })
+      JSON.stringify([
+        {
+          id: 1,
+          name: 'Vegetables',
+        },
+      ])
     );
     const state = await dispatch(addCategory({ name: 'Vegetables' }));
     expect(categories(undefined, state)).toEqual([
@@ -34,7 +36,17 @@ describe('categories reducer', () => {
     expect(categories(undefined, dispatch(addCategory({})))).toEqual([]);
   });
 
-  it('can handle EDIT_CATEGORY', () => {
+  it('can handle EDIT_CATEGORY', async () => {
+    fetch.mockResponse(
+      JSON.stringify([
+        {
+          id: 1,
+          name: 'Edit',
+          color: '#fff',
+        },
+      ])
+    );
+
     expect(
       categories(
         [
@@ -43,7 +55,7 @@ describe('categories reducer', () => {
             name: 'Vegetables',
           },
         ],
-        dispatch(editCategory({ id: 1, name: 'Edit', color: '#fff' }))
+        await dispatch(editCategory({ id: 1, name: 'Edit', color: '#fff' }))
       )
     ).toEqual([
       {
@@ -54,7 +66,7 @@ describe('categories reducer', () => {
     ]);
   });
 
-  it('can handle REORDER_CATEGORY', () => {
+  it('can handle REORDER_CATEGORY', async () => {
     expect(
       categories(
         [
@@ -69,7 +81,7 @@ describe('categories reducer', () => {
             orderidx: 2,
           },
         ],
-        dispatch(reorderCategory({ startIndex: 1, endIndex: 2 }))
+        await dispatch(reorderCategory({ startIndex: 1, endIndex: 2 }))
       )
     ).toEqual([
       {
@@ -85,7 +97,16 @@ describe('categories reducer', () => {
     ]);
   });
 
-  it('can handle REMOVE_CATEGORY', () => {
+  it('can handle REMOVE_CATEGORY', async () => {
+    fetch.mockResponse(
+      JSON.stringify([
+        {
+          id: 2,
+          name: 'Meat',
+        },
+      ])
+    );
+
     expect(
       categories(
         [
@@ -98,7 +119,7 @@ describe('categories reducer', () => {
             name: 'Meat',
           },
         ],
-        dispatch(removeCategory(1))
+        await dispatch(removeCategory(1))
       )
     ).toEqual([
       {
@@ -108,7 +129,7 @@ describe('categories reducer', () => {
     ]);
   });
 
-  it('can handle FETCH_CATEGORIES', done => {
+  it('can handle FETCH_CATEGORIES', (done) => {
     const mockStore = makeStore();
     fetch.mockResponse(
       JSON.stringify([
