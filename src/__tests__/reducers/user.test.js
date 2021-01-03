@@ -28,6 +28,7 @@ describe('user reducer', () => {
     expect(user(undefined, { type: 'unexpected' })).toEqual({
       isFetching: false,
       isSubmitting: false,
+      isCollaboration: true
     });
   });
 
