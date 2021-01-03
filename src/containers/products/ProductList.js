@@ -19,7 +19,7 @@ import ProductList from '../../components/ProductList';
 
 // TODO: Move some of this logic to a helpers function
 
-const sectioned = state => {
+const active = state => {
   const uncategorized = getTranslate(state.locale)('categories.uncategorized');
   const getCategory = ({ category }) =>
     get('name', find({ id: toInteger(category) }, state.categories));
@@ -27,7 +27,7 @@ const sectioned = state => {
   return flow(
     map(product => ({
       ...product,
-      checked: !product.inactive,
+      checked: product.checked !== null,
       categoryName: getCategory(product),
     })),
     sortBy(({ name }) => name.toLowerCase()),
@@ -44,7 +44,7 @@ const sectioned = state => {
 };
 
 const mapStateToProps = state => ({
-  active: sectioned(state),
+  active: active(state),
   checked: [],
   translate: getTranslate(state.locale),
   linkTo: id => `/products/${id}`,

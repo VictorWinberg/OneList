@@ -20,16 +20,29 @@ CREATE TABLE categories (
   PRIMARY KEY(id)
 );
 
-DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS products CASCADE;
 CREATE TABLE products (
   id        SERIAL        NOT NULL,
   name      VARCHAR(255)  NOT NULL UNIQUE,
   amount    DECIMAL       DEFAULT 0,
   unit      VARCHAR(50),
-  inactive  BOOLEAN       DEFAULT FALSE,
-  checked   BOOLEAN       DEFAULT FALSE,
+
+  -- inactive  BOOLEAN       DEFAULT FALSE, -- TODO: REMOVE
+  -- checked   BOOLEAN       DEFAULT FALSE, -- TODO: REMOVE
+
   category  INT,
 
   FOREIGN KEY(category) REFERENCES categories(id) ON DELETE SET NULL,
   PRIMARY KEY(id)
+);
+
+DROP TABLE IF EXISTS items CASCADE;
+CREATE TABLE items (
+  checked   BOOLEAN       DEFAULT FALSE,
+
+  product   INT           NOT NULL,
+  uid       INT           DEFAULT 0,
+
+  FOREIGN KEY(product) REFERENCES products(id) ON DELETE CASCADE,
+  PRIMARY KEY(product, uid)
 );

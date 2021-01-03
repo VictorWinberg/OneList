@@ -9,7 +9,6 @@ import {
   groupBy,
   map,
   mergeWith,
-  reject,
   sortBy,
   toInteger,
   zipObject,
@@ -23,14 +22,13 @@ import ProductList from '../../components/ProductList';
 
 // TODO: Move some of this logic to a helpers function
 
-const sectioned = state => {
+const active = state => {
   const uncategorized = getTranslate(state.locale)('categories.uncategorized');
   const getCategory = ({ category }) =>
     get('name', find({ id: toInteger(category) }, state.categories));
 
   return flow(
-    reject('inactive'),
-    reject('checked'),
+    filter(['checked', false]),
     map(product => ({
       ...product,
       categoryName: getCategory(product),
@@ -50,13 +48,12 @@ const sectioned = state => {
 
 const checked = state =>
   flow(
-    reject('inactive'),
-    filter('checked'),
+    filter(['checked', true]),
     map(product => ({ ...product, value: product.name }))
   )(state.products);
 
 const mapStateToProps = state => ({
-  active: sectioned(state),
+  active: active(state),
   checked: checked(state),
   translate: getTranslate(state.locale),
   linkTo: id => `/products/${id}`,

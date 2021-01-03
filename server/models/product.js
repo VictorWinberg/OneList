@@ -1,13 +1,21 @@
 module.exports = client => ({
   create({ name, category }, done) {
     const sql = `
-      INSERT INTO products (name, category) VALUES ($1, $2)
-      ON CONFLICT (name) DO UPDATE SET inactive = FALSE, checked = FALSE
-      RETURNING *`;
+      WITH product AS (
+        INSERT INTO products (name, category) VALUES ($1, $2)
+        ON CONFLICT (name) DO UPDATE SET category = $2
+        RETURNING *
+      ), item AS (
+        INSERT INTO items (product)
+        SELECT id FROM product
+        RETURNING *
+      )
+      SELECT * FROM product
+      JOIN item ON (product.id = item.product)`;
     client
       .query(sql, [name, category])
       .then(({ rows }) => done(null, rows[0] || null))
-      .catch(err => done(err));
+      .catch(err => done({ ...err, stack: err.stack }));
   },
 
   update(id, { name, amount, unit, category }, done) {
@@ -15,23 +23,32 @@ module.exports = client => ({
     client
       .query(sql, [id, name, amount, unit, category])
       .then(({ rows }) => done(null, rows[0] || null))
-      .catch(err => done(err));
+      .catch(err => done({ ...err, stack: err.stack }));
   },
 
   toggleChecked(id, done) {
-    const sql = 'UPDATE products SET checked = NOT checked WHERE id = $1';
+    const sql = 'UPDATE items SET checked = NOT checked WHERE product = $1';
     client
       .query(sql, [id])
       .then(({ rows }) => done(null, rows[0] || null))
-      .catch(err => done(err));
+      .catch(err => done({ ...err, stack: err.stack }));
   },
 
   toggleInactive(id, done) {
-    const sql = 'UPDATE products SET inactive = NOT inactive, checked = FALSE WHERE id = $1';
+    const sql = `
+      DO $$
+      BEGIN
+      IF EXISTS (SELECT * FROM items WHERE product = ${id}) THEN
+        DELETE FROM items WHERE product = ${id};
+      ELSE
+        INSERT INTO items (product) VALUES (${id});
+      END IF;
+      END $$;
+      `;
     client
-      .query(sql, [id])
+      .query(sql)
       .then(({ rows }) => done(null, rows[0] || null))
-      .catch(err => done(err));
+      .catch(err => done({ ...err, stack: err.stack }));
   },
 
   delete(id, done) {
@@ -39,20 +56,20 @@ module.exports = client => ({
     client
       .query(sql, [id])
       .then(({ rows }) => done(null, rows[0] || null))
-      .catch(err => done(err));
+      .catch(err => done({ ...err, stack: err.stack }));
   },
 
   getAll(done) {
     client
-      .query('SELECT * FROM products')
+      .query('SELECT * FROM products FULL JOIN items ON (products.id = items.product)')
       .then(({ rows }) => done(null, rows))
-      .catch(err => done(err));
+      .catch(err => done({ ...err, stack: err.stack }));
   },
 
   inactivate(done) {
     client
-      .query('UPDATE products SET inactive = TRUE WHERE checked = TRUE')
+      .query('DELETE FROM items WHERE checked = TRUE')
       .then(({ rows }) => done(null, rows))
-      .catch(err => done(err));
+      .catch(err => done({ ...err, stack: err.stack }));
   },
 });
