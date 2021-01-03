@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
 import addicon from '../../assets/icons/add.svg';
+import oneuser from '../../assets/icons/one-user.svg';
+import twousers from '../../assets/icons/two-users.svg';
 import clearicon from '../../assets/icons/clear.svg';
 
 import Autosuggest from './Autosuggest';
@@ -11,7 +13,7 @@ class New extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { name: '' };
+    this.state = { name: '', private: true};
   }
 
   onSelect({ target }, { suggestion }) {
@@ -34,6 +36,10 @@ class New extends Component {
     event.preventDefault();
   }
 
+  toogleList() {
+    this.setState({private: !this.state.private})
+  }
+
   render() {
     const { name } = this.state;
     const { translate, view, autosuggest } = this.props;
@@ -49,15 +55,21 @@ class New extends Component {
         }}
       />
     ) : (
-      <input
-        id="newItem"
-        type="text"
-        value={name}
-        autoComplete="off"
-        placeholder={translate(`${view}.input`)}
-        onChange={({ target }) => this.setState({ name: target.value })}
-      />
-    );
+        <input
+          id="newItem"
+          type="text"
+          value={name}
+          autoComplete="off"
+          placeholder={translate(`${view}.input`)}
+          onChange={({ target }) => this.setState({ name: target.value })}
+        />
+      );
+
+    const toggle =
+      <div className={"toggle " + (autosuggest ? "" : "disabled")} onClick={() => this.toogleList()}>
+        <img className={"one-user " + (this.state.private ? "active" : "")} alt="1" src={oneuser} height="18px" />
+        <img className={"two-users " + (!this.state.private ? "active" : "")} alt="2" src={twousers} height="24px" />
+      </div>
 
     return (
       <form className="search-form" onSubmit={evt => this.handleSubmit(evt)}>
@@ -68,6 +80,7 @@ class New extends Component {
           <img className="add-icon" alt="add" src={addicon} height="12px" />
           {inputfield}
         </label>
+        {toggle}
       </form>
     );
   }
