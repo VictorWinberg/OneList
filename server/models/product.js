@@ -26,22 +26,23 @@ module.exports = client => ({
       .catch(err => done({ ...err, stack: err.stack }));
   },
 
-  toggleChecked(id, done) {
-    const sql = 'UPDATE items SET checked = NOT checked WHERE product = $1';
+  toggleChecked(id, uid, done) {
+    const sql = 'UPDATE items SET checked = NOT checked WHERE product = $1 AND uid = $2';
     client
-      .query(sql, [id])
+      .query(sql, [id, uid])
       .then(({ rows }) => done(null, rows[0] || null))
       .catch(err => done({ ...err, stack: err.stack }));
   },
 
-  toggleInactive(id, done) {
+  toggleInactive(id, uid, done) {
+    console.log(id, uid);
     const sql = `
       DO $$
       BEGIN
-      IF EXISTS (SELECT * FROM items WHERE product = ${id}) THEN
-        DELETE FROM items WHERE product = ${id};
+      IF EXISTS (SELECT * FROM items WHERE product = ${id} AND uid = ${uid}) THEN
+        DELETE FROM items WHERE product = ${id} AND uid = ${uid};
       ELSE
-        INSERT INTO items (product) VALUES (${id});
+        INSERT INTO items (product) VALUES (${id}) AND uid = ${uid};
       END IF;
       END $$;
       `;

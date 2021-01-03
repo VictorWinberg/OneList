@@ -22,15 +22,17 @@ import ProductList from '../../components/ProductList';
 
 // TODO: Move some of this logic to a helpers function
 
-const active = state => {
+const active = ({ user, ...state }) => {
   const uncategorized = getTranslate(state.locale)('categories.uncategorized');
   const getCategory = ({ category }) =>
     get('name', find({ id: toInteger(category) }, state.categories));
 
   return flow(
     filter(['checked', false]),
+    filter((item) => item.uid === 0 || (!user.isCollaboration && item.uid === user.id)),
     map(product => ({
       ...product,
+      key: product.id + '-' + product.uid,
       categoryName: getCategory(product),
     })),
     sortBy(({ name }) => name.toLowerCase()),
@@ -46,10 +48,15 @@ const active = state => {
   )(state.products);
 };
 
-const checked = state =>
+const checked = ({ user, ...state }) =>
   flow(
     filter(['checked', true]),
-    map(product => ({ ...product, value: product.name }))
+    filter((item) => item.uid === 0 || (!user.isCollaboration && item.uid === user.id)),
+    map(product => ({
+      ...product,
+      key: product.id + '-' + product.uid,
+      value: product.name,
+    }))
   )(state.products);
 
 const mapStateToProps = state => ({

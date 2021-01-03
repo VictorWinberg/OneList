@@ -19,7 +19,7 @@ import ProductList from '../../components/ProductList';
 
 // TODO: Move some of this logic to a helpers function
 
-const active = state => {
+const active = ({ user, ...state}) => {
   const uncategorized = getTranslate(state.locale)('categories.uncategorized');
   const getCategory = ({ category }) =>
     get('name', find({ id: toInteger(category) }, state.categories));
@@ -27,7 +27,9 @@ const active = state => {
   return flow(
     map(product => ({
       ...product,
-      checked: product.checked !== null,
+      key: product.id,
+      checked: product.uid !== null,
+      // TODO: product.uid === 0 || (!user.isCollaboration && product.uid === user.id)),
       categoryName: getCategory(product),
     })),
     sortBy(({ name }) => name.toLowerCase()),

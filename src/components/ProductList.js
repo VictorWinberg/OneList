@@ -12,12 +12,13 @@ const showAmount = (amount, unit) => {
 
 const li = (item, onItemClick, linkTo, backUrl) => (
   <ListItem
-    key={item.id}
+    key={item.key}
     id={item.id}
     value={item.value}
-    description={showAmount(item.amount, item.unit)}
+    description={showAmount('uid ', item.uid)}
+    // description={showAmount(item.amount, item.unit)}
     checked={item.checked}
-    onClick={() => onItemClick(item.id)}
+    onClick={() => onItemClick(item)}
     linkTo={linkTo(item.id)}
     backUrl={backUrl}
   />

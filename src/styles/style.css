@@ -476,8 +476,8 @@ nav a.active {
 }
 
 .hidden,
-.products .done img,
-.products .done .amountText {
+.products .done img
+/* , .products .done .amountText */ {
   display: none;
 }
 
