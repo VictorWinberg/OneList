@@ -32,7 +32,7 @@ const active = ({ user, ...state }) => {
     filter((item) => item.uid === 0 || (!user.isCollaboration && item.uid === user.id)),
     map(product => ({
       ...product,
-      key: product.id + '-' + product.uid,
+      key: `${product.id}-${product.uid}`,
       categoryName: getCategory(product),
     })),
     sortBy(({ name }) => name.toLowerCase()),
@@ -54,7 +54,7 @@ const checked = ({ user, ...state }) =>
     filter((item) => item.uid === 0 || (!user.isCollaboration && item.uid === user.id)),
     map(product => ({
       ...product,
-      key: product.id + '-' + product.uid,
+      key: `${product.id}-${product.uid}`,
       value: product.name,
     }))
   )(state.products);

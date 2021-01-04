@@ -35,14 +35,13 @@ module.exports = client => ({
   },
 
   toggleInactive(id, uid, done) {
-    console.log(id, uid);
     const sql = `
       DO $$
       BEGIN
       IF EXISTS (SELECT * FROM items WHERE product = ${id} AND uid = ${uid}) THEN
         DELETE FROM items WHERE product = ${id} AND uid = ${uid};
       ELSE
-        INSERT INTO items (product) VALUES (${id}) AND uid = ${uid};
+        INSERT INTO items (product, uid) VALUES (${id}, ${uid});
       END IF;
       END $$;
       `;

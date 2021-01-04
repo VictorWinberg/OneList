@@ -11,6 +11,7 @@ import {
   mergeWith,
   sortBy,
   toInteger,
+  uniqBy,
   zipObject,
 } from 'lodash/fp';
 
@@ -19,7 +20,8 @@ import ProductList from '../../components/ProductList';
 
 // TODO: Move some of this logic to a helpers function
 
-const active = ({ user, ...state}) => {
+const active = (state) => {
+  const userId = state.user.isCollaboration ? 0 : state.user.id || 0;
   const uncategorized = getTranslate(state.locale)('categories.uncategorized');
   const getCategory = ({ category }) =>
     get('name', find({ id: toInteger(category) }, state.categories));
@@ -28,11 +30,11 @@ const active = ({ user, ...state}) => {
     map(product => ({
       ...product,
       key: product.id,
-      checked: product.uid !== null,
-      // TODO: product.uid === 0 || (!user.isCollaboration && product.uid === user.id)),
+      checked: product.uid !== null && product.uid === userId,
       categoryName: getCategory(product),
     })),
-    sortBy(({ name }) => name.toLowerCase()),
+    sortBy(({ name, uid }) => [name.toLowerCase(), uid !== userId]),
+    uniqBy('id'),
     groupBy('categoryName'),
     mergeWith((category, products) => ({
       ...category,
@@ -51,6 +53,7 @@ const mapStateToProps = state => ({
   translate: getTranslate(state.locale),
   linkTo: id => `/products/${id}`,
   backUrl: '/products',
+  uid: state.user.isCollaboration ? 0 : state.user.id || 0,
 });
 
 const mapDispatchToProps = {

@@ -56,9 +56,9 @@ export const toggleProductChecked = ({ id, uid }) => async (dispatch) => {
   }
 };
 
-export const toggleProductInactive = ({ id, uid }) => async (dispatch) => {
+export const toggleProductInactive = (item, uid) => async (dispatch) => {
   try {
-    await fetch(`/__/products/${id}/${uid}`, {
+    await fetch(`/__/products/${item.id}/${uid}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",

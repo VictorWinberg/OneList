@@ -10,7 +10,7 @@ const showAmount = (amount, unit) => {
   return null;
 }
 
-const li = (item, onItemClick, linkTo, backUrl) => (
+const li = (item, onItemClick, linkTo, uid, backUrl) => (
   <ListItem
     key={item.key}
     id={item.id}
@@ -18,7 +18,7 @@ const li = (item, onItemClick, linkTo, backUrl) => (
     description={showAmount('uid ', item.uid)}
     // description={showAmount(item.amount, item.unit)}
     checked={item.checked}
-    onClick={() => onItemClick(item)}
+    onClick={() => onItemClick(item, uid !== null ? uid : item.uid)}
     linkTo={linkTo(item.id)}
     backUrl={backUrl}
   />
@@ -33,6 +33,7 @@ const ProductList = ({
   backUrl,
   translate,
   view,
+  uid,
 }) => (
     <div className={view}>
       <div>
@@ -40,20 +41,24 @@ const ProductList = ({
           <div key={value} style={{ borderLeft: `5px solid ${color || '#ccc'}` }}>
             <div className="section">{value}</div>
             <ul className="active">
-              {items.map(item => li(item, onItemClick, linkTo, backUrl))}
+              {items.map(item => li(item, onItemClick, linkTo, uid, backUrl))}
             </ul>
           </div>
         ))}
       </div>
       <ul className={checked.length ? 'done' : 'hidden'}>
         <h2>{translate(`${view}.cart`)}</h2>
-        <button className="removeBtn" onClick={onDoneClick}>
+        <button type="button" className="removeBtn" onClick={onDoneClick}>
           {translate(`${view}.remove`)}
         </button>
         <ul>{checked.map(item => li(item, onItemClick, linkTo))}</ul>
       </ul>
     </div>
   );
+
+ProductList.defaultProps = {
+  uid: null,
+};
 
 ProductList.propTypes = {
   active: PropTypes.arrayOf(
@@ -75,6 +80,7 @@ ProductList.propTypes = {
   backUrl: PropTypes.string.isRequired,
   translate: PropTypes.func.isRequired,
   view: PropTypes.string.isRequired,
+  uid: PropTypes.number,
 };
 
 export default ProductList;
