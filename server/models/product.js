@@ -66,9 +66,9 @@ module.exports = client => ({
       .catch(err => done({ ...err, stack: err.stack }));
   },
 
-  inactivate(done) {
+  inactivate(uid, done) {
     client
-      .query('DELETE FROM items WHERE checked = TRUE')
+      .query('DELETE FROM items WHERE checked = TRUE AND (uid = 0 OR uid = $1)', [uid])
       .then(({ rows }) => done(null, rows))
       .catch(err => done({ ...err, stack: err.stack }));
   },

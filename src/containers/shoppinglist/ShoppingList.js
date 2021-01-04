@@ -66,7 +66,7 @@ const mapStateToProps = state => ({
   linkTo: id => `/products/${id}`,
   backUrl: '/',
   isLoggedIn: !!state.user.email,
-  getData: (item) => ({ ...item }),
+  getData: (item) => ({ ...item, userId: state.user.isCollaboration ? 0 : state.user.id || 0 }),
 });
 
 const mapDispatchToProps = {
