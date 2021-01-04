@@ -17,6 +17,8 @@ const testProduct = [
   },
 ];
 
+const id = () => ({})
+
 describe('products reducer', () => {
   const { dispatch } = store;
   it('has a default state', () => {
@@ -58,7 +60,7 @@ describe('products reducer', () => {
         checked: null
       }])
     );
-    expect(products(testProduct, await dispatch(toggleProductInactive(1)))).toEqual(
+    expect(products(testProduct, await dispatch(toggleProductInactive(1, id)))).toEqual(
       testProduct.map(product => ({ ...product, checked: null }))
     );
   });
@@ -128,7 +130,7 @@ describe('products reducer', () => {
     dispatch(addProduct({ name: 'Milk' }));
     dispatch(editProduct({ id: 1, name: 'Milk' }));
     dispatch(toggleProductChecked(1));
-    dispatch(toggleProductInactive(1));
+    dispatch(toggleProductInactive(1, id));
     dispatch(removeProduct(1));
     dispatch(inactivateProducts());
     dispatch(fetchProducts());
