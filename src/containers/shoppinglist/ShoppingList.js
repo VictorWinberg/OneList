@@ -9,7 +9,6 @@ import {
   groupBy,
   map,
   mergeWith,
-  reject,
   sortBy,
   toInteger,
   zipObject,
@@ -23,19 +22,20 @@ import ProductList from '../../components/ProductList';
 
 // TODO: Move some of this logic to a helpers function
 
-const sectioned = state => {
+const active = ({ user, ...state }) => {
   const uncategorized = getTranslate(state.locale)('categories.uncategorized');
   const getCategory = ({ category }) =>
     get('name', find({ id: toInteger(category) }, state.categories));
 
   return flow(
-    reject('inactive'),
-    reject('checked'),
+    filter(['checked', false]),
+    filter((item) => item.uid === 0 || (!user.isCollaboration && item.uid === user.id)),
     map(product => ({
       ...product,
+      key: `${product.id}-${product.uid}`,
       categoryName: getCategory(product),
     })),
-    sortBy(({ name }) => name.toLowerCase()),
+    sortBy(({ name, uid }) => [name.toLowerCase(), uid]),
     groupBy('categoryName'),
     mergeWith((category, products) => ({
       ...category,
@@ -48,20 +48,25 @@ const sectioned = state => {
   )(state.products);
 };
 
-const checked = state =>
+const checked = ({ user, ...state }) =>
   flow(
-    reject('inactive'),
-    filter('checked'),
-    map(product => ({ ...product, value: product.name }))
+    filter(['checked', true]),
+    filter((item) => item.uid === 0 || (!user.isCollaboration && item.uid === user.id)),
+    map(product => ({
+      ...product,
+      key: `${product.id}-${product.uid}`,
+      value: product.name,
+    }))
   )(state.products);
 
 const mapStateToProps = state => ({
-  active: sectioned(state),
+  active: active(state),
   checked: checked(state),
   translate: getTranslate(state.locale),
   linkTo: id => `/products/${id}`,
   backUrl: '/',
   isLoggedIn: !!state.user.email,
+  getData: (item) => ({ ...item }),
 });
 
 const mapDispatchToProps = {

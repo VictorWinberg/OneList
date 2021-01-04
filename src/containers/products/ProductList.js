@@ -11,6 +11,7 @@ import {
   mergeWith,
   sortBy,
   toInteger,
+  uniqBy,
   zipObject,
 } from 'lodash/fp';
 
@@ -19,7 +20,8 @@ import ProductList from '../../components/ProductList';
 
 // TODO: Move some of this logic to a helpers function
 
-const sectioned = state => {
+const active = (state) => {
+  const userId = state.user.isCollaboration ? 0 : state.user.id || 0;
   const uncategorized = getTranslate(state.locale)('categories.uncategorized');
   const getCategory = ({ category }) =>
     get('name', find({ id: toInteger(category) }, state.categories));
@@ -27,10 +29,12 @@ const sectioned = state => {
   return flow(
     map(product => ({
       ...product,
-      checked: !product.inactive,
+      key: `${product.id}-${product.uid}`,
+      checked: product.uid !== null && product.uid === userId,
       categoryName: getCategory(product),
     })),
-    sortBy(({ name }) => name.toLowerCase()),
+    sortBy(({ name, uid }) => [name.toLowerCase(), uid !== userId]),
+    uniqBy('id'),
     groupBy('categoryName'),
     mergeWith((category, products) => ({
       ...category,
@@ -44,11 +48,12 @@ const sectioned = state => {
 };
 
 const mapStateToProps = state => ({
-  active: sectioned(state),
+  active: active(state),
   checked: [],
   translate: getTranslate(state.locale),
   linkTo: id => `/products/${id}`,
   backUrl: '/products',
+  getData: (item) => ({ ...item, uid: state.user.isCollaboration ? 0 : state.user.id || 0 }),
 });
 
 const mapDispatchToProps = {

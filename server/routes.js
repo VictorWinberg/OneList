@@ -70,17 +70,24 @@ module.exports = (app, passport, db) => {
   });
 
   app.put('/__/products/:id', isLoggedIn, (req, res) => {
+    db.Product.update(req.params.id, req.body, (err, product) => {
+      if (err) return res.status(400).send(err);
+      return res.send(product);
+    });
+  });
+
+  app.put('/__/products/:id/:uid', isLoggedIn, (req, res) => {
     const result = (err, product) => {
       if (err) return res.status(400).send(err);
       return res.send(product);
     };
 
     if (req.get('Type') === 'toggle-checked') {
-      db.Product.toggleChecked(req.params.id, result);
+      db.Product.toggleChecked(req.params.id, req.params.uid, result);
     } else if (req.get('Type') === 'toggle-inactive') {
-      db.Product.toggleInactive(req.params.id, result);
+      db.Product.toggleInactive(req.params.id, req.params.uid, result);
     } else {
-      db.Product.update(req.params.id, req.body, result);
+      res.sendStatus(400);
     }
   });
 

@@ -1,6 +1,6 @@
 import { FETCH_PRODUCTS } from "../constants/products";
 
-export const addProduct = ({ name, category }) => async (dispatch) => {
+export const addProduct = ({ name, category, uid }) => async (dispatch) => {
   if (name) {
     try {
       await fetch("/__/products", {
@@ -10,7 +10,7 @@ export const addProduct = ({ name, category }) => async (dispatch) => {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ name, category }),
+        body: JSON.stringify({ name, category, uid }),
       });
       return await dispatch(fetchProducts());
     } catch (err) {
@@ -38,9 +38,9 @@ export const editProduct = ({ id, name, amount, unit, category }) => async (
   }
 };
 
-export const toggleProductChecked = (id) => async (dispatch) => {
+export const toggleProductChecked = ({ id, uid }) => async (dispatch) => {
   try {
-    await fetch(`/__/products/${id}`, {
+    await fetch(`/__/products/${id}/${uid}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -55,9 +55,10 @@ export const toggleProductChecked = (id) => async (dispatch) => {
   }
 };
 
-export const toggleProductInactive = (id) => async (dispatch) => {
+export const toggleProductInactive = (item, getData) => async (dispatch) => {
   try {
-    await fetch(`/__/products/${id}`, {
+    const { uid } = getData(item);
+    await fetch(`/__/products/${item.id}/${uid}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",

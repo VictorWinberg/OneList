@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
 import addicon from '../../assets/icons/add.svg';
+import oneuser from '../../assets/icons/one-user.svg';
+import twousers from '../../assets/icons/two-users.svg';
 import clearicon from '../../assets/icons/clear.svg';
-
+import { toggleCollaboration } from '../../actions/user';
 import Autosuggest from './Autosuggest';
 
 class New extends Component {
@@ -27,16 +29,22 @@ class New extends Component {
 
   handleSubmit(event) {
     const { name } = this.state;
-    const { onAddItem } = this.props;
+    const { onAddItem, isCollaboration, uid } = this.props;
 
-    onAddItem({ name, category: null });
+    onAddItem({ name, category: null, uid: isCollaboration ? null : uid });
     this.setState({ name: '' });
     event.preventDefault();
   }
 
   render() {
     const { name } = this.state;
-    const { translate, view, autosuggest } = this.props;
+    const {
+      translate,
+      view,
+      autosuggest,
+      isCollaboration,
+      onToggleCollaboration,
+    } = this.props;
 
     const inputfield = autosuggest ? (
       <Autosuggest
@@ -49,15 +57,21 @@ class New extends Component {
         }}
       />
     ) : (
-      <input
-        id="newItem"
-        type="text"
-        value={name}
-        autoComplete="off"
-        placeholder={translate(`${view}.input`)}
-        onChange={({ target }) => this.setState({ name: target.value })}
-      />
-    );
+        <input
+          id="newItem"
+          type="text"
+          value={name}
+          autoComplete="off"
+          placeholder={translate(`${view}.input`)}
+          onChange={({ target }) => this.setState({ name: target.value })}
+        />
+      );
+
+    const toggle =
+      <div className={"toggle " + (autosuggest ? "" : "disabled")} onClick={() => onToggleCollaboration()}>
+        <img className={"one-user " + (!isCollaboration ? "active" : "")} alt="1" src={oneuser} height="18px" />
+        <img className={"two-users " + (isCollaboration ? "active" : "")} alt="2" src={twousers} height="24px" />
+      </div>
 
     return (
       <form className="search-form" onSubmit={evt => this.handleSubmit(evt)}>
@@ -68,6 +82,7 @@ class New extends Component {
           <img className="add-icon" alt="add" src={addicon} height="12px" />
           {inputfield}
         </label>
+        {toggle}
       </form>
     );
   }
@@ -87,11 +102,14 @@ New.propTypes = {
 
 const mapStateToProps = state => ({
   translate: getTranslate(state.locale),
+  isCollaboration: state.user.isCollaboration,
+  uid: state.user.id
 });
 
 const mapDispatchToProps = (dispatch, { onAdd, onRemove }) => ({
   onAddItem: item => dispatch(onAdd(item)),
   onRemoveItem: id => dispatch(onRemove(id)),
+  onToggleCollaboration: () => dispatch(toggleCollaboration()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(New);
