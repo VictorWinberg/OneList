@@ -40,7 +40,6 @@ export const editProduct = ({ id, name, amount, unit, category }) => async (
 
 export const toggleProductChecked = ({ id, uid }) => async (dispatch) => {
   try {
-    console.log(id, uid);
     await fetch(`/__/products/${id}/${uid}`, {
       method: "PUT",
       headers: {

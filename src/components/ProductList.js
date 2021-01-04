@@ -15,8 +15,7 @@ const li = (item, onItemClick, linkTo, getData, backUrl) => (
     id={item.key}
     key={item.key}
     value={item.value}
-    description={showAmount('uid ', item.uid)}
-    // description={showAmount(item.amount, item.unit)}
+    description={showAmount(item.amount, item.unit)}
     checked={item.checked}
     onClick={() => onItemClick(item, getData)}
     linkTo={linkTo(item.id)}
