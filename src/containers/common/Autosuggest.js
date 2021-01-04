@@ -31,6 +31,7 @@ const getSuggestions = (value, state) => {
     filter(search),
     map(product => ({
       ...product,
+      uid: state.user.isCollaboration ? 0 : state.user.id || 0,
       categoryName: getCategory(product),
     })),
     groupBy('categoryName'),
