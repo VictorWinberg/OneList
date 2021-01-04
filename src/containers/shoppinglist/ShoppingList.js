@@ -35,7 +35,7 @@ const active = ({ user, ...state }) => {
       key: `${product.id}-${product.uid}`,
       categoryName: getCategory(product),
     })),
-    sortBy(({ name }) => name.toLowerCase()),
+    sortBy(({ name, uid }) => [name.toLowerCase(), uid]),
     groupBy('categoryName'),
     mergeWith((category, products) => ({
       ...category,
@@ -66,6 +66,7 @@ const mapStateToProps = state => ({
   linkTo: id => `/products/${id}`,
   backUrl: '/',
   isLoggedIn: !!state.user.email,
+  getData: (item) => ({ ...item }),
 });
 
 const mapDispatchToProps = {

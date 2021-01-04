@@ -10,15 +10,15 @@ const showAmount = (amount, unit) => {
   return null;
 }
 
-const li = (item, onItemClick, linkTo, uid, backUrl) => (
+const li = (item, onItemClick, linkTo, getData, backUrl) => (
   <ListItem
+    id={item.key}
     key={item.key}
-    id={item.id}
     value={item.value}
     description={showAmount('uid ', item.uid)}
     // description={showAmount(item.amount, item.unit)}
     checked={item.checked}
-    onClick={() => onItemClick(item, uid !== null ? uid : item.uid)}
+    onClick={() => onItemClick(item, getData)}
     linkTo={linkTo(item.id)}
     backUrl={backUrl}
   />
@@ -33,7 +33,7 @@ const ProductList = ({
   backUrl,
   translate,
   view,
-  uid,
+  getData,
 }) => (
     <div className={view}>
       <div>
@@ -41,7 +41,7 @@ const ProductList = ({
           <div key={value} style={{ borderLeft: `5px solid ${color || '#ccc'}` }}>
             <div className="section">{value}</div>
             <ul className="active">
-              {items.map(item => li(item, onItemClick, linkTo, uid, backUrl))}
+              {items.map(item => li(item, onItemClick, linkTo, getData, backUrl))}
             </ul>
           </div>
         ))}
@@ -55,10 +55,6 @@ const ProductList = ({
       </ul>
     </div>
   );
-
-ProductList.defaultProps = {
-  uid: null,
-};
 
 ProductList.propTypes = {
   active: PropTypes.arrayOf(
@@ -80,7 +76,7 @@ ProductList.propTypes = {
   backUrl: PropTypes.string.isRequired,
   translate: PropTypes.func.isRequired,
   view: PropTypes.string.isRequired,
-  uid: PropTypes.number,
+  getData: PropTypes.func.isRequired,
 };
 
 export default ProductList;

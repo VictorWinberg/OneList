@@ -56,8 +56,9 @@ export const toggleProductChecked = ({ id, uid }) => async (dispatch) => {
   }
 };
 
-export const toggleProductInactive = (item, uid) => async (dispatch) => {
+export const toggleProductInactive = (item, getData) => async (dispatch) => {
   try {
+    const { uid } = getData(item);
     await fetch(`/__/products/${item.id}/${uid}`, {
       method: "PUT",
       headers: {

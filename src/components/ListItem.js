@@ -27,15 +27,20 @@ ListItem.defaultProps = {
   checked: false,
   onClick: null,
   description: null,
+  backUrl: null,
 };
 
 ListItem.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]).isRequired,
   value: PropTypes.string.isRequired,
   description: PropTypes.element,
   checked: PropTypes.bool,
   onClick: PropTypes.func,
   linkTo: PropTypes.string.isRequired,
+  backUrl: PropTypes.string,
 };
 
 export default ListItem;

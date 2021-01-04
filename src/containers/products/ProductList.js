@@ -29,7 +29,7 @@ const active = (state) => {
   return flow(
     map(product => ({
       ...product,
-      key: product.id,
+      key: `${product.id}-${product.uid}`,
       checked: product.uid !== null && product.uid === userId,
       categoryName: getCategory(product),
     })),
@@ -53,7 +53,7 @@ const mapStateToProps = state => ({
   translate: getTranslate(state.locale),
   linkTo: id => `/products/${id}`,
   backUrl: '/products',
-  uid: state.user.isCollaboration ? 0 : state.user.id || 0,
+  getData: (item) => ({ ...item, uid: state.user.isCollaboration ? 0 : state.user.id || 0 }),
 });
 
 const mapDispatchToProps = {
