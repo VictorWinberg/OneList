@@ -57,8 +57,8 @@ export const toggleProductChecked = ({ id, uid }) => async (dispatch) => {
 
 export const toggleProductInactive = (item, getData) => async (dispatch) => {
   try {
-    const { uid } = getData(item);
-    await fetch(`/__/products/${item.id}/${uid}`, {
+    const { userId } = getData(item);
+    await fetch(`/__/products/${item.id}/${userId}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -89,9 +89,10 @@ export const removeProduct = (id) => async (dispatch) => {
   }
 };
 
-export const inactivateProducts = () => async (dispatch) => {
+export const inactivateProducts = (_, getData) => async (dispatch) => {
   try {
-    await fetch("/__/products", {
+    const { userId } = getData({});
+    await fetch(`/__/inactivate/${userId}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",

@@ -53,7 +53,7 @@ const mapStateToProps = state => ({
   translate: getTranslate(state.locale),
   linkTo: id => `/products/${id}`,
   backUrl: '/products',
-  getData: (item) => ({ ...item, uid: state.user.isCollaboration ? 0 : state.user.id || 0 }),
+  getData: (item) => ({ ...item, userId: state.user.isCollaboration ? 0 : state.user.id || 0 }),
 });
 
 const mapDispatchToProps = {

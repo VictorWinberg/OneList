@@ -62,8 +62,8 @@ module.exports = (app, passport, db) => {
     });
   });
 
-  app.put('/__/products', isLoggedIn, (req, res) => {
-    db.Product.inactivate((err, products) => {
+  app.put('/__/inactivate/:uid', isLoggedIn, (req, res) => {
+    db.Product.inactivate(req.params.uid, (err, products) => {
       if (err) return res.status(400).send(err);
       return res.send(products);
     });

@@ -85,7 +85,7 @@ describe('products reducer', () => {
           { id: 2, name: 'Apple', checked: true },
           { id: 3, name: 'Pear', checked: true },
         ],
-        await dispatch(inactivateProducts())
+        await dispatch(inactivateProducts(null, id))
       )
     ).toEqual([
       ...testProduct,
@@ -132,7 +132,7 @@ describe('products reducer', () => {
     dispatch(toggleProductChecked(1));
     dispatch(toggleProductInactive(1, id));
     dispatch(removeProduct(1));
-    dispatch(inactivateProducts());
+    dispatch(inactivateProducts(null, id));
     dispatch(fetchProducts());
 
     expect(fetch.mock.calls.length).toEqual(7);
