@@ -1,6 +1,6 @@
 import { FETCH_PRODUCTS } from "../constants/products";
 
-export const addProduct = ({ name, category, uid }) => async (dispatch) => {
+export const addProduct = ({ name, uid }) => async (dispatch) => {
   if (name) {
     try {
       await fetch("/__/products", {
@@ -10,7 +10,7 @@ export const addProduct = ({ name, category, uid }) => async (dispatch) => {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ name, category, uid }),
+        body: JSON.stringify({ name, uid }),
       });
       return await dispatch(fetchProducts());
     } catch (err) {

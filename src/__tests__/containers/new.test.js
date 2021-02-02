@@ -15,7 +15,7 @@ describe('New', () => {
     component.find('input').simulate('change', { target: { value: 'Milk' } });
     component.find('form').simulate('submit', { preventDefault() {} });
     expect(store.getActions()).toEqual([
-      { type: 'ADD', name: 'Milk', category: null },
+      { type: 'ADD', name: 'Milk', uid: undefined },
     ]);
   });
 

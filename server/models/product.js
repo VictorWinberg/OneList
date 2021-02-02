@@ -1,19 +1,19 @@
 module.exports = client => ({
-  create({ name, category, uid }, done) {
+  create({ name, uid }, done) {
     const sql = `
       WITH product AS (
-        INSERT INTO products (name, category) VALUES ($1, $2)
-        ON CONFLICT (name) DO UPDATE SET category = $2
+        INSERT INTO products (name) VALUES ($1)
+        ON CONFLICT (name) DO UPDATE SET name = $1
         RETURNING *
       ), item AS (
         INSERT INTO items (product, uid)
-        SELECT id, COALESCE($3, 0) FROM product
+        SELECT id, COALESCE($2, 0) FROM product
         RETURNING *
       )
       SELECT * FROM product
       JOIN item ON (product.id = item.product)`;
     client
-      .query(sql, [name, category, uid])
+      .query(sql, [name, uid])
       .then(({ rows }) => done(null, rows[0] || null))
       .catch(err => done(err));
   },

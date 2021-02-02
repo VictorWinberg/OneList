@@ -31,7 +31,7 @@ class New extends Component {
     const { name } = this.state;
     const { onAddItem, isCollaboration, uid } = this.props;
 
-    onAddItem({ name, category: null, uid: isCollaboration ? null : uid });
+    onAddItem({ name, uid: isCollaboration ? null : uid });
     this.setState({ name: '' });
     event.preventDefault();
   }
