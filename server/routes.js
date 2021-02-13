@@ -6,7 +6,7 @@ module.exports = (app, passport, db) => {
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated()) return next();
 
-    return res.sendStatus(401);
+    return passport.authenticate(['headerapikey'])(req, res, next);
   };
 
   const callback = req => {

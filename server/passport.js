@@ -1,6 +1,7 @@
 const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
-
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
+const HeaderAPIKeyStrategy = require('passport-headerapikey').HeaderAPIKeyStrategy;
+    
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, API_KEY } = process.env;
 
 const get = (p, o) => p.reduce((xs, x) => (xs && xs[x] ? xs[x] : null), o);
 
@@ -44,6 +45,20 @@ module.exports = (passport, User) => {
 
             // return User.create(newUser, done);
           });
+        });
+      }
+    )
+  );
+
+  passport.use(
+    new HeaderAPIKeyStrategy(
+      { header: 'Authorization', prefix: 'Api-Key ' },
+      false,
+      (apiKey, done) => {
+        if (apiKey !== API_KEY) return done(null, false);
+        return User.getByEmail('api@key', (err, user) => {
+          if (err) return done(err);
+          return done(null, user);
         });
       }
     )
