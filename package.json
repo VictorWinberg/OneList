@@ -35,7 +35,7 @@
     "dotenv": "8.2.0",
     "express": "4.17.1",
     "http-proxy-middleware": "1.0.6",
-    "lodash": "4.17.20",
+    "lodash": "4.17.21",
     "passport": "0.4.1",
     "passport-google-oauth": "2.0.0",
     "passport-headerapikey": "^1.2.2",
@@ -49,7 +49,7 @@
     "react-redux": "7.2.2",
     "react-router-dom": "5.2.0",
     "redux": "4.0.5",
-    "redux-devtools-extension": "2.13.8",
+    "redux-devtools-extension": "2.13.9",
     "redux-thunk": "2.3.0"
   },
   "devDependencies": {
