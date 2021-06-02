@@ -20,6 +20,7 @@ const li = (item, onItemClick, linkTo, getData, backUrl) => (
     onClick={() => onItemClick(item, getData)}
     linkTo={linkTo(item.id)}
     backUrl={backUrl}
+    italic={item.italic}
   />
 );
 

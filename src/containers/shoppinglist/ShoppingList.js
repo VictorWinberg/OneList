@@ -29,7 +29,10 @@ const active = ({ user, ...state }) => {
 
   return flow(
     filter(['checked', false]),
-    filter((item) => item.uid === 0 || (!user.isCollaboration && item.uid === user.id)),
+    map((item) => ({
+      ...item,
+      italic: (user.isCollaboration && item.uid === user.id) || (!user.isCollaboration && item.uid === 0)
+    })),
     map(product => ({
       ...product,
       key: `${product.id}-${product.uid}`,
