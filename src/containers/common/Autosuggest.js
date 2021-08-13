@@ -34,6 +34,7 @@ const getSuggestions = (value, state) => {
       uid: state.user.isCollaboration ? 0 : state.user.id || 0,
       categoryName: getCategory(product),
     })),
+    sortBy(({ name, uid }) => [name.toLowerCase(), uid]),
     groupBy('categoryName'),
     mergeWith((category, products) => ({
       title: getOr(uncategorized, 'name', category),
