@@ -1,6 +1,9 @@
 #!/bin/bash
 set -eu # exit script on errors
 
+echo "copy one-list env"
+rsync /home/git/www/onelist/.env .
+
 echo "> npm install"
 npm install
 
