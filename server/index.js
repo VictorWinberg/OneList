@@ -9,8 +9,7 @@ const { Client } = require('pg');
 const passport = require('passport');
 
 const app = express();
-const port = 3004;
-const { DATABASE_URL } = process.env;
+const { DATABASE_URL, PORT } = process.env;
 
 // serve static react build
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
@@ -58,4 +57,4 @@ app.use(passport.session()); // persistent login sessions
 // routes
 require('./routes.js')(app, passport, db);
 
-app.listen(port, () => console.log('ShoppingList app listening on port 3004!'));
+app.listen(PORT || 3000, () => console.log(`OneList listening on port ${PORT || 3000}!`));
