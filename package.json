@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start": "npm-run-all -p serve server",
-    "serve": "react-scripts start",
+    "serve": "PORT=8080 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom --coverage",
     "test:watch": "react-scripts test --env=jsdom",
