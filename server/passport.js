@@ -40,7 +40,7 @@ module.exports = (passport, User) => {
             //   email,
             //   username: get(['displayName'], profile),
             //   photo: get(['photos', 0, 'value'], profile),
-            //   language: get(['_json', 'language'], profile),
+            //   language: get(['_json', 'locale'], profile),
             // };
 
             // return User.create(newUser, done);
