@@ -1,0 +1,37 @@
+{
+  "name": "shopping-list-server",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "nodemon index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VictorWinberg/shopping-list.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VictorWinberg/shopping-list/issues"
+  },
+  "dependencies": {
+    "body-parser": "1.19.0",
+    "cookie-parser": "1.4.5",
+    "cookie-session": "2.0.0-rc.1",
+    "dotenv": "10.0.0",
+    "express": "4.17.1",
+    "passport": "0.4.1",
+    "passport-google-oauth": "2.0.0",
+    "passport-headerapikey": "1.2.2",
+    "pg": "8.7.1"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": "12.x"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
