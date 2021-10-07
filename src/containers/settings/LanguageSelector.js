@@ -10,7 +10,7 @@ import {
 import { updateUser } from '../../actions/user';
 
 const LanguageSelector = ({ myLanguage, translate, languages, update }) => (
-  <div>
+  <div key={myLanguage.code}>
     <label htmlFor="land">
       <span>{translate('settings.language')}</span>
       <input name="lang" type="hidden" />
