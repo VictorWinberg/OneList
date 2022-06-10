@@ -2,7 +2,7 @@ import {
   UPDATE_USER,
   SUBMIT_USER,
   REQUEST_USER,
-  RECIEVE_USER,
+  RECEIVE_USER,
   TOGGLE_COLLABORATION,
   LOGOUT_USER,
 } from '../constants/user';
@@ -22,7 +22,7 @@ export const fetchUser = () => dispatch => {
   dispatch({ type: REQUEST_USER });
   return fetch('/__/user', { credentials: 'include' })
     .then(response => response.json())
-    .then(user => dispatch({ type: RECIEVE_USER, user }))
+    .then(user => dispatch({ type: RECEIVE_USER, user }))
     .catch(err => console.error(err));
 };
 
@@ -46,7 +46,7 @@ export const submitUser = (event, user) => dispatch => {
       if (response.ok) return response.json();
       throw response;
     })
-    .then(json => dispatch({ type: RECIEVE_USER, user: json }))
+    .then(json => dispatch({ type: RECEIVE_USER, user: json }))
     .catch(err => {
       err.json().then(json => console.error(json));
       dispatch(fetchUser());

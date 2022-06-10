@@ -56,7 +56,7 @@ describe('user reducer', () => {
       expect(mockStore.getActions()).toEqual([
         { type: 'SUBMIT_USER' },
         {
-          type: 'RECIEVE_USER',
+          type: 'RECEIVE_USER',
           user: testUser,
         },
       ]);
@@ -89,7 +89,7 @@ describe('user reducer', () => {
         { type: 'SUBMIT_USER' },
         { type: 'REQUEST_USER' },
         {
-          type: 'RECIEVE_USER',
+          type: 'RECEIVE_USER',
           user: testUser,
         },
       ]);
@@ -97,7 +97,7 @@ describe('user reducer', () => {
     });
   });
 
-  it('can handle REQUEST_USER and RECIEVE_USER', done => {
+  it('can handle REQUEST_USER and RECEIVE_USER', done => {
     fetch.mockResponse(JSON.stringify(testUser));
     mockStore.dispatch(fetchUser());
 
@@ -105,7 +105,7 @@ describe('user reducer', () => {
       expect(mockStore.getActions()).toEqual([
         { type: 'REQUEST_USER' },
         {
-          type: 'RECIEVE_USER',
+          type: 'RECEIVE_USER',
           user: testUser,
         },
       ]);
