@@ -1,5 +1,5 @@
 {
-  "name": "shopping-list",
+  "name": "onelist",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -16,12 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/VictorWinberg/shopping-list.git"
+    "url": "git+https://github.com/VictorWinberg/onelist.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/VictorWinberg/shopping-list/issues"
+    "url": "https://github.com/VictorWinberg/onelist/issues"
   },
   "jest": {
     "collectCoverageFrom": [
