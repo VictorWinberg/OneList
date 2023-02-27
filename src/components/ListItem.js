@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import penselecticon from '../assets/icons/pen-select.svg';
 
-const ListItem = ({ id, value, description, checked, italic, onClick, linkTo, backUrl }) => (
+const ListItem = ({ id, value, description, checked, days, italic, onClick, linkTo, backUrl }) => (
   <li className="listitem">
     <label role="presentation" onKeyDown={onClick} htmlFor={id} className={italic ? 'text-italic' : ''}>
       <input
@@ -15,6 +15,7 @@ const ListItem = ({ id, value, description, checked, italic, onClick, linkTo, ba
       />
       <span className="productText">{value}</span>
       {description}
+      <span className="productDays">{days}</span>
       <span className="checkmark" />
     </label>
     <Link to={{ pathname: linkTo, query: { backUrl } }}>
@@ -27,6 +28,7 @@ ListItem.defaultProps = {
   checked: false,
   onClick: null,
   description: null,
+  days: null,
   backUrl: null,
   italic: false,
 };
@@ -39,6 +41,7 @@ ListItem.propTypes = {
   value: PropTypes.string.isRequired,
   description: PropTypes.element,
   checked: PropTypes.bool,
+  days: PropTypes.string,
   italic: PropTypes.bool,
   onClick: PropTypes.func,
   linkTo: PropTypes.string.isRequired,

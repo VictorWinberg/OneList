@@ -61,14 +61,23 @@ module.exports = client => ({
 
   getAll(done) {
     client
-      .query('SELECT * FROM products FULL JOIN items ON (products.id = items.product)')
+      .query('SELECT * FROM products FULL JOIN items ON (products.id = items.product) ORDER BY name')
       .then(({ rows }) => done(null, rows))
       .catch(err => done({ ...err, stack: err.stack }));
   },
 
   inactivate(uid, done) {
+    const where = `WHERE checked = TRUE AND (uid = 0 OR uid = ${uid})`
+
     client
-      .query('DELETE FROM items WHERE checked = TRUE AND (uid = 0 OR uid = $1)', [uid])
+      .query(`
+        BEGIN;
+          UPDATE products SET updated_at = NOW() WHERE id IN (
+            SELECT product FROM items ${where}
+          );
+          DELETE FROM items ${where};
+        COMMIT;
+      `)
       .then(({ rows }) => done(null, rows))
       .catch(err => done({ ...err, stack: err.stack }));
   },

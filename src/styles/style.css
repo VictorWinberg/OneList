@@ -387,6 +387,14 @@ nav a.active {
   font-size: 18px;
 }
 
+.listitem .productDays{
+  font-family: "Quicksand", sans-serif;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.6);
+  padding-left: 10px;
+  font-size: 12px;
+}
+
 /* Hide the browser's default checkbox */
 .listitem label input {
   position: absolute;
