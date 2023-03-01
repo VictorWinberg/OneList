@@ -1,14 +1,28 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import ListItem from './ListItem';
+import ListItem from "./ListItem";
 
 const showAmount = (amount, unit) => {
-  if (amount && amount !== '0') {
-    return <span className="amountText">{amount.replace(/\./, ',')}{unit}</span>
+  if (amount && amount !== "0") {
+    return (
+      <span className="amountText">
+        {amount.replace(/\./, ",")}
+        {unit}
+      </span>
+    );
   }
   return null;
-}
+};
+
+const countDays = (date) => {
+  if (!date) return null;
+  const today = new Date().getTime();
+  const updated = new Date(date).getTime();
+  const days = Math.floor((today - updated) / (1000 * 60 * 60 * 24));
+  if (days === 0) return null;
+  return `${days}d`;
+};
 
 const li = (item, onItemClick, linkTo, getData, backUrl) => (
   <ListItem
@@ -16,6 +30,7 @@ const li = (item, onItemClick, linkTo, getData, backUrl) => (
     key={item.key}
     value={item.value}
     description={showAmount(item.amount, item.unit)}
+    days={countDays(item.updated_at)}
     checked={item.checked}
     onClick={() => onItemClick(item, getData)}
     linkTo={linkTo(item.id)}
@@ -35,26 +50,26 @@ const ProductList = ({
   view,
   getData,
 }) => (
-    <div className={view}>
-      <div>
-        {active.map(({ value, color, items }) => (
-          <div key={value} style={{ borderLeft: `5px solid ${color || '#ccc'}` }}>
-            <div className="section">{value}</div>
-            <ul className="active">
-              {items.map(item => li(item, onItemClick, linkTo, getData, backUrl))}
-            </ul>
-          </div>
-        ))}
-      </div>
-      <ul className={checked.length ? 'done' : 'hidden'}>
-        <h2>{translate(`${view}.cart`)}</h2>
-        <button type="button" className="removeBtn" onClick={(evt) => onDoneClick(evt, getData)}>
-          {translate(`${view}.remove`)}
-        </button>
-        <ul>{checked.map(item => li(item, onItemClick, linkTo))}</ul>
-      </ul>
+  <div className={view}>
+    <div>
+      {active.map(({ value, color, items }) => (
+        <div key={value} style={{ borderLeft: `5px solid ${color || "#ccc"}` }}>
+          <div className="section">{value}</div>
+          <ul className="active">
+            {items.map((item) => li(item, onItemClick, linkTo, getData, backUrl))}
+          </ul>
+        </div>
+      ))}
     </div>
-  );
+    <ul className={checked.length ? "done" : "hidden"}>
+      <h2>{translate(`${view}.cart`)}</h2>
+      <button type="button" className="removeBtn" onClick={(evt) => onDoneClick(evt, getData)}>
+        {translate(`${view}.remove`)}
+      </button>
+      <ul>{checked.map((item) => li(item, onItemClick, linkTo))}</ul>
+    </ul>
+  </div>
+);
 
 ProductList.propTypes = {
   active: PropTypes.arrayOf(

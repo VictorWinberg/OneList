@@ -22,12 +22,15 @@ CREATE TABLE categories (
 
 DROP TABLE IF EXISTS products CASCADE;
 CREATE TABLE products (
-  id        SERIAL        NOT NULL,
-  name      VARCHAR(255)  NOT NULL UNIQUE,
-  amount    DECIMAL       DEFAULT 0,
-  unit      VARCHAR(50),
+  id          SERIAL        NOT NULL,
+  name        VARCHAR(255)  NOT NULL UNIQUE,
+  amount      DECIMAL       DEFAULT 0,
+  unit        VARCHAR(50),
 
-  category  INT,
+  created_at  TIMESTAMP     DEFAULT NOW(),
+  updated_at  TIMESTAMP,
+
+  category    INT,
 
   FOREIGN KEY(category) REFERENCES categories(id) ON DELETE SET NULL,
   PRIMARY KEY(id)
