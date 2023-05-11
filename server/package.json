@@ -1,5 +1,5 @@
 {
-  "name": "shopping-list-server",
+  "name": "onelist-server",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -7,12 +7,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/VictorWinberg/shopping-list.git"
+    "url": "git+https://github.com/VictorWinberg/OneList.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/VictorWinberg/shopping-list/issues"
+    "url": "https://github.com/VictorWinberg/OneList/issues"
   },
   "dependencies": {
     "body-parser": "1.20.2",
