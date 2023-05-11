@@ -24,8 +24,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Install and cache client dependencies
-      uses: bahmutov/npm-install@v1
+    - name: Install
+      uses: npm ci
 
     - name: Build client
       run: npm run build
