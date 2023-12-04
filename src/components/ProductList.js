@@ -20,7 +20,11 @@ const countDays = (date) => {
   const today = new Date().getTime();
   const updated = new Date(date).getTime();
   const days = Math.floor((today - updated) / (1000 * 60 * 60 * 24));
+  const months = Math.floor(days / 30);
+  const years = Math.floor(months / 12);
   if (days === 0) return null;
+  if (months > 0) return `${months}m`;
+  if (years > 0) return `${years}y`;
   return `${days}d`;
 };
 
@@ -56,14 +60,20 @@ const ProductList = ({
         <div key={value} style={{ borderLeft: `5px solid ${color || "#ccc"}` }}>
           <div className="section">{value}</div>
           <ul className="active">
-            {items.map((item) => li(item, onItemClick, linkTo, getData, backUrl))}
+            {items.map((item) =>
+              li(item, onItemClick, linkTo, getData, backUrl)
+            )}
           </ul>
         </div>
       ))}
     </div>
     <ul className={checked.length ? "done" : "hidden"}>
       <h2>{translate(`${view}.cart`)}</h2>
-      <button type="button" className="removeBtn" onClick={(evt) => onDoneClick(evt, getData)}>
+      <button
+        type="button"
+        className="removeBtn"
+        onClick={(evt) => onDoneClick(evt, getData)}
+      >
         {translate(`${view}.remove`)}
       </button>
       <ul>{checked.map((item) => li(item, onItemClick, linkTo))}</ul>
