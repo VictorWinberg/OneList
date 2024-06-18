@@ -10,7 +10,7 @@ const Header = ({ translate }) => (
   <div className="header">
     <div className="top">
       <img id="headericon" src={onelisticon} alt="Settings" height="30px" />
-      <a href="https://menu.codies.se"><h1>OneList</h1></a>
+      <h1>OneList</h1>
       <NavLink to="/settings">
         <img id="settingicon" src={settingicon} alt="Settings" height="28px" />
       </NavLink>
