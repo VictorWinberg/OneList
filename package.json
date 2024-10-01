@@ -43,7 +43,7 @@
     "react-router-dom": "5.3.4",
     "redux": "4.2.1",
     "redux-devtools-extension": "2.13.9",
-    "redux-thunk": "2.4.2"
+    "redux-thunk": "3.1.0"
   },
   "devDependencies": {
     "enzyme": "3.11.0",
