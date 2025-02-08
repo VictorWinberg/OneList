@@ -27,7 +27,7 @@
   },
   "devDependencies": {},
   "engines": {
-    "node": "12.x"
+    "node": "22.x"
   },
   "browserslist": [
     ">0.2%",

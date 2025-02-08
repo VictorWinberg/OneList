@@ -4,6 +4,8 @@ set -eu # exit script on errors
 echo "copy one-list env"
 rsync /home/git/www/onelist/.env .
 
+nvm use 22.13.1
+
 echo "> npm run install-server"
 npm run install-server
 
