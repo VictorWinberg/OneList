@@ -17,14 +17,17 @@ const showAmount = (amount, unit) => {
 
 const countDays = (date) => {
   if (!date) return null;
+
   const today = new Date().getTime();
   const updated = new Date(date).getTime();
+
   const days = Math.floor((today - updated) / (1000 * 60 * 60 * 24));
   const months = Math.floor(days / 30);
-  const years = Math.floor(months / 12);
+  const years = parseFloat((days / 365).toFixed(1));
+
   if (days === 0) return null;
-  if (months > 0) return `${months}m`;
   if (years > 0) return `${years}y`;
+  if (months > 0) return `${months}m`;
   return `${days}d`;
 };
 
