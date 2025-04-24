@@ -26,8 +26,8 @@ const countDays = (date) => {
   const years = parseFloat((days / 365).toFixed(1));
 
   if (days === 0) return null;
-  if (years > 0) return `${years}y`;
-  if (months > 0) return `${months}m`;
+  if (years >= 1) return `${years}y`;
+  if (months >= 1) return `${months}m`;
   return `${days}d`;
 };
 
