@@ -3,6 +3,25 @@ import PropTypes from "prop-types";
 
 import ListItem from "./ListItem";
 
+const parseAgeFilter = (filter) => {
+  const unitMultipliers = { d: 1, w: 7, m: 30, y: 365 };
+  if (!filter) return null;
+
+  const amount = parseInt(filter.slice(0, -1), 10);
+  const unit = filter.slice(-1);
+
+  return amount * unitMultipliers[unit];
+};
+
+const countDays = (date) => {
+  if (!date) return null;
+
+  const today = new Date().getTime();
+  const updated = new Date(date).getTime();
+
+  return Math.floor((today - updated) / (1000 * 60 * 60 * 24));
+};
+
 const showAmount = (amount, unit) => {
   if (amount && amount !== "0") {
     return (
@@ -15,21 +34,16 @@ const showAmount = (amount, unit) => {
   return null;
 };
 
-const countDays = (date) => {
-  if (!date) return null;
-
-  const today = new Date().getTime();
-  const updated = new Date(date).getTime();
-
-  const days = Math.floor((today - updated) / (1000 * 60 * 60 * 24));
-  const months = Math.floor(days / 30);
-  const years = parseFloat((days / 365).toFixed(1));
-
-  if (days === 0) return null;
-  if (years >= 1) return `${years}y`;
-  if (months >= 1) return `${months}m`;
-  return `${days}d`;
+const getDays = (date) => countDays(date) ?? Number.MAX_SAFE_INTEGER;
+const compareStrings = (a, b) => a.localeCompare(b, undefined, { sensitivity: "base" });
+const sorters = {
+  nameAsc: (a, b) => compareStrings(a.value, b.value),
+  nameDesc: (a, b) => compareStrings(b.value, a.value),
+  dateAsc: (a, b) => getDays(b.updated_at) - getDays(a.updated_at),
+  dateDesc: (a, b) => getDays(a.updated_at) - getDays(b.updated_at),
 };
+
+const sortItems = (items = [], sortOrder = "nameAsc") => [...items].sort(sorters[sortOrder]);
 
 const li = (item, onItemClick, linkTo, getData, backUrl) => (
   <ListItem
@@ -56,27 +70,38 @@ const ProductList = ({
   translate,
   view,
   getData,
+  ageFilter,
+  sortOrder,
 }) => (
   <div className={view}>
     <div>
-      {active.map(({ value, color, items }) => (
-        <div key={value} style={{ borderLeft: `5px solid ${color || "#ccc"}` }}>
-          <div className="section">{value}</div>
-          <ul className="active">
-            {items.map((item) =>
-              li(item, onItemClick, linkTo, getData, backUrl)
-            )}
-          </ul>
-        </div>
-      ))}
+      {active.map(({ value, color, items }) => {
+        const filteredItems = items.filter((item) => {
+          const maxDays = parseAgeFilter(ageFilter);
+          if (!maxDays) return true;
+
+          const days = countDays(item.updated_at);
+          return days !== null && days <= maxDays;
+        });
+
+        const sortedItems = sortItems(filteredItems, sortOrder);
+
+        if (sortedItems.length === 0) return null;
+
+        return (
+          <div key={value} style={{ borderLeft: `5px solid ${color || "#ccc"}` }}>
+            <div className="section">{value}</div>
+            <ul className="active">
+              {sortedItems.map((item) => li(item, onItemClick, linkTo, getData, backUrl))}
+            </ul>
+          </div>
+        );
+      })}
     </div>
+
     <ul className={checked.length ? "done" : "hidden"}>
       <h2>{translate(`${view}.cart`)}</h2>
-      <button
-        type="button"
-        className="removeBtn"
-        onClick={(evt) => onDoneClick(evt, getData)}
-      >
+      <button type="button" className="removeBtn" onClick={(evt) => onDoneClick(evt, getData)}>
         {translate(`${view}.remove`)}
       </button>
       <ul>{checked.map((item) => li(item, onItemClick, linkTo))}</ul>
@@ -105,6 +130,7 @@ ProductList.propTypes = {
   translate: PropTypes.func.isRequired,
   view: PropTypes.string.isRequired,
   getData: PropTypes.func.isRequired,
+  ageFilter: PropTypes.string,
 };
 
 export default ProductList;
