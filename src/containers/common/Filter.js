@@ -6,8 +6,8 @@ import { getTranslate } from 'react-localize-redux';
 const AGE_OPTIONS = [
   ['all', null, 'all'],
   ['1d', 1, 'day'],
-  ['7d', 1, 'week'],
-  ['30d', 30, 'days'],
+  ['1w', 1, 'week'],
+  ['1m', 1, 'month'],
   ['3m', 3, 'months'],
   ['6m', 6, 'months'],
   ['1y', 1, 'year'],
