@@ -26,7 +26,7 @@ const ListItem = ({ id, value, description, checked, days, italic, onClick, link
 const daysToHumanReadable = (days) => {
   if (days == null) return null;
 
-  const years = parseFloat((days / 365).toFixed(1));
+  const years = Math.floor(days / 365);
   if (years >= 1) return `${years}y`;
 
   const months = Math.floor(days / 30);
