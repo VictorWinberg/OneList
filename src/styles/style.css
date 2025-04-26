@@ -205,8 +205,8 @@ nav a.active {
 
 .one-user.active,
 .two-users.active {
-  filter: invert(50%) sepia(82%) saturate(428%) hue-rotate(172deg)
-    brightness(90%) contrast(92%) drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.5));
+  filter: invert(50%) sepia(82%) saturate(428%) hue-rotate(172deg) brightness(90%) contrast(92%)
+    drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.5));
   transform: scale(2);
   z-index: 1;
 }
@@ -218,6 +218,27 @@ nav a.active {
 
 .suggestions span {
   font-size: 18px;
+}
+
+.filter-control {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  padding: 0.5em;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.filter-control label {
+  font-weight: bold;
+  color: #333;
+}
+
+.filter-control select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  color: #333;
 }
 
 .delete-icon {

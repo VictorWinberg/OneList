@@ -18,8 +18,6 @@ import {
 import { toggleProductInactive } from '../../actions/products';
 import ProductList from '../../components/ProductList';
 
-// TODO: Move some of this logic to a helpers function
-
 const active = (state) => {
   const userId = state.user.isCollaboration ? 0 : state.user.id || 0;
   const uncategorized = getTranslate(state.locale)('categories.uncategorized');
@@ -27,7 +25,7 @@ const active = (state) => {
     get('name', find({ id: toInteger(category) }, state.categories));
 
   return flow(
-    map(product => ({
+    map((product) => ({
       ...product,
       key: `${product.id}-${product.uid}`,
       checked: product.uid !== null && product.uid === userId,
@@ -40,20 +38,22 @@ const active = (state) => {
       ...category,
       value: getOr(uncategorized, 'name', category),
       orderidx: getOr(0, 'orderidx', category),
-      items: map(product => ({ ...product, value: product.name }), products),
+      items: map((product) => ({ ...product, value: product.name }), products),
     }))(zipObject(map('name', state.categories), state.categories)),
     filter('items.length'),
     sortBy('orderidx')
   )(state.products);
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
   active: active(state),
   checked: [],
   translate: getTranslate(state.locale),
-  linkTo: id => `/products/${id}`,
+  linkTo: (id) => `/products/${id}`,
   backUrl: '/products',
   getData: (item) => ({ ...item, userId: state.user.isCollaboration ? 0 : state.user.id || 0 }),
+  ageFilter: ownProps.ageFilter, // Pass ageFilter down from props
+  sortOrder: ownProps.sortOrder || 'name_asc',
 });
 
 const mapDispatchToProps = {
@@ -61,7 +61,4 @@ const mapDispatchToProps = {
   onDoneClick: () => null,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProductList);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductList);
