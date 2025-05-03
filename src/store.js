@@ -11,7 +11,7 @@ const store = createStore(
   reducers,
   composeWithDevTools(applyMiddleware(thunk))
 );
-store.dispatch(initialize(['en', 'sv']));
+store.dispatch(initialize(['en', 'sv', 'es']));
 store.dispatch(addTranslation(translation));
 store.dispatch(fetchUser());
 
