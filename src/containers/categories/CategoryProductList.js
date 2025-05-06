@@ -6,42 +6,39 @@ import { toggleProductInactive } from '../../actions/products';
 import ProductList from '../../components/ProductList';
 
 const active = (state, categoryId) => {
-  const [category] = state.categories.filter(
-    (category) => category.id === categoryId
-  );
+  const [category] = state.categories.filter((category) => category.id === categoryId);
   const items = [];
 
   if (!category) {
-    return [
-      { value: getTranslate(state.locale)('categories.nonexistent'), items },
-    ];
+    return [{ value: getTranslate(state.locale)('categories.nonexistent'), items }];
   }
 
   flow(
     sortBy(({ name }) => [name.toLowerCase()]),
     forEach((product) => {
-      (product.categoryIds || []).forEach((_categoryId) => {
-        if (_categoryId === categoryId) {
-          items.push({
-            ...product,
-            key: `${product.id}-${product.uid}`,
-            checked: product.active,
-            value: product.name,
-          });
-        }
-      });
+      if (product.category === categoryId) {
+        items.push({
+          ...product,
+          key: `${product.id}-${product.uid}`,
+          checked: product.active,
+          value: product.name,
+        });
+      }
     })
   )(state.products);
 
   return [{ ...category, value: category.name, items }];
 };
 
-const mapStateToProps = (state, { match }) => ({
+const mapStateToProps = (state, { match, ...ownProps }) => ({
   active: active(state, Number(match.params.id)),
   checked: [],
   translate: getTranslate(state.locale),
   linkTo: (id) => `/products/${id}`,
-  backUrl: '/products',
+  backUrl: `/categories/${match.params.id}`,
+  getData: (item) => ({ ...item, userId: state.user.isCollaboration ? 0 : state.user.id || 0 }),
+  ageFilter: ownProps.ageFilter,
+  sortOrder: ownProps.sortOrder || 'nameAsc',
 });
 
 const mapDispatchToProps = {

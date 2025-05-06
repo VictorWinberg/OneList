@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import Header from './common/Header';
 import ShoppingList from './shoppinglist';
 import Categories from './categories';
-import CategoryProductList from './categories/CategoryProductList';
+import CategoryProducts from './categories/CategoryProducts';
 import EditCategory from './categories/EditCategory';
 import Products from './products';
 import EditProduct from './products/EditProduct';
@@ -19,7 +19,7 @@ const App = () => (
     <Route path="/" component={Header} />
     <Route exact path="/" component={ShoppingList} />
     <Route exact path="/categories" component={Categories} />
-    <Route exact path="/categories/:id" component={CategoryProductList} />
+    <Route exact path="/categories/:id" component={CategoryProducts} />
     <Route exact path="/categories/edit/:id" component={EditCategory} />
     <Route exact path="/products" component={Products} />
     <Route exact path="/products/:id" component={EditProduct} />

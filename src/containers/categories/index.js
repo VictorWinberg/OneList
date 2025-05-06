@@ -5,11 +5,11 @@ import New from '../common/New';
 import Snackbar from '../common/Snackbar';
 import { addCategory } from '../../actions/categories';
 
-const Categories = () => (
+const Categories = (props) => (
   <div>
     <New view="categories" onAdd={addCategory} />
     <Snackbar />
-    <CategoryList view="categories" />
+    <CategoryList view="categories" {...props} />
   </div>
 );
 

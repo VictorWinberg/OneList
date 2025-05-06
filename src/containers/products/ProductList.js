@@ -52,8 +52,8 @@ const mapStateToProps = (state, ownProps) => ({
   linkTo: (id) => `/products/${id}`,
   backUrl: '/products',
   getData: (item) => ({ ...item, userId: state.user.isCollaboration ? 0 : state.user.id || 0 }),
-  ageFilter: ownProps.ageFilter, // Pass ageFilter down from props
-  sortOrder: ownProps.sortOrder || 'name_asc',
+  ageFilter: ownProps.ageFilter,
+  sortOrder: ownProps.sortOrder || 'nameAsc',
 });
 
 const mapDispatchToProps = {
