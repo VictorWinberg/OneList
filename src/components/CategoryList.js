@@ -60,6 +60,9 @@ CategoryList.propTypes = {
   ).isRequired,
   linkTo: PropTypes.func.isRequired,
   onItemReorder: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default CategoryList;
