@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
-import { filter, flow, forEach, map, sortBy } from 'lodash/fp';
+import { filter, flow, map, sortBy } from 'lodash/fp';
 
 import { toggleProductInactive } from '../../actions/products';
 import ProductList from '../../components/ProductList';
@@ -8,13 +8,12 @@ import ProductList from '../../components/ProductList';
 const active = (state, categoryId) => {
   const userId = state.user.isCollaboration ? 0 : state.user.id || 0;
   const [category] = state.categories.filter((category) => category.id === categoryId);
-  const items = [];
 
   if (!category) {
-    return [{ value: getTranslate(state.locale)('categories.nonexistent'), items }];
+    return [{ value: getTranslate(state.locale)('categories.nonexistent'), items: [] }];
   }
 
-  items = flow(
+  const items = flow(
     map((product) => ({
       ...product,
       key: `${product.id}-${product.uid}`,
