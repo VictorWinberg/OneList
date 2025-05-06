@@ -6,6 +6,7 @@ import { toggleProductInactive } from '../../actions/products';
 import ProductList from '../../components/ProductList';
 
 const active = (state, categoryId) => {
+  const userId = state.user.isCollaboration ? 0 : state.user.id || 0;
   const [category] = state.categories.filter((category) => category.id === categoryId);
   const items = [];
 
