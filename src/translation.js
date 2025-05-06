@@ -22,6 +22,7 @@ module.exports = {
   categories: {
     input: ['New category...', 'Ny kategori...', 'Nueva categoría...'],
     uncategorized: ['Uncategorized', 'Okategoriserad', 'Sin categoría'],
+    nonexistent: ['Category missing', 'Kategori saknas', 'Falta categoría']
   },
   products: {
     cart: ['Cart', 'Varukorg', 'Carrito'],
