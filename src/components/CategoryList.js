@@ -4,7 +4,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import ListItem from './ListItem';
 
-const CategoryList = ({ view, items, linkTo, onItemReorder }) => (
+const CategoryList = ({ view, items, linkTo, history, onItemReorder }) => (
   <div className={view}>
     <DragDropContext
       onDragEnd={({ source, destination }) => {
@@ -35,6 +35,7 @@ const CategoryList = ({ view, items, linkTo, onItemReorder }) => (
                     <ListItem
                       id={item.id}
                       value={item.value}
+                      onClick={() => history.push(`/categories/${item.id}`)}
                       linkTo={linkTo(item.id)}
                     />
                   </div>
@@ -59,6 +60,9 @@ CategoryList.propTypes = {
   ).isRequired,
   linkTo: PropTypes.func.isRequired,
   onItemReorder: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default CategoryList;

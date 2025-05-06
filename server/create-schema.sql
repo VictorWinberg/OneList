@@ -28,7 +28,7 @@ CREATE TABLE products (
   unit        VARCHAR(50),
 
   created_at  TIMESTAMP     DEFAULT NOW(),
-  updated_at  TIMESTAMP,
+  updated_at  TIMESTAMP     DEFAULT NOW(),
 
   category    INT,
 
