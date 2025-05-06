@@ -8,7 +8,8 @@ const mapStateToProps = state => ({
     ...category,
     value: category.name,
   })),
-  linkTo: id => `/categories/${id}`,
+  onClick: id => `/categories/${id}`,
+  linkTo: id => `/categories/edit/${id}`,
 });
 
 const mapDispatchToProps = {
