@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
-import { flow, forEach, sortBy } from 'lodash/fp';
+import { flow, forEach, map, sortBy } from 'lodash/fp';
 
 import { toggleProductInactive } from '../../actions/products';
 import ProductList from '../../components/ProductList';
@@ -14,6 +14,11 @@ const active = (state, categoryId) => {
   }
 
   flow(
+    map((product) => ({
+      ...product,
+      key: `${product.id}-${product.uid}`,
+      checked: product.uid !== null && product.uid === userId,
+    })),
     sortBy(({ name }) => [name.toLowerCase()]),
     forEach((product) => {
       if (product.category === categoryId) {
