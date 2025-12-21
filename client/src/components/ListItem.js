@@ -25,7 +25,6 @@ const ListItem = ({
   onClick = null,
   linkTo,
   backUrl = null,
-  onDelete,
 }) => (
   <li className="listitem">
     <label
@@ -50,16 +49,6 @@ const ListItem = ({
       <Link to={{ pathname: linkTo, query: { backUrl } }}>
         <img id="editicon" src={penselecticon} alt="Edit" height="27px" />
       </Link>
-      {onDelete && (
-        <button
-          type="button"
-          onClick={onDelete}
-          className="delete-button"
-          aria-label="Delete"
-        >
-          ×
-        </button>
-      )}
     </div>
   </li>
 );
@@ -74,7 +63,6 @@ ListItem.propTypes = {
   onClick: PropTypes.func,
   linkTo: PropTypes.string.isRequired,
   backUrl: PropTypes.string,
-  onDelete: PropTypes.func,
 };
 
 export default ListItem;
