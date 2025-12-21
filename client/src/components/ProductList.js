@@ -48,7 +48,7 @@ const sorters = {
 const sortItems = (items = [], sortOrder = 'nameAsc') =>
   [...items].sort(sorters[sortOrder]);
 
-const li = (item, onItemClick, linkTo, getData, backUrl) => (
+const li = (item, onItemClick, linkTo, getData, backUrl, onDelete) => (
   <ListItem
     id={item.key}
     key={item.key}
@@ -60,6 +60,7 @@ const li = (item, onItemClick, linkTo, getData, backUrl) => (
     linkTo={linkTo(item.id)}
     backUrl={backUrl}
     italic={item.italic}
+    onDelete={onDelete ? () => onDelete(item.id) : null}
   />
 );
 
@@ -74,6 +75,7 @@ const ProductList = ({
   getData,
   ageFilter,
   sortOrder,
+  onDelete,
 }) => {
   const { t } = useTranslation();
 
@@ -101,7 +103,7 @@ const ProductList = ({
               <div className="section">{value}</div>
               <ul className="active">
                 {sortedItems.map((item) =>
-                  li(item, onItemClick, linkTo, getData, backUrl)
+                  li(item, onItemClick, linkTo, getData, backUrl, onDelete)
                 )}
               </ul>
             </div>
@@ -118,7 +120,11 @@ const ProductList = ({
         >
           {t(`${view}.remove`)}
         </button>
-        <ul>{checked.map((item) => li(item, onItemClick, linkTo))}</ul>
+        <ul>
+          {checked.map((item) =>
+            li(item, onItemClick, linkTo, getData, backUrl, onDelete)
+          )}
+        </ul>
       </ul>
     </div>
   );
@@ -146,6 +152,7 @@ ProductList.propTypes = {
   getData: PropTypes.func.isRequired,
   ageFilter: PropTypes.string,
   sortOrder: PropTypes.string,
+  onDelete: PropTypes.func,
 };
 
 export default ProductList;

@@ -392,7 +392,8 @@ nav a.active {
   display: flex;
   align-items: center;
   font-family: 'Quicksand', sans-serif;
-  width: calc(100% - 2em);
+  width: 0;
+  flex-grow: 1;
   position: relative;
   cursor: pointer;
   font-size: 22px;
@@ -410,13 +411,6 @@ nav a.active {
   font-size: 18px;
 }
 
-.listitem .productDays {
-  margin-left: auto;
-  font-style: italic;
-  color: rgba(0, 0, 0, 0.6);
-  font-size: 12px;
-}
-
 /* Hide the browser's default checkbox */
 .listitem label input {
   position: absolute;
@@ -424,10 +418,36 @@ nav a.active {
   cursor: pointer;
 }
 
-.listitem label ~ a img {
+.listitem-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  line-height: 0;
+}
+
+.productDays {
+  font-family: 'Quicksand', sans-serif;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 12px;
+}
+
+.listitem-actions img {
   cursor: pointer;
-  position: absolute;
-  right: 0.5em;
+}
+
+.listitem-actions .delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 32px;
+  color: #666;
+  line-height: 0;
+}
+
+.listitem-actions .delete-button:hover {
+  color: #000;
 }
 
 /* When the checkbox is checked, add a blue background */

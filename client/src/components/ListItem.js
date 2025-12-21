@@ -25,6 +25,7 @@ const ListItem = ({
   onClick,
   linkTo,
   backUrl,
+  onDelete,
 }) => (
   <li className="listitem">
     <label
@@ -42,12 +43,24 @@ const ListItem = ({
       />
       <span className="productText">{value}</span>
       {description}
-      <span className="productDays">{daysToHumanReadable(days)}</span>
       <span className="checkmark" />
     </label>
-    <Link to={{ pathname: linkTo, query: { backUrl } }}>
-      <img id="editicon" src={penselecticon} alt="Edit" height="27px" />
-    </Link>
+    <div className="listitem-actions">
+      <span className="productDays">{daysToHumanReadable(days)}</span>
+      <Link to={{ pathname: linkTo, query: { backUrl } }}>
+        <img id="editicon" src={penselecticon} alt="Edit" height="27px" />
+      </Link>
+      {onDelete && (
+        <button
+          type="button"
+          onClick={onDelete}
+          className="delete-button"
+          aria-label="Delete"
+        >
+          ×
+        </button>
+      )}
+    </div>
   </li>
 );
 
@@ -70,6 +83,7 @@ ListItem.propTypes = {
   onClick: PropTypes.func,
   linkTo: PropTypes.string.isRequired,
   backUrl: PropTypes.string,
+  onDelete: PropTypes.func,
 };
 
 export default ListItem;

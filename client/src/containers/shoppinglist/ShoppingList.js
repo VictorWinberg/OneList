@@ -18,6 +18,7 @@ import i18n from '../../i18n';
 import {
   toggleProductChecked,
   inactivateProducts,
+  removeProduct,
 } from '../../actions/products';
 import ProductList from '../../components/ProductList';
 
@@ -84,6 +85,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   onItemClick: toggleProductChecked,
   onDoneClick: inactivateProducts,
+  onDelete: removeProduct,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductList);

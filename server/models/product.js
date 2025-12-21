@@ -37,19 +37,19 @@ module.exports = (client) => ({
   },
 
   toggleInactive(id, uid, done) {
-    const sql = `
-      DO $$
-      BEGIN
-      IF EXISTS (SELECT * FROM items WHERE product = $1 AND uid = $2) THEN
-        DELETE FROM items WHERE product = $1 AND uid = $2;
-      ELSE
-        INSERT INTO items (product, uid) VALUES ($1, $2);
-      END IF;
-      END $$;
-      `;
+    const checkSql = 'SELECT 1 FROM items WHERE product = $1 AND uid = $2';
     client
-      .query(sql, [id, uid])
-      .then(({ rows }) => done(null, rows[0] || null))
+      .query(checkSql, [id, uid])
+      .then(({ rows }) => {
+        if (rows.length > 0) {
+          const deleteSql = 'DELETE FROM items WHERE product = $1 AND uid = $2';
+          return client.query(deleteSql, [id, uid]);
+        } else {
+          const insertSql = 'INSERT INTO items (product, uid) VALUES ($1, $2)';
+          return client.query(insertSql, [id, uid]);
+        }
+      })
+      .then(() => done(null, null))
       .catch((err) => done(err));
   },
 
