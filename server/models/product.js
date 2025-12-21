@@ -1,4 +1,4 @@
-module.exports = client => ({
+module.exports = (client) => ({
   create({ name, uid }, done) {
     const sql = `
       WITH product AS (
@@ -15,40 +15,42 @@ module.exports = client => ({
     client
       .query(sql, [name, uid])
       .then(({ rows }) => done(null, rows[0] || null))
-      .catch(err => done(err));
+      .catch((err) => done(err));
   },
 
   update(id, { name, amount, unit, category }, done) {
-    const sql = 'UPDATE products SET name = $2, amount = $3, unit = $4, category = $5 WHERE id = $1';
+    const sql =
+      'UPDATE products SET name = $2, amount = $3, unit = $4, category = $5 WHERE id = $1';
     client
       .query(sql, [id, name, amount, unit, category])
       .then(({ rows }) => done(null, rows[0] || null))
-      .catch(err => done({ ...err, stack: err.stack }));
+      .catch((err) => done(err));
   },
 
   toggleChecked(id, uid, done) {
-    const sql = 'UPDATE items SET checked = NOT checked WHERE product = $1 AND uid = $2';
+    const sql =
+      'UPDATE items SET checked = NOT checked WHERE product = $1 AND uid = $2';
     client
       .query(sql, [id, uid])
       .then(({ rows }) => done(null, rows[0] || null))
-      .catch(err => done({ ...err, stack: err.stack }));
+      .catch((err) => done(err));
   },
 
   toggleInactive(id, uid, done) {
     const sql = `
       DO $$
       BEGIN
-      IF EXISTS (SELECT * FROM items WHERE product = ${id} AND uid = ${uid}) THEN
-        DELETE FROM items WHERE product = ${id} AND uid = ${uid};
+      IF EXISTS (SELECT * FROM items WHERE product = $1 AND uid = $2) THEN
+        DELETE FROM items WHERE product = $1 AND uid = $2;
       ELSE
-        INSERT INTO items (product, uid) VALUES (${id}, ${uid});
+        INSERT INTO items (product, uid) VALUES ($1, $2);
       END IF;
       END $$;
       `;
     client
-      .query(sql)
+      .query(sql, [id, uid])
       .then(({ rows }) => done(null, rows[0] || null))
-      .catch(err => done({ ...err, stack: err.stack }));
+      .catch((err) => done(err));
   },
 
   delete(id, done) {
@@ -56,29 +58,40 @@ module.exports = client => ({
     client
       .query(sql, [id])
       .then(({ rows }) => done(null, rows[0] || null))
-      .catch(err => done({ ...err, stack: err.stack }));
+      .catch((err) => done(err));
   },
 
   getAll(done) {
     client
-      .query('SELECT * FROM products FULL JOIN items ON (products.id = items.product) ORDER BY name')
+      .query(
+        'SELECT * FROM products FULL JOIN items ON (products.id = items.product) ORDER BY name'
+      )
       .then(({ rows }) => done(null, rows))
-      .catch(err => done({ ...err, stack: err.stack }));
+      .catch((err) => done(err));
   },
 
   inactivate(uid, done) {
-    const where = `WHERE checked = TRUE AND (uid = 0 OR uid = ${uid})`
-
     client
-      .query(`
-        BEGIN;
-          UPDATE products SET updated_at = NOW() WHERE id IN (
-            SELECT product FROM items ${where}
-          );
-          DELETE FROM items ${where};
-        COMMIT;
-      `)
-      .then(({ rows }) => done(null, rows))
-      .catch(err => done({ ...err, stack: err.stack }));
+      .query('BEGIN')
+      .then(() =>
+        client.query(
+          `UPDATE products SET updated_at = NOW() WHERE id IN (
+            SELECT product FROM items WHERE checked = TRUE AND (uid = 0 OR uid = $1)
+          )`,
+          [uid]
+        )
+      )
+      .then(() =>
+        client.query(
+          'DELETE FROM items WHERE checked = TRUE AND (uid = 0 OR uid = $1)',
+          [uid]
+        )
+      )
+      .then(() => client.query('COMMIT'))
+      .then(() => done(null, null))
+      .catch((err) => {
+        client.query('ROLLBACK').catch(() => {});
+        done(err);
+      });
   },
 });
