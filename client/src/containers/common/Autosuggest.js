@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import i18n from '../../i18n';
 import {
   filter,
   find,
@@ -14,6 +13,7 @@ import {
   uniqBy,
   zipObject
 } from 'lodash/fp';
+import i18n from '../../i18n';
 
 import Autosuggest from '../../components/Autosuggest';
 

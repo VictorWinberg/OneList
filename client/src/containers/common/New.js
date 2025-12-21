@@ -38,13 +38,8 @@ class New extends Component {
 
   render() {
     const { name } = this.state;
-    const {
-      t,
-      view,
-      autosuggest,
-      isCollaboration,
-      onToggleCollaboration,
-    } = this.props;
+    const { t, view, autosuggest, isCollaboration, onToggleCollaboration } =
+      this.props;
 
     const inputfield = autosuggest ? (
       <Autosuggest
@@ -57,15 +52,15 @@ class New extends Component {
         }}
       />
     ) : (
-        <input
-          id="newItem"
-          type="text"
-          value={name}
-          autoComplete="off"
-          placeholder={t(`${view}.input`)}
-          onChange={({ target }) => this.setState({ name: target.value })}
-        />
-      );
+      <input
+        id="newItem"
+        type="text"
+        value={name}
+        autoComplete="off"
+        placeholder={t(`${view}.input`)}
+        onChange={({ target }) => this.setState({ name: target.value })}
+      />
+    );
 
     const toggle = (
       <div
@@ -95,7 +90,7 @@ class New extends Component {
     );
 
     return (
-      <form className="search-form" onSubmit={evt => this.handleSubmit(evt)}>
+      <form className="search-form" onSubmit={(evt) => this.handleSubmit(evt)}>
         <span role="presentation" onClick={() => this.setState({ name: '' })}>
           <img className="clear-icon" alt="X" src={clearicon} height="12px" />
         </span>
@@ -119,6 +114,9 @@ New.propTypes = {
   onRemoveItem: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   view: PropTypes.string.isRequired,
+  isCollaboration: PropTypes.bool.isRequired,
+  uid: PropTypes.number,
+  onToggleCollaboration: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -127,9 +125,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch, { onAdd, onRemove }) => ({
-  onAddItem: item => dispatch(onAdd(item)),
-  onRemoveItem: id => dispatch(onRemove(id)),
+  onAddItem: (item) => dispatch(onAdd(item)),
+  onRemoveItem: (id) => dispatch(onRemove(id)),
   onToggleCollaboration: () => dispatch(toggleCollaboration()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(New));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withTranslation()(New));

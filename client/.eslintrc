@@ -53,7 +53,8 @@
     "react/forbid-prop-types": "off",
     "react/require-default-props": "off",
     "no-shadow": "warn",
-    "import/order": "warn"
+    "import/order": "warn",
+    "no-console": "off"
   }
 }
 

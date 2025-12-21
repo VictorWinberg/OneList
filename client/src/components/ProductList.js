@@ -145,6 +145,7 @@ ProductList.propTypes = {
   view: PropTypes.string.isRequired,
   getData: PropTypes.func.isRequired,
   ageFilter: PropTypes.string,
+  sortOrder: PropTypes.string,
 };
 
 export default ProductList;

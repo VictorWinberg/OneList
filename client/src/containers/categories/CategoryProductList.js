@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
-import i18n from '../../i18n';
 import { filter, flow, map, sortBy } from 'lodash/fp';
+import i18n from '../../i18n';
 
 import { toggleProductInactive } from '../../actions/products';
 import ProductList from '../../components/ProductList';
 
 const active = (state, categoryId) => {
   const userId = state.user.isCollaboration ? 0 : state.user.id || 0;
-  const [category] = state.categories.filter((category) => category.id === categoryId);
+  const [category] = state.categories.filter((cat) => cat.id === categoryId);
 
   if (!category) {
     return [{ value: i18n.t('categories.nonexistent'), items: [] }];
@@ -21,7 +21,7 @@ const active = (state, categoryId) => {
       checked: product.uid !== null && product.uid === userId,
     })),
     sortBy(({ name }) => [name.toLowerCase()]),
-    filter(({ category }) => category === categoryId)
+    filter(({ category: productCategory }) => productCategory === categoryId)
   )(state.products);
 
   return [{ ...category, value: category.name, items }];
