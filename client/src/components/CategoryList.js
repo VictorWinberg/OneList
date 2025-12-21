@@ -33,7 +33,7 @@ const SortableItem = ({ item, linkTo, history, isDraggingGlobal }) => {
     transform: CSS.Transform.toString(transform),
     transition,
     borderLeft: `5px solid ${item.color || '#ccc'}`,
-    touchAction: 'none', // Prevent default touch behaviors on mobile
+    touchAction: isDragging ? 'none' : 'pan-y', // Allow vertical scrolling when not dragging
     WebkitTouchCallout: 'none', // Prevent iOS callout menu
     WebkitUserSelect: 'none', // Prevent text selection on drag
     userSelect: 'none',
@@ -92,8 +92,8 @@ const CategoryList = ({ view, items, linkTo, history, onItemReorder }) => {
     }),
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 250,
-        tolerance: 8,
+        delay: 150,
+        tolerance: 5,
       },
     }),
     useSensor(KeyboardSensor, {
