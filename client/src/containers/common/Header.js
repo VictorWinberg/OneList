@@ -13,7 +13,12 @@ const Header = () => {
         <img id="headericon" src={onelisticon} alt="Settings" height="30px" />
         <h1>OneList</h1>
         <NavLink to="/settings">
-          <img id="settingicon" src={settingicon} alt="Settings" height="28px" />
+          <img
+            id="settingicon"
+            src={settingicon}
+            alt="Settings"
+            height="28px"
+          />
         </NavLink>
       </div>
       <nav>
@@ -28,9 +33,6 @@ const Header = () => {
           </li>
           <li>
             <NavLink to="/products">{t('nav.products')}</NavLink>
-          </li>
-          <li>
-            <NavLink to="/shopping-history">{t('nav.shoppingHistory')}</NavLink>
           </li>
         </ul>
       </nav>

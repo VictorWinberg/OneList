@@ -2,8 +2,7 @@
   "nav": {
     "shoppinglist": "Inköpslista",
     "categories": "Kategorier",
-    "products": "Varor",
-    "shoppingHistory": "Historik"
+    "products": "Varor"
   },
   "edit": {
     "edit": "Redigera",
@@ -65,17 +64,5 @@
   },
   "snackbar": {
     "unauthenticated": "Du är inte inloggad. Logga in och försök igen."
-  },
-  "shoppingHistory": {
-    "title": "Inköpshistorik",
-    "monthlyChart": "Köp per månad",
-    "purchaseFrequency": "Inköpsfrekvens",
-    "mostBoughtItems": "Mest köpta varor",
-    "totalPurchases": "Totalt antal köp",
-    "itemsPerWeek": "varor per vecka",
-    "itemsPerMonth": "varor per månad",
-    "noData": "Ingen inköpshistorik ännu. Slutför inköpspass för att se statistik.",
-    "loading": "Laddar statistik..."
   }
 }
-

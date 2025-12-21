@@ -21,10 +21,9 @@ client.connect();
 // load models
 const User = require('./models/user')(client);
 const Category = require('./models/category')(client);
-const ShoppingHistory = require('./models/shoppingHistory')(client);
-const Product = require('./models/product')(client, ShoppingHistory);
+const Product = require('./models/product')(client);
 
-const db = { User, Category, Product, ShoppingHistory };
+const db = { User, Category, Product };
 
 require('./passport')(passport, User);
 

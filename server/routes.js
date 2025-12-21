@@ -133,13 +133,6 @@ module.exports = (app, passport, db) => {
     });
   });
 
-  app.get('/__/shopping-history/stats', isLoggedIn, (req, res) => {
-    db.ShoppingHistory.getStatistics((err, stats) => {
-      if (err) return res.status(400).send(err);
-      return res.send(stats);
-    });
-  });
-
   app.get('*', (req, res) => {
     res.sendFile(
       path.resolve(__dirname, '..', 'client', 'build', 'index.html')

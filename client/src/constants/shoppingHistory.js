@@ -1,1 +1,0 @@
-export const FETCH_STATISTICS = 'FETCH_STATISTICS';

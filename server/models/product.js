@@ -1,4 +1,4 @@
-module.exports = (client, ShoppingHistory) => ({
+module.exports = (client) => ({
   create({ name, uid }, done) {
     const sql = `
       WITH product AS (
@@ -71,47 +71,22 @@ module.exports = (client, ShoppingHistory) => ({
   },
 
   inactivate(uid, done) {
-    let checkedItems = [];
-
     client
       .query('BEGIN')
       .then(() =>
-        // First, get the checked items with product details before deletion
         client.query(
-          `SELECT p.id as product_id, p.name as product_name, p.category as category_id
-           FROM items i
-           JOIN products p ON p.id = i.product
-           WHERE i.checked = TRUE AND (i.uid = 0 OR i.uid = $1)`,
-          [uid]
-        )
-      )
-      .then(({ rows }) => {
-        checkedItems = rows;
-        return client.query(
           `UPDATE products SET updated_at = NOW() WHERE id IN (
             SELECT product FROM items WHERE checked = TRUE AND (uid = 0 OR uid = $1)
           )`,
           [uid]
-        );
-      })
+        )
+      )
       .then(() =>
         client.query(
           'DELETE FROM items WHERE checked = TRUE AND (uid = 0 OR uid = $1)',
           [uid]
         )
       )
-      .then(() => {
-        // Record purchases if there are checked items
-        if (checkedItems.length > 0) {
-          return new Promise((resolve, reject) => {
-            ShoppingHistory.recordPurchases(uid, checkedItems, (err) => {
-              if (err) reject(err);
-              else resolve();
-            });
-          });
-        }
-        return Promise.resolve();
-      })
       .then(() => client.query('COMMIT'))
       .then(() => done(null, null))
       .catch((err) => {

@@ -2,8 +2,7 @@
   "nav": {
     "shoppinglist": "Shopping List",
     "categories": "Categories",
-    "products": "Products",
-    "shoppingHistory": "History"
+    "products": "Products"
   },
   "edit": {
     "edit": "Edit",
@@ -65,16 +64,5 @@
   },
   "snackbar": {
     "unauthenticated": "You are not logged in. Please log in and try again."
-  },
-  "shoppingHistory": {
-    "title": "Shopping History",
-    "monthlyChart": "Purchases by Month",
-    "purchaseFrequency": "Purchase Frequency",
-    "mostBoughtItems": "Most Bought Items",
-    "totalPurchases": "Total Purchases",
-    "itemsPerWeek": "items per week",
-    "itemsPerMonth": "items per month",
-    "noData": "No shopping history yet. Complete shopping sessions to see statistics.",
-    "loading": "Loading statistics..."
   }
 }

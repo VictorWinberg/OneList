@@ -2,8 +2,7 @@
   "nav": {
     "shoppinglist": "Lista de compras",
     "categories": "Categorías",
-    "products": "Productos",
-    "shoppingHistory": "Historial"
+    "products": "Productos"
   },
   "edit": {
     "edit": "Editar",
@@ -65,17 +64,5 @@
   },
   "snackbar": {
     "unauthenticated": "No has iniciado sesión. Por favor, inicia sesión e inténtalo de nuevo."
-  },
-  "shoppingHistory": {
-    "title": "Historial de compras",
-    "monthlyChart": "Compras por mes",
-    "purchaseFrequency": "Frecuencia de compras",
-    "mostBoughtItems": "Artículos más comprados",
-    "totalPurchases": "Compras totales",
-    "itemsPerWeek": "artículos por semana",
-    "itemsPerMonth": "artículos por mes",
-    "noData": "Sin historial de compras aún. Completa sesiones de compras para ver estadísticas.",
-    "loading": "Cargando estadísticas..."
   }
 }
-
