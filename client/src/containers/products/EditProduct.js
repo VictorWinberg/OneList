@@ -13,9 +13,9 @@ const redirect = (history, location) =>
 
 const EditProduct = ({
   id,
-  name,
-  amount,
-  unit,
+  name = '',
+  amount = null,
+  unit = null,
   onRemove,
   onSubmit,
   history,
@@ -88,12 +88,6 @@ const EditProduct = ({
       </div>
     </div>
   );
-};
-
-EditProduct.defaultProps = {
-  name: '',
-  amount: null,
-  unit: null,
 };
 
 EditProduct.propTypes = {

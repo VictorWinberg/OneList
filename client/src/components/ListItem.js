@@ -18,13 +18,13 @@ const daysToHumanReadable = (days) => {
 const ListItem = ({
   id,
   value,
-  description,
-  checked,
-  days,
-  italic,
-  onClick,
+  description = null,
+  checked = false,
+  days = null,
+  italic = false,
+  onClick = null,
   linkTo,
-  backUrl,
+  backUrl = null,
   onDelete,
 }) => (
   <li className="listitem">
@@ -63,15 +63,6 @@ const ListItem = ({
     </div>
   </li>
 );
-
-ListItem.defaultProps = {
-  checked: false,
-  onClick: null,
-  description: null,
-  days: null,
-  backUrl: null,
-  italic: false,
-};
 
 ListItem.propTypes = {
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,

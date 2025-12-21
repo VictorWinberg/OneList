@@ -38,8 +38,13 @@ class New extends Component {
 
   render() {
     const { name } = this.state;
-    const { t, view, autosuggest, isCollaboration, onToggleCollaboration } =
-      this.props;
+    const {
+      t,
+      view,
+      autosuggest = false,
+      isCollaboration,
+      onToggleCollaboration,
+    } = this.props;
 
     const inputfield = autosuggest ? (
       <Autosuggest
@@ -103,10 +108,6 @@ class New extends Component {
     );
   }
 }
-
-New.defaultProps = {
-  autosuggest: false,
-};
 
 New.propTypes = {
   autosuggest: PropTypes.bool,

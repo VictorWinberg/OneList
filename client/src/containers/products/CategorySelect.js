@@ -60,10 +60,6 @@ class CategorySelect extends Component {
   }
 }
 
-CategorySelect.defaultProps = {
-  category: 0,
-};
-
 CategorySelect.propTypes = {
   category: PropTypes.number,
   categories: PropTypes.arrayOf(
@@ -76,7 +72,7 @@ CategorySelect.propTypes = {
 };
 
 const mapStateToProps = (state, { id }) => ({
-  category: get('category', find({ id }, state.products)),
+  category: get('category', find({ id }, state.products)) || 0,
   categories: sortBy('name', state.categories),
 });
 

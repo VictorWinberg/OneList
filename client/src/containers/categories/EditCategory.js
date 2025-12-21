@@ -7,7 +7,13 @@ import { find, get, toInteger } from 'lodash/fp';
 import { editCategory, removeCategory } from '../../actions/categories';
 import CategoryColors from './CategoryColors';
 
-const EditCategory = ({ id, category, onRemove, onSubmit, history }) => {
+const EditCategory = ({
+  id,
+  category = 'Uncategorized',
+  onRemove,
+  onSubmit,
+  history,
+}) => {
   const { t } = useTranslation();
 
   return (
@@ -52,10 +58,6 @@ const EditCategory = ({ id, category, onRemove, onSubmit, history }) => {
       </div>
     </div>
   );
-};
-
-EditCategory.defaultProps = {
-  category: 'Uncategorized',
 };
 
 EditCategory.propTypes = {

@@ -74,17 +74,13 @@ class CategoryColors extends Component {
   }
 }
 
-CategoryColors.defaultProps = {
-  color: '#ccc',
-};
-
 CategoryColors.propTypes = {
   color: PropTypes.string,
   t: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, { id }) => ({
-  color: get('color', find({ id }, state.categories)),
+  color: get('color', find({ id }, state.categories)) || '#ccc',
 });
 
 export default connect(mapStateToProps)(withTranslation()(CategoryColors));
