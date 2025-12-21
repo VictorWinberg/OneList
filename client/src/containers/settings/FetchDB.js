@@ -55,7 +55,4 @@ const mapDispatchToProps = {
   updateCategories: fetchCategories,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FetchDB);
+export default connect(mapStateToProps, mapDispatchToProps)(FetchDB);

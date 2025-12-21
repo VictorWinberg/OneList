@@ -32,7 +32,10 @@ const mapStateToProps = (state, { match, ...ownProps }) => ({
   checked: [],
   linkTo: (id) => `/products/${id}`,
   backUrl: `/categories/${match.params.id}`,
-  getData: (item) => ({ ...item, userId: state.user.isCollaboration ? 0 : state.user.id || 0 }),
+  getData: (item) => ({
+    ...item,
+    userId: state.user.isCollaboration ? 0 : state.user.id || 0,
+  }),
   ageFilter: ownProps.ageFilter,
   sortOrder: ownProps.sortOrder || 'nameAsc',
 });

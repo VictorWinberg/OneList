@@ -34,7 +34,9 @@ describe('categories reducer', () => {
     ); // GET response from fetchCategories
     await mockStore.dispatch(addCategory({ name: 'Vegetables' }));
     // Wait a bit for async operations
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => {
+      setTimeout(resolve, 100);
+    });
     const actions = mockStore.getActions();
     const fetchAction = actions.find((a) => a.type === 'FETCH_CATEGORIES');
     expect(fetchAction).toBeDefined();
@@ -69,7 +71,9 @@ describe('categories reducer', () => {
       editCategory({ id: 1, name: 'Edit', color: '#fff' })
     );
     // Wait a bit for async operations
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => {
+      setTimeout(resolve, 100);
+    });
     const actions = mockStore.getActions();
     const fetchAction = actions.find((a) => a.type === 'FETCH_CATEGORIES');
     expect(fetchAction).toBeDefined();
@@ -115,7 +119,9 @@ describe('categories reducer', () => {
 
     await mockStore.dispatch(reorderCategory({ startIndex: 1, endIndex: 2 }));
     // Wait a bit for async operations
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => {
+      setTimeout(resolve, 100);
+    });
     const actions = mockStore.getActions();
     const fetchAction = actions.find((a) => a.type === 'FETCH_CATEGORIES');
     expect(fetchAction).toBeDefined();
@@ -166,7 +172,9 @@ describe('categories reducer', () => {
 
     await mockStore.dispatch(removeCategory(1));
     // Wait a bit for async operations
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => {
+      setTimeout(resolve, 100);
+    });
     const actions = mockStore.getActions();
     const fetchAction = actions.find((a) => a.type === 'FETCH_CATEGORIES');
     expect(fetchAction).toBeDefined();

@@ -10,7 +10,7 @@ const User = ({ user, update, submit }) => {
   const { t } = useTranslation();
 
   return (
-    <form className="userform" onSubmit={event => submit(event, user)}>
+    <form className="userform" onSubmit={(event) => submit(event, user)}>
       <div className="setting-wrapper">
         <img src={user.photo} id="userphoto" alt="profile" />
         <br />
@@ -36,7 +36,9 @@ const User = ({ user, update, submit }) => {
         </label>
         <LanguageSelector />
       </div>
-      <button className="saveBtn" type="submit">{t('user.submit')}</button>
+      <button className="saveBtn" type="submit">
+        {t('user.submit')}
+      </button>
     </form>
   );
 };
@@ -52,7 +54,7 @@ User.propTypes = {
   submit: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   user: state.user,
 });
 

@@ -15,7 +15,7 @@ class CategoryColors extends Component {
   }
 
   renderColorList(colors) {
-    return colors.map(color => (
+    return colors.map((color) => (
       <li
         key={color}
         role="presentation"

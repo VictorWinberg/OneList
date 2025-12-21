@@ -1,13 +1,14 @@
 /* eslint-disable import/no-import-module-exports */
 import { createRoot } from 'react-dom/client';
 
-import './i18n'; // Initialize i18next
+import './i18n';
 import App from './containers/App';
 import Root from './containers/Root';
 import store from './store';
 import registerServiceWorker from './registerServiceWorker';
 
-const container = document.getElementById('root') || document.createElement('div');
+const container =
+  document.getElementById('root') || document.createElement('div');
 const root = createRoot(container);
 root.render(Root(App, store));
 registerServiceWorker();

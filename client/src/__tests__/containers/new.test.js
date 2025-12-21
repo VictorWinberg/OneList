@@ -52,7 +52,6 @@ describe('New', () => {
       screen.getByLabelText(/newItem/i);
     await user.type(input, 'Milk');
 
-    const form = input.closest('form');
     await user.type(input, '{Enter}');
 
     // The action should be dispatched to the store

@@ -12,7 +12,12 @@ const CategoryProducts = (props) => {
 
   return (
     <div>
-      <New view="products" autosuggest onAdd={addProduct} onRemove={removeProduct} />
+      <New
+        view="products"
+        autosuggest
+        onAdd={addProduct}
+        onRemove={removeProduct}
+      />
       <Filter
         ageFilter={ageFilter}
         sortOrder={sortOrder}
@@ -20,7 +25,12 @@ const CategoryProducts = (props) => {
         onSortChange={setSortOrder}
       />
       <Snackbar />
-      <CategoryProductList view="products" ageFilter={ageFilter} sortOrder={sortOrder} {...props} />
+      <CategoryProductList
+        view="products"
+        ageFilter={ageFilter}
+        sortOrder={sortOrder}
+        {...props}
+      />
     </div>
   );
 };

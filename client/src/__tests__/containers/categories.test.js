@@ -74,8 +74,6 @@ describe('Categories', () => {
       await user.click(colorOption);
     }
 
-    // Submit form
-    const form = container.querySelector('form');
     await user.click(screen.getByText(/edit.save/i));
 
     await waitFor(() => {

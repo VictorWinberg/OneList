@@ -20,7 +20,12 @@ const EditCategory = ({ id, category, onRemove, onSubmit, history }) => {
         <form onSubmit={(evt) => onSubmit(evt, id, history)}>
           <label htmlFor="categoryName">
             <span>{t('edit.category')}:</span>
-            <input id="categoryName" name="categoryName" autoComplete="off" defaultValue={category} />
+            <input
+              id="categoryName"
+              name="categoryName"
+              autoComplete="off"
+              defaultValue={category}
+            />
           </label>
           <CategoryColors id={id} />
           <button
@@ -33,7 +38,11 @@ const EditCategory = ({ id, category, onRemove, onSubmit, history }) => {
           >
             {t('edit.delete')}
           </button>
-          <button className="cancelBtn" type="button" onClick={() => history.push('/categories')}>
+          <button
+            className="cancelBtn"
+            type="button"
+            onClick={() => history.push('/categories')}
+          >
             {t('edit.cancel')}
           </button>
           <button className="doneBtn" type="submit">

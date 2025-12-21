@@ -8,7 +8,8 @@ import { addCategory } from '../../actions/categories';
 import { editProduct, removeProduct } from '../../actions/products';
 import CategorySelect from './CategorySelect';
 
-const redirect = (history, location) => history.push((location.query || {}).backUrl || '/');
+const redirect = (history, location) =>
+  history.push((location.query || {}).backUrl || '/');
 
 const EditProduct = ({
   id,
@@ -29,7 +30,7 @@ const EditProduct = ({
         {name}
       </div>
       <div className="wrapper">
-        <form onSubmit={evt => onSubmit(evt, id, history, location)}>
+        <form onSubmit={(evt) => onSubmit(evt, id, history, location)}>
           <label htmlFor="productName">
             <span>{t('edit.name')}:</span>
             <input
@@ -68,7 +69,7 @@ const EditProduct = ({
             type="button"
             onClick={() => {
               onRemove(id);
-              redirect(history, location)
+              redirect(history, location);
             }}
           >
             {t('edit.delete')}
@@ -112,7 +113,7 @@ EditProduct.propTypes = {
   }).isRequired,
 };
 
-const handleSubmit = (event, id, history, location) => dispatch => {
+const handleSubmit = (event, id, history, location) => (dispatch) => {
   const data = new FormData(event.target);
 
   const [name, amount, unit, category, newCategory] = [
@@ -121,7 +122,7 @@ const handleSubmit = (event, id, history, location) => dispatch => {
     'productAmountUnit',
     'category',
     'newCategory',
-  ].map(type => data.get(type));
+  ].map((type) => data.get(type));
 
   const edit = editProduct({
     id,
@@ -138,7 +139,7 @@ const handleSubmit = (event, id, history, location) => dispatch => {
   }
 
   event.preventDefault();
-  redirect(history, location)
+  redirect(history, location);
 };
 
 const mapStateToProps = (state, { match }) => {
@@ -158,7 +159,4 @@ const mapDispatchToProps = {
   onRemove: removeProduct,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EditProduct);
+export default connect(mapStateToProps, mapDispatchToProps)(EditProduct);

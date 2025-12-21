@@ -45,7 +45,9 @@ describe('products reducer', () => {
     ); // GET response from fetchProducts
     await mockStore.dispatch(addProduct({ name: 'Milk' }));
     // Wait a bit for async operations
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => {
+      setTimeout(resolve, 100);
+    });
     const actions = mockStore.getActions();
     // Find the FETCH_PRODUCTS action
     const fetchAction = actions.find((a) => a.type === 'FETCH_PRODUCTS');
@@ -73,7 +75,9 @@ describe('products reducer', () => {
     ); // GET response from fetchProducts
     await mockStore.dispatch(toggleProductChecked({ id: 1, uid: 0 }));
     // Wait a bit for async operations
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => {
+      setTimeout(resolve, 100);
+    });
     const actions = mockStore.getActions();
     const fetchAction = actions.find((a) => a.type === 'FETCH_PRODUCTS');
     expect(fetchAction).toBeDefined();
@@ -97,7 +101,9 @@ describe('products reducer', () => {
     ); // GET response from fetchProducts
     await mockStore.dispatch(toggleProductInactive({ id: 1 }, id));
     // Wait a bit for async operations
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => {
+      setTimeout(resolve, 100);
+    });
     const actions = mockStore.getActions();
     const fetchAction = actions.find((a) => a.type === 'FETCH_PRODUCTS');
     expect(fetchAction).toBeDefined();
@@ -113,7 +119,9 @@ describe('products reducer', () => {
     fetch.mockResponseOnce(JSON.stringify([]), { status: 200 }); // GET response from fetchProducts
     await mockStore.dispatch(removeProduct(1));
     // Wait a bit for async operations
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => {
+      setTimeout(resolve, 100);
+    });
     const actions = mockStore.getActions();
     const fetchAction = actions.find((a) => a.type === 'FETCH_PRODUCTS');
     expect(fetchAction).toBeDefined();
@@ -134,7 +142,9 @@ describe('products reducer', () => {
     ); // GET response from fetchProducts
     await mockStore.dispatch(inactivateProducts(null, id));
     // Wait a bit for async operations
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => {
+      setTimeout(resolve, 100);
+    });
     const actions = mockStore.getActions();
     const fetchAction = actions.find((a) => a.type === 'FETCH_PRODUCTS');
     expect(fetchAction).toBeDefined();

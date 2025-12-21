@@ -9,9 +9,7 @@ const Snackbar = ({ isLoggedIn, isFetching }) => {
   return (
     <div>
       {!isLoggedIn && !isFetching && (
-        <div id="unauthenticated">
-          {t('snackbar.unauthenticated')}
-        </div>
+        <div id="unauthenticated">{t('snackbar.unauthenticated')}</div>
       )}
     </div>
   );
@@ -22,7 +20,7 @@ Snackbar.propTypes = {
   isFetching: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isLoggedIn: !!state.user.email,
   isFetching: !!state.user.isFetching,
 });
