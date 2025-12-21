@@ -1,47 +1,46 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import LanguageSelector from './LanguageSelector';
 import { updateUser, submitUser } from '../../actions/user';
 
-const User = ({ user, update, submit }) => {
-  const { t } = useTranslation();
-
-  return (
-    <form className="userform" onSubmit={(event) => submit(event, user)}>
-      <div className="setting-wrapper">
-        <img src={user.photo} id="userphoto" alt="profile" />
-        <br />
-        <label htmlFor="username">
-          <span>{t('user.name')}</span>
-          <input
-            id="username"
-            type="text"
-            autoComplete="off"
-            value={user.username}
-            onChange={update}
-          />
-        </label>
-        <label htmlFor="email">
-          <span>{t('user.email')}</span>
-          <input
-            id="email"
-            type="text"
-            autoComplete="off"
-            value={user.email}
-            onChange={update}
-          />
-        </label>
-        <LanguageSelector />
-      </div>
-      <button className="saveBtn" type="submit">
-        {t('user.submit')}
-      </button>
-    </form>
-  );
-};
+const User = ({ user, update, submit, t }) => (
+  <form className="userform" onSubmit={(event) => submit(event, user)}>
+    <img src={user.photo} id="userphoto" alt="profile" />
+    <br />
+    <label htmlFor="username">
+      <span>{t('user.name')}</span>
+      <input
+        id="username"
+        type="text"
+        autoComplete="off"
+        value={user.username}
+        onChange={update}
+      />
+    </label>
+    <label htmlFor="email">
+      <span>{t('user.email')}</span>
+      <input
+        id="email"
+        type="text"
+        autoComplete="off"
+        value={user.email}
+        onChange={update}
+      />
+    </label>
+    <LanguageSelector />
+    <br />
+    <Link to="/history" className="history-link">
+      {t('user.showHistory')}
+    </Link>
+    <button className="saveBtn" type="submit">
+      {t('user.submit')}
+    </button>
+  </form>
+);
 
 User.propTypes = {
   user: PropTypes.shape({
@@ -52,6 +51,7 @@ User.propTypes = {
   }).isRequired,
   update: PropTypes.func.isRequired,
   submit: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -63,4 +63,7 @@ const mapDispatchToProps = {
   submit: submitUser,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(User);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withTranslation()(User));

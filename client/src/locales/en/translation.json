@@ -2,7 +2,8 @@
   "nav": {
     "shoppinglist": "Shopping List",
     "categories": "Categories",
-    "products": "Products"
+    "products": "Products",
+    "history": "History"
   },
   "edit": {
     "edit": "Edit",
@@ -60,9 +61,41 @@
     "name": "Name: ",
     "email": "Email: ",
     "language": "Lang: ",
-    "submit": "Save"
+    "submit": "Save",
+    "showHistory": "Show my history"
   },
   "snackbar": {
     "unauthenticated": "You are not logged in. Please log in and try again."
+  },
+  "history": {
+    "title": "Shopping History",
+    "monthlyChart": "Purchases by Month",
+    "purchaseFrequency": "Purchase Frequency",
+    "mostBoughtItems": "Most Bought Items",
+    "totalPurchases": "Total Purchases",
+    "itemsPerWeek": "items/week",
+    "itemsPerMonth": "items/month",
+    "noData": "No shopping history yet. Complete shopping sessions to see statistics.",
+    "loading": "Loading statistics...",
+    "purchases": "Purchases",
+    "uniqueProducts": "Unique Products",
+    "mostActiveDay": "Busiest Day",
+    "monthChange": "vs Last Month",
+    "productBarChart": "Top Products",
+    "productPieChart": "Purchase Distribution",
+    "productTrendChart": "Product Trends",
+    "categoryDistribution": "By Category",
+    "dayOfWeekChart": "Purchases by Day of Week",
+    "dayOfMonthChart": "Purchases by Day of Month",
+    "purchaseHeatmap": "Activity (Last 90 Days)",
+    "monthComparison": "Month Comparison",
+    "thisMonth": "This Month",
+    "lastMonth": "Last Month",
+    "twoMonthsAgo": "Two Months Ago",
+    "increase": "increase",
+    "decrease": "decrease",
+    "others": "Others",
+    "less": "Less",
+    "more": "More"
   }
 }

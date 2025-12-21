@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 
 import Header from './common/Header';
 import ShoppingList from './shoppinglist';
+import History from './history';
 import Categories from './categories';
 import CategoryProducts from './categories/CategoryProducts';
 import EditCategory from './categories/EditCategory';
@@ -23,6 +24,7 @@ const App = () => (
     <Route exact path="/categories/edit/:id" component={EditCategory} />
     <Route exact path="/products" component={Products} />
     <Route exact path="/products/:id" component={EditProduct} />
+    <Route exact path="/history" component={History} />
     <Route path="/settings" component={Settings} />
     <SetLanguage />
     <FetchDB />

@@ -133,6 +133,13 @@ module.exports = (app, passport, db) => {
     });
   });
 
+  app.get('/__/history/stats', isLoggedIn, (req, res) => {
+    db.History.getStatistics((err, stats) => {
+      if (err) return res.status(400).send(err);
+      return res.send(stats);
+    });
+  });
+
   app.get('*', (req, res) => {
     res.sendFile(
       path.resolve(__dirname, '..', 'client', 'build', 'index.html')
