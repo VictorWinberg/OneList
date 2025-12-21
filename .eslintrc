@@ -8,11 +8,7 @@
   },
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended",
-    "airbnb",
-    "prettier",
-    "prettier/react",
-    "prettier/standard"
+    "plugin:react/recommended"
   ],
   "plugins": ["react"],
   "rules": {
@@ -20,7 +16,7 @@
       "error",
       { "extensions": [".js", ".jsx"] }
     ],
-    "comma-dangle": ["error", "always-multiline", { "functions": "never" }],
+    "comma-dangle": ["error", { "arrays": "always-multiline", "objects": "always-multiline", "functions": "never" }],
     "quotes": ["error", "single", { "avoidEscape": true }],
     "jsx-a11y/anchor-is-valid": [
       "error",
@@ -28,6 +24,7 @@
         "components": ["Link"],
         "specialLink": ["to"]
       }
-    ]
+    ],
+    "react/react-in-jsx-scope": "off"
   }
 }

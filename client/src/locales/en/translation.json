@@ -1,0 +1,80 @@
+{
+  "nav": {
+    "shoppinglist": "Shopping List",
+    "categories": "Categories",
+    "products": "Products",
+    "shoppingHistory": "History"
+  },
+  "edit": {
+    "edit": "Edit",
+    "name": "Name",
+    "amount": "Amount",
+    "selectAmount": "Amount",
+    "selectUnit": "Unit",
+    "category": "Category",
+    "color": "Color",
+    "selectColor": "Select a color...",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete"
+  },
+  "categories": {
+    "input": "New category...",
+    "uncategorized": "Uncategorized",
+    "nonexistent": "Category missing"
+  },
+  "products": {
+    "cart": "Cart",
+    "remove": "Done",
+    "input": "New product..."
+  },
+  "filter": {
+    "ageFilterLabel": "Filter age:",
+    "sortOrderLabel": "Sort:",
+    "ageUnits": {
+      "all": "All",
+      "day": "day",
+      "days": "days",
+      "week": "week",
+      "weeks": "weeks",
+      "month": "month",
+      "months": "months",
+      "year": "year",
+      "years": "years"
+    },
+    "sortOptions": {
+      "nameAsc": "Name A-Z",
+      "nameDesc": "Name Z-A",
+      "dateDesc": "Date Newest",
+      "dateAsc": "Date Oldest"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "authenticated": "Here you can configure your account.",
+    "unauthenticated": "Please log in to see your settings.",
+    "language": "Language: "
+  },
+  "user": {
+    "login": "Log In",
+    "logout": "Logout",
+    "name": "Name: ",
+    "email": "Email: ",
+    "language": "Lang: ",
+    "submit": "Save"
+  },
+  "snackbar": {
+    "unauthenticated": "You are not logged in. Please log in and try again."
+  },
+  "shoppingHistory": {
+    "title": "Shopping History",
+    "monthlyChart": "Purchases by Month",
+    "purchaseFrequency": "Purchase Frequency",
+    "mostBoughtItems": "Most Bought Items",
+    "totalPurchases": "Total Purchases",
+    "itemsPerWeek": "items per week",
+    "itemsPerMonth": "items per month",
+    "noData": "No shopping history yet. Complete shopping sessions to see statistics.",
+    "loading": "Loading statistics..."
+  }
+}

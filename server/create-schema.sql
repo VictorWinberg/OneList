@@ -46,3 +46,20 @@ CREATE TABLE items (
   FOREIGN KEY(product) REFERENCES products(id) ON DELETE CASCADE,
   PRIMARY KEY(product, uid)
 );
+
+DROP TABLE IF EXISTS product_purchases CASCADE;
+CREATE TABLE product_purchases (
+  id            SERIAL        NOT NULL,
+  product_id    INT,
+  product_name  VARCHAR(255)  NOT NULL,
+  category_id   INT,
+  user_id       INT,
+  purchased_at  TIMESTAMP     DEFAULT NOW(),
+
+  FOREIGN KEY(product_id) REFERENCES products(id) ON DELETE SET NULL,
+  FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE SET NULL,
+  PRIMARY KEY(id)
+);
+
+CREATE INDEX idx_purchases_purchased_at ON product_purchases(purchased_at);
+CREATE INDEX idx_purchases_product_name ON product_purchases(product_name);

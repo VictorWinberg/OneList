@@ -3,14 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "npm-run-all -p serve server",
-    "serve": "PORT=8080 react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom --coverage",
-    "test:watch": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "server": "nodemon server",
-    "install-server": "cd server && npm install",
+    "start": "npm-run-all -p client:serve server:start",
+    "client:serve": "cd client && npm run serve",
+    "client:build": "cd client && npm run build",
+    "client:test": "cd client && npm test",
+    "server:start": "cd server && npm start",
     "env:pull": "scp git@192.168.0.100:www/onelist/.env .env",
     "db:pull": "pg_dump --format=c -h 192.168.0.100 -U vicnie onelist | pg_restore --clean --no-owner -h localhost -d onelist"
   },
@@ -23,51 +20,7 @@
   "bugs": {
     "url": "https://github.com/VictorWinberg/onelist/issues"
   },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.js",
-      "!src/registerServiceWorker.js"
-    ]
-  },
-  "dependencies": {
-    "dotenv": "16.4.7",
-    "http-proxy-middleware": "2.0.7",
-    "lodash": "4.17.21",
-    "prop-types": "15.8.1",
-    "react": "16.14.0",
-    "react-autosuggest": "10.1.0",
-    "react-beautiful-dnd": "11.0.5",
-    "react-dom": "16.14.0",
-    "react-localize-redux": "2.17.5",
-    "react-redux": "7.2.9",
-    "react-router-dom": "5.3.4",
-    "redux": "4.2.1",
-    "redux-devtools-extension": "2.13.9",
-    "redux-thunk": "2.4.2"
-  },
   "devDependencies": {
-    "enzyme": "3.11.0",
-    "enzyme-adapter-react-16": "1.15.8",
-    "eslint": "6.8.0",
-    "eslint-config-airbnb": "18.2.1",
-    "eslint-config-prettier": "8.10.0",
-    "eslint-plugin-import": "2.31.0",
-    "eslint-plugin-jsx-a11y": "6.10.2",
-    "eslint-plugin-react": "7.37.3",
-    "jest-fetch-mock": "3.0.3",
-    "nodemon": "2.0.22",
-    "npm-run-all": "4.1.5",
-    "prettier-eslint": "15.0.1",
-    "react-scripts": "3.4.4",
-    "react-test-renderer": "16.14.0",
-    "redux-mock-store": "1.5.5"
-  },
-  "engines": {
-    "node": "12.x"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+    "npm-run-all": "4.1.5"
+  }
 }

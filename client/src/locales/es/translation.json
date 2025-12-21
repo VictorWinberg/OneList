@@ -1,0 +1,81 @@
+{
+  "nav": {
+    "shoppinglist": "Lista de compras",
+    "categories": "Categorías",
+    "products": "Productos",
+    "shoppingHistory": "Historial"
+  },
+  "edit": {
+    "edit": "Editar",
+    "name": "Nombre",
+    "amount": "Cantidad",
+    "selectAmount": "Cantidad",
+    "selectUnit": "Unidad",
+    "category": "Categoría",
+    "color": "Color",
+    "selectColor": "Selecciona un color...",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar"
+  },
+  "categories": {
+    "input": "Nueva categoría...",
+    "uncategorized": "Sin categoría",
+    "nonexistent": "Falta categoría"
+  },
+  "products": {
+    "cart": "Carrito",
+    "remove": "Listo",
+    "input": "Nuevo producto..."
+  },
+  "filter": {
+    "ageFilterLabel": "Filtrar edad:",
+    "sortOrderLabel": "Ordenar:",
+    "ageUnits": {
+      "all": "Todos",
+      "day": "día",
+      "days": "días",
+      "week": "semana",
+      "weeks": "semanas",
+      "month": "mes",
+      "months": "meses",
+      "year": "año",
+      "years": "años"
+    },
+    "sortOptions": {
+      "nameAsc": "Nombre A-Z",
+      "nameDesc": "Nombre Z-A",
+      "dateDesc": "Fecha más reciente",
+      "dateAsc": "Fecha más antigua"
+    }
+  },
+  "settings": {
+    "title": "Configuración",
+    "authenticated": "Aquí puedes configurar tu cuenta.",
+    "unauthenticated": "Por favor inicia sesión para ver tu configuración.",
+    "language": "Idioma: "
+  },
+  "user": {
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "name": "Nombre: ",
+    "email": "Correo: ",
+    "language": "Idioma: ",
+    "submit": "Guardar"
+  },
+  "snackbar": {
+    "unauthenticated": "No has iniciado sesión. Por favor, inicia sesión e inténtalo de nuevo."
+  },
+  "shoppingHistory": {
+    "title": "Historial de compras",
+    "monthlyChart": "Compras por mes",
+    "purchaseFrequency": "Frecuencia de compras",
+    "mostBoughtItems": "Artículos más comprados",
+    "totalPurchases": "Compras totales",
+    "itemsPerWeek": "artículos por semana",
+    "itemsPerMonth": "artículos por mes",
+    "noData": "Sin historial de compras aún. Completa sesiones de compras para ver estadísticas.",
+    "loading": "Cargando estadísticas..."
+  }
+}
+

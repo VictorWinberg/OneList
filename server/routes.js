@@ -9,7 +9,7 @@ module.exports = (app, passport, db) => {
     return passport.authenticate(['headerapikey'])(req, res, next);
   };
 
-  const callback = req => {
+  const callback = (req) => {
     const host = req.get('host');
     const protocol = req.headers['x-forwarded-proto'] || req.protocol;
     return `${protocol}://${host}/__/auth/google/callback`;
@@ -130,6 +130,13 @@ module.exports = (app, passport, db) => {
     db.Category.reorder(req.body, (err, categories) => {
       if (err) return res.status(400).send(err);
       return res.send(categories);
+    });
+  });
+
+  app.get('/__/shopping-history/stats', isLoggedIn, (req, res) => {
+    db.ShoppingHistory.getStatistics((err, stats) => {
+      if (err) return res.status(400).send(err);
+      return res.send(stats);
     });
   });
 

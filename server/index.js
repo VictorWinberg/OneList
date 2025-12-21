@@ -3,7 +3,7 @@ const session = require('cookie-session');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const path = require('path');
-require('dotenv').config();
+require('dotenv').config({ path: path.resolve(__dirname, '..', '.env') });
 
 const { Client } = require('pg');
 const passport = require('passport');
@@ -21,9 +21,10 @@ client.connect();
 // load models
 const User = require('./models/user')(client);
 const Category = require('./models/category')(client);
-const Product = require('./models/product')(client);
+const ShoppingHistory = require('./models/shoppingHistory')(client);
+const Product = require('./models/product')(client, ShoppingHistory);
 
-const db = { User, Category, Product };
+const db = { User, Category, Product, ShoppingHistory };
 
 require('./passport')(passport, User);
 
@@ -57,4 +58,6 @@ app.use(passport.session()); // persistent login sessions
 // routes
 require('./routes.js')(app, passport, db);
 
-app.listen(PORT || 3000, () => console.log(`OneList listening on port ${PORT || 3000}!`));
+app.listen(PORT || 3000, () =>
+  console.log(`OneList listening on port ${PORT || 3000}!`)
+);

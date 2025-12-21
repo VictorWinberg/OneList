@@ -1,0 +1,81 @@
+{
+  "nav": {
+    "shoppinglist": "Inköpslista",
+    "categories": "Kategorier",
+    "products": "Varor",
+    "shoppingHistory": "Historik"
+  },
+  "edit": {
+    "edit": "Redigera",
+    "name": "Namn",
+    "amount": "Mängd",
+    "selectAmount": "Mängd",
+    "selectUnit": "Enhet",
+    "category": "Kategori",
+    "color": "Färg",
+    "selectColor": "Välj färg...",
+    "cancel": "Avbryt",
+    "save": "Spara",
+    "delete": "Radera"
+  },
+  "categories": {
+    "input": "Ny kategori...",
+    "uncategorized": "Okategoriserad",
+    "nonexistent": "Kategori saknas"
+  },
+  "products": {
+    "cart": "Varukorg",
+    "remove": "Klar",
+    "input": "Ny vara..."
+  },
+  "filter": {
+    "ageFilterLabel": "Filtrera ålder:",
+    "sortOrderLabel": "Sortera:",
+    "ageUnits": {
+      "all": "Alla",
+      "day": "dag",
+      "days": "dagar",
+      "week": "vecka",
+      "weeks": "veckor",
+      "month": "månad",
+      "months": "månader",
+      "year": "år",
+      "years": "år"
+    },
+    "sortOptions": {
+      "nameAsc": "Namn A-Ö",
+      "nameDesc": "Namn Ö-A",
+      "dateDesc": "Senaste datum",
+      "dateAsc": "Äldsta datum"
+    }
+  },
+  "settings": {
+    "title": "Inställningar",
+    "authenticated": "Här kan du konfigurera ditt konto.",
+    "unauthenticated": "Vänligen logga in för att se dina inställningar.",
+    "language": "Språk: "
+  },
+  "user": {
+    "login": "Logga in",
+    "logout": "Logga ut",
+    "name": "Namn: ",
+    "email": "Mail: ",
+    "language": "Språk: ",
+    "submit": "Spara"
+  },
+  "snackbar": {
+    "unauthenticated": "Du är inte inloggad. Logga in och försök igen."
+  },
+  "shoppingHistory": {
+    "title": "Inköpshistorik",
+    "monthlyChart": "Köp per månad",
+    "purchaseFrequency": "Inköpsfrekvens",
+    "mostBoughtItems": "Mest köpta varor",
+    "totalPurchases": "Totalt antal köp",
+    "itemsPerWeek": "varor per vecka",
+    "itemsPerMonth": "varor per månad",
+    "noData": "Ingen inköpshistorik ännu. Slutför inköpspass för att se statistik.",
+    "loading": "Laddar statistik..."
+  }
+}
+
