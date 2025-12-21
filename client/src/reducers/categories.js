@@ -1,16 +1,13 @@
 import { sortBy } from 'lodash/fp';
 
-import {
-  REORDER_CATEGORY,
-  FETCH_CATEGORIES
-} from '../constants/categories';
+import { REORDER_CATEGORY, FETCH_CATEGORIES } from '../constants/categories';
 
 const categories = (state = [], action = {}) => {
   switch (action.type) {
     case REORDER_CATEGORY: {
       const { startIndex, endIndex } = action;
 
-      const newState = [...state].map(item => {
+      const newState = [...state].map((item) => {
         // REPLACE
         if (item.orderidx === startIndex) {
           return { ...item, orderidx: endIndex };

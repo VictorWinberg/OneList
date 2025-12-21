@@ -10,7 +10,7 @@ import {
   sortBy,
   toInteger,
   uniqBy,
-  zipObject
+  zipObject,
 } from 'lodash/fp';
 import { connect } from 'react-redux';
 
@@ -51,7 +51,10 @@ const mapStateToProps = (state, ownProps) => ({
   checked: [],
   linkTo: (id) => `/products/${id}`,
   backUrl: '/products',
-  getData: (item) => ({ ...item, userId: state.user.isCollaboration ? 0 : state.user.id || 0 }),
+  getData: (item) => ({
+    ...item,
+    userId: state.user.isCollaboration ? 0 : state.user.id || 0,
+  }),
   ageFilter: ownProps.ageFilter,
   sortOrder: ownProps.sortOrder || 'nameAsc',
 });

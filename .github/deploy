@@ -1,6 +1,8 @@
 #!/bin/bash
 set -eu # exit script on errors
 
+nvm use 22.13.1
+
 echo "copy one-list env"
 rsync /home/git/www/onelist/.env .
 

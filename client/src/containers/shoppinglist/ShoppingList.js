@@ -9,7 +9,7 @@ import {
   mergeWith,
   sortBy,
   toInteger,
-  zipObject
+  zipObject,
 } from 'lodash/fp';
 import { connect } from 'react-redux';
 
@@ -17,7 +17,7 @@ import i18n from '../../i18n';
 
 import {
   toggleProductChecked,
-  inactivateProducts
+  inactivateProducts,
 } from '../../actions/products';
 import ProductList from '../../components/ProductList';
 
@@ -33,7 +33,9 @@ const active = ({ user, ...state }) => {
     filter((item) => item.uid === 0 || item.uid === user.id),
     map((item) => ({
       ...item,
-      italic: (user.isCollaboration && item.uid === user.id) || (!user.isCollaboration && item.uid === 0),
+      italic:
+        (user.isCollaboration && item.uid === user.id) ||
+        (!user.isCollaboration && item.uid === 0),
     })),
     map((product) => ({
       ...product,
@@ -56,7 +58,10 @@ const active = ({ user, ...state }) => {
 const checked = ({ user, ...state }) =>
   flow(
     filter(['checked', true]),
-    filter((item) => item.uid === 0 || (!user.isCollaboration && item.uid === user.id)),
+    filter(
+      (item) =>
+        item.uid === 0 || (!user.isCollaboration && item.uid === user.id)
+    ),
     map((product) => ({
       ...product,
       key: `${product.id}-${product.uid}`,
@@ -70,7 +75,10 @@ const mapStateToProps = (state) => ({
   linkTo: (id) => `/products/${id}`,
   backUrl: '/',
   isLoggedIn: !!state.user.email,
-  getData: (item) => ({ ...item, userId: state.user.isCollaboration ? 0 : state.user.id || 0 }),
+  getData: (item) => ({
+    ...item,
+    userId: state.user.isCollaboration ? 0 : state.user.id || 0,
+  }),
 });
 
 const mapDispatchToProps = {
@@ -78,7 +86,4 @@ const mapDispatchToProps = {
   onDoneClick: inactivateProducts,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProductList);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductList);

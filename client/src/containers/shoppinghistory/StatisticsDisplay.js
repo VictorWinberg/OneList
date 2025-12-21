@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import {
-  BarChart,
-  Bar,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -54,7 +54,7 @@ const MonthlyChart = ({ data }) => {
       <h3>{t('shoppingHistory.monthlyChart')}</h3>
       <div className="monthly-chart" style={{ width: '100%', height: '300px' }}>
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart
+          <LineChart
             data={chartData}
             margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
           >
@@ -76,13 +76,15 @@ const MonthlyChart = ({ data }) => {
                 borderRadius: '4px',
               }}
             />
-            <Bar
+            <Line
+              type="monotone"
               dataKey="purchases"
-              fill="#8884d8"
-              radius={[4, 4, 0, 0]}
-              label={{ position: 'top', fontSize: 12 }}
+              stroke="#8884d8"
+              strokeWidth={2}
+              dot={{ r: 4 }}
+              activeDot={{ r: 6 }}
             />
-          </BarChart>
+          </LineChart>
         </ResponsiveContainer>
       </div>
     </div>

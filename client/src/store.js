@@ -4,7 +4,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import reducers from './reducers';
 import { fetchUser } from './actions/user';
-import './i18n'; // Initialize i18next
+import './i18n';
 
 const store = createStore(
   reducers,

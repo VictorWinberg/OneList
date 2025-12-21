@@ -11,7 +11,7 @@ import {
   sortBy,
   toInteger,
   uniqBy,
-  zipObject
+  zipObject,
 } from 'lodash/fp';
 import i18n from '../../i18n';
 
