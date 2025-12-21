@@ -16,7 +16,7 @@ import { connect } from 'react-redux';
 
 import i18n from '../../i18n';
 
-import { toggleProductInactive } from '../../actions/products';
+import { removeProduct, toggleProductInactive } from '../../actions/products';
 import ProductList from '../../components/ProductList';
 
 const active = (state) => {
@@ -61,6 +61,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = {
   onItemClick: toggleProductInactive,
+  onDelete: (item) => removeProduct(item.id),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductList);
