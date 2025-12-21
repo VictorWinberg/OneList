@@ -20,7 +20,7 @@ const CategoryList = ({ view, items, linkTo, history, onItemReorder }) => (
         {({ innerRef, placeholder }) => (
           <ul ref={innerRef}>
             {items.map((item, index) => (
-              <Draggable key={item.id} draggableId={item.id} index={index}>
+              <Draggable key={item.id} draggableId={String(item.id)} index={index}>
                 {(provided, { isDragging }) => (
                   <div
                     className={isDragging ? 'isDragging' : null}
