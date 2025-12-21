@@ -76,7 +76,7 @@ const li = (
     linkTo,
     getData,
     backUrl,
-    onDelete: onDelete ? () => onDelete(item.id) : null,
+    onDelete: onDelete ? () => onDelete(item, getData) : null,
   };
 
   if (useSwipe && (onDelete || onItemClick)) {
@@ -95,7 +95,7 @@ const li = (
       linkTo={linkTo(item.id)}
       backUrl={backUrl}
       italic={item.italic}
-      onDelete={onDelete ? () => onDelete(item.id) : null}
+      onDelete={onDelete ? () => onDelete(item, getData) : null}
     />
   );
 };
@@ -149,7 +149,7 @@ const ProductList = ({
     if (draggedItem) {
       // Check if swiped left beyond threshold (delete)
       if (dragDelta.x < -SWIPE_THRESHOLD && onDelete) {
-        onDelete(draggedItem.id);
+        onDelete(draggedItem, getData);
       }
       // Check if swiped right beyond threshold (move to cart)
       else if (dragDelta.x > SWIPE_THRESHOLD && onItemClick) {

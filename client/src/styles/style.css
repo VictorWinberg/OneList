@@ -316,6 +316,7 @@ nav a.active {
 .saveBtn,
 .loginBtn,
 .logoutBtn {
+  color: black;
   cursor: pointer;
   padding: 0.2em 0;
   font-family: 'Quicksand', sans-serif;
