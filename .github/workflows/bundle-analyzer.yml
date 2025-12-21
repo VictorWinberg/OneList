@@ -11,16 +11,27 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [20.x]
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-    - uses: preactjs/compressed-size-action@v2
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        pattern: "./build/**/*.{js,css}"
-        strip-hash: "\\b\\w{8}\\."
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install client dependencies
+        working-directory: client
+        run: npm ci
+
+      - name: Build client
+        working-directory: client
+        run: npm run build
+
+      - uses: preactjs/compressed-size-action@v2
+        working-directory: client
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          pattern: './client/build/**/*.{js,css}'
+          strip-hash: "\\b\\w{8}\\."

@@ -1,10 +1,9 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
-// Skip importing index.js as it imports i18n which causes issues in tests
-// import Index from '../../index';
+import Index from '../../index';
 import Root from '../../containers/Root';
 import { store } from '../store';
 import ShoppingList from '../../containers/shoppinglist';
@@ -42,10 +41,9 @@ jest.mock('react-i18next', () => ({
 }));
 
 describe('containers', () => {
-  // Skip index test as it imports i18n which causes issues
-  // it('index renders without crashing', () => {
-  //   expect(Index).toBeDefined();
-  // });
+  it('index renders without crashing', () => {
+    expect(Index).toBeDefined();
+  });
 
   it('ShoppingList renders ProductList with ListItem', () => {
     const { container } = render(
