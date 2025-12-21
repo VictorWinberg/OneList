@@ -11,8 +11,8 @@ const passport = require('passport');
 const app = express();
 const { DATABASE_URL, PORT } = process.env;
 
-// serve static react build
-app.use(express.static(path.resolve(__dirname, '..', 'build')));
+// serve client build
+app.use(express.static(path.resolve(__dirname, '..', 'client', 'build')));
 
 // connect to our database
 const client = new Client(DATABASE_URL);
