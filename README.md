@@ -9,5 +9,6 @@ Working Environment, Project | Ergonomics and Aerosol Technology
 
 - Set up environment variables, e.g. `npm run env:pull`
 - Create postgres database, e.g. `npm run db:pull`
-- Install dependencies, `npm install && npm run install-server`
-- Start `npm start`
+- Install dependencies: `npm run install:all` (or install separately: `npm install`, `cd client && npm install`, `cd ../server && npm install`)
+- Start both client and server: `npm start`
+  - Or start separately: `npm run client:serve` (frontend) and `npm run server:start` (backend)

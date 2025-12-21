@@ -3,7 +3,7 @@ const session = require('cookie-session');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const path = require('path');
-require('dotenv').config();
+require('dotenv').config({ path: path.resolve(__dirname, '..', '.env') });
 
 const { Client } = require('pg');
 const passport = require('passport');
@@ -11,8 +11,8 @@ const passport = require('passport');
 const app = express();
 const { DATABASE_URL, PORT } = process.env;
 
-// serve static react build
-app.use(express.static(path.resolve(__dirname, '..', 'build')));
+// serve client build
+app.use(express.static(path.resolve(__dirname, '..', 'client', 'build')));
 
 // connect to our database
 const client = new Client(DATABASE_URL);
@@ -57,4 +57,6 @@ app.use(passport.session()); // persistent login sessions
 // routes
 require('./routes.js')(app, passport, db);
 
-app.listen(PORT || 3000, () => console.log(`OneList listening on port ${PORT || 3000}!`));
+app.listen(PORT || 3000, () =>
+  console.log(`OneList listening on port ${PORT || 3000}!`)
+);

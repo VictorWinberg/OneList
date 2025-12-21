@@ -9,7 +9,7 @@ module.exports = (app, passport, db) => {
     return passport.authenticate(['headerapikey'])(req, res, next);
   };
 
-  const callback = req => {
+  const callback = (req) => {
     const host = req.get('host');
     const protocol = req.headers['x-forwarded-proto'] || req.protocol;
     return `${protocol}://${host}/__/auth/google/callback`;
@@ -134,6 +134,8 @@ module.exports = (app, passport, db) => {
   });
 
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
+    res.sendFile(
+      path.resolve(__dirname, '..', 'client', 'build', 'index.html')
+    );
   });
 };
