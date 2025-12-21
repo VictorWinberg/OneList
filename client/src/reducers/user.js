@@ -4,7 +4,7 @@ import {
   REQUEST_USER,
   RECEIVE_USER,
   TOGGLE_COLLABORATION,
-  LOGOUT_USER
+  LOGOUT_USER,
 } from '../constants/user';
 
 const initialState = {

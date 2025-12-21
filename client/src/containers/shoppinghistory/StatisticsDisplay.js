@@ -1,6 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts';
 
 const formatDate = (dateStr) => {
   if (!dateStr) return '-';
@@ -33,25 +42,48 @@ const MonthlyChart = ({ data }) => {
     return null;
   }
 
-  const maxCount = Math.max(...data.map((d) => d.count));
+  // Transform data for recharts: convert month format and add formatted name
+  const chartData = data.map((item) => ({
+    ...item,
+    name: formatMonth(item.month),
+    purchases: item.count,
+  }));
 
   return (
     <div className="stats-section">
       <h3>{t('shoppingHistory.monthlyChart')}</h3>
-      <div className="monthly-chart">
-        {data.map((item) => (
-          <div key={item.month} className="chart-bar-container">
-            <div className="chart-bar-wrapper">
-              <div
-                className="chart-bar"
-                style={{ height: `${(item.count / maxCount) * 100}%` }}
-              >
-                <span className="chart-bar-value">{item.count}</span>
-              </div>
-            </div>
-            <span className="chart-bar-label">{formatMonth(item.month)}</span>
-          </div>
-        ))}
+      <div className="monthly-chart" style={{ width: '100%', height: '300px' }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart
+            data={chartData}
+            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+            <XAxis
+              dataKey="name"
+              tick={{ fontSize: 12 }}
+              angle={-45}
+              textAnchor="end"
+              height={80}
+            />
+            <YAxis tick={{ fontSize: 12 }} />
+            <Tooltip
+              formatter={(value) => [value, 'Purchases']}
+              labelStyle={{ color: '#333' }}
+              contentStyle={{
+                backgroundColor: '#fff',
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+              }}
+            />
+            <Bar
+              dataKey="purchases"
+              fill="#8884d8"
+              radius={[4, 4, 0, 0]}
+              label={{ position: 'top', fontSize: 12 }}
+            />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
     </div>
   );
