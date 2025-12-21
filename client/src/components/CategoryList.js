@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   DndContext,
@@ -19,7 +19,7 @@ import { CSS } from '@dnd-kit/utilities';
 
 import ListItem from './ListItem';
 
-const SortableItem = ({ item, linkTo, history }) => {
+const SortableItem = ({ item, linkTo, history, isDraggingGlobal }) => {
   const {
     attributes,
     listeners,
@@ -33,6 +33,20 @@ const SortableItem = ({ item, linkTo, history }) => {
     transform: CSS.Transform.toString(transform),
     transition,
     borderLeft: `5px solid ${item.color || '#ccc'}`,
+    touchAction: 'none', // Prevent default touch behaviors on mobile
+    WebkitTouchCallout: 'none', // Prevent iOS callout menu
+    WebkitUserSelect: 'none', // Prevent text selection on drag
+    userSelect: 'none',
+  };
+
+  const handleClick = (e) => {
+    // Prevent navigation if we're dragging
+    if (isDragging || isDraggingGlobal) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+    history.push(`/categories/${item.id}`);
   };
 
   return (
@@ -46,7 +60,7 @@ const SortableItem = ({ item, linkTo, history }) => {
       <ListItem
         id={item.id}
         value={item.value}
-        onClick={() => history.push(`/categories/${item.id}`)}
+        onClick={handleClick}
         linkTo={linkTo(item.id)}
       />
     </div>
@@ -64,9 +78,12 @@ SortableItem.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  isDraggingGlobal: PropTypes.bool,
 };
 
 const CategoryList = ({ view, items, linkTo, history, onItemReorder }) => {
+  const [isDragging, setIsDragging] = useState(false);
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -75,8 +92,8 @@ const CategoryList = ({ view, items, linkTo, history, onItemReorder }) => {
     }),
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 200,
-        tolerance: 5,
+        delay: 250,
+        tolerance: 8,
       },
     }),
     useSensor(KeyboardSensor, {
@@ -84,7 +101,12 @@ const CategoryList = ({ view, items, linkTo, history, onItemReorder }) => {
     })
   );
 
+  const handleDragStart = () => {
+    setIsDragging(true);
+  };
+
   const handleDragEnd = (event) => {
+    setIsDragging(false);
     const { active, over } = event;
 
     if (over && active.id !== over.id) {
@@ -100,6 +122,10 @@ const CategoryList = ({ view, items, linkTo, history, onItemReorder }) => {
     }
   };
 
+  const handleDragCancel = () => {
+    setIsDragging(false);
+  };
+
   const itemIds = items.map((item) => item.id);
 
   return (
@@ -107,7 +133,9 @@ const CategoryList = ({ view, items, linkTo, history, onItemReorder }) => {
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
+        onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
+        onDragCancel={handleDragCancel}
       >
         <SortableContext items={itemIds} strategy={verticalListSortingStrategy}>
           <ul>
@@ -117,6 +145,7 @@ const CategoryList = ({ view, items, linkTo, history, onItemReorder }) => {
                 item={item}
                 linkTo={linkTo}
                 history={history}
+                isDraggingGlobal={isDragging}
               />
             ))}
           </ul>
