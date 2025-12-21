@@ -61,7 +61,6 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = {
   onItemClick: toggleProductInactive,
-  onDoneClick: () => null,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductList);

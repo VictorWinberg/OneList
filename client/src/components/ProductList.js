@@ -113,13 +113,15 @@ const ProductList = ({
 
       <ul className={checked.length ? 'done' : 'hidden'}>
         <h2>{t(`${view}.cart`)}</h2>
-        <button
-          type="button"
-          className="removeBtn"
-          onClick={(evt) => onDoneClick(evt, getData)}
-        >
-          {t(`${view}.remove`)}
-        </button>
+        {onDoneClick && (
+          <button
+            type="button"
+            className="removeBtn"
+            onClick={(evt) => onDoneClick(evt, getData)}
+          >
+            {t(`${view}.remove`)}
+          </button>
+        )}
         <ul>
           {checked.map((item) =>
             li(item, onItemClick, linkTo, getData, backUrl, onDelete)
@@ -145,7 +147,7 @@ ProductList.propTypes = {
     })
   ).isRequired,
   onItemClick: PropTypes.func.isRequired,
-  onDoneClick: PropTypes.func.isRequired,
+  onDoneClick: PropTypes.func,
   linkTo: PropTypes.func.isRequired,
   backUrl: PropTypes.string.isRequired,
   view: PropTypes.string.isRequired,
