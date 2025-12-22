@@ -8,6 +8,13 @@ import ListItem from './ListItem';
 
 const SWIPE_THRESHOLD = 100;
 
+const getIndicatorStyle = (opacity, isDragging) => ({
+  opacity,
+  transitionProperty: isDragging ? 'none' : 'opacity',
+  transitionDuration: isDragging ? 'none' : '0.2s',
+  transitionTimingFunction: 'ease-out',
+});
+
 const SwipeableListItem = ({
   item,
   onItemClick,
@@ -24,62 +31,16 @@ const SwipeableListItem = ({
     });
 
   const swipeDistance = transform?.x || 0;
-  const isSwipedLeftEnough = swipeDistance < -SWIPE_THRESHOLD;
-  const isSwipedRightEnough = swipeDistance > SWIPE_THRESHOLD;
 
-  const wrapperStyle = {
-    position: 'relative',
-    overflow: 'hidden',
-  };
-
-  const deleteIndicatorStyle = {
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    bottom: 0,
-    width: '100px',
-    backgroundColor: '#fb9191',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: 'white',
-    fontSize: '18px',
-    fontWeight: 'bold',
-    zIndex: 0,
-    opacity:
-      swipeDistance < 0
-        ? Math.min(Math.abs(swipeDistance) / SWIPE_THRESHOLD, 1)
-        : 0,
-    transitionProperty: isDragging ? 'none' : 'opacity',
-    transitionDuration: isDragging ? 'none' : '0.2s',
-    transitionTimingFunction: 'ease-out',
-  };
-
-  const cartIndicatorStyle = {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    bottom: 0,
-    width: '100px',
-    backgroundColor: '#c8eea0',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: 'white',
-    fontSize: '18px',
-    fontWeight: 'bold',
-    zIndex: 0,
-    opacity:
-      swipeDistance > 0 ? Math.min(swipeDistance / SWIPE_THRESHOLD, 1) : 0,
-    transitionProperty: isDragging ? 'none' : 'opacity',
-    transitionDuration: isDragging ? 'none' : '0.2s',
-    transitionTimingFunction: 'ease-out',
-  };
+  const deleteOpacity =
+    swipeDistance < 0 ? Math.min(-swipeDistance / SWIPE_THRESHOLD, 1) : 0;
+  const cartOpacity =
+    swipeDistance > 0 ? Math.min(swipeDistance / SWIPE_THRESHOLD, 1) : 0;
 
   let backgroundColor = 'transparent';
-  if (isSwipedLeftEnough) {
+  if (swipeDistance < -SWIPE_THRESHOLD) {
     backgroundColor = '#ffcccc';
-  } else if (isSwipedRightEnough) {
+  } else if (swipeDistance > SWIPE_THRESHOLD) {
     backgroundColor = '#e6ffd9';
   }
 
@@ -94,9 +55,19 @@ const SwipeableListItem = ({
   };
 
   return (
-    <div style={wrapperStyle}>
-      <div style={deleteIndicatorStyle}>{t('edit.delete')}</div>
-      <div style={cartIndicatorStyle}>{t('products.cart')}</div>
+    <div className="swipeable-wrapper">
+      <div
+        className="swipeable-indicator swipeable-indicator--delete"
+        style={getIndicatorStyle(deleteOpacity, isDragging)}
+      >
+        {t('edit.delete')}
+      </div>
+      <div
+        className="swipeable-indicator swipeable-indicator--cart"
+        style={getIndicatorStyle(cartOpacity, isDragging)}
+      >
+        {t('products.cart')}
+      </div>
       <div ref={setNodeRef} style={contentStyle}>
         <div {...listeners} {...attributes} style={{ touchAction: 'pan-y' }}>
           <ListItem
