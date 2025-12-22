@@ -39,26 +39,27 @@ const formatDate = (dateStr) => {
   return date.toLocaleDateString();
 };
 
-const formatMonth = (monthStr) => {
+// Helper function to format month using translations
+const formatMonthWithTranslation = (monthStr, t) => {
   const [year, month] = monthStr.split('-');
-  const monthNames = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
+  const monthKeys = [
+    'january',
+    'february',
+    'march',
+    'april',
+    'may',
+    'june',
+    'july',
+    'august',
+    'september',
+    'october',
+    'november',
+    'december',
   ];
-  return `${monthNames[parseInt(month, 10) - 1]} '${year.slice(2)}`;
+  const monthName = t(`date.monthsShort.${monthKeys[parseInt(month, 10) - 1]}`);
+  return `${monthName} '${year.slice(2)}`;
 };
 
-// Overview Stat Cards
 const StatCard = ({ value, label, icon, color }) => (
   <div className="stat-card" style={{ borderLeftColor: color }}>
     <div className="stat-card-icon">{icon}</div>
@@ -90,6 +91,21 @@ const OverviewCards = ({
       ? `+${monthComparison.change}%`
       : `${monthComparison.change}%`;
 
+  // Convert day number (0=Sunday, 1=Monday, ..., 6=Saturday) to translated day name
+  const getDayName = (dayNum) => {
+    if (dayNum === null || dayNum === undefined) return '-';
+    const dayKeys = [
+      'sunday',
+      'monday',
+      'tuesday',
+      'wednesday',
+      'thursday',
+      'friday',
+      'saturday',
+    ];
+    return t(`date.daysOfWeek.${dayKeys[dayNum]}`);
+  };
+
   return (
     <div className="overview-cards">
       <StatCard
@@ -105,7 +121,7 @@ const OverviewCards = ({
         color="#ffc658"
       />
       <StatCard
-        value={mostActiveDay || '-'}
+        value={getDayName(mostActiveDay)}
         label={t('history.mostActiveDay')}
         icon="📅"
         color="#ff7c7c"
@@ -138,7 +154,6 @@ OverviewCards.propTypes = {
   }).isRequired,
 };
 
-// Monthly Purchases Line Chart
 const MonthlyChart = ({ data }) => {
   const { t } = useTranslation();
   if (!data || data.length === 0) {
@@ -147,7 +162,7 @@ const MonthlyChart = ({ data }) => {
 
   const chartData = data.map((item) => ({
     ...item,
-    name: formatMonth(item.month),
+    name: formatMonthWithTranslation(item.month, t),
     purchases: item.count,
   }));
 
@@ -201,7 +216,6 @@ MonthlyChart.propTypes = {
   ).isRequired,
 };
 
-// Product Purchase Bar Chart (Horizontal)
 const ProductPurchaseBarChart = ({ data }) => {
   const { t } = useTranslation();
   if (!data || data.length === 0) {
@@ -266,7 +280,6 @@ const formatProductTooltip = (total) => (value, name, tooltipProps) => {
   return [`${value} (${((value / total) * 100).toFixed(1)}%)`, productName];
 };
 
-// Product Purchase Pie Chart
 const ProductPurchasePieChart = ({ data }) => {
   const { t } = useTranslation();
   if (!data || data.length === 0) {
@@ -321,22 +334,17 @@ ProductPurchasePieChart.propTypes = {
   ).isRequired,
 };
 
-// Product Trend Chart (Multi-line)
 const ProductTrendChart = ({ data, monthlyPurchases }) => {
   const { t } = useTranslation();
   if (!data || data.length === 0) {
     return null;
   }
 
-  // Get all months from the monthly purchases for x-axis
   const months = monthlyPurchases.map((m) => m.month).sort();
-
-  // Get unique products
   const products = [...new Set(data.map((d) => d.product))];
 
-  // Transform data for recharts
   const chartData = months.map((month) => {
-    const point = { month, name: formatMonth(month) };
+    const point = { month, name: formatMonthWithTranslation(month, t) };
     products.forEach((product) => {
       const found = data.find(
         (d) => d.product === product && d.month === month
@@ -411,7 +419,6 @@ const formatCategoryTooltip = (total) => (value, name, tooltipProps) => {
   return [`${value} (${((value / total) * 100).toFixed(1)}%)`, categoryName];
 };
 
-// Category Distribution Chart
 const CategoryDistributionChart = ({ data }) => {
   const { t } = useTranslation();
   if (!data || data.length === 0) {
@@ -460,7 +467,6 @@ CategoryDistributionChart.propTypes = {
   ).isRequired,
 };
 
-// Day of Week Chart
 const DayOfWeekChart = ({ data }) => {
   const { t } = useTranslation();
   if (!data || data.length === 0) {
@@ -468,15 +474,23 @@ const DayOfWeekChart = ({ data }) => {
   }
 
   const dayOrder = [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Sunday',
+    t('date.daysOfWeek.monday'),
+    t('date.daysOfWeek.tuesday'),
+    t('date.daysOfWeek.wednesday'),
+    t('date.daysOfWeek.thursday'),
+    t('date.daysOfWeek.friday'),
+    t('date.daysOfWeek.saturday'),
+    t('date.daysOfWeek.sunday'),
   ];
-  const shortDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const shortDays = [
+    t('date.daysOfWeekShort.monday'),
+    t('date.daysOfWeekShort.tuesday'),
+    t('date.daysOfWeekShort.wednesday'),
+    t('date.daysOfWeekShort.thursday'),
+    t('date.daysOfWeekShort.friday'),
+    t('date.daysOfWeekShort.saturday'),
+    t('date.daysOfWeekShort.sunday'),
+  ];
 
   const chartData = dayOrder.map((day, index) => {
     const found = data.find((d) => d.name === day);
@@ -541,14 +555,12 @@ DayOfWeekChart.propTypes = {
   ).isRequired,
 };
 
-// Day of Month Chart
 const DayOfMonthChart = ({ data }) => {
   const { t } = useTranslation();
   if (!data || data.length === 0) {
     return null;
   }
 
-  // Fill in all days 1-31
   const chartData = Array.from({ length: 31 }, (_, i) => {
     const day = i + 1;
     const found = data.find((d) => d.day === day);
@@ -606,7 +618,6 @@ DayOfMonthChart.propTypes = {
   ).isRequired,
 };
 
-// Purchase Heatmap (Calendar Style)
 const PurchaseHeatmap = ({ data }) => {
   const { t } = useTranslation();
   if (!data || data.length === 0) {
@@ -614,8 +625,6 @@ const PurchaseHeatmap = ({ data }) => {
   }
 
   const maxCount = Math.max(...data.map((d) => d.count));
-
-  // Group by week
   const weeks = [];
   let currentWeek = [];
   const sortedData = [...data].sort(
@@ -689,21 +698,43 @@ PurchaseHeatmap.propTypes = {
   ).isRequired,
 };
 
-// Month Comparison Chart
 const MonthComparisonChart = ({ data }) => {
   const { t } = useTranslation();
 
+  const formatMonthName = (date) => {
+    const monthNames = [
+      'january',
+      'february',
+      'march',
+      'april',
+      'may',
+      'june',
+      'july',
+      'august',
+      'september',
+      'october',
+      'november',
+      'december',
+    ];
+    return t(`date.months.${monthNames[date.getMonth()]}`);
+  };
+
+  const now = new Date();
+  const thisMonthDate = new Date(now.getFullYear(), now.getMonth(), 1);
+  const lastMonthDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  const twoMonthsAgoDate = new Date(now.getFullYear(), now.getMonth() - 2, 1);
+
   const chartData = [
     {
-      name: data.twoMonthsAgoName || t('history.twoMonthsAgo'),
+      name: formatMonthName(twoMonthsAgoDate),
       count: data.twoMonthsAgo,
     },
     {
-      name: data.lastMonthName || t('history.lastMonth'),
+      name: formatMonthName(lastMonthDate),
       count: data.lastMonth,
     },
     {
-      name: data.thisMonthName || t('history.thisMonth'),
+      name: formatMonthName(thisMonthDate),
       count: data.thisMonth,
     },
   ];
@@ -730,9 +761,9 @@ const MonthComparisonChart = ({ data }) => {
             />
             <Bar dataKey="count" radius={[4, 4, 0, 0]}>
               {chartData.map((entry, index) => {
-                let fillColor = '#8884d8'; // Default: two months ago
-                if (index === 1) fillColor = '#458fde'; // Last month
-                if (index === 2) fillColor = '#82ca9d'; // This month
+                let fillColor = '#8884d8';
+                if (index === 1) fillColor = '#458fde';
+                if (index === 2) fillColor = '#82ca9d';
                 return <Cell key={`cell-${entry.name}`} fill={fillColor} />;
               })}
             </Bar>
@@ -765,7 +796,6 @@ MonthComparisonChart.propTypes = {
   }).isRequired,
 };
 
-// Purchase Frequency Distribution Chart
 const FrequencyDistributionChart = ({ data }) => {
   const { t } = useTranslation();
   if (!data || data.length === 0) {
@@ -812,7 +842,6 @@ FrequencyDistributionChart.propTypes = {
   ).isRequired,
 };
 
-// Product Purchase Frequency Chart
 const ProductFrequencyChart = ({ data }) => {
   const { t } = useTranslation();
   if (!data || data.length === 0) {
@@ -874,7 +903,6 @@ ProductFrequencyChart.propTypes = {
   ).isRequired,
 };
 
-// Time Between Purchases Trend Chart
 const IntervalTrendChart = ({ data }) => {
   const { t } = useTranslation();
   if (!data || data.length === 0) {
@@ -883,7 +911,7 @@ const IntervalTrendChart = ({ data }) => {
 
   const chartData = data.map((item) => ({
     ...item,
-    name: formatMonth(item.month),
+    name: formatMonthWithTranslation(item.month, t),
   }));
 
   return (
@@ -940,14 +968,12 @@ IntervalTrendChart.propTypes = {
   ).isRequired,
 };
 
-// Hour of Day Chart
 const HourOfDayChart = ({ data }) => {
   const { t } = useTranslation();
   if (!data || data.length === 0) {
     return null;
   }
 
-  // Fill in all 24 hours
   const chartData = Array.from({ length: 24 }, (_, i) => {
     const found = data.find((d) => d.hour === i);
     return {
@@ -976,7 +1002,7 @@ const HourOfDayChart = ({ data }) => {
             <YAxis tick={{ fontSize: 11 }} width={40} />
             <Tooltip
               formatter={(value) => [value, t('history.purchases')]}
-              labelFormatter={(label) => `Hour ${label}`}
+              labelFormatter={(label) => `${t('history.hour')} ${label}`}
               contentStyle={{
                 backgroundColor: '#fff',
                 border: '1px solid #ccc',
@@ -1000,7 +1026,6 @@ HourOfDayChart.propTypes = {
   ).isRequired,
 };
 
-// Week-over-Week Comparison Chart
 const WeeklyComparisonChart = ({ data }) => {
   const { t } = useTranslation();
   if (!data || data.length === 0) {
@@ -1079,21 +1104,22 @@ WeeklyComparisonChart.propTypes = {
   ).isRequired,
 };
 
-// Seasonal Trends Chart
 const SeasonalTrendsChart = ({ data }) => {
   const { t } = useTranslation();
   if (!data || data.length === 0) {
     return null;
   }
 
-  // Group by year
   const years = [...new Set(data.map((d) => d.year))].sort();
   const months = Array.from({ length: 12 }, (_, i) => i + 1);
 
   const chartData = months.map((month) => {
     const point = {
       month,
-      name: formatMonth(`2024-${String(month).padStart(2, '0')}`),
+      name: formatMonthWithTranslation(
+        `2024-${String(month).padStart(2, '0')}`,
+        t
+      ),
     };
     years.forEach((year) => {
       const found = data.find((d) => d.year === year && d.month === month);
@@ -1159,7 +1185,6 @@ SeasonalTrendsChart.propTypes = {
   ).isRequired,
 };
 
-// Category Frequency Chart
 const CategoryFrequencyChart = ({ data }) => {
   const { t } = useTranslation();
   if (!data || data.length === 0) {
@@ -1225,7 +1250,6 @@ CategoryFrequencyChart.propTypes = {
   ).isRequired,
 };
 
-// Product Lifecycle Chart
 const ProductLifecycleChart = ({ data }) => {
   const { t } = useTranslation();
   if (!data || data.length === 0) {
@@ -1296,7 +1320,6 @@ ProductLifecycleChart.propTypes = {
   ).isRequired,
 };
 
-// Purchase Velocity Chart
 const PurchaseVelocityChart = ({ data }) => {
   const { t } = useTranslation();
   if (!data || data.length === 0) {
@@ -1375,7 +1398,6 @@ PurchaseVelocityChart.propTypes = {
   ).isRequired,
 };
 
-// Purchase Intervals Summary Component
 const IntervalsSummary = ({ data }) => {
   const { t } = useTranslation();
   if (
@@ -1425,7 +1447,6 @@ IntervalsSummary.propTypes = {
   }).isRequired,
 };
 
-// Most Bought Items List
 const MostBoughtList = ({ data, dateRange }) => {
   const { t } = useTranslation();
   if (!data || data.length === 0) {
@@ -1464,7 +1485,6 @@ MostBoughtList.propTypes = {
   }).isRequired,
 };
 
-// Main Statistics Display Component
 const Statistics = ({ history }) => {
   const { t } = useTranslation();
 

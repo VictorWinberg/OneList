@@ -216,7 +216,6 @@ module.exports = (client) => ({
         FROM monthly_intervals
         ORDER BY month
       ),
-      -- Hour of day analysis
       hour_of_day AS (
         SELECT
           EXTRACT(HOUR FROM purchased_at)::int as hour,
@@ -226,7 +225,6 @@ module.exports = (client) => ({
         GROUP BY EXTRACT(HOUR FROM purchased_at)
         ORDER BY hour
       ),
-      -- Week-over-week comparison
       weekly_comparison AS (
         WITH weekly_stats AS (
           SELECT
@@ -246,7 +244,6 @@ module.exports = (client) => ({
         FROM weekly_stats
         ORDER BY week_start
       ),
-      -- Seasonal/yearly trends
       seasonal_trends AS (
         SELECT
           EXTRACT(YEAR FROM purchased_at)::int as year,
@@ -258,7 +255,6 @@ module.exports = (client) => ({
         GROUP BY EXTRACT(YEAR FROM purchased_at), EXTRACT(MONTH FROM purchased_at), TO_CHAR(purchased_at, 'YYYY-MM')
         ORDER BY year, month
       ),
-      -- Category purchase frequency
       category_frequency AS (
         WITH category_purchase_dates AS (
           SELECT
@@ -279,7 +275,6 @@ module.exports = (client) => ({
         HAVING COUNT(*) > 1
         ORDER BY avg_days_between ASC
       ),
-      -- Product lifecycle analysis
       product_lifecycle AS (
         WITH product_first_last AS (
           SELECT
@@ -319,7 +314,6 @@ module.exports = (client) => ({
         FROM daily_counts
         ORDER BY purchase_date
       ),
-      -- Purchase intervals summary statistics
       intervals_summary AS (
         SELECT
           MIN(days_between)::int as min_interval,
@@ -460,17 +454,17 @@ module.exports = (client) => ({
           itemsPerMonth = Math.round((totalPurchases / monthsDiff) * 10) / 10;
         }
 
-        // Find most active day
+        // Find most active day (return day number 0-6, where 0=Sunday, 6=Saturday)
+        // Frontend will translate this to the user's language
         let mostActiveDay = null;
         if (dayOfWeekStats.length > 0) {
           const maxDay = dayOfWeekStats.reduce(
             (max, day) => (day.count > max.count ? day : max),
             dayOfWeekStats[0]
           );
-          mostActiveDay = maxDay.name;
+          mostActiveDay = maxDay.day; // Return day number instead of name
         }
 
-        // Calculate month comparison with month names
         const now = new Date();
         const thisMonthDate = new Date(now.getFullYear(), now.getMonth(), 1);
         const lastMonthDate = new Date(

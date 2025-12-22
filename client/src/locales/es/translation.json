@@ -2,8 +2,7 @@
   "nav": {
     "shoppinglist": "Lista de compras",
     "categories": "Categorías",
-    "products": "Productos",
-    "history": "Historial"
+    "products": "Productos"
   },
   "edit": {
     "edit": "Editar",
@@ -60,24 +59,68 @@
     "logout": "Cerrar sesión",
     "name": "Nombre: ",
     "email": "Correo: ",
-    "language": "Idioma: ",
     "submit": "Guardar",
     "showHistory": "Mostrar mi historial"
   },
   "snackbar": {
     "unauthenticated": "No has iniciado sesión. Por favor, inicia sesión e inténtalo de nuevo."
   },
+  "date": {
+    "daysOfWeek": {
+      "monday": "Lunes",
+      "tuesday": "Martes",
+      "wednesday": "Miércoles",
+      "thursday": "Jueves",
+      "friday": "Viernes",
+      "saturday": "Sábado",
+      "sunday": "Domingo"
+    },
+    "daysOfWeekShort": {
+      "monday": "Lun",
+      "tuesday": "Mar",
+      "wednesday": "Mié",
+      "thursday": "Jue",
+      "friday": "Vie",
+      "saturday": "Sáb",
+      "sunday": "Dom"
+    },
+    "months": {
+      "january": "Enero",
+      "february": "Febrero",
+      "march": "Marzo",
+      "april": "Abril",
+      "may": "Mayo",
+      "june": "Junio",
+      "july": "Julio",
+      "august": "Agosto",
+      "september": "Septiembre",
+      "october": "Octubre",
+      "november": "Noviembre",
+      "december": "Diciembre"
+    },
+    "monthsShort": {
+      "january": "Ene",
+      "february": "Feb",
+      "march": "Mar",
+      "april": "Abr",
+      "may": "May",
+      "june": "Jun",
+      "july": "Jul",
+      "august": "Ago",
+      "september": "Sep",
+      "october": "Oct",
+      "november": "Nov",
+      "december": "Dic"
+    }
+  },
   "history": {
     "title": "Historial de compras",
     "monthlyChart": "Compras por mes",
-    "purchaseFrequency": "Frecuencia de compras",
     "mostBoughtItems": "Artículos más comprados",
     "totalPurchases": "Compras totales",
     "itemsPerWeek": "artículos/semana",
-    "itemsPerMonth": "artículos/mes",
     "loading": "Cargando estadísticas...",
     "purchases": "Compras",
-    "uniqueProducts": "Productos únicos",
     "mostActiveDay": "Día más activo",
     "monthChange": "vs mes anterior",
     "productBarChart": "Productos principales",
@@ -95,6 +138,39 @@
     "decrease": "disminución",
     "others": "Otros",
     "less": "Menos",
-    "more": "Más"
+    "more": "Más",
+    "frequencyDistribution": "Distribución de frecuencia de compras",
+    "frequencyDistributionDesc": "Días entre compras",
+    "productFrequency": "Frecuencia de compra de productos",
+    "productFrequencyDesc": "Promedio de días entre compras",
+    "avgDays": "Promedio días",
+    "intervalTrend": "Tendencia de tiempo entre compras",
+    "intervalTrendDesc": "Promedio de días entre compras a lo largo del tiempo",
+    "hourOfDay": "Compras por hora del día",
+    "hourOfDayDesc": "Actividad de compras durante el día",
+    "hour": "Hora",
+    "weeklyComparison": "Comparación semanal",
+    "weeklyComparisonDesc": "Compras por semana",
+    "seasonalTrends": "Tendencias estacionales",
+    "seasonalTrendsDesc": "Comparación año tras año",
+    "categoryFrequency": "Frecuencia de compra por categoría",
+    "categoryFrequencyDesc": "Promedio de días entre compras por categoría",
+    "productLifecycle": "Análisis del ciclo de vida del producto",
+    "productLifecycleDesc": "Primera compra, última compra y días activos",
+    "daysActive": "Días activos",
+    "purchaseVelocity": "Velocidad de compra",
+    "purchaseVelocityDesc": "Compras por día (promedio móvil de 7 días)",
+    "dailyCount": "Diario",
+    "movingAvg": "Promedio 7 días",
+    "intervalsSummary": "Resumen de intervalos de compra",
+    "intervalsSummaryDesc": "Estadísticas sobre días entre compras",
+    "min": "Mín",
+    "max": "Máx",
+    "avg": "Promedio",
+    "median": "Mediana",
+    "q1": "Q1",
+    "q3": "Q3",
+    "days": "días",
+    "weekChange": "vs semana anterior"
   }
 }

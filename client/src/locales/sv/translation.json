@@ -2,8 +2,7 @@
   "nav": {
     "shoppinglist": "Inköpslista",
     "categories": "Kategorier",
-    "products": "Varor",
-    "history": "Historik"
+    "products": "Varor"
   },
   "edit": {
     "edit": "Redigera",
@@ -60,24 +59,68 @@
     "logout": "Logga ut",
     "name": "Namn: ",
     "email": "Mail: ",
-    "language": "Språk: ",
     "submit": "Spara",
     "showHistory": "Visa min historik"
   },
   "snackbar": {
     "unauthenticated": "Du är inte inloggad. Logga in och försök igen."
   },
+  "date": {
+    "daysOfWeek": {
+      "monday": "Måndag",
+      "tuesday": "Tisdag",
+      "wednesday": "Onsdag",
+      "thursday": "Torsdag",
+      "friday": "Fredag",
+      "saturday": "Lördag",
+      "sunday": "Söndag"
+    },
+    "daysOfWeekShort": {
+      "monday": "Mån",
+      "tuesday": "Tis",
+      "wednesday": "Ons",
+      "thursday": "Tor",
+      "friday": "Fre",
+      "saturday": "Lör",
+      "sunday": "Sön"
+    },
+    "months": {
+      "january": "Januari",
+      "february": "Februari",
+      "march": "Mars",
+      "april": "April",
+      "may": "Maj",
+      "june": "Juni",
+      "july": "Juli",
+      "august": "Augusti",
+      "september": "September",
+      "october": "Oktober",
+      "november": "November",
+      "december": "December"
+    },
+    "monthsShort": {
+      "january": "Jan",
+      "february": "Feb",
+      "march": "Mar",
+      "april": "Apr",
+      "may": "Maj",
+      "june": "Jun",
+      "july": "Jul",
+      "august": "Aug",
+      "september": "Sep",
+      "october": "Okt",
+      "november": "Nov",
+      "december": "Dec"
+    }
+  },
   "history": {
     "title": "Inköpshistorik",
     "monthlyChart": "Köp per månad",
-    "purchaseFrequency": "Inköpsfrekvens",
     "mostBoughtItems": "Mest köpta varor",
     "totalPurchases": "Totalt antal köp",
     "itemsPerWeek": "varor/vecka",
-    "itemsPerMonth": "varor/månad",
     "loading": "Laddar statistik...",
     "purchases": "Köp",
-    "uniqueProducts": "Unika varor",
     "mostActiveDay": "Mest aktiv dag",
     "monthChange": "mot förra månaden",
     "productBarChart": "Toppvaror",
@@ -95,6 +138,39 @@
     "decrease": "minskning",
     "others": "Övriga",
     "less": "Mindre",
-    "more": "Mer"
+    "more": "Mer",
+    "frequencyDistribution": "Inköpsfrekvensfördelning",
+    "frequencyDistributionDesc": "Dagar mellan köp",
+    "productFrequency": "Produktinköpsfrekvens",
+    "productFrequencyDesc": "Genomsnittliga dagar mellan köp",
+    "avgDays": "Genomsnitt dagar",
+    "intervalTrend": "Trender för tid mellan köp",
+    "intervalTrendDesc": "Genomsnittliga dagar mellan köp över tid",
+    "hourOfDay": "Köp per timme på dygnet",
+    "hourOfDayDesc": "Inköpsaktivitet under dagen",
+    "hour": "Timme",
+    "weeklyComparison": "Veckovis jämförelse",
+    "weeklyComparisonDesc": "Köp per vecka",
+    "seasonalTrends": "Säsongstrender",
+    "seasonalTrendsDesc": "År-till-år jämförelse",
+    "categoryFrequency": "Kategoriinköpsfrekvens",
+    "categoryFrequencyDesc": "Genomsnittliga dagar mellan köp per kategori",
+    "productLifecycle": "Produktlivscykelanalys",
+    "productLifecycleDesc": "Första köp, sista köp och aktiva dagar",
+    "daysActive": "Aktiva dagar",
+    "purchaseVelocity": "Inköpshastighet",
+    "purchaseVelocityDesc": "Köp per dag (7-dagars glidande medelvärde)",
+    "dailyCount": "Dagligen",
+    "movingAvg": "7-dagars medelvärde",
+    "intervalsSummary": "Sammanfattning av köpintervaller",
+    "intervalsSummaryDesc": "Statistik över dagar mellan köp",
+    "min": "Min",
+    "max": "Max",
+    "avg": "Genomsnitt",
+    "median": "Median",
+    "q1": "Q1",
+    "q3": "Q3",
+    "days": "dagar",
+    "weekChange": "mot föregående vecka"
   }
 }
