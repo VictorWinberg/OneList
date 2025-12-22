@@ -539,6 +539,11 @@ nav a.active {
 .categories .checkmark {
   background-image: url('../assets/icons/reorder.svg');
   background-size: contain;
+  cursor: grab;
+}
+
+.categories .isDragging .checkmark {
+  cursor: grabbing;
 }
 
 .share .checkmark {

@@ -20,7 +20,7 @@ const SwipeableListItem = ({
   const { attributes, listeners, setNodeRef, transform, isDragging } =
     useDraggable({
       id: item.key,
-      disabled: !onDelete && !onItemClick, // Enable dragging if delete or cart action is available
+      disabled: !onDelete && !onItemClick,
     });
 
   const swipeDistance = transform?.x || 0;

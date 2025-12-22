@@ -33,14 +33,13 @@ const SortableItem = ({ item, linkTo, history, isDraggingGlobal }) => {
     transform: CSS.Transform.toString(transform),
     transition,
     borderLeft: `5px solid ${item.color || '#ccc'}`,
-    touchAction: isDragging ? 'none' : 'pan-y', // Allow vertical scrolling when not dragging
-    WebkitTouchCallout: 'none', // Prevent iOS callout menu
-    WebkitUserSelect: 'none', // Prevent text selection on drag
+    touchAction: isDragging ? 'none' : 'pan-y',
+    WebkitTouchCallout: 'none',
+    WebkitUserSelect: 'none',
     userSelect: 'none',
   };
 
   const handleClick = (e) => {
-    // Prevent navigation if we're dragging
     if (isDragging || isDraggingGlobal) {
       e.preventDefault();
       e.stopPropagation();
@@ -55,13 +54,13 @@ const SortableItem = ({ item, linkTo, history, isDraggingGlobal }) => {
       style={style}
       className={isDragging ? 'isDragging' : null}
       {...attributes}
-      {...listeners}
     >
       <ListItem
         id={item.id}
         value={item.value}
         onClick={handleClick}
         linkTo={linkTo(item.id)}
+        dragListeners={listeners}
       />
     </div>
   );

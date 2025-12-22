@@ -25,6 +25,7 @@ const ListItem = ({
   onClick = null,
   linkTo,
   backUrl = null,
+  dragListeners = null,
 }) => (
   <li className="listitem">
     <label
@@ -42,7 +43,7 @@ const ListItem = ({
       />
       <span className="productText">{value}</span>
       {description}
-      <span className="checkmark" />
+      <span className="checkmark" {...(dragListeners || {})} />
     </label>
     <div className="listitem-actions">
       <span className="productDays">{daysToHumanReadable(days)}</span>
@@ -63,6 +64,7 @@ ListItem.propTypes = {
   onClick: PropTypes.func,
   linkTo: PropTypes.string.isRequired,
   backUrl: PropTypes.string,
+  dragListeners: PropTypes.object,
 };
 
 export default ListItem;
