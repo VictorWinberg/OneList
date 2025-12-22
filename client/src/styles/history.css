@@ -287,3 +287,172 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* Prediction Card */
+.prediction-card {
+  background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 1.5em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid #82ca9d;
+  margin-top: 0.5em;
+}
+
+.prediction-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.prediction-date {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #458fde;
+}
+
+.prediction-days {
+  font-size: 1em;
+  color: #666;
+}
+
+/* Restock Predictions */
+.restock-predictions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+  margin-top: 0.5em;
+}
+
+.restock-prediction-item {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1em;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-left: 3px solid #458fde;
+}
+
+.restock-item-name {
+  font-weight: bold;
+  font-size: 1em;
+  color: #333;
+  margin-bottom: 0.5em;
+  display: block;
+}
+
+.restock-item-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25em;
+}
+
+.restock-item-date {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.restock-item-status {
+  font-size: 0.85em;
+  font-weight: bold;
+  padding: 0.25em 0.5em;
+  border-radius: 12px;
+  background-color: rgba(69, 143, 222, 0.1);
+}
+
+.restock-item-meta {
+  font-size: 0.8em;
+  color: #999;
+}
+
+/* Shopping Basket Analysis - uses existing chart styles */
+
+/* Purchase Clusters - uses existing chart styles */
+
+/* Anomalies */
+.anomalies-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+  margin-top: 0.5em;
+}
+
+.anomaly-item {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1em;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-left: 3px solid #ffc658;
+}
+
+.anomaly-date {
+  font-weight: bold;
+  font-size: 1em;
+  color: #333;
+  margin-bottom: 0.5em;
+  display: block;
+}
+
+.anomaly-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+}
+
+.anomaly-type {
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.anomaly-stats {
+  font-size: 0.85em;
+  color: #666;
+}
+
+/* Shopping Efficiency */
+.efficiency-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1em;
+  margin-top: 1em;
+}
+
+.efficiency-metric-card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1em;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-top: 3px solid #458fde;
+}
+
+.efficiency-metric-label {
+  display: block;
+  font-size: 0.85em;
+  color: #666;
+  margin-bottom: 0.5em;
+  font-weight: 500;
+}
+
+.efficiency-metric-value {
+  display: block;
+  font-size: 1.75em;
+  font-weight: bold;
+}
+
+/* Responsive adjustments for new components */
+@media (max-width: 600px) {
+  .efficiency-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .restock-item-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25em;
+  }
+
+  .prediction-date {
+    font-size: 1.25em;
+  }
+}

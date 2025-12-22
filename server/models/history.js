@@ -324,6 +324,186 @@ module.exports = (client) => ({
           ROUND((PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY days_between))::numeric, 1) as q3_interval
         FROM purchase_intervals
         WHERE days_between IS NOT NULL AND days_between > 0
+      ),
+      next_purchase_prediction AS (
+        WITH recent_intervals AS (
+          SELECT days_between
+          FROM purchase_intervals
+          WHERE days_between IS NOT NULL AND days_between > 0
+            AND purchase_date >= NOW() - INTERVAL '90 days'
+          ORDER BY purchase_date DESC
+          LIMIT 10
+        )
+        SELECT
+          ROUND(AVG(days_between)::numeric, 1) as predicted_days,
+          (NOW()::date + ROUND(AVG(days_between))::int)::date as predicted_date
+        FROM recent_intervals
+      ),
+      product_restock_predictions AS (
+        WITH product_last_purchase AS (
+          SELECT
+            product_name,
+            MAX(DATE(purchased_at)) as last_purchase_date,
+            COUNT(*) as total_purchases
+          FROM product_purchases
+          WHERE purchased_at >= NOW() - INTERVAL '12 months'
+          GROUP BY product_name
+          HAVING COUNT(*) >= 2
+        ),
+        product_intervals AS (
+          SELECT
+            pp.product_name,
+            DATE(pp.purchased_at) as purchase_date,
+            DATE(pp.purchased_at) - LAG(DATE(pp.purchased_at)) OVER (PARTITION BY pp.product_name ORDER BY DATE(pp.purchased_at)) as days_between
+          FROM product_purchases pp
+          WHERE pp.purchased_at >= NOW() - INTERVAL '12 months'
+        ),
+        product_avg_intervals AS (
+          SELECT
+            product_name,
+            AVG(days_between)::int as avg_days,
+            COUNT(*) as interval_count
+          FROM product_intervals
+          WHERE days_between IS NOT NULL AND days_between > 0
+          GROUP BY product_name
+          HAVING COUNT(*) >= 2
+        )
+        SELECT
+          plp.product_name as name,
+          plp.last_purchase_date as last_purchase,
+          pai.avg_days,
+          (plp.last_purchase_date + pai.avg_days)::date as predicted_restock_date,
+          CASE
+            WHEN (plp.last_purchase_date + pai.avg_days)::date < NOW()::date THEN 'overdue'
+            WHEN (plp.last_purchase_date + pai.avg_days)::date <= (NOW()::date + INTERVAL '3 days') THEN 'soon'
+            ELSE 'upcoming'
+          END as status,
+          plp.total_purchases as purchase_count
+        FROM product_last_purchase plp
+        JOIN product_avg_intervals pai ON plp.product_name = pai.product_name
+        WHERE (plp.last_purchase_date + pai.avg_days)::date <= (NOW()::date + INTERVAL '30 days')
+        ORDER BY predicted_restock_date ASC
+        LIMIT 20
+      ),
+      shopping_baskets AS (
+        WITH purchase_sessions AS (
+          SELECT
+            DATE_TRUNC('hour', purchased_at) as session_time,
+            product_name,
+            category_id
+          FROM product_purchases
+          WHERE purchased_at >= NOW() - INTERVAL '6 months'
+        ),
+        product_pairs AS (
+          SELECT DISTINCT
+            ps1.product_name as product1,
+            ps2.product_name as product2,
+            COUNT(*) as co_occurrence_count
+          FROM purchase_sessions ps1
+          JOIN purchase_sessions ps2 ON ps1.session_time = ps2.session_time
+          WHERE ps1.product_name < ps2.product_name
+          GROUP BY ps1.product_name, ps2.product_name
+          HAVING COUNT(*) >= 2
+        )
+        SELECT
+          product1,
+          product2,
+          co_occurrence_count
+        FROM product_pairs
+        ORDER BY co_occurrence_count DESC
+        LIMIT 30
+      ),
+      purchase_clusters AS (
+        WITH purchase_dates AS (
+          SELECT DISTINCT DATE(purchased_at) as purchase_date
+          FROM product_purchases
+          WHERE purchased_at >= NOW() - INTERVAL '6 months'
+          ORDER BY purchase_date
+        ),
+        date_gaps AS (
+          SELECT
+            purchase_date,
+            purchase_date - LAG(purchase_date) OVER (ORDER BY purchase_date) as days_since_last
+          FROM purchase_dates
+        ),
+        clusters AS (
+          SELECT
+            purchase_date,
+            CASE
+              WHEN days_since_last IS NULL OR days_since_last > 2 THEN 1
+              ELSE 0
+            END as is_new_cluster,
+            SUM(CASE WHEN days_since_last IS NULL OR days_since_last > 2 THEN 1 ELSE 0 END) OVER (ORDER BY purchase_date) as cluster_id
+          FROM date_gaps
+        )
+        SELECT
+          cluster_id,
+          MIN(purchase_date) as cluster_start,
+          MAX(purchase_date) as cluster_end,
+          COUNT(*) as days_in_cluster,
+          COUNT(DISTINCT pp.product_name) as unique_products,
+          COUNT(*) FILTER (WHERE pp.id IS NOT NULL) as total_items
+        FROM clusters c
+        LEFT JOIN product_purchases pp ON DATE(pp.purchased_at) = c.purchase_date
+        GROUP BY cluster_id
+        ORDER BY cluster_start DESC
+        LIMIT 20
+      ),
+      purchase_anomalies AS (
+        WITH daily_stats AS (
+          SELECT
+            DATE(purchased_at) as purchase_date,
+            COUNT(*) as item_count,
+            COUNT(DISTINCT product_name) as unique_products,
+            COUNT(DISTINCT category_id) as unique_categories
+          FROM product_purchases
+          WHERE purchased_at >= NOW() - INTERVAL '6 months'
+          GROUP BY DATE(purchased_at)
+        ),
+        stats_summary AS (
+          SELECT
+            AVG(item_count) as avg_items,
+            STDDEV(item_count) as stddev_items,
+            AVG(unique_products) as avg_products,
+            STDDEV(unique_products) as stddev_products
+          FROM daily_stats
+        )
+        SELECT
+          ds.purchase_date as date,
+          ds.item_count,
+          ds.unique_products,
+          CASE
+            WHEN ds.item_count > (ss.avg_items + 2 * ss.stddev_items) THEN 'high_volume'
+            WHEN ds.item_count < (ss.avg_items - 2 * ss.stddev_items) THEN 'low_volume'
+            WHEN ds.unique_products > (ss.avg_products + 2 * ss.stddev_products) THEN 'high_diversity'
+            ELSE 'normal'
+          END as anomaly_type
+        FROM daily_stats ds
+        CROSS JOIN stats_summary ss
+        WHERE ds.item_count > (ss.avg_items + 2 * ss.stddev_items)
+           OR ds.item_count < (ss.avg_items - 2 * ss.stddev_items)
+           OR ds.unique_products > (ss.avg_products + 2 * ss.stddev_products)
+        ORDER BY ds.purchase_date DESC
+        LIMIT 10
+      ),
+      shopping_efficiency AS (
+        WITH daily_purchase_stats AS (
+          SELECT
+            DATE(purchased_at) as purchase_date,
+            COUNT(*) as items_purchased,
+            COUNT(DISTINCT product_name) as unique_products,
+            COUNT(DISTINCT category_id) as unique_categories
+          FROM product_purchases
+          WHERE purchased_at >= NOW() - INTERVAL '6 months'
+          GROUP BY DATE(purchased_at)
+        )
+        SELECT
+          ROUND(AVG(items_purchased)::numeric, 1) as avg_items_per_trip,
+          ROUND(AVG(unique_products)::numeric, 1) as avg_products_per_trip,
+          ROUND(AVG(unique_categories)::numeric, 1) as avg_categories_per_trip,
+          MAX(items_purchased) as max_items_single_trip,
+          COUNT(*) as total_shopping_trips
+        FROM daily_purchase_stats
       )
       SELECT
         stats.total_purchases,
@@ -404,7 +584,34 @@ module.exports = (client) => ({
           'q1', q1_interval,
           'median', median_interval,
           'q3', q3_interval
-        ) FROM intervals_summary) as intervals_summary
+        ) FROM intervals_summary) as intervals_summary,
+        (SELECT json_build_object(
+          'predictedDays', predicted_days,
+          'predictedDate', predicted_date
+        ) FROM next_purchase_prediction) as next_purchase_prediction,
+        COALESCE(
+          (SELECT json_agg(json_build_object('name', name, 'lastPurchase', last_purchase, 'avgDays', avg_days, 'predictedRestockDate', predicted_restock_date, 'status', status, 'purchaseCount', purchase_count)) FROM product_restock_predictions),
+          '[]'
+        ) as product_restock_predictions,
+        COALESCE(
+          (SELECT json_agg(json_build_object('product1', product1, 'product2', product2, 'coOccurrenceCount', co_occurrence_count)) FROM shopping_baskets),
+          '[]'
+        ) as shopping_baskets,
+        COALESCE(
+          (SELECT json_agg(json_build_object('clusterId', cluster_id, 'clusterStart', cluster_start, 'clusterEnd', cluster_end, 'daysInCluster', days_in_cluster, 'uniqueProducts', unique_products, 'totalItems', total_items)) FROM purchase_clusters),
+          '[]'
+        ) as purchase_clusters,
+        COALESCE(
+          (SELECT json_agg(json_build_object('date', date, 'itemCount', item_count, 'uniqueProducts', unique_products, 'anomalyType', anomaly_type)) FROM purchase_anomalies),
+          '[]'
+        ) as purchase_anomalies,
+        (SELECT json_build_object(
+          'avgItemsPerTrip', avg_items_per_trip,
+          'avgProductsPerTrip', avg_products_per_trip,
+          'avgCategoriesPerTrip', avg_categories_per_trip,
+          'maxItemsSingleTrip', max_items_single_trip,
+          'totalShoppingTrips', total_shopping_trips
+        ) FROM shopping_efficiency) as shopping_efficiency
       FROM stats
       GROUP BY stats.total_purchases, stats.first_purchase, stats.last_purchase, stats.unique_products`;
 
@@ -436,6 +643,12 @@ module.exports = (client) => ({
         const productLifecycle = row.product_lifecycle || [];
         const purchaseVelocity = row.purchase_velocity || [];
         const intervalsSummary = row.intervals_summary || {};
+        const nextPurchasePrediction = row.next_purchase_prediction || {};
+        const productRestockPredictions = row.product_restock_predictions || [];
+        const shoppingBaskets = row.shopping_baskets || [];
+        const purchaseClusters = row.purchase_clusters || [];
+        const purchaseAnomalies = row.purchase_anomalies || [];
+        const shoppingEfficiency = row.shopping_efficiency || {};
 
         // Calculate purchase frequency (items per week/month)
         let itemsPerWeek = 0;
@@ -543,6 +756,12 @@ module.exports = (client) => ({
           productLifecycle,
           purchaseVelocity,
           intervalsSummary,
+          nextPurchasePrediction,
+          productRestockPredictions,
+          shoppingBaskets,
+          purchaseClusters,
+          purchaseAnomalies,
+          shoppingEfficiency,
         });
       })
       .catch((err) => done({ ...err, stack: err.stack }));

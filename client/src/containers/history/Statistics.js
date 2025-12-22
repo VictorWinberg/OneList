@@ -138,7 +138,7 @@ const OverviewCards = ({
 
 OverviewCards.propTypes = {
   totalPurchases: PropTypes.number.isRequired,
-  mostActiveDay: PropTypes.string,
+  mostActiveDay: PropTypes.number,
   purchaseFrequency: PropTypes.shape({
     itemsPerWeek: PropTypes.number.isRequired,
     itemsPerMonth: PropTypes.number.isRequired,
@@ -1485,6 +1485,365 @@ MostBoughtList.propTypes = {
   }).isRequired,
 };
 
+const ProductRestockPredictions = ({ data }) => {
+  const { t } = useTranslation();
+  if (!data || data.length === 0) {
+    return null;
+  }
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'overdue':
+        return '#ff7c7c';
+      case 'soon':
+        return '#ffc658';
+      default:
+        return '#82ca9d';
+    }
+  };
+
+  const getStatusLabel = (status) => {
+    switch (status) {
+      case 'overdue':
+        return t('history.statusOverdue');
+      case 'soon':
+        return t('history.statusSoon');
+      default:
+        return t('history.statusUpcoming');
+    }
+  };
+
+  return (
+    <div className="stats-section">
+      <h3>{t('history.productRestockPredictions')}</h3>
+      <p className="chart-description">
+        {t('history.productRestockPredictionsDesc')}
+      </p>
+      <div className="restock-predictions-list">
+        {data.slice(0, 10).map((item) => (
+          <div key={item.name} className="restock-prediction-item">
+            <div className="restock-item-name">{item.name}</div>
+            <div className="restock-item-details">
+              <span className="restock-item-date">
+                {formatDate(item.predictedRestockDate)}
+              </span>
+              <span
+                className="restock-item-status"
+                style={{ color: getStatusColor(item.status) }}
+              >
+                {getStatusLabel(item.status)}
+              </span>
+            </div>
+            <div className="restock-item-meta">
+              {t('history.lastPurchase')}: {formatDate(item.lastPurchase)} •{' '}
+              {item.avgDays} {t('history.days')} avg
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+ProductRestockPredictions.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      lastPurchase: PropTypes.string.isRequired,
+      avgDays: PropTypes.number.isRequired,
+      predictedRestockDate: PropTypes.string.isRequired,
+      status: PropTypes.string.isRequired,
+      purchaseCount: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+};
+
+const ShoppingBasketAnalysis = ({ data }) => {
+  const { t } = useTranslation();
+  if (!data || data.length === 0) {
+    return null;
+  }
+
+  const truncateName = (name, maxLength = 20) => {
+    if (name.length <= maxLength) return name;
+    return `${name.slice(0, maxLength)}...`;
+  };
+
+  const chartData = data.slice(0, 12).map((item) => {
+    const fullName = `${item.product1} + ${item.product2}`;
+    return {
+      name: truncateName(fullName, 25),
+      fullName,
+      count: item.coOccurrenceCount,
+    };
+  });
+
+  return (
+    <div className="stats-section chart-section">
+      <h3>{t('history.shoppingBaskets')}</h3>
+      <p className="chart-description">{t('history.shoppingBasketsDesc')}</p>
+      <div className="chart-container">
+        <ResponsiveContainer width="100%" height={350}>
+          <BarChart
+            data={chartData}
+            layout="vertical"
+            margin={{ top: 5, right: 30, left: 120, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+            <XAxis type="number" tick={{ fontSize: 11 }} />
+            <YAxis
+              type="category"
+              dataKey="name"
+              tick={{ fontSize: 9 }}
+              width={115}
+              angle={0}
+            />
+            <Tooltip
+              formatter={(value, _name, { payload }) => [
+                value,
+                payload.fullName,
+              ]}
+              contentStyle={{
+                backgroundColor: '#fff',
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+              }}
+            />
+            <Bar dataKey="count" fill="#8884d8" radius={[0, 4, 4, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  );
+};
+
+ShoppingBasketAnalysis.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      product1: PropTypes.string.isRequired,
+      product2: PropTypes.string.isRequired,
+      coOccurrenceCount: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+};
+
+const PurchaseClustersChart = ({ data }) => {
+  const { t } = useTranslation();
+  if (!data || data.length === 0) {
+    return null;
+  }
+
+  const chartData = data.slice(0, 10).map((item) => ({
+    name: `${formatDate(item.clusterStart)} - ${formatDate(item.clusterEnd)}`,
+    fullName: `${formatDate(item.clusterStart)} - ${formatDate(
+      item.clusterEnd
+    )}`,
+    totalItems: item.totalItems,
+    uniqueProducts: item.uniqueProducts,
+    daysInCluster: item.daysInCluster,
+  }));
+
+  return (
+    <div className="stats-section chart-section">
+      <h3>{t('history.purchaseClusters')}</h3>
+      <p className="chart-description">{t('history.purchaseClustersDesc')}</p>
+      <div className="chart-container">
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart
+            data={chartData}
+            layout="vertical"
+            margin={{ top: 5, right: 30, left: 120, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+            <XAxis type="number" tick={{ fontSize: 11 }} />
+            <YAxis
+              type="category"
+              dataKey="name"
+              tick={{ fontSize: 9 }}
+              width={115}
+            />
+            <Tooltip
+              formatter={(value, name) => {
+                if (name === 'totalItems') {
+                  return [value, t('history.totalItems')];
+                }
+                if (name === 'uniqueProducts') {
+                  return [value, t('history.uniqueProducts')];
+                }
+                return [value, t('history.daysInCluster')];
+              }}
+              contentStyle={{
+                backgroundColor: '#fff',
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+              }}
+            />
+            <Legend wrapperStyle={{ fontSize: '11px' }} />
+            <Bar
+              dataKey="totalItems"
+              fill="#458fde"
+              name={t('history.totalItems')}
+            />
+            <Bar
+              dataKey="uniqueProducts"
+              fill="#82ca9d"
+              name={t('history.uniqueProducts')}
+            />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  );
+};
+
+PurchaseClustersChart.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      clusterId: PropTypes.number.isRequired,
+      clusterStart: PropTypes.string.isRequired,
+      clusterEnd: PropTypes.string.isRequired,
+      daysInCluster: PropTypes.number.isRequired,
+      uniqueProducts: PropTypes.number.isRequired,
+      totalItems: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+};
+
+const PurchaseAnomalies = ({ data }) => {
+  const { t } = useTranslation();
+  if (!data || data.length === 0) {
+    return null;
+  }
+
+  const getAnomalyLabel = (type) => {
+    switch (type) {
+      case 'high_volume':
+        return t('history.anomalyHighVolume');
+      case 'low_volume':
+        return t('history.anomalyLowVolume');
+      case 'high_diversity':
+        return t('history.anomalyHighDiversity');
+      default:
+        return 'Normal';
+    }
+  };
+
+  const getAnomalyColor = (type) => {
+    switch (type) {
+      case 'high_volume':
+        return '#82ca9d';
+      case 'low_volume':
+        return '#ffc658';
+      case 'high_diversity':
+        return '#8884d8';
+      default:
+        return '#458fde';
+    }
+  };
+
+  return (
+    <div className="stats-section">
+      <h3>{t('history.purchaseAnomalies')}</h3>
+      <p className="chart-description">{t('history.purchaseAnomaliesDesc')}</p>
+      <div className="anomalies-list">
+        {data.map((item) => (
+          <div key={item.date} className="anomaly-item">
+            <div className="anomaly-date">{formatDate(item.date)}</div>
+            <div className="anomaly-details">
+              <span
+                className="anomaly-type"
+                style={{ color: getAnomalyColor(item.anomalyType) }}
+              >
+                {getAnomalyLabel(item.anomalyType)}
+              </span>
+              <span className="anomaly-stats">
+                {item.itemCount} {t('history.purchases')} •{' '}
+                {item.uniqueProducts} {t('history.uniqueProducts')}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+PurchaseAnomalies.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      date: PropTypes.string.isRequired,
+      itemCount: PropTypes.number.isRequired,
+      uniqueProducts: PropTypes.number.isRequired,
+      anomalyType: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};
+
+const ShoppingEfficiencyMetrics = ({ data }) => {
+  const { t } = useTranslation();
+  if (!data || Object.keys(data).length === 0) {
+    return null;
+  }
+
+  const metrics = [
+    {
+      label: t('history.avgItemsPerTrip'),
+      value: data.avgItemsPerTrip || 0,
+      color: '#458fde',
+    },
+    {
+      label: t('history.avgProductsPerTrip'),
+      value: data.avgProductsPerTrip || 0,
+      color: '#82ca9d',
+    },
+    {
+      label: t('history.avgCategoriesPerTrip'),
+      value: data.avgCategoriesPerTrip || 0,
+      color: '#ffc658',
+    },
+    {
+      label: t('history.maxItemsSingleTrip'),
+      value: data.maxItemsSingleTrip || 0,
+      color: '#ff7c7c',
+    },
+    {
+      label: t('history.totalShoppingTrips'),
+      value: data.totalShoppingTrips || 0,
+      color: '#8884d8',
+    },
+  ];
+
+  return (
+    <div className="stats-section">
+      <h3>{t('history.shoppingEfficiency')}</h3>
+      <p className="chart-description">{t('history.shoppingEfficiencyDesc')}</p>
+      <div className="efficiency-metrics-grid">
+        {metrics.map((metric) => (
+          <div key={metric.label} className="efficiency-metric-card">
+            <span className="efficiency-metric-label">{metric.label}</span>
+            <span
+              className="efficiency-metric-value"
+              style={{ color: metric.color }}
+            >
+              {metric.value}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+ShoppingEfficiencyMetrics.propTypes = {
+  data: PropTypes.shape({
+    avgItemsPerTrip: PropTypes.number,
+    avgProductsPerTrip: PropTypes.number,
+    avgCategoriesPerTrip: PropTypes.number,
+    maxItemsSingleTrip: PropTypes.number,
+    totalShoppingTrips: PropTypes.number,
+  }).isRequired,
+};
+
 const Statistics = ({ history }) => {
   const { t } = useTranslation();
 
@@ -1550,6 +1909,19 @@ const Statistics = ({ history }) => {
         {/* Row 10: Product lifecycle and velocity */}
         <ProductLifecycleChart data={history.productLifecycle || []} />
         <PurchaseVelocityChart data={history.purchaseVelocity || []} />
+
+        {/* Row 11: Predictive Analytics */}
+        <ProductRestockPredictions
+          data={history.productRestockPredictions || []}
+        />
+
+        {/* Row 12: Behavioral Analysis */}
+        <ShoppingBasketAnalysis data={history.shoppingBaskets || []} />
+        <PurchaseClustersChart data={history.purchaseClusters || []} />
+
+        {/* Row 13: Anomalies and Efficiency */}
+        <PurchaseAnomalies data={history.purchaseAnomalies || []} />
+        <ShoppingEfficiencyMetrics data={history.shoppingEfficiency || {}} />
       </div>
     </div>
   );

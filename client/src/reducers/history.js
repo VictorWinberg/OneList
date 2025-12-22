@@ -34,6 +34,12 @@ const initialState = {
   productLifecycle: [],
   purchaseVelocity: [],
   intervalsSummary: {},
+  nextPurchasePrediction: {},
+  productRestockPredictions: [],
+  shoppingBaskets: [],
+  purchaseClusters: [],
+  purchaseAnomalies: [],
+  shoppingEfficiency: {},
   loading: true,
 };
 
