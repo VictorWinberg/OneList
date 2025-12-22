@@ -25,7 +25,7 @@ const ListItem = ({
   onClick = null,
   linkTo,
   backUrl = null,
-  onDelete,
+  dragListeners = null,
 }) => (
   <li className="listitem">
     <label
@@ -43,23 +43,13 @@ const ListItem = ({
       />
       <span className="productText">{value}</span>
       {description}
-      <span className="checkmark" />
+      <span className="checkmark" {...(dragListeners || {})} />
     </label>
     <div className="listitem-actions">
       <span className="productDays">{daysToHumanReadable(days)}</span>
       <Link to={{ pathname: linkTo, query: { backUrl } }}>
         <img id="editicon" src={penselecticon} alt="Edit" height="27px" />
       </Link>
-      {onDelete && (
-        <button
-          type="button"
-          onClick={onDelete}
-          className="delete-button"
-          aria-label="Delete"
-        >
-          ×
-        </button>
-      )}
     </div>
   </li>
 );
@@ -74,7 +64,7 @@ ListItem.propTypes = {
   onClick: PropTypes.func,
   linkTo: PropTypes.string.isRequired,
   backUrl: PropTypes.string,
-  onDelete: PropTypes.func,
+  dragListeners: PropTypes.object,
 };
 
 export default ListItem;

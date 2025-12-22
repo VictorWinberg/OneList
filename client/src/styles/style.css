@@ -316,6 +316,7 @@ nav a.active {
 .saveBtn,
 .loginBtn,
 .logoutBtn {
+  color: black;
   cursor: pointer;
   padding: 0.2em 0;
   font-family: 'Quicksand', sans-serif;
@@ -436,20 +437,6 @@ nav a.active {
   cursor: pointer;
 }
 
-.listitem-actions .delete-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  font-size: 32px;
-  color: #666;
-  line-height: 0;
-}
-
-.listitem-actions .delete-button:hover {
-  color: #000;
-}
-
 /* When the checkbox is checked, add a blue background */
 .products input:checked ~ .checkmark {
   background-color: #458fde;
@@ -535,7 +522,8 @@ nav a.active {
 
 .hidden,
 .products .done img,
-.products .done .amountText {
+.products .done .amountText,
+.products .done .listitem-actions {
   display: none;
 }
 
@@ -552,6 +540,12 @@ nav a.active {
 .categories .checkmark {
   background-image: url('../assets/icons/reorder.svg');
   background-size: contain;
+  cursor: grab;
+  touch-action: none;
+}
+
+.categories .isDragging .checkmark {
+  cursor: grabbing;
 }
 
 .share .checkmark {
@@ -617,4 +611,34 @@ nav a.active {
 @font-face {
   font-family: 'Quicksand';
   src: url('../assets/fonts/Quicksand-Regular.ttf');
+}
+
+/* SwipeableListItem styles */
+.swipeable-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.swipeable-indicator {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  z-index: 0;
+}
+
+.swipeable-indicator--delete {
+  right: 0;
+  background-color: #fb9191;
+}
+
+.swipeable-indicator--cart {
+  left: 0;
+  background-color: #c8eea0;
 }
