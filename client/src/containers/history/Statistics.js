@@ -1465,32 +1465,10 @@ MostBoughtList.propTypes = {
 };
 
 // Main Statistics Display Component
-const StatisticsDisplay = ({
-  loading,
-  totalPurchases,
-  purchaseFrequency,
-  mostBoughtItems,
-  monthlyPurchases,
-  categoryDistribution,
-  dayOfWeekStats,
-  productTrends,
-  monthComparison,
-  mostActiveDay = null,
-  dailyPurchases,
-  frequencyDistribution,
-  productFrequency,
-  intervalTrend,
-  hourOfDay,
-  weeklyComparison,
-  seasonalTrends,
-  categoryFrequency,
-  productLifecycle,
-  purchaseVelocity,
-  intervalsSummary,
-}) => {
+const Statistics = ({ history }) => {
   const { t } = useTranslation();
 
-  if (loading) {
+  if (history.loading) {
     return (
       <div className="statistics-display">
         <p>{t('history.loading')}</p>
@@ -1502,187 +1480,63 @@ const StatisticsDisplay = ({
     <div className="statistics-display">
       {/* Overview Section */}
       <OverviewCards
-        totalPurchases={totalPurchases}
-        mostActiveDay={mostActiveDay}
-        purchaseFrequency={purchaseFrequency}
-        monthComparison={monthComparison}
+        totalPurchases={history.totalPurchases}
+        mostActiveDay={history.mostActiveDay}
+        purchaseFrequency={history.purchaseFrequency}
+        monthComparison={history.monthComparison}
       />
 
       {/* Charts Grid */}
       <div className="charts-grid">
         {/* Row 1: Monthly trend and comparison */}
-        <MonthlyChart data={monthlyPurchases} />
-        <MonthComparisonChart data={monthComparison} />
+        <MonthlyChart data={history.monthlyPurchases} />
+        <MonthComparisonChart data={history.monthComparison} />
 
         {/* Row 2: Product analysis */}
-        <ProductPurchaseBarChart data={mostBoughtItems} />
-        <ProductPurchasePieChart data={mostBoughtItems} />
+        <ProductPurchaseBarChart data={history.mostBoughtItems} />
+        <ProductPurchasePieChart data={history.mostBoughtItems} />
 
         {/* Row 3: Product trends and category */}
         <ProductTrendChart
-          data={productTrends}
-          monthlyPurchases={monthlyPurchases}
+          data={history.productTrends}
+          monthlyPurchases={history.monthlyPurchases}
         />
-        <CategoryDistributionChart data={categoryDistribution} />
+        <CategoryDistributionChart data={history.categoryDistribution} />
 
         {/* Row 4: Temporal patterns */}
-        <DayOfWeekChart data={dayOfWeekStats} />
+        <DayOfWeekChart data={history.dayOfWeekStats} />
 
         {/* Row 5: Heatmap */}
-        <PurchaseHeatmap data={dailyPurchases} />
+        <PurchaseHeatmap data={history.dailyPurchases} />
 
         {/* Row 6: Frequency analysis */}
-        <FrequencyDistributionChart data={frequencyDistribution || []} />
-        <IntervalsSummary data={intervalsSummary || {}} />
+        <FrequencyDistributionChart
+          data={history.frequencyDistribution || []}
+        />
+        <IntervalsSummary data={history.intervalsSummary || {}} />
 
         {/* Row 7: Product frequency */}
-        <ProductFrequencyChart data={productFrequency || []} />
-        <IntervalTrendChart data={intervalTrend || []} />
+        <ProductFrequencyChart data={history.productFrequency || []} />
+        <IntervalTrendChart data={history.intervalTrend || []} />
 
         {/* Row 8: Time-based analysis */}
-        <HourOfDayChart data={hourOfDay || []} />
-        <WeeklyComparisonChart data={weeklyComparison || []} />
+        <HourOfDayChart data={history.hourOfDay || []} />
+        <WeeklyComparisonChart data={history.weeklyComparison || []} />
 
         {/* Row 9: Seasonal and category analysis */}
-        <SeasonalTrendsChart data={seasonalTrends || []} />
-        <CategoryFrequencyChart data={categoryFrequency || []} />
+        <SeasonalTrendsChart data={history.seasonalTrends || []} />
+        <CategoryFrequencyChart data={history.categoryFrequency || []} />
 
         {/* Row 10: Product lifecycle and velocity */}
-        <ProductLifecycleChart data={productLifecycle || []} />
-        <PurchaseVelocityChart data={purchaseVelocity || []} />
+        <ProductLifecycleChart data={history.productLifecycle || []} />
+        <PurchaseVelocityChart data={history.purchaseVelocity || []} />
       </div>
     </div>
   );
 };
 
-StatisticsDisplay.propTypes = {
-  loading: PropTypes.bool.isRequired,
-  totalPurchases: PropTypes.number.isRequired,
-  purchaseFrequency: PropTypes.shape({
-    itemsPerWeek: PropTypes.number.isRequired,
-    itemsPerMonth: PropTypes.number.isRequired,
-  }).isRequired,
-  mostBoughtItems: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      count: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-  monthlyPurchases: PropTypes.arrayOf(
-    PropTypes.shape({
-      month: PropTypes.string.isRequired,
-      count: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-  categoryDistribution: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      count: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-  dayOfWeekStats: PropTypes.arrayOf(
-    PropTypes.shape({
-      day: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      count: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-  productTrends: PropTypes.arrayOf(
-    PropTypes.shape({
-      product: PropTypes.string.isRequired,
-      month: PropTypes.string.isRequired,
-      count: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-  monthComparison: PropTypes.shape({
-    thisMonth: PropTypes.number.isRequired,
-    lastMonth: PropTypes.number.isRequired,
-    twoMonthsAgo: PropTypes.number.isRequired,
-    thisMonthName: PropTypes.string,
-    lastMonthName: PropTypes.string,
-    twoMonthsAgoName: PropTypes.string,
-    change: PropTypes.number.isRequired,
-  }).isRequired,
-  mostActiveDay: PropTypes.string,
-  dailyPurchases: PropTypes.arrayOf(
-    PropTypes.shape({
-      date: PropTypes.string.isRequired,
-      count: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-  frequencyDistribution: PropTypes.arrayOf(
-    PropTypes.shape({
-      bucket: PropTypes.string.isRequired,
-      count: PropTypes.number.isRequired,
-    })
-  ),
-  productFrequency: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      avgDays: PropTypes.number.isRequired,
-      count: PropTypes.number.isRequired,
-    })
-  ),
-  intervalTrend: PropTypes.arrayOf(
-    PropTypes.shape({
-      month: PropTypes.string.isRequired,
-      avgDays: PropTypes.number.isRequired,
-    })
-  ),
-  hourOfDay: PropTypes.arrayOf(
-    PropTypes.shape({
-      hour: PropTypes.number.isRequired,
-      count: PropTypes.number.isRequired,
-    })
-  ),
-  weeklyComparison: PropTypes.arrayOf(
-    PropTypes.shape({
-      week: PropTypes.string.isRequired,
-      weekLabel: PropTypes.string.isRequired,
-      count: PropTypes.number.isRequired,
-      previousCount: PropTypes.number,
-    })
-  ),
-  seasonalTrends: PropTypes.arrayOf(
-    PropTypes.shape({
-      year: PropTypes.number.isRequired,
-      month: PropTypes.number.isRequired,
-      yearMonth: PropTypes.string.isRequired,
-      count: PropTypes.number.isRequired,
-    })
-  ),
-  categoryFrequency: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      avgDaysBetween: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-        .isRequired,
-      purchaseCount: PropTypes.number.isRequired,
-    })
-  ),
-  productLifecycle: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      firstPurchase: PropTypes.string.isRequired,
-      lastPurchase: PropTypes.string.isRequired,
-      daysActive: PropTypes.number.isRequired,
-      count: PropTypes.number.isRequired,
-    })
-  ),
-  purchaseVelocity: PropTypes.arrayOf(
-    PropTypes.shape({
-      date: PropTypes.string.isRequired,
-      dailyCount: PropTypes.number.isRequired,
-      movingAvg7d: PropTypes.number,
-    })
-  ),
-  intervalsSummary: PropTypes.shape({
-    min: PropTypes.number,
-    max: PropTypes.number,
-    avg: PropTypes.number,
-    q1: PropTypes.number,
-    median: PropTypes.number,
-    q3: PropTypes.number,
-  }),
+Statistics.propTypes = {
+  history: PropTypes.object.isRequired,
 };
 
-export default StatisticsDisplay;
+export default Statistics;
