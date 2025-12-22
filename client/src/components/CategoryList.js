@@ -91,8 +91,8 @@ const CategoryList = ({ view, items, linkTo, history, onItemReorder }) => {
     }),
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 150,
-        tolerance: 5,
+        delay: 0,
+        tolerance: 8,
       },
     }),
     useSensor(KeyboardSensor, {

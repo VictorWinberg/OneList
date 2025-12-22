@@ -138,21 +138,17 @@ const ProductList = ({
 
   const handleDragEnd = (event) => {
     const { active: activeDrag } = event;
-    const SWIPE_THRESHOLD = 100; // pixels to swipe before action triggers
+    const SWIPE_THRESHOLD = 100;
 
-    // Find the item by active.id (which is item.key)
     const allItems = active.flatMap((category) => category.items);
     const draggedItem = allItems.find(
       (listItem) => listItem.key === activeDrag.id
     );
 
     if (draggedItem) {
-      // Check if swiped left beyond threshold (delete)
       if (dragDelta.x < -SWIPE_THRESHOLD && onDelete) {
         onDelete(draggedItem, getData);
-      }
-      // Check if swiped right beyond threshold (move to cart)
-      else if (dragDelta.x > SWIPE_THRESHOLD && onItemClick) {
+      } else if (dragDelta.x > SWIPE_THRESHOLD && onItemClick) {
         onItemClick(draggedItem, getData);
       }
     }
