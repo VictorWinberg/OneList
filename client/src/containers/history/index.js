@@ -20,6 +20,16 @@ const History = ({
   monthComparison,
   mostActiveDay,
   dailyPurchases,
+  frequencyDistribution,
+  productFrequency,
+  intervalTrend,
+  hourOfDay,
+  weeklyComparison,
+  seasonalTrends,
+  categoryFrequency,
+  productLifecycle,
+  purchaseVelocity,
+  intervalsSummary,
   loadStatistics,
 }) => {
   const { t } = useTranslation();
@@ -47,6 +57,16 @@ const History = ({
           monthComparison={monthComparison}
           mostActiveDay={mostActiveDay}
           dailyPurchases={dailyPurchases}
+          frequencyDistribution={frequencyDistribution}
+          productFrequency={productFrequency}
+          intervalTrend={intervalTrend}
+          hourOfDay={hourOfDay}
+          weeklyComparison={weeklyComparison}
+          seasonalTrends={seasonalTrends}
+          categoryFrequency={categoryFrequency}
+          productLifecycle={productLifecycle}
+          purchaseVelocity={purchaseVelocity}
+          intervalsSummary={intervalsSummary}
         />
       ) : (
         <p>{t('settings.unauthenticated')}</p>
@@ -111,6 +131,16 @@ History.propTypes = {
       count: PropTypes.number.isRequired,
     })
   ).isRequired,
+  frequencyDistribution: PropTypes.array,
+  productFrequency: PropTypes.array,
+  intervalTrend: PropTypes.array,
+  hourOfDay: PropTypes.array,
+  weeklyComparison: PropTypes.array,
+  seasonalTrends: PropTypes.array,
+  categoryFrequency: PropTypes.array,
+  productLifecycle: PropTypes.array,
+  purchaseVelocity: PropTypes.array,
+  intervalsSummary: PropTypes.object,
   loadStatistics: PropTypes.func.isRequired,
 };
 
@@ -134,6 +164,16 @@ const mapStateToProps = (state) => ({
   mostActiveDay: state.history.mostActiveDay,
   dailyPurchases: state.history.dailyPurchases,
   dateRange: state.history.dateRange,
+  frequencyDistribution: state.history.frequencyDistribution,
+  productFrequency: state.history.productFrequency,
+  intervalTrend: state.history.intervalTrend,
+  hourOfDay: state.history.hourOfDay,
+  weeklyComparison: state.history.weeklyComparison,
+  seasonalTrends: state.history.seasonalTrends,
+  categoryFrequency: state.history.categoryFrequency,
+  productLifecycle: state.history.productLifecycle,
+  purchaseVelocity: state.history.purchaseVelocity,
+  intervalsSummary: state.history.intervalsSummary,
 });
 
 const mapDispatchToProps = {

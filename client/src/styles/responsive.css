@@ -1,0 +1,23 @@
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .overview-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card {
+    padding: 0.75em;
+  }
+
+  .stat-card-value {
+    font-size: 1.25em;
+  }
+
+  .stat-card-icon {
+    font-size: 1.25em;
+  }
+}
+

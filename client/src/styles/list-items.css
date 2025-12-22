@@ -1,0 +1,107 @@
+/* List item styles, checkmarks, productText, amountText */
+.listitem {
+  display: flex;
+  border-bottom: grey solid 0.5px;
+  padding: 0.5em 0;
+}
+
+/* Customize the label (the listitem label) */
+.listitem label {
+  display: flex;
+  align-items: center;
+  font-family: 'Quicksand', sans-serif;
+  width: 0;
+  flex-grow: 1;
+  position: relative;
+  cursor: pointer;
+  font-size: 22px;
+  user-select: none;
+}
+
+.listitem .productText {
+  padding-left: 35px;
+  font-size: 22px;
+}
+
+.listitem .amountText {
+  color: rgba(0, 0, 0, 0.6);
+  padding-left: 10px;
+  font-size: 18px;
+}
+
+/* Hide the browser's default checkbox */
+.listitem label input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.listitem-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  line-height: 0;
+}
+
+.productDays {
+  font-family: 'Quicksand', sans-serif;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 12px;
+}
+
+.listitem-actions img {
+  cursor: pointer;
+}
+
+/* When the checkbox is checked, add a blue background */
+.products input:checked ~ .checkmark {
+  background-color: #458fde;
+}
+
+/* Show the checkmark when checked */
+.products input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.products .checkmark:after {
+  left: 6px;
+  top: -2px;
+  width: 10px;
+  height: 20px;
+  border: solid white;
+  border-width: 0 4px 4px 0;
+  transform: rotate(45deg);
+}
+
+/* Create a custom checkbox */
+.products .checkmark {
+  background-color: #eee;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.products .checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.section {
+  font-family: 'Quicksand', sans-serif;
+  padding-left: 0.5em;
+  margin-top: 0.3em;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.categories .checkmark,
+.products .checkmark,
+.share .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 27px;
+  width: 27px;
+}
+

@@ -1,0 +1,289 @@
+/* History Styles */
+.history {
+  padding: 0.5em;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.history h2 {
+  margin-bottom: 1em;
+}
+
+.statistics-display {
+  background-color: white;
+}
+
+.stats-section {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 1em;
+  margin-bottom: 1em;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.stats-section h3 {
+  color: #458fde;
+  margin: 0 0 0.75em 0;
+  font-size: 18px;
+  border-bottom: 2px solid #458fde;
+  padding-bottom: 0.5em;
+}
+
+.stats-list {
+  display: flex;
+  justify-content: space-around;
+  margin: 0;
+}
+
+.stats-list li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5em;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: bold;
+  color: #458fde;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #666;
+  margin-top: 0.25em;
+}
+
+.total-count {
+  font-size: 32px;
+  font-weight: bold;
+  color: #458fde;
+  text-align: center;
+  margin: 0.5em 0;
+}
+
+.date-range {
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+}
+
+.most-bought-list {
+  margin: 0;
+}
+
+.most-bought-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5em 0;
+  border-bottom: 1px solid #eee;
+}
+
+.most-bought-item:last-child {
+  border-bottom: none;
+}
+
+.item-rank {
+  width: 30px;
+  font-weight: bold;
+  color: #458fde;
+}
+
+.item-name {
+  flex: 1;
+  font-size: 16px;
+}
+
+.item-count {
+  font-weight: bold;
+  color: #666;
+  background-color: #e8f4fc;
+  padding: 0.25em 0.5em;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Overview Cards */
+.overview-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75em;
+  margin-bottom: 1.5em;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 1em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid #458fde;
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.stat-card-icon {
+  font-size: 1.5em;
+}
+
+.stat-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-card-value {
+  font-size: 1.5em;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.stat-card-label {
+  font-size: 0.75em;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Charts Grid */
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1em;
+}
+
+.chart-section {
+  min-height: 280px;
+}
+
+.chart-container {
+  width: 100%;
+  height: 100%;
+}
+
+/* Month Comparison Summary */
+.month-comparison-summary {
+  text-align: center;
+  margin-top: 0.5em;
+}
+
+.change-indicator {
+  font-size: 1.1em;
+  font-weight: bold;
+  padding: 0.25em 0.75em;
+  border-radius: 20px;
+}
+
+.change-indicator.positive {
+  color: #28a745;
+  background-color: rgba(40, 167, 69, 0.1);
+}
+
+.change-indicator.negative {
+  color: #dc3545;
+  background-color: rgba(220, 53, 69, 0.1);
+}
+
+/* Heatmap Styles */
+.heatmap-container {
+  padding: 0.5em;
+}
+
+.heatmap-grid {
+  display: flex;
+  gap: 3px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 0.75em;
+}
+
+.heatmap-week {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.heatmap-day {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.heatmap-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #666;
+}
+
+/* Chart Description */
+.chart-description {
+  font-size: 0.9em;
+  color: #666;
+  margin: -0.5em 0 0.75em 0;
+  font-style: italic;
+}
+
+/* Intervals Summary Grid */
+.intervals-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1em;
+  margin-top: 1em;
+}
+
+.interval-stat-card {
+  background-color: white;
+  border-radius: 6px;
+  padding: 1em;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.interval-stat-label {
+  display: block;
+  font-size: 0.85em;
+  color: #666;
+  margin-bottom: 0.5em;
+  font-weight: 500;
+}
+
+.interval-stat-value {
+  display: block;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .overview-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card {
+    padding: 0.75em;
+  }
+
+  .stat-card-value {
+    font-size: 1.25em;
+  }
+
+  .stat-card-icon {
+    font-size: 1.25em;
+  }
+
+  .intervals-summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

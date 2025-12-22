@@ -24,6 +24,16 @@ const initialState = {
     first: null,
     last: null,
   },
+  frequencyDistribution: [],
+  productFrequency: [],
+  intervalTrend: [],
+  hourOfDay: [],
+  weeklyComparison: [],
+  seasonalTrends: [],
+  categoryFrequency: [],
+  productLifecycle: [],
+  purchaseVelocity: [],
+  intervalsSummary: {},
   loading: true,
 };
 
