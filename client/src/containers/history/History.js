@@ -80,7 +80,7 @@ StatCard.propTypes = {
 
 const OverviewCards = ({
   totalPurchases,
-  mostActiveDay,
+  mostActiveDay = null,
   purchaseFrequency,
   monthComparison,
 }) => {
@@ -136,10 +136,6 @@ OverviewCards.propTypes = {
     twoMonthsAgoName: PropTypes.string,
     change: PropTypes.number.isRequired,
   }).isRequired,
-};
-
-OverviewCards.defaultProps = {
-  mostActiveDay: null,
 };
 
 // Monthly Purchases Line Chart
@@ -1468,135 +1464,6 @@ MostBoughtList.propTypes = {
   }).isRequired,
 };
 
-// Generate fake data for demonstration
-const generateFakeData = () => {
-  const now = new Date();
-  const currentMonth = now.getMonth();
-  const currentYear = now.getFullYear();
-
-  // Generate last 6 months
-  const monthlyPurchases = [];
-  for (let i = 5; i >= 0; i -= 1) {
-    const date = new Date(currentYear, currentMonth - i, 1);
-    const monthStr = `${date.getFullYear()}-${String(
-      date.getMonth() + 1
-    ).padStart(2, '0')}`;
-    monthlyPurchases.push({
-      month: monthStr,
-      count: Math.floor(Math.random() * 30) + 10,
-    });
-  }
-
-  // Generate most bought items
-  const productNames = [
-    'Milk',
-    'Bread',
-    'Eggs',
-    'Bananas',
-    'Chicken',
-    'Rice',
-    'Pasta',
-    'Tomatoes',
-    'Cheese',
-    'Yogurt',
-  ];
-  const mostBoughtItems = productNames
-    .map((name) => ({
-      name,
-      count: Math.floor(Math.random() * 20) + 5,
-    }))
-    .sort((a, b) => b.count - a.count);
-
-  // Generate category distribution
-  const categories = [
-    'Fruits',
-    'Vegetables',
-    'Dairy',
-    'Meat',
-    'Grains',
-    'Beverages',
-  ];
-  const categoryDistribution = categories.map((name) => ({
-    name,
-    count: Math.floor(Math.random() * 25) + 5,
-  }));
-
-  // Generate day of week stats
-  const dayNames = [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Sunday',
-  ];
-  const dayOfWeekStats = dayNames.map((name, index) => ({
-    day: index + 1,
-    name,
-    count: Math.floor(Math.random() * 15) + 3,
-  }));
-
-  // Generate product trends
-  const productTrends = [];
-  const topProducts = productNames.slice(0, 5);
-  monthlyPurchases.forEach((month) => {
-    topProducts.forEach((product) => {
-      productTrends.push({
-        product,
-        month: month.month,
-        count: Math.floor(Math.random() * 8) + 1,
-      });
-    });
-  });
-
-  // Generate month comparison
-  const thisMonth = monthlyPurchases[monthlyPurchases.length - 1].count;
-  const lastMonth = monthlyPurchases[monthlyPurchases.length - 2].count;
-  const twoMonthsAgo = monthlyPurchases[monthlyPurchases.length - 3].count;
-  const change = Math.round(((thisMonth - lastMonth) / lastMonth) * 100);
-
-  const monthComparison = {
-    thisMonth,
-    lastMonth,
-    twoMonthsAgo,
-    change,
-  };
-
-  // Generate daily purchases for heatmap (last 90 days)
-  const dailyPurchases = [];
-  for (let i = 89; i >= 0; i -= 1) {
-    const date = new Date(now);
-    date.setDate(date.getDate() - i);
-    const dateStr = date.toISOString().split('T')[0];
-    dailyPurchases.push({
-      date: dateStr,
-      count: Math.random() > 0.3 ? Math.floor(Math.random() * 5) + 1 : 0,
-    });
-  }
-
-  // Calculate totals
-  const totalPurchases = monthlyPurchases.reduce((sum, m) => sum + m.count, 0);
-  const itemsPerWeek = Math.round((totalPurchases / (6 * 4.33)) * 10) / 10;
-  const itemsPerMonth = Math.round((totalPurchases / 6) * 10) / 10;
-
-  return {
-    totalPurchases,
-    purchaseFrequency: {
-      itemsPerWeek,
-      itemsPerMonth,
-    },
-    mostBoughtItems,
-    monthlyPurchases,
-    categoryDistribution,
-    dayOfWeekStats,
-    productTrends,
-    monthComparison,
-    mostActiveDay: 'Saturday',
-    dailyPurchases,
-  };
-};
-
 // Main Statistics Display Component
 const StatisticsDisplay = ({
   loading,
@@ -1608,7 +1475,7 @@ const StatisticsDisplay = ({
   dayOfWeekStats,
   productTrends,
   monthComparison,
-  mostActiveDay,
+  mostActiveDay = null,
   dailyPurchases,
   frequencyDistribution,
   productFrequency,
@@ -1631,85 +1498,58 @@ const StatisticsDisplay = ({
     );
   }
 
-  // Use fake data if no real data exists
-  const displayData =
-    totalPurchases === 0
-      ? generateFakeData()
-      : {
-          totalPurchases,
-          purchaseFrequency,
-          mostBoughtItems,
-          monthlyPurchases,
-          categoryDistribution,
-          dayOfWeekStats,
-          productTrends,
-          monthComparison,
-          mostActiveDay,
-          dailyPurchases,
-          frequencyDistribution: frequencyDistribution || [],
-          productFrequency: productFrequency || [],
-          intervalTrend: intervalTrend || [],
-          hourOfDay: hourOfDay || [],
-          weeklyComparison: weeklyComparison || [],
-          seasonalTrends: seasonalTrends || [],
-          categoryFrequency: categoryFrequency || [],
-          productLifecycle: productLifecycle || [],
-          purchaseVelocity: purchaseVelocity || [],
-          intervalsSummary: intervalsSummary || {},
-        };
-
   return (
     <div className="statistics-display">
       {/* Overview Section */}
       <OverviewCards
-        totalPurchases={displayData.totalPurchases}
-        mostActiveDay={displayData.mostActiveDay}
-        purchaseFrequency={displayData.purchaseFrequency}
-        monthComparison={displayData.monthComparison}
+        totalPurchases={totalPurchases}
+        mostActiveDay={mostActiveDay}
+        purchaseFrequency={purchaseFrequency}
+        monthComparison={monthComparison}
       />
 
       {/* Charts Grid */}
       <div className="charts-grid">
         {/* Row 1: Monthly trend and comparison */}
-        <MonthlyChart data={displayData.monthlyPurchases} />
-        <MonthComparisonChart data={displayData.monthComparison} />
+        <MonthlyChart data={monthlyPurchases} />
+        <MonthComparisonChart data={monthComparison} />
 
         {/* Row 2: Product analysis */}
-        <ProductPurchaseBarChart data={displayData.mostBoughtItems} />
-        <ProductPurchasePieChart data={displayData.mostBoughtItems} />
+        <ProductPurchaseBarChart data={mostBoughtItems} />
+        <ProductPurchasePieChart data={mostBoughtItems} />
 
         {/* Row 3: Product trends and category */}
         <ProductTrendChart
-          data={displayData.productTrends}
-          monthlyPurchases={displayData.monthlyPurchases}
+          data={productTrends}
+          monthlyPurchases={monthlyPurchases}
         />
-        <CategoryDistributionChart data={displayData.categoryDistribution} />
+        <CategoryDistributionChart data={categoryDistribution} />
 
         {/* Row 4: Temporal patterns */}
-        <DayOfWeekChart data={displayData.dayOfWeekStats} />
+        <DayOfWeekChart data={dayOfWeekStats} />
 
         {/* Row 5: Heatmap */}
-        <PurchaseHeatmap data={displayData.dailyPurchases} />
+        <PurchaseHeatmap data={dailyPurchases} />
 
         {/* Row 6: Frequency analysis */}
-        <FrequencyDistributionChart data={displayData.frequencyDistribution} />
-        <IntervalsSummary data={displayData.intervalsSummary} />
+        <FrequencyDistributionChart data={frequencyDistribution || []} />
+        <IntervalsSummary data={intervalsSummary || {}} />
 
         {/* Row 7: Product frequency */}
-        <ProductFrequencyChart data={displayData.productFrequency} />
-        <IntervalTrendChart data={displayData.intervalTrend} />
+        <ProductFrequencyChart data={productFrequency || []} />
+        <IntervalTrendChart data={intervalTrend || []} />
 
         {/* Row 8: Time-based analysis */}
-        <HourOfDayChart data={displayData.hourOfDay} />
-        <WeeklyComparisonChart data={displayData.weeklyComparison} />
+        <HourOfDayChart data={hourOfDay || []} />
+        <WeeklyComparisonChart data={weeklyComparison || []} />
 
         {/* Row 9: Seasonal and category analysis */}
-        <SeasonalTrendsChart data={displayData.seasonalTrends} />
-        <CategoryFrequencyChart data={displayData.categoryFrequency} />
+        <SeasonalTrendsChart data={seasonalTrends || []} />
+        <CategoryFrequencyChart data={categoryFrequency || []} />
 
         {/* Row 10: Product lifecycle and velocity */}
-        <ProductLifecycleChart data={displayData.productLifecycle} />
-        <PurchaseVelocityChart data={displayData.purchaseVelocity} />
+        <ProductLifecycleChart data={productLifecycle || []} />
+        <PurchaseVelocityChart data={purchaseVelocity || []} />
       </div>
     </div>
   );
@@ -1843,10 +1683,6 @@ StatisticsDisplay.propTypes = {
     median: PropTypes.number,
     q3: PropTypes.number,
   }),
-};
-
-StatisticsDisplay.defaultProps = {
-  mostActiveDay: null,
 };
 
 export default StatisticsDisplay;

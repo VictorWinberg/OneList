@@ -18,7 +18,7 @@ const History = ({
   dayOfWeekStats,
   productTrends,
   monthComparison,
-  mostActiveDay,
+  mostActiveDay = null,
   dailyPurchases,
   frequencyDistribution,
   productFrequency,
@@ -142,10 +142,6 @@ History.propTypes = {
   purchaseVelocity: PropTypes.array,
   intervalsSummary: PropTypes.object,
   loadStatistics: PropTypes.func.isRequired,
-};
-
-History.defaultProps = {
-  mostActiveDay: null,
 };
 
 const mapStateToProps = (state) => ({

@@ -8,7 +8,7 @@ import User from './User';
 import Snackbar from '../common/Snackbar';
 import { logoutUser } from '../../actions/user';
 
-const Settings = ({ isLoggedIn, logout, t }) => (
+const Settings = ({ isLoggedIn, logout, t, i18n }) => (
   <div className="settings">
     <Snackbar />
     <h2>{t('settings.title')}</h2>
@@ -16,7 +16,7 @@ const Settings = ({ isLoggedIn, logout, t }) => (
     {isLoggedIn ? (
       <div>
         <p>{t('settings.authenticated')}</p>
-        <User />
+        <User key={i18n.language} />
         <button type="button" className="logoutBtn" onClick={logout}>
           {t('user.logout')}
         </button>
@@ -36,6 +36,7 @@ Settings.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
+  i18n: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
