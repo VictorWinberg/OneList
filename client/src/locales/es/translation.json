@@ -2,7 +2,8 @@
   "nav": {
     "shoppinglist": "Lista de compras",
     "categories": "Categorías",
-    "products": "Productos"
+    "products": "Productos",
+    "history": "Historial"
   },
   "edit": {
     "edit": "Editar",
@@ -60,9 +61,40 @@
     "name": "Nombre: ",
     "email": "Correo: ",
     "language": "Idioma: ",
-    "submit": "Guardar"
+    "submit": "Guardar",
+    "showHistory": "Mostrar mi historial"
   },
   "snackbar": {
     "unauthenticated": "No has iniciado sesión. Por favor, inicia sesión e inténtalo de nuevo."
+  },
+  "history": {
+    "title": "Historial de compras",
+    "monthlyChart": "Compras por mes",
+    "purchaseFrequency": "Frecuencia de compras",
+    "mostBoughtItems": "Artículos más comprados",
+    "totalPurchases": "Compras totales",
+    "itemsPerWeek": "artículos/semana",
+    "itemsPerMonth": "artículos/mes",
+    "loading": "Cargando estadísticas...",
+    "purchases": "Compras",
+    "uniqueProducts": "Productos únicos",
+    "mostActiveDay": "Día más activo",
+    "monthChange": "vs mes anterior",
+    "productBarChart": "Productos principales",
+    "productPieChart": "Distribución de compras",
+    "productTrendChart": "Tendencias de productos",
+    "categoryDistribution": "Por categoría",
+    "dayOfWeekChart": "Compras por día de la semana",
+    "dayOfMonthChart": "Compras por día del mes",
+    "purchaseHeatmap": "Actividad (últimos 90 días)",
+    "monthComparison": "Comparación mensual",
+    "thisMonth": "Este mes",
+    "lastMonth": "Mes anterior",
+    "twoMonthsAgo": "Hace dos meses",
+    "increase": "aumento",
+    "decrease": "disminución",
+    "others": "Otros",
+    "less": "Menos",
+    "more": "Más"
   }
 }

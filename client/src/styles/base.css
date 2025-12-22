@@ -1,0 +1,42 @@
+/* Base styles, reset, and layout */
+body,
+html,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+#root > div {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* main div comes after header */
+#root > div > :nth-child(2),
+.products {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.products > :nth-child(1) {
+  flex: 1;
+}
+
+.products > :nth-child(2) {
+  overflow: visible;
+}
+
+.text-italic {
+  font-style: italic;
+}
+
+.hidden {
+  display: none;
+}
+
+:focus {
+  outline: none;
+}

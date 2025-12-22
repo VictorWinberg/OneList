@@ -1,0 +1,24 @@
+/* Category-specific styles */
+.categories ul {
+  margin: 0;
+}
+
+.categories .listitem {
+  margin: 0.25em 0.5em;
+}
+
+.categories .checkmark {
+  background-image: url('../assets/icons/reorder.svg');
+  background-size: contain;
+  cursor: grab;
+  touch-action: none;
+}
+
+.categories .isDragging .checkmark {
+  cursor: grabbing;
+}
+
+.share .checkmark {
+  background-image: url('../assets/icons/user.svg');
+  background-size: contain;
+}

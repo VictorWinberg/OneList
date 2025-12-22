@@ -2,7 +2,8 @@
   "nav": {
     "shoppinglist": "Inköpslista",
     "categories": "Kategorier",
-    "products": "Varor"
+    "products": "Varor",
+    "history": "Historik"
   },
   "edit": {
     "edit": "Redigera",
@@ -60,9 +61,40 @@
     "name": "Namn: ",
     "email": "Mail: ",
     "language": "Språk: ",
-    "submit": "Spara"
+    "submit": "Spara",
+    "showHistory": "Visa min historik"
   },
   "snackbar": {
     "unauthenticated": "Du är inte inloggad. Logga in och försök igen."
+  },
+  "history": {
+    "title": "Inköpshistorik",
+    "monthlyChart": "Köp per månad",
+    "purchaseFrequency": "Inköpsfrekvens",
+    "mostBoughtItems": "Mest köpta varor",
+    "totalPurchases": "Totalt antal köp",
+    "itemsPerWeek": "varor/vecka",
+    "itemsPerMonth": "varor/månad",
+    "loading": "Laddar statistik...",
+    "purchases": "Köp",
+    "uniqueProducts": "Unika varor",
+    "mostActiveDay": "Mest aktiv dag",
+    "monthChange": "mot förra månaden",
+    "productBarChart": "Toppvaror",
+    "productPieChart": "Köpfördelning",
+    "productTrendChart": "Varutrender",
+    "categoryDistribution": "Per kategori",
+    "dayOfWeekChart": "Köp per veckodag",
+    "dayOfMonthChart": "Köp per dag i månaden",
+    "purchaseHeatmap": "Aktivitet (senaste 90 dagar)",
+    "monthComparison": "Månadsförjämning",
+    "thisMonth": "Denna månad",
+    "lastMonth": "Förra månaden",
+    "twoMonthsAgo": "För två månader sedan",
+    "increase": "ökning",
+    "decrease": "minskning",
+    "others": "Övriga",
+    "less": "Mindre",
+    "more": "Mer"
   }
 }

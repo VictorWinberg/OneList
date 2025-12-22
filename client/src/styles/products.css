@@ -1,0 +1,121 @@
+/* Product-specific styles */
+.product .title,
+.category .title {
+  font-family: 'Quicksand', sans-serif;
+  padding: 0.5em 0.5em;
+  font-size: 20px;
+}
+
+.product .title,
+.category .title {
+  position: relative;
+  background-color: #c3e6fc;
+}
+
+.product .wrapper,
+.category .wrapper {
+  padding-top: 1em;
+  clear: both;
+  overflow: auto;
+  background-color: white;
+}
+
+.product label span,
+.category label span,
+.settings label span {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 20px;
+  width: 120px;
+  clear: both;
+  float: left;
+  text-align: right;
+  padding: 0.6em 0.5em;
+}
+
+.product input,
+.product select,
+.category input,
+.settings input,
+.settings select,
+#color-btn {
+  font-size: 16px;
+  padding: 0.5em 0;
+  margin: 0.5em 0;
+  border-radius: 4px;
+  float: left;
+}
+
+.product .productAmountText {
+  width: calc((100% - 120px - 2em) * 0.6);
+  text-indent: 0.3em;
+  border-radius: 4px 0px 0px 4px;
+}
+
+.product .productAmountUnit {
+  width: calc((100% - 120px - 2em) * 0.4);
+  text-indent: 0.3em;
+  border-radius: 0px 4px 4px 0px;
+}
+
+.product input,
+.category input,
+.settings input,
+#color-btn {
+  width: calc(100% - 120px - 2em);
+  text-indent: 0.3em;
+}
+
+.product select,
+.settings select,
+#color-btn {
+  width: calc(100% - 120px - 1.89em);
+  cursor: pointer;
+}
+
+#color-btn img {
+  float: right;
+  margin: 0.2em 0.5em 0 0;
+}
+
+/* Done section */
+.products .done {
+  background-color: rgb(80, 80, 80);
+  border-radius: 5px 5px 0 0;
+  margin: 0.5em 0 0 0;
+  padding: 0 0 0.5em 0em;
+  color: white;
+}
+
+.products .done h2 {
+  color: white;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: normal;
+  margin-left: 0.3em;
+  display: inline;
+}
+
+.products .done li {
+  text-decoration: line-through;
+}
+
+.products .done button {
+  position: absolute;
+  right: 0;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 20px;
+  border-radius: 5px;
+  border: outset 2px white;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  width: calc(100% / 3);
+  margin: 0.5em;
+  cursor: pointer;
+  background-color: #767676;
+  color: white;
+}
+
+.products .done img,
+.products .done .amountText,
+.products .done .listitem-actions {
+  display: none;
+}
+
