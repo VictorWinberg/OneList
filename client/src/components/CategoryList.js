@@ -33,7 +33,7 @@ const SortableItem = ({ item, linkTo, history, isDraggingGlobal }) => {
     transform: CSS.Transform.toString(transform),
     transition,
     borderLeft: `5px solid ${item.color || '#ccc'}`,
-    touchAction: isDragging ? 'none' : 'pan-y',
+    ...(isDragging && { touchAction: 'none' }),
     WebkitTouchCallout: 'none',
     WebkitUserSelect: 'none',
     userSelect: 'none',

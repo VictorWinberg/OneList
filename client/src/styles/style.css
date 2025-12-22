@@ -540,6 +540,7 @@ nav a.active {
   background-image: url('../assets/icons/reorder.svg');
   background-size: contain;
   cursor: grab;
+  touch-action: none;
 }
 
 .categories .isDragging .checkmark {
