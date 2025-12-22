@@ -9,10 +9,10 @@ import Snackbar from '../common/Snackbar';
 import { logoutUser } from '../../actions/user';
 
 const Settings = ({ isLoggedIn, logout }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
-    <div className="settings">
+    <div className="settings" key={i18n.language}>
       <Snackbar />
       <h2>{t('settings.title')}</h2>
       {isLoggedIn ? (

@@ -15,7 +15,7 @@ const LanguageSelector = ({ update }) => {
   const handleChange = (e) => {
     const newLanguage = e.target.value;
     i18n.changeLanguage(newLanguage);
-    update({ language: newLanguage });
+    update(e);
   };
 
   return (
