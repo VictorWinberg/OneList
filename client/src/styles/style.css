@@ -522,7 +522,8 @@ nav a.active {
 
 .hidden,
 .products .done img,
-.products .done .amountText {
+.products .done .amountText,
+.products .done .listitem-actions {
   display: none;
 }
 
