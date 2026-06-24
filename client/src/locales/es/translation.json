@@ -27,8 +27,8 @@
     "description": "Cada tienda puede tener su propio orden de categorías.",
     "label": "Tienda:",
     "orderFor": "Ordenar categorías para:",
-    "orderingFor": "Arrastra para definir el orden de pasillos en {{store}}.",
     "input": "Nueva tienda...",
+    "createNew": "Crear nueva tienda...",
     "add": "Añadir tienda",
     "none": "Aún no hay tiendas. Añade una en Configuración."
   },

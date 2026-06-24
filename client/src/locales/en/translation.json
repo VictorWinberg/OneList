@@ -27,8 +27,8 @@
     "description": "Each store can have its own category aisle order.",
     "label": "Store:",
     "orderFor": "Order categories for:",
-    "orderingFor": "Drag to set aisle order for {{store}}.",
     "input": "New store...",
+    "createNew": "Create new store...",
     "add": "Add store",
     "none": "No stores yet. Add one in Settings."
   },

@@ -35,7 +35,7 @@ export const addStore =
   async (dispatch) => {
     if (!name) return null;
     try {
-      await fetch('/__/stores', {
+      const res = await fetch('/__/stores', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -44,7 +44,12 @@ export const addStore =
         credentials: 'include',
         body: JSON.stringify({ name }),
       });
-      return dispatch(fetchStores());
+      const store = await res.json();
+      await dispatch(fetchStores());
+      if (store?.id) {
+        return dispatch(setActiveStore(store.id));
+      }
+      return null;
     } catch (err) {
       console.error(err);
       return null;

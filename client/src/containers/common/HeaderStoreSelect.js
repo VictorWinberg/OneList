@@ -3,29 +3,39 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 
+import shoppingBagIcon from '../../assets/icons/shopping-bag.svg';
 import { setActiveStore } from '../../actions/stores';
 
-const StorePicker = ({
+const HeaderStoreSelect = ({
   stores,
   activeStoreId,
-  onChange,
+  onSelectStore,
   t,
-  labelKey,
-  className,
 }) => {
   if (!stores.length) {
-    return (
-      <p className={className}>{t('stores.none')}</p>
-    );
+    return null;
   }
 
+  const activeStore = stores.find(({ id }) => id === activeStoreId);
+  const initial = activeStore?.name?.charAt(0).toUpperCase() ?? '?';
+
   return (
-    <div className={`store-picker ${className || ''}`.trim()}>
-      <label htmlFor="store-select">{t(labelKey)}</label>
+    <div className="header-store-select">
+      <span className="header-store-display" aria-hidden="true">
+        <img
+          className="header-store-icon"
+          src={shoppingBagIcon}
+          alt=""
+          height="28"
+        />
+        <span className="header-store-initial">{initial}</span>
+      </span>
       <select
-        id="store-select"
         value={activeStoreId || ''}
-        onChange={({ target }) => onChange(parseInt(target.value, 10))}
+        aria-label={t('stores.label')}
+        onChange={({ target }) =>
+          onSelectStore(parseInt(target.value, 10))
+        }
       >
         {stores.map(({ id, name }) => (
           <option key={id} value={id}>
@@ -37,7 +47,7 @@ const StorePicker = ({
   );
 };
 
-StorePicker.propTypes = {
+HeaderStoreSelect.propTypes = {
   stores: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -45,16 +55,12 @@ StorePicker.propTypes = {
     })
   ).isRequired,
   activeStoreId: PropTypes.number,
-  onChange: PropTypes.func.isRequired,
+  onSelectStore: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
-  labelKey: PropTypes.string,
-  className: PropTypes.string,
 };
 
-StorePicker.defaultProps = {
+HeaderStoreSelect.defaultProps = {
   activeStoreId: null,
-  labelKey: 'stores.label',
-  className: '',
 };
 
 const mapStateToProps = (state) => ({
@@ -63,10 +69,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  onChange: setActiveStore,
+  onSelectStore: setActiveStore,
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withTranslation()(StorePicker));
+)(withTranslation()(HeaderStoreSelect));

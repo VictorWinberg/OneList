@@ -27,8 +27,8 @@
     "description": "Varje butik kan ha sin egen ordning på kategorierna.",
     "label": "Butik:",
     "orderFor": "Ordna kategorier för:",
-    "orderingFor": "Dra för att ställa in gångordning för {{store}}.",
     "input": "Ny butik...",
+    "createNew": "Skapa ny butik...",
     "add": "Lägg till butik",
     "none": "Inga butiker ännu. Lägg till en under Inställningar."
   },

@@ -5,7 +5,6 @@ import { withTranslation } from 'react-i18next';
 
 import LanguageSelector from './LanguageSelector';
 import User from './User';
-import Stores from './Stores';
 import Snackbar from '../common/Snackbar';
 import { logoutUser } from '../../actions/user';
 
@@ -18,7 +17,6 @@ const Settings = ({ isLoggedIn, logout, t, i18n }) => (
       <div>
         <p>{t('settings.authenticated')}</p>
         <User key={i18n.language} />
-        <Stores />
         <button type="button" className="logoutBtn" onClick={logout}>
           {t('user.logout')}
         </button>
