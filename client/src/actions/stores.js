@@ -1,4 +1,4 @@
-import { FETCH_STORES, SET_ACTIVE_STORE, ACTIVE_STORE_KEY, getInitialActiveStoreId } from '../constants/stores';
+import { FETCH_STORES, SET_ACTIVE_STORE, ACTIVE_STORE_KEY } from '../constants/stores';
 import { fetchCategories } from './categories';
 
 export const setActiveStore = (storeId) => async (dispatch) => {
