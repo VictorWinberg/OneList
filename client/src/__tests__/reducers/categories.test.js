@@ -125,6 +125,12 @@ describe('categories reducer', () => {
     const actions = mockStore.getActions();
     const fetchAction = actions.find((a) => a.type === 'FETCH_CATEGORIES');
     expect(fetchAction).toBeDefined();
+    expect(fetch.mock.calls[0][0]).toBe('/__/categories_reorder');
+    expect(JSON.parse(fetch.mock.calls[0][1].body)).toEqual({
+      storeId: 1,
+      startIndex: 1,
+      endIndex: 2,
+    });
 
     expect(
       categories(
@@ -215,6 +221,7 @@ describe('categories reducer', () => {
     mockStore.dispatch(fetchCategories());
 
     setTimeout(() => {
+      expect(fetch.mock.calls[0][0]).toBe('/__/categories?storeId=1');
       expect(mockStore.getActions()).toEqual([
         {
           type: 'FETCH_CATEGORIES',

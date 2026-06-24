@@ -7,7 +7,8 @@ const state = {
     translations: {},
     options: {},
   },
-  categories: [{ id: 1, name: 'Dairy' }],
+  stores: { list: [{ id: 1, name: 'ICA' }], activeStoreId: 1 },
+  categories: [{ id: 1, name: 'Dairy', orderidx: 1 }],
   products: [
     { id: 1, name: 'Milk', category: 1, inactive: false, checked: false },
     { id: 2, name: 'Potatoes', inactive: false, checked: true },
