@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { fetchProducts } from '../../actions/products';
 import { fetchCategories } from '../../actions/categories';
+import { fetchStores } from '../../actions/stores';
 
 class FetchDB extends Component {
   constructor() {
@@ -13,10 +14,11 @@ class FetchDB extends Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    const { user, updateProducts, updateCategories } = nextProps;
+    const { user, updateProducts, updateCategories, updateStores } = nextProps;
     const { username } = user;
     const { user: prevUser } = this.props;
     this.update = () => {
+      updateStores();
       updateProducts();
       updateCategories();
     };
@@ -44,6 +46,7 @@ FetchDB.propTypes = {
   }).isRequired,
   updateProducts: PropTypes.func.isRequired,
   updateCategories: PropTypes.func.isRequired,
+  updateStores: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -53,6 +56,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   updateProducts: fetchProducts,
   updateCategories: fetchCategories,
+  updateStores: fetchStores,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FetchDB);

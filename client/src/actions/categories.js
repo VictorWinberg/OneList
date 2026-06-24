@@ -1,8 +1,13 @@
 import { REORDER_CATEGORY, FETCH_CATEGORIES } from '../constants/categories';
 
-export const fetchCategories = () => async (dispatch) => {
+export const fetchCategories = () => async (dispatch, getState) => {
+  const storeId = getState().stores.activeStoreId;
+  if (!storeId) return null;
+
   try {
-    const res = await fetch('/__/categories', { credentials: 'include' });
+    const res = await fetch(`/__/categories?storeId=${storeId}`, {
+      credentials: 'include',
+    });
     const categories = await res.json();
     return dispatch({ type: FETCH_CATEGORIES, categories });
   } catch (err) {
@@ -76,7 +81,10 @@ export const removeCategory = (id) => async (dispatch) => {
 
 export const reorderCategory =
   ({ startIndex, endIndex }) =>
-  async (dispatch) => {
+  async (dispatch, getState) => {
+    const storeId = getState().stores.activeStoreId;
+    if (!storeId) return null;
+
     dispatch({
       type: REORDER_CATEGORY,
       startIndex,
@@ -91,7 +99,7 @@ export const reorderCategory =
           'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify({ startIndex, endIndex }),
+        body: JSON.stringify({ storeId, startIndex, endIndex }),
       });
       return await dispatch(fetchCategories());
     } catch (err) {
