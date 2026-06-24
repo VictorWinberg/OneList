@@ -22,6 +22,16 @@
     "uncategorized": "Sin categoría",
     "nonexistent": "Falta categoría"
   },
+  "stores": {
+    "title": "Tiendas",
+    "description": "Cada tienda puede tener su propio orden de categorías.",
+    "label": "Tienda:",
+    "orderFor": "Ordenar categorías para:",
+    "orderingFor": "Arrastra para definir el orden de pasillos en {{store}}.",
+    "input": "Nueva tienda...",
+    "add": "Añadir tienda",
+    "none": "Aún no hay tiendas. Añade una en Configuración."
+  },
   "products": {
     "cart": "Carrito",
     "remove": "Listo",

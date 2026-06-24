@@ -22,6 +22,16 @@
     "uncategorized": "Uncategorized",
     "nonexistent": "Category missing"
   },
+  "stores": {
+    "title": "Stores",
+    "description": "Each store can have its own category aisle order.",
+    "label": "Store:",
+    "orderFor": "Order categories for:",
+    "orderingFor": "Drag to set aisle order for {{store}}.",
+    "input": "New store...",
+    "add": "Add store",
+    "none": "No stores yet. Add one in Settings."
+  },
   "products": {
     "cart": "Cart",
     "remove": "Done",
