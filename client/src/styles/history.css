@@ -2,6 +2,10 @@
 .history {
   padding: 0.5em;
   font-family: 'Quicksand', sans-serif;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .history h2 {
@@ -10,6 +14,8 @@
 
 .statistics-display {
   background-color: white;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .stats-section {
@@ -18,6 +24,9 @@
   padding: 1em;
   margin-bottom: 1em;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .stats-section h3 {
@@ -196,6 +205,128 @@
   font-style: italic;
 }
 
+/* Section group titles */
+.stats-group-title {
+  color: #333;
+  font-size: 1.25em;
+  margin: 1.5em 0 0.75em 0;
+  padding-bottom: 0.35em;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.adoption-cards {
+  margin-bottom: 0;
+}
+
+/* Shopping heatmap */
+.shopping-heatmap-wrapper {
+  position: relative;
+  margin-top: 0.5em;
+}
+
+.shopping-heatmap {
+  display: grid;
+  grid-template-columns: 48px repeat(24, minmax(8px, 1fr));
+  gap: 2px;
+  overflow-x: auto;
+  max-width: 100%;
+  min-width: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.heatmap-corner {
+  min-height: 20px;
+}
+
+.heatmap-hour-label {
+  font-size: 0.65em;
+  color: #888;
+  text-align: center;
+  min-height: 16px;
+}
+
+.heatmap-day-label {
+  font-size: 0.75em;
+  font-weight: 600;
+  color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 0.35em;
+}
+
+.heatmap-cell {
+  position: relative;
+  aspect-ratio: 1;
+  min-width: 12px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.heatmap-cell--hovered {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 2px #458fde;
+  z-index: 1;
+}
+
+.heatmap-tooltip {
+  position: absolute;
+  transform: translate(-50%, calc(-100% - 8px));
+  background: #333;
+  color: #fff;
+  font-size: 0.8em;
+  font-weight: 500;
+  padding: 0.4em 0.65em;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.heatmap-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #333;
+}
+
+.heatmap-tooltip--below {
+  transform: translate(-50%, 0);
+}
+
+.heatmap-tooltip--below::after {
+  top: auto;
+  bottom: 100%;
+  border-top-color: transparent;
+  border-bottom-color: #333;
+}
+
+.heatmap-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  margin-top: 0.75em;
+  font-size: 0.8em;
+  color: #666;
+}
+
+.heatmap-legend-gradient {
+  width: 120px;
+  height: 10px;
+  border-radius: 4px;
+  background: linear-gradient(to right, #f0f4f8, #458fde);
+}
+
+.abandoned-products-table td {
+  color: #555;
+}
+
 /* Responsive adjustments */
 @media (max-width: 600px) {
   .overview-cards {
@@ -250,6 +381,7 @@
 /* Restock Predictions Table */
 .stats-section--full-width {
   width: 100%;
+  max-width: 100%;
 }
 
 .restock-predictions-section {
@@ -258,9 +390,11 @@
 
 .restock-table-wrapper {
   overflow-x: auto;
+  max-width: 100%;
   margin-top: 0.5em;
   border-radius: 8px;
   border: 1px solid #e0e0e0;
+  -webkit-overflow-scrolling: touch;
 }
 
 .restock-predictions-table {
@@ -268,6 +402,14 @@
   border-collapse: collapse;
   background-color: white;
   font-size: 0.95em;
+}
+
+.restock-predictions-table:not(.abandoned-products-table) {
+  min-width: 36rem;
+}
+
+.abandoned-products-table {
+  table-layout: fixed;
 }
 
 .restock-predictions-table thead {
@@ -305,13 +447,23 @@
 }
 
 .restock-cell-product {
-  min-width: 160px;
+  min-width: 0;
+  max-width: 14rem;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.abandoned-products-table .restock-cell-product {
+  max-width: none;
+  width: 45%;
 }
 
 .restock-product-name {
   font-weight: 600;
   color: #333;
   margin-right: 0.5em;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .restock-cell-number {
@@ -347,9 +499,17 @@
     font-size: 0.85em;
   }
 
+  .restock-predictions-table:not(.abandoned-products-table) {
+    min-width: 32rem;
+  }
+
   .restock-predictions-table th,
   .restock-predictions-table td {
     padding: 0.65em 0.75em;
+  }
+
+  .restock-cell-product {
+    max-width: 10rem;
   }
 
   .prediction-date {
