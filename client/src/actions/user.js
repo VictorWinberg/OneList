@@ -26,6 +26,32 @@ export const fetchUser = () => (dispatch) => {
     .catch((err) => console.error(err));
 };
 
+export const persistUserStore = (store) => (dispatch, getState) => {
+  const { id } = getState().user;
+  if (!id) return Promise.resolve(null);
+
+  dispatch({ type: UPDATE_USER, key: 'store', value: store });
+
+  return fetch('/__/user', {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({ store }),
+  })
+    .then((response) => {
+      if (response.ok) return response.json();
+      throw response;
+    })
+    .then((user) => dispatch({ type: RECEIVE_USER, user }))
+    .catch((err) => {
+      console.error(err);
+      return dispatch(fetchUser());
+    });
+};
+
 export const toggleCollaboration = () => ({
   type: TOGGLE_COLLABORATION,
 });

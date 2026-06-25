@@ -6,6 +6,7 @@ CREATE TABLE users (
   email     VARCHAR(255)  NOT NULL,
   photo     VARCHAR(255)  NOT NULL,
   language  VARCHAR(255)  NOT NULL,
+  store     VARCHAR(255),
 
   PRIMARY KEY (email)
 );

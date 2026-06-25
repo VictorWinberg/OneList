@@ -13,6 +13,7 @@ const testUser = {
   email: 'johndoe@example.com',
   photo: 'https://johndoe.example.com/profile.png',
   language: 'en',
+  store: 'ICA',
 };
 
 describe('user reducer', () => {

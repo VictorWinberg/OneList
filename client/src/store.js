@@ -11,7 +11,6 @@ const store = createStore(
   reducers,
   composeWithDevTools(applyMiddleware(thunk))
 );
-store.dispatch(fetchUser());
-store.dispatch(fetchStores());
+store.dispatch(fetchUser()).then(() => store.dispatch(fetchStores()));
 
 export default store;

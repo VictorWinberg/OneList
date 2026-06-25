@@ -1,11 +1,7 @@
-import {
-  FETCH_STORES,
-  SET_ACTIVE_STORE,
-  getInitialActiveStoreId,
-} from '../constants/stores';
+import { FETCH_STORES, SET_ACTIVE_STORE } from '../constants/stores';
 
 const stores = (
-  state = { list: [], activeStoreId: getInitialActiveStoreId() },
+  state = { list: [], activeStoreId: null },
   action = {}
 ) => {
   switch (action.type) {

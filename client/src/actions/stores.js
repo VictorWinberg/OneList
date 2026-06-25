@@ -1,10 +1,30 @@
-import { FETCH_STORES, SET_ACTIVE_STORE, ACTIVE_STORE_KEY } from '../constants/stores';
+import { FETCH_STORES, SET_ACTIVE_STORE } from '../constants/stores';
 import { fetchCategories } from './categories';
+import { persistUserStore } from './user';
 
-export const setActiveStore = (storeId) => async (dispatch) => {
-  localStorage.setItem(ACTIVE_STORE_KEY, storeId);
+const resolveActiveStoreId = (stores, getState) => {
+  const { activeStoreId } = getState().stores;
+  const { store: userStoreName } = getState().user;
+
+  if (userStoreName) {
+    const match = stores.find(({ name }) => name === userStoreName);
+    if (match) return match.id;
+  }
+
+  const hasActive = stores.some(({ id }) => id === activeStoreId);
+  if (hasActive) return activeStoreId;
+
+  return stores[0]?.id ?? null;
+};
+
+export const setActiveStore = (storeId) => async (dispatch, getState) => {
+  const store = getState().stores.list.find(({ id }) => id === storeId);
   dispatch({ type: SET_ACTIVE_STORE, storeId });
-  return dispatch(fetchCategories());
+  await dispatch(fetchCategories());
+  if (store?.name) {
+    return dispatch(persistUserStore(store.name));
+  }
+  return dispatch(persistUserStore(null));
 };
 
 export const fetchStores = () => async (dispatch, getState) => {
@@ -14,8 +34,7 @@ export const fetchStores = () => async (dispatch, getState) => {
     dispatch({ type: FETCH_STORES, stores });
 
     const { activeStoreId } = getState().stores;
-    const hasActive = stores.some(({ id }) => id === activeStoreId);
-    const nextStoreId = hasActive ? activeStoreId : stores[0]?.id ?? null;
+    const nextStoreId = resolveActiveStoreId(stores, getState);
 
     if (nextStoreId && nextStoreId !== activeStoreId) {
       return dispatch(setActiveStore(nextStoreId));
@@ -84,7 +103,6 @@ export const removeStore = (id) => async (dispatch, getState) => {
     });
     const { activeStoreId } = getState().stores;
     if (activeStoreId === id) {
-      localStorage.removeItem(ACTIVE_STORE_KEY);
       dispatch({ type: SET_ACTIVE_STORE, storeId: null });
     }
     return dispatch(fetchStores());

@@ -13,7 +13,6 @@ import { FETCH_STORES, SET_ACTIVE_STORE } from '../../constants/stores';
 describe('stores reducer', () => {
   beforeEach(() => {
     fetch.resetMocks();
-    localStorage.clear();
   });
 
   it('has a default state', () => {
@@ -48,17 +47,18 @@ describe('stores reducer', () => {
 describe('stores actions', () => {
   beforeEach(() => {
     fetch.resetMocks();
-    localStorage.clear();
   });
 
-  it('can fetch stores and set active store', async () => {
+  it('can fetch stores and set active store from user.store', async () => {
     const mockStore = configureStore([thunk])({
+      user: { id: 1, store: 'ICA' },
       stores: { list: [], activeStoreId: null },
     });
     fetch.mockResponseOnce(JSON.stringify([{ id: 1, name: 'ICA' }]));
     fetch.mockResponseOnce(
       JSON.stringify([{ id: 1, name: 'Dairy', orderidx: 1 }])
     );
+    fetch.mockResponseOnce(JSON.stringify({ id: 1, store: 'ICA' }));
 
     await mockStore.dispatch(fetchStores());
     await new Promise((resolve) => {
@@ -74,14 +74,16 @@ describe('stores actions', () => {
       type: SET_ACTIVE_STORE,
       storeId: 1,
     });
-    expect(localStorage.getItem('activeStoreId')).toBe('1');
+    expect(fetch.mock.calls.some(([url]) => url === '/__/user')).toBe(true);
   });
 
   it('can add a store', async () => {
     const mockStore = makeStore();
-    fetch.mockResponseOnce('{}', { status: 200 });
-    fetch.mockResponseOnce(JSON.stringify([{ id: 1, name: 'Coop' }]));
+    fetch.mockResponseOnce(JSON.stringify({ id: 2, name: 'Coop' }));
+    fetch.mockResponseOnce(JSON.stringify([{ id: 1, name: 'ICA' }, { id: 2, name: 'Coop' }]));
     fetch.mockResponseOnce(JSON.stringify([]));
+    fetch.mockResponseOnce(JSON.stringify([]));
+    fetch.mockResponseOnce(JSON.stringify({ id: 1, store: 'Coop' }));
 
     await mockStore.dispatch(addStore({ name: 'Coop' }));
     await new Promise((resolve) => {
@@ -97,6 +99,7 @@ describe('stores actions', () => {
     fetch.mockResponseOnce(
       JSON.stringify([{ id: 1, name: 'Dairy', orderidx: 1 }])
     );
+    fetch.mockResponseOnce(JSON.stringify({ id: 1, store: 'ICA' }));
 
     await mockStore.dispatch(setActiveStore(1));
     await new Promise((resolve) => {
@@ -104,7 +107,8 @@ describe('stores actions', () => {
     });
 
     expect(fetch.mock.calls[0][0]).toBe('/__/categories?storeId=1');
-    expect(localStorage.getItem('activeStoreId')).toBe('1');
+    expect(fetch.mock.calls[1][0]).toBe('/__/user');
+    expect(JSON.parse(fetch.mock.calls[1][1].body)).toEqual({ store: 'ICA' });
   });
 
   it('can remove a store', async () => {
