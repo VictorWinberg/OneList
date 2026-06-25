@@ -78,6 +78,11 @@ class StoreSelect extends Component {
             value={store || ''}
             onChange={this.handleSelectChange}
           >
+            {!store && (
+              <option value="" disabled>
+                {t('stores.selectPlaceholder')}
+              </option>
+            )}
             {stores.map(({ id, name }) => (
               <option key={id} value={name}>
                 {name}

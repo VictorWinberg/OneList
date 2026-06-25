@@ -26,6 +26,7 @@
     "title": "Butiker",
     "description": "Varje butik kan ha sin egen ordning på kategorierna.",
     "label": "Butik:",
+    "selectPlaceholder": "Välj butik...",
     "orderFor": "Ordna kategorier för:",
     "input": "Ny butik...",
     "createNew": "Skapa ny butik...",
