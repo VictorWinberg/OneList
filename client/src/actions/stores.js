@@ -53,36 +53,3 @@ export const addStore =
       return null;
     }
   };
-
-export const editStore =
-  ({ id, name }) =>
-  async (dispatch) => {
-    try {
-      await fetch(`/__/stores/${id}`, {
-        method: 'PUT',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({ name }),
-      });
-      return dispatch(fetchStores());
-    } catch (err) {
-      console.error(err);
-      return null;
-    }
-  };
-
-export const removeStore = (id) => async (dispatch) => {
-  try {
-    await fetch(`/__/stores/${id}`, {
-      method: 'DELETE',
-      credentials: 'include',
-    });
-    return dispatch(fetchStores());
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
-};

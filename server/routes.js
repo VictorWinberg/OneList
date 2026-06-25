@@ -112,20 +112,6 @@ module.exports = (app, passport, db) => {
     });
   });
 
-  app.put('/__/stores/:id', isLoggedIn, (req, res) => {
-    db.Store.update(req.params.id, req.body, (err, store) => {
-      if (err) return res.status(400).send(err);
-      return res.send(store);
-    });
-  });
-
-  app.delete('/__/stores/:id', isLoggedIn, (req, res) => {
-    db.Store.delete(req.params.id, (err) => {
-      if (err) return res.status(400).send(err.message || err);
-      return res.sendStatus(204);
-    });
-  });
-
   app.get('/__/categories', isLoggedIn, (req, res) => {
     const storeId = req.query.storeId;
     if (!storeId) {

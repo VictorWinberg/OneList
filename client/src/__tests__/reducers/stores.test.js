@@ -4,7 +4,6 @@ import {
   fetchStores,
   setActiveStore,
   addStore,
-  removeStore,
 } from '../../actions/stores';
 import { FETCH_STORES } from '../../constants/stores';
 import { FETCH_CATEGORIES } from '../../constants/categories';
@@ -99,19 +98,5 @@ describe('stores actions', () => {
       key: 'store',
       value: 'ICA',
     });
-  });
-
-  it('can remove a store', async () => {
-    const mockStore = makeStore();
-    fetch.mockResponseOnce('{}', { status: 204 });
-    fetch.mockResponseOnce(JSON.stringify([]));
-
-    await mockStore.dispatch(removeStore(1));
-    await new Promise((resolve) => {
-      setTimeout(resolve, 100);
-    });
-
-    expect(fetch.mock.calls[0][0]).toBe('/__/stores/1');
-    expect(fetch.mock.calls[0][1].method).toBe('DELETE');
   });
 });
