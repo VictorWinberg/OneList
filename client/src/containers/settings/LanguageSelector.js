@@ -19,11 +19,8 @@ const LanguageSelector = ({ update }) => {
   };
 
   return (
-    <div key={i18n.language}>
-      <label htmlFor="land">
-        <span>{t('settings.language')}</span>
-        <input name="lang" type="hidden" />
-      </label>
+    <label htmlFor="language" key={i18n.language}>
+      <span>{t('settings.language')}</span>
       <select id="language" value={i18n.language} onChange={handleChange}>
         {languages.map((language) => (
           <option key={language.code} value={language.code}>
@@ -31,7 +28,7 @@ const LanguageSelector = ({ update }) => {
           </option>
         ))}
       </select>
-    </div>
+    </label>
   );
 };
 

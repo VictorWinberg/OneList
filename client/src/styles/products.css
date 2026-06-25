@@ -21,8 +21,7 @@
 }
 
 .product label span,
-.category label span,
-.settings label span {
+.category label span {
   font-family: 'Quicksand', sans-serif;
   font-size: 20px;
   width: 120px;
@@ -35,8 +34,6 @@
 .product input,
 .product select,
 .category input,
-.settings input,
-.settings select,
 #color-btn {
   font-size: 16px;
   padding: 0.5em 0;
@@ -59,14 +56,12 @@
 
 .product input,
 .category input,
-.settings input,
 #color-btn {
   width: calc(100% - 120px - 2em);
   text-indent: 0.3em;
 }
 
 .product select,
-.settings select,
 #color-btn {
   width: calc(100% - 120px - 1.89em);
   cursor: pointer;
