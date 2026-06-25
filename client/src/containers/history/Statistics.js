@@ -11,8 +11,6 @@ import {
   ResponsiveContainer,
   BarChart,
   Bar,
-  PieChart,
-  Pie,
   Cell,
   Legend,
   AreaChart,
@@ -35,8 +33,16 @@ const COLORS = [
 
 const formatDate = (dateStr) => {
   if (!dateStr) return '-';
+  const isoDate = String(dateStr).slice(0, 10);
+  if (/^\d{4}-\d{2}-\d{2}$/.test(isoDate)) {
+    return isoDate;
+  }
   const date = new Date(dateStr);
-  return date.toLocaleDateString();
+  if (Number.isNaN(date.getTime())) return '-';
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 };
 
 // Helper function to format month using translations
@@ -274,199 +280,6 @@ ProductPurchaseBarChart.propTypes = {
   ).isRequired,
 };
 
-// Helper function for product pie chart tooltip
-const formatProductTooltip = (total) => (value, name, tooltipProps) => {
-  const productName = tooltipProps?.payload?.name || name || '';
-  return [`${value} (${((value / total) * 100).toFixed(1)}%)`, productName];
-};
-
-const ProductPurchasePieChart = ({ data }) => {
-  const { t } = useTranslation();
-  if (!data || data.length === 0) {
-    return null;
-  }
-
-  const total = data.reduce((sum, item) => sum + item.count, 0);
-  const topItems = data.slice(0, 8);
-  const othersCount = data.slice(8).reduce((sum, item) => sum + item.count, 0);
-
-  const chartData =
-    othersCount > 0
-      ? [...topItems, { name: t('history.others'), count: othersCount }]
-      : topItems;
-
-  return (
-    <div className="stats-section chart-section">
-      <h3>{t('history.productPieChart')}</h3>
-      <div className="chart-container">
-        <ResponsiveContainer width="100%" height={300}>
-          <PieChart>
-            <Pie
-              data={chartData}
-              cx="50%"
-              cy="50%"
-              labelLine={false}
-              outerRadius={100}
-              dataKey="count"
-              nameKey="name"
-            >
-              {chartData.map((entry, index) => (
-                <Cell
-                  key={`cell-${entry.name}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
-            </Pie>
-            <Tooltip formatter={formatProductTooltip(total)} />
-          </PieChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
-  );
-};
-
-ProductPurchasePieChart.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      count: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-};
-
-const ProductTrendChart = ({ data, monthlyPurchases }) => {
-  const { t } = useTranslation();
-  if (!data || data.length === 0) {
-    return null;
-  }
-
-  const months = monthlyPurchases.map((m) => m.month).sort();
-  const products = [...new Set(data.map((d) => d.product))];
-
-  const chartData = months.map((month) => {
-    const point = { month, name: formatMonthWithTranslation(month, t) };
-    products.forEach((product) => {
-      const found = data.find(
-        (d) => d.product === product && d.month === month
-      );
-      point[product] = found ? found.count : 0;
-    });
-    return point;
-  });
-
-  return (
-    <div className="stats-section chart-section">
-      <h3>{t('history.productTrendChart')}</h3>
-      <div className="chart-container">
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart
-            data={chartData}
-            margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
-            <XAxis
-              dataKey="name"
-              tick={{ fontSize: 10 }}
-              angle={-45}
-              textAnchor="end"
-              height={60}
-            />
-            <YAxis tick={{ fontSize: 11 }} width={40} />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: '#fff',
-                border: '1px solid #ccc',
-                borderRadius: '4px',
-              }}
-            />
-            <Legend wrapperStyle={{ fontSize: '11px' }} />
-            {products.map((product, index) => (
-              <Line
-                key={product}
-                type="monotone"
-                dataKey={product}
-                stroke={COLORS[index % COLORS.length]}
-                strokeWidth={2}
-                dot={{ r: 3 }}
-              />
-            ))}
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
-  );
-};
-
-ProductTrendChart.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      product: PropTypes.string.isRequired,
-      month: PropTypes.string.isRequired,
-      count: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-  monthlyPurchases: PropTypes.arrayOf(
-    PropTypes.shape({
-      month: PropTypes.string.isRequired,
-      count: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-};
-
-// Helper function for category distribution chart tooltip
-const formatCategoryTooltip = (total) => (value, name, tooltipProps) => {
-  const categoryName = tooltipProps?.payload?.name || name || '';
-  return [`${value} (${((value / total) * 100).toFixed(1)}%)`, categoryName];
-};
-
-const CategoryDistributionChart = ({ data }) => {
-  const { t } = useTranslation();
-  if (!data || data.length === 0) {
-    return null;
-  }
-
-  const total = data.reduce((sum, item) => sum + item.count, 0);
-
-  return (
-    <div className="stats-section chart-section">
-      <h3>{t('history.categoryDistribution')}</h3>
-      <div className="chart-container">
-        <ResponsiveContainer width="100%" height={250}>
-          <PieChart>
-            <Pie
-              data={data}
-              cx="50%"
-              cy="50%"
-              innerRadius={50}
-              outerRadius={80}
-              dataKey="count"
-              nameKey="name"
-              labelLine={false}
-            >
-              {data.map((entry, index) => (
-                <Cell
-                  key={`cell-${entry.name}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
-            </Pie>
-            <Tooltip formatter={formatCategoryTooltip(total)} />
-          </PieChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
-  );
-};
-
-CategoryDistributionChart.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      count: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-};
-
 const DayOfWeekChart = ({ data }) => {
   const { t } = useTranslation();
   if (!data || data.length === 0) {
@@ -618,86 +431,6 @@ DayOfMonthChart.propTypes = {
   ).isRequired,
 };
 
-const PurchaseHeatmap = ({ data }) => {
-  const { t } = useTranslation();
-  if (!data || data.length === 0) {
-    return null;
-  }
-
-  const maxCount = Math.max(...data.map((d) => d.count));
-  const weeks = [];
-  let currentWeek = [];
-  const sortedData = [...data].sort(
-    (a, b) => new Date(a.date) - new Date(b.date)
-  );
-
-  sortedData.forEach((d) => {
-    const date = new Date(d.date);
-    const dayOfWeek = date.getDay();
-
-    if (dayOfWeek === 0 && currentWeek.length > 0) {
-      weeks.push(currentWeek);
-      currentWeek = [];
-    }
-    currentWeek.push(d);
-  });
-  if (currentWeek.length > 0) {
-    weeks.push(currentWeek);
-  }
-
-  const getColor = (count) => {
-    if (count === 0) return '#ebedf0';
-    const intensity = count / maxCount;
-    if (intensity > 0.75) return '#216e39';
-    if (intensity > 0.5) return '#30a14e';
-    if (intensity > 0.25) return '#40c463';
-    return '#9be9a8';
-  };
-
-  return (
-    <div className="stats-section chart-section">
-      <h3>{t('history.purchaseHeatmap')}</h3>
-      <div className="heatmap-container">
-        <div className="heatmap-grid">
-          {weeks.slice(-13).map((week, weekIndex) => (
-            <div
-              key={`week-${week[0]?.date || weekIndex}`}
-              className="heatmap-week"
-            >
-              {week.map((d) => (
-                <div
-                  key={d.date}
-                  className="heatmap-day"
-                  style={{ backgroundColor: getColor(d.count) }}
-                  title={`${d.date}: ${d.count} purchases`}
-                />
-              ))}
-            </div>
-          ))}
-        </div>
-        <div className="heatmap-legend">
-          <span>{t('history.less')}</span>
-          <div className="heatmap-day" style={{ backgroundColor: '#ebedf0' }} />
-          <div className="heatmap-day" style={{ backgroundColor: '#9be9a8' }} />
-          <div className="heatmap-day" style={{ backgroundColor: '#40c463' }} />
-          <div className="heatmap-day" style={{ backgroundColor: '#30a14e' }} />
-          <div className="heatmap-day" style={{ backgroundColor: '#216e39' }} />
-          <span>{t('history.more')}</span>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-PurchaseHeatmap.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      date: PropTypes.string.isRequired,
-      count: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-};
-
 const MonthComparisonChart = ({ data }) => {
   const { t } = useTranslation();
 
@@ -796,52 +529,6 @@ MonthComparisonChart.propTypes = {
   }).isRequired,
 };
 
-const FrequencyDistributionChart = ({ data }) => {
-  const { t } = useTranslation();
-  if (!data || data.length === 0) {
-    return null;
-  }
-
-  return (
-    <div className="stats-section chart-section">
-      <h3>{t('history.frequencyDistribution')}</h3>
-      <p className="chart-description">
-        {t('history.frequencyDistributionDesc')}
-      </p>
-      <div className="chart-container">
-        <ResponsiveContainer width="100%" height={250}>
-          <BarChart
-            data={data}
-            margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
-            <XAxis dataKey="bucket" tick={{ fontSize: 11 }} />
-            <YAxis tick={{ fontSize: 11 }} width={40} />
-            <Tooltip
-              formatter={(value) => [value, t('history.purchases')]}
-              contentStyle={{
-                backgroundColor: '#fff',
-                border: '1px solid #ccc',
-                borderRadius: '4px',
-              }}
-            />
-            <Bar dataKey="count" fill="#458fde" radius={[4, 4, 0, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
-  );
-};
-
-FrequencyDistributionChart.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      bucket: PropTypes.string.isRequired,
-      count: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-};
-
 const ProductFrequencyChart = ({ data }) => {
   const { t } = useTranslation();
   if (!data || data.length === 0) {
@@ -899,71 +586,6 @@ ProductFrequencyChart.propTypes = {
       name: PropTypes.string.isRequired,
       avgDays: PropTypes.number.isRequired,
       count: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-};
-
-const IntervalTrendChart = ({ data }) => {
-  const { t } = useTranslation();
-  if (!data || data.length === 0) {
-    return null;
-  }
-
-  const chartData = data.map((item) => ({
-    ...item,
-    name: formatMonthWithTranslation(item.month, t),
-  }));
-
-  return (
-    <div className="stats-section chart-section">
-      <h3>{t('history.intervalTrend')}</h3>
-      <p className="chart-description">{t('history.intervalTrendDesc')}</p>
-      <div className="chart-container">
-        <ResponsiveContainer width="100%" height={250}>
-          <LineChart
-            data={chartData}
-            margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
-            <XAxis
-              dataKey="name"
-              tick={{ fontSize: 11 }}
-              angle={-45}
-              textAnchor="end"
-              height={60}
-            />
-            <YAxis tick={{ fontSize: 11 }} width={40} />
-            <Tooltip
-              formatter={(value) => [
-                `${value} ${t('history.days')}`,
-                t('history.avgDays'),
-              ]}
-              contentStyle={{
-                backgroundColor: '#fff',
-                border: '1px solid #ccc',
-                borderRadius: '4px',
-              }}
-            />
-            <Line
-              type="monotone"
-              dataKey="avgDays"
-              stroke="#ffc658"
-              strokeWidth={2}
-              dot={{ r: 4 }}
-              activeDot={{ r: 6 }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
-  );
-};
-
-IntervalTrendChart.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      month: PropTypes.string.isRequired,
-      avgDays: PropTypes.number.isRequired,
     })
   ).isRequired,
 };
@@ -1185,141 +807,6 @@ SeasonalTrendsChart.propTypes = {
   ).isRequired,
 };
 
-const CategoryFrequencyChart = ({ data }) => {
-  const { t } = useTranslation();
-  if (!data || data.length === 0) {
-    return null;
-  }
-
-  const chartData = data.map((item) => ({
-    name: item.name,
-    avgDaysBetween: parseFloat(item.avgDaysBetween),
-    purchaseCount: item.purchaseCount,
-  }));
-
-  return (
-    <div className="stats-section chart-section">
-      <h3>{t('history.categoryFrequency')}</h3>
-      <p className="chart-description">{t('history.categoryFrequencyDesc')}</p>
-      <div className="chart-container">
-        <ResponsiveContainer width="100%" height={250}>
-          <BarChart
-            data={chartData}
-            layout="vertical"
-            margin={{ top: 5, right: 30, left: 100, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
-            <XAxis type="number" tick={{ fontSize: 11 }} />
-            <YAxis
-              type="category"
-              dataKey="name"
-              tick={{ fontSize: 11 }}
-              width={95}
-            />
-            <Tooltip
-              formatter={(value) => [
-                `${value} ${t('history.days')}`,
-                t('history.avgDays'),
-              ]}
-              contentStyle={{
-                backgroundColor: '#fff',
-                border: '1px solid #ccc',
-                borderRadius: '4px',
-              }}
-            />
-            <Bar
-              dataKey="avgDaysBetween"
-              fill="#00C49F"
-              radius={[0, 4, 4, 0]}
-            />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
-  );
-};
-
-CategoryFrequencyChart.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      avgDaysBetween: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-        .isRequired,
-      purchaseCount: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-};
-
-const ProductLifecycleChart = ({ data }) => {
-  const { t } = useTranslation();
-  if (!data || data.length === 0) {
-    return null;
-  }
-
-  const chartData = data.slice(0, 10).map((item) => ({
-    name: item.name.length > 20 ? `${item.name.slice(0, 20)}...` : item.name,
-    fullName: item.name,
-    daysActive: item.daysActive,
-    count: item.count,
-    firstPurchase: formatDate(item.firstPurchase),
-    lastPurchase: formatDate(item.lastPurchase),
-  }));
-
-  return (
-    <div className="stats-section chart-section">
-      <h3>{t('history.productLifecycle')}</h3>
-      <p className="chart-description">{t('history.productLifecycleDesc')}</p>
-      <div className="chart-container">
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart
-            data={chartData}
-            layout="vertical"
-            margin={{ top: 5, right: 30, left: 100, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
-            <XAxis type="number" tick={{ fontSize: 11 }} />
-            <YAxis
-              type="category"
-              dataKey="name"
-              tick={{ fontSize: 10 }}
-              width={95}
-            />
-            <Tooltip
-              formatter={(value, name) => {
-                if (name === 'daysActive') {
-                  return [
-                    `${value} ${t('history.days')}`,
-                    t('history.daysActive'),
-                  ];
-                }
-                return [value, t('history.purchases')];
-              }}
-              contentStyle={{
-                backgroundColor: '#fff',
-                border: '1px solid #ccc',
-                borderRadius: '4px',
-              }}
-            />
-            <Bar dataKey="daysActive" fill="#FF8042" radius={[0, 4, 4, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
-  );
-};
-
-ProductLifecycleChart.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      firstPurchase: PropTypes.string.isRequired,
-      lastPurchase: PropTypes.string.isRequired,
-      daysActive: PropTypes.number.isRequired,
-      count: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-};
-
 const PurchaseVelocityChart = ({ data }) => {
   const { t } = useTranslation();
   if (!data || data.length === 0) {
@@ -1398,55 +885,6 @@ PurchaseVelocityChart.propTypes = {
   ).isRequired,
 };
 
-const IntervalsSummary = ({ data }) => {
-  const { t } = useTranslation();
-  if (
-    !data ||
-    Object.keys(data).length === 0 ||
-    data.min === null ||
-    data.min === undefined
-  ) {
-    return null;
-  }
-
-  const stats = [
-    { label: t('history.min'), value: data.min || 0, color: '#ff7c7c' },
-    { label: t('history.q1'), value: data.q1 || 0, color: '#ffc658' },
-    { label: t('history.median'), value: data.median || 0, color: '#458fde' },
-    { label: t('history.q3'), value: data.q3 || 0, color: '#ffc658' },
-    { label: t('history.max'), value: data.max || 0, color: '#ff7c7c' },
-    { label: t('history.avg'), value: data.avg || 0, color: '#82ca9d' },
-  ];
-
-  return (
-    <div className="stats-section">
-      <h3>{t('history.intervalsSummary')}</h3>
-      <p className="chart-description">{t('history.intervalsSummaryDesc')}</p>
-      <div className="intervals-summary-grid">
-        {stats.map((stat) => (
-          <div key={stat.label} className="interval-stat-card">
-            <span className="interval-stat-label">{stat.label}</span>
-            <span className="interval-stat-value" style={{ color: stat.color }}>
-              {stat.value} {t('history.days')}
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-IntervalsSummary.propTypes = {
-  data: PropTypes.shape({
-    min: PropTypes.number,
-    max: PropTypes.number,
-    avg: PropTypes.number,
-    q1: PropTypes.number,
-    median: PropTypes.number,
-    q3: PropTypes.number,
-  }).isRequired,
-};
-
 const MostBoughtList = ({ data, dateRange }) => {
   const { t } = useTranslation();
   if (!data || data.length === 0) {
@@ -1502,44 +940,91 @@ const ProductRestockPredictions = ({ data }) => {
     }
   };
 
-  const getStatusLabel = (status) => {
+  const getDaysUntilRestock = (predictedRestockDate) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const predicted = new Date(predictedRestockDate);
+    predicted.setHours(0, 0, 0, 0);
+    return Math.round((predicted - today) / (1000 * 60 * 60 * 24));
+  };
+
+  const getStatusLabel = (status, daysUntil) => {
+    if (daysUntil === 0) {
+      switch (status) {
+        case 'overdue':
+          return t('history.statusOverdueToday');
+        case 'soon':
+          return t('history.statusSoonToday');
+        default:
+          return t('history.statusUpcomingToday');
+      }
+    }
+
     switch (status) {
       case 'overdue':
-        return t('history.statusOverdue');
+        return t('history.statusOverdueDays', { days: daysUntil });
       case 'soon':
-        return t('history.statusSoon');
+        return t('history.statusSoonDays', { days: daysUntil });
       default:
-        return t('history.statusUpcoming');
+        return t('history.statusUpcomingDays', { days: daysUntil });
     }
   };
 
   return (
-    <div className="stats-section">
+    <div className="stats-section stats-section--full-width restock-predictions-section">
       <h3>{t('history.productRestockPredictions')}</h3>
       <p className="chart-description">
         {t('history.productRestockPredictionsDesc')}
       </p>
-      <div className="restock-predictions-list">
-        {data.slice(0, 10).map((item) => (
-          <div key={item.name} className="restock-prediction-item">
-            <div className="restock-item-name">{item.name}</div>
-            <div className="restock-item-details">
-              <span className="restock-item-date">
-                {formatDate(item.predictedRestockDate)}
-              </span>
-              <span
-                className="restock-item-status"
-                style={{ color: getStatusColor(item.status) }}
+      <div className="restock-table-wrapper">
+        <table className="restock-predictions-table">
+          <thead>
+            <tr>
+              <th>{t('history.restockColumnProduct')}</th>
+              <th>{t('history.lastPurchase')}</th>
+              <th>{t('history.predictedRestockDate')}</th>
+              <th>{t('history.status')}</th>
+              <th>{t('history.restockColumnTimesBought')}</th>
+              <th>{t('history.restockColumnAvgInterval')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((item) => (
+              <tr
+                key={item.name}
+                className={
+                  item.highlighted ? 'restock-row--frequent' : undefined
+                }
               >
-                {getStatusLabel(item.status)}
-              </span>
-            </div>
-            <div className="restock-item-meta">
-              {t('history.lastPurchase')}: {formatDate(item.lastPurchase)} •{' '}
-              {item.avgDays} {t('history.days')} avg
-            </div>
-          </div>
-        ))}
+                <td className="restock-cell-product">
+                  <span className="restock-product-name">{item.name}</span>
+                  {item.highlighted && (
+                    <span className="restock-frequent-badge">
+                      {t('history.restockFrequentBuy')}
+                    </span>
+                  )}
+                </td>
+                <td>{formatDate(item.lastPurchase)}</td>
+                <td>{formatDate(item.predictedRestockDate)}</td>
+                <td>
+                  <span
+                    className="restock-status-pill"
+                    style={{ color: getStatusColor(item.status) }}
+                  >
+                    {getStatusLabel(
+                      item.status,
+                      getDaysUntilRestock(item.predictedRestockDate)
+                    )}
+                  </span>
+                </td>
+                <td className="restock-cell-number">{item.purchaseCount}</td>
+                <td className="restock-cell-number">
+                  {t('history.restockEveryDays', { days: item.avgDays })}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
@@ -1554,294 +1039,9 @@ ProductRestockPredictions.propTypes = {
       predictedRestockDate: PropTypes.string.isRequired,
       status: PropTypes.string.isRequired,
       purchaseCount: PropTypes.number.isRequired,
+      highlighted: PropTypes.bool,
     })
   ).isRequired,
-};
-
-const ShoppingBasketAnalysis = ({ data }) => {
-  const { t } = useTranslation();
-  if (!data || data.length === 0) {
-    return null;
-  }
-
-  const truncateName = (name, maxLength = 20) => {
-    if (name.length <= maxLength) return name;
-    return `${name.slice(0, maxLength)}...`;
-  };
-
-  const chartData = data.slice(0, 12).map((item) => {
-    const fullName = `${item.product1} + ${item.product2}`;
-    return {
-      name: truncateName(fullName, 25),
-      fullName,
-      count: item.coOccurrenceCount,
-    };
-  });
-
-  return (
-    <div className="stats-section chart-section">
-      <h3>{t('history.shoppingBaskets')}</h3>
-      <p className="chart-description">{t('history.shoppingBasketsDesc')}</p>
-      <div className="chart-container">
-        <ResponsiveContainer width="100%" height={350}>
-          <BarChart
-            data={chartData}
-            layout="vertical"
-            margin={{ top: 5, right: 30, left: 120, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
-            <XAxis type="number" tick={{ fontSize: 11 }} />
-            <YAxis
-              type="category"
-              dataKey="name"
-              tick={{ fontSize: 9 }}
-              width={115}
-              angle={0}
-            />
-            <Tooltip
-              formatter={(value, _name, { payload }) => [
-                value,
-                payload.fullName,
-              ]}
-              contentStyle={{
-                backgroundColor: '#fff',
-                border: '1px solid #ccc',
-                borderRadius: '4px',
-              }}
-            />
-            <Bar dataKey="count" fill="#8884d8" radius={[0, 4, 4, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
-  );
-};
-
-ShoppingBasketAnalysis.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      product1: PropTypes.string.isRequired,
-      product2: PropTypes.string.isRequired,
-      coOccurrenceCount: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-};
-
-const PurchaseClustersChart = ({ data }) => {
-  const { t } = useTranslation();
-  if (!data || data.length === 0) {
-    return null;
-  }
-
-  const chartData = data.slice(0, 10).map((item) => ({
-    name: `${formatDate(item.clusterStart)} - ${formatDate(item.clusterEnd)}`,
-    fullName: `${formatDate(item.clusterStart)} - ${formatDate(
-      item.clusterEnd
-    )}`,
-    totalItems: item.totalItems,
-    uniqueProducts: item.uniqueProducts,
-    daysInCluster: item.daysInCluster,
-  }));
-
-  return (
-    <div className="stats-section chart-section">
-      <h3>{t('history.purchaseClusters')}</h3>
-      <p className="chart-description">{t('history.purchaseClustersDesc')}</p>
-      <div className="chart-container">
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart
-            data={chartData}
-            layout="vertical"
-            margin={{ top: 5, right: 30, left: 120, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
-            <XAxis type="number" tick={{ fontSize: 11 }} />
-            <YAxis
-              type="category"
-              dataKey="name"
-              tick={{ fontSize: 9 }}
-              width={115}
-            />
-            <Tooltip
-              formatter={(value, name) => {
-                if (name === 'totalItems') {
-                  return [value, t('history.totalItems')];
-                }
-                if (name === 'uniqueProducts') {
-                  return [value, t('history.uniqueProducts')];
-                }
-                return [value, t('history.daysInCluster')];
-              }}
-              contentStyle={{
-                backgroundColor: '#fff',
-                border: '1px solid #ccc',
-                borderRadius: '4px',
-              }}
-            />
-            <Legend wrapperStyle={{ fontSize: '11px' }} />
-            <Bar
-              dataKey="totalItems"
-              fill="#458fde"
-              name={t('history.totalItems')}
-            />
-            <Bar
-              dataKey="uniqueProducts"
-              fill="#82ca9d"
-              name={t('history.uniqueProducts')}
-            />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
-  );
-};
-
-PurchaseClustersChart.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      clusterId: PropTypes.number.isRequired,
-      clusterStart: PropTypes.string.isRequired,
-      clusterEnd: PropTypes.string.isRequired,
-      daysInCluster: PropTypes.number.isRequired,
-      uniqueProducts: PropTypes.number.isRequired,
-      totalItems: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-};
-
-const PurchaseAnomalies = ({ data }) => {
-  const { t } = useTranslation();
-  if (!data || data.length === 0) {
-    return null;
-  }
-
-  const getAnomalyLabel = (type) => {
-    switch (type) {
-      case 'high_volume':
-        return t('history.anomalyHighVolume');
-      case 'low_volume':
-        return t('history.anomalyLowVolume');
-      case 'high_diversity':
-        return t('history.anomalyHighDiversity');
-      default:
-        return 'Normal';
-    }
-  };
-
-  const getAnomalyColor = (type) => {
-    switch (type) {
-      case 'high_volume':
-        return '#82ca9d';
-      case 'low_volume':
-        return '#ffc658';
-      case 'high_diversity':
-        return '#8884d8';
-      default:
-        return '#458fde';
-    }
-  };
-
-  return (
-    <div className="stats-section">
-      <h3>{t('history.purchaseAnomalies')}</h3>
-      <p className="chart-description">{t('history.purchaseAnomaliesDesc')}</p>
-      <div className="anomalies-list">
-        {data.map((item) => (
-          <div key={item.date} className="anomaly-item">
-            <div className="anomaly-date">{formatDate(item.date)}</div>
-            <div className="anomaly-details">
-              <span
-                className="anomaly-type"
-                style={{ color: getAnomalyColor(item.anomalyType) }}
-              >
-                {getAnomalyLabel(item.anomalyType)}
-              </span>
-              <span className="anomaly-stats">
-                {item.itemCount} {t('history.purchases')} •{' '}
-                {item.uniqueProducts} {t('history.uniqueProducts')}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-PurchaseAnomalies.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      date: PropTypes.string.isRequired,
-      itemCount: PropTypes.number.isRequired,
-      uniqueProducts: PropTypes.number.isRequired,
-      anomalyType: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-};
-
-const ShoppingEfficiencyMetrics = ({ data }) => {
-  const { t } = useTranslation();
-  if (!data || Object.keys(data).length === 0) {
-    return null;
-  }
-
-  const metrics = [
-    {
-      label: t('history.avgItemsPerTrip'),
-      value: data.avgItemsPerTrip || 0,
-      color: '#458fde',
-    },
-    {
-      label: t('history.avgProductsPerTrip'),
-      value: data.avgProductsPerTrip || 0,
-      color: '#82ca9d',
-    },
-    {
-      label: t('history.avgCategoriesPerTrip'),
-      value: data.avgCategoriesPerTrip || 0,
-      color: '#ffc658',
-    },
-    {
-      label: t('history.maxItemsSingleTrip'),
-      value: data.maxItemsSingleTrip || 0,
-      color: '#ff7c7c',
-    },
-    {
-      label: t('history.totalShoppingTrips'),
-      value: data.totalShoppingTrips || 0,
-      color: '#8884d8',
-    },
-  ];
-
-  return (
-    <div className="stats-section">
-      <h3>{t('history.shoppingEfficiency')}</h3>
-      <p className="chart-description">{t('history.shoppingEfficiencyDesc')}</p>
-      <div className="efficiency-metrics-grid">
-        {metrics.map((metric) => (
-          <div key={metric.label} className="efficiency-metric-card">
-            <span className="efficiency-metric-label">{metric.label}</span>
-            <span
-              className="efficiency-metric-value"
-              style={{ color: metric.color }}
-            >
-              {metric.value}
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-ShoppingEfficiencyMetrics.propTypes = {
-  data: PropTypes.shape({
-    avgItemsPerTrip: PropTypes.number,
-    avgProductsPerTrip: PropTypes.number,
-    avgCategoriesPerTrip: PropTypes.number,
-    maxItemsSingleTrip: PropTypes.number,
-    totalShoppingTrips: PropTypes.number,
-  }).isRequired,
 };
 
 const Statistics = ({ history }) => {
@@ -1867,62 +1067,20 @@ const Statistics = ({ history }) => {
 
       {/* Charts Grid */}
       <div className="charts-grid">
-        {/* Row 1: Monthly trend and comparison */}
         <MonthlyChart data={history.monthlyPurchases} />
         <MonthComparisonChart data={history.monthComparison} />
-
-        {/* Row 2: Product analysis */}
         <ProductPurchaseBarChart data={history.mostBoughtItems} />
-        <ProductPurchasePieChart data={history.mostBoughtItems} />
-
-        {/* Row 3: Product trends and category */}
-        <ProductTrendChart
-          data={history.productTrends}
-          monthlyPurchases={history.monthlyPurchases}
-        />
-        <CategoryDistributionChart data={history.categoryDistribution} />
-
-        {/* Row 4: Temporal patterns */}
         <DayOfWeekChart data={history.dayOfWeekStats} />
-
-        {/* Row 5: Heatmap */}
-        <PurchaseHeatmap data={history.dailyPurchases} />
-
-        {/* Row 6: Frequency analysis */}
-        <FrequencyDistributionChart
-          data={history.frequencyDistribution || []}
-        />
-        <IntervalsSummary data={history.intervalsSummary || {}} />
-
-        {/* Row 7: Product frequency */}
         <ProductFrequencyChart data={history.productFrequency || []} />
-        <IntervalTrendChart data={history.intervalTrend || []} />
-
-        {/* Row 8: Time-based analysis */}
         <HourOfDayChart data={history.hourOfDay || []} />
         <WeeklyComparisonChart data={history.weeklyComparison || []} />
-
-        {/* Row 9: Seasonal and category analysis */}
         <SeasonalTrendsChart data={history.seasonalTrends || []} />
-        <CategoryFrequencyChart data={history.categoryFrequency || []} />
-
-        {/* Row 10: Product lifecycle and velocity */}
-        <ProductLifecycleChart data={history.productLifecycle || []} />
         <PurchaseVelocityChart data={history.purchaseVelocity || []} />
-
-        {/* Row 11: Predictive Analytics */}
-        <ProductRestockPredictions
-          data={history.productRestockPredictions || []}
-        />
-
-        {/* Row 12: Behavioral Analysis */}
-        <ShoppingBasketAnalysis data={history.shoppingBaskets || []} />
-        <PurchaseClustersChart data={history.purchaseClusters || []} />
-
-        {/* Row 13: Anomalies and Efficiency */}
-        <PurchaseAnomalies data={history.purchaseAnomalies || []} />
-        <ShoppingEfficiencyMetrics data={history.shoppingEfficiency || {}} />
       </div>
+
+      <ProductRestockPredictions
+        data={history.productRestockPredictions || []}
+      />
     </div>
   );
 };

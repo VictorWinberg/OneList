@@ -188,77 +188,12 @@
   background-color: rgba(220, 53, 69, 0.1);
 }
 
-/* Heatmap Styles */
-.heatmap-container {
-  padding: 0.5em;
-}
-
-.heatmap-grid {
-  display: flex;
-  gap: 3px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 0.75em;
-}
-
-.heatmap-week {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.heatmap-day {
-  width: 12px;
-  height: 12px;
-  border-radius: 2px;
-  cursor: pointer;
-}
-
-.heatmap-legend {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  font-size: 11px;
-  color: #666;
-}
-
 /* Chart Description */
 .chart-description {
   font-size: 0.9em;
   color: #666;
   margin: -0.5em 0 0.75em 0;
   font-style: italic;
-}
-
-/* Intervals Summary Grid */
-.intervals-summary-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1em;
-  margin-top: 1em;
-}
-
-.interval-stat-card {
-  background-color: white;
-  border-radius: 6px;
-  padding: 1em;
-  text-align: center;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-.interval-stat-label {
-  display: block;
-  font-size: 0.85em;
-  color: #666;
-  margin-bottom: 0.5em;
-  font-weight: 500;
-}
-
-.interval-stat-value {
-  display: block;
-  font-size: 1.5em;
-  font-weight: bold;
 }
 
 /* Responsive adjustments */
@@ -281,10 +216,6 @@
 
   .stat-card-icon {
     font-size: 1.25em;
-  }
-
-  .intervals-summary-grid {
-    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -316,140 +247,109 @@
   color: #666;
 }
 
-/* Restock Predictions */
-.restock-predictions-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75em;
+/* Restock Predictions Table */
+.stats-section--full-width {
+  width: 100%;
+}
+
+.restock-predictions-section {
   margin-top: 0.5em;
 }
 
-.restock-prediction-item {
-  background-color: white;
+.restock-table-wrapper {
+  overflow-x: auto;
+  margin-top: 0.5em;
   border-radius: 8px;
-  padding: 1em;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border-left: 3px solid #458fde;
+  border: 1px solid #e0e0e0;
 }
 
-.restock-item-name {
-  font-weight: bold;
-  font-size: 1em;
+.restock-predictions-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  font-size: 0.95em;
+}
+
+.restock-predictions-table thead {
+  background-color: #458fde;
+  color: white;
+}
+
+.restock-predictions-table th {
+  padding: 0.85em 1em;
+  text-align: left;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.restock-predictions-table td {
+  padding: 0.85em 1em;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+
+.restock-predictions-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.restock-predictions-table tbody tr:hover {
+  background-color: #f5f9fd;
+}
+
+.restock-row--frequent {
+  background-color: #fffdf5;
+}
+
+.restock-row--frequent:hover {
+  background-color: #fff8e6 !important;
+}
+
+.restock-cell-product {
+  min-width: 160px;
+}
+
+.restock-product-name {
+  font-weight: 600;
   color: #333;
-  margin-bottom: 0.5em;
-  display: block;
+  margin-right: 0.5em;
 }
 
-.restock-item-details {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.25em;
+.restock-cell-number {
+  text-align: center;
+  white-space: nowrap;
+  color: #555;
 }
 
-.restock-item-date {
-  font-size: 0.9em;
-  color: #666;
+.restock-frequent-badge {
+  display: inline-block;
+  font-size: 0.75em;
+  font-weight: bold;
+  padding: 0.2em 0.5em;
+  border-radius: 12px;
+  color: #b8860b;
+  background-color: rgba(255, 198, 88, 0.25);
+  vertical-align: middle;
 }
 
-.restock-item-status {
+.restock-status-pill {
+  display: inline-block;
   font-size: 0.85em;
   font-weight: bold;
-  padding: 0.25em 0.5em;
+  padding: 0.25em 0.6em;
   border-radius: 12px;
   background-color: rgba(69, 143, 222, 0.1);
-}
-
-.restock-item-meta {
-  font-size: 0.8em;
-  color: #999;
-}
-
-/* Shopping Basket Analysis - uses existing chart styles */
-
-/* Purchase Clusters - uses existing chart styles */
-
-/* Anomalies */
-.anomalies-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75em;
-  margin-top: 0.5em;
-}
-
-.anomaly-item {
-  background-color: white;
-  border-radius: 8px;
-  padding: 1em;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border-left: 3px solid #ffc658;
-}
-
-.anomaly-date {
-  font-weight: bold;
-  font-size: 1em;
-  color: #333;
-  margin-bottom: 0.5em;
-  display: block;
-}
-
-.anomaly-details {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25em;
-}
-
-.anomaly-type {
-  font-size: 0.9em;
-  font-weight: bold;
-}
-
-.anomaly-stats {
-  font-size: 0.85em;
-  color: #666;
-}
-
-/* Shopping Efficiency */
-.efficiency-metrics-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1em;
-  margin-top: 1em;
-}
-
-.efficiency-metric-card {
-  background-color: white;
-  border-radius: 8px;
-  padding: 1em;
-  text-align: center;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border-top: 3px solid #458fde;
-}
-
-.efficiency-metric-label {
-  display: block;
-  font-size: 0.85em;
-  color: #666;
-  margin-bottom: 0.5em;
-  font-weight: 500;
-}
-
-.efficiency-metric-value {
-  display: block;
-  font-size: 1.75em;
-  font-weight: bold;
+  white-space: nowrap;
 }
 
 /* Responsive adjustments for new components */
 @media (max-width: 600px) {
-  .efficiency-metrics-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .restock-predictions-table {
+    font-size: 0.85em;
   }
 
-  .restock-item-details {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.25em;
+  .restock-predictions-table th,
+  .restock-predictions-table td {
+    padding: 0.65em 0.75em;
   }
 
   .prediction-date {
