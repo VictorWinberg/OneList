@@ -6,18 +6,38 @@ CREATE TABLE users (
   email     VARCHAR(255)  NOT NULL,
   photo     VARCHAR(255)  NOT NULL,
   language  VARCHAR(255)  NOT NULL,
+  store     VARCHAR(255),
 
   PRIMARY KEY (email)
 );
 
+DROP TABLE IF EXISTS category_store_order CASCADE;
+DROP TABLE IF EXISTS stores CASCADE;
 DROP TABLE IF EXISTS categories CASCADE;
 CREATE TABLE categories (
   id        SERIAL        NOT NULL,
   name      VARCHAR(255)  NOT NULL UNIQUE,
   color     VARCHAR(255),
-  orderidx  SERIAL        NOT NULL,
 
   PRIMARY KEY(id)
+);
+
+CREATE TABLE stores (
+  id        SERIAL        NOT NULL,
+  name      VARCHAR(255)  NOT NULL UNIQUE,
+
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE category_store_order (
+  store_id    INT           NOT NULL,
+  category_id INT           NOT NULL,
+  orderidx    INT           NOT NULL,
+
+  FOREIGN KEY(store_id) REFERENCES stores(id) ON DELETE CASCADE,
+  FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE CASCADE,
+  PRIMARY KEY (store_id, category_id),
+  UNIQUE (store_id, orderidx)
 );
 
 DROP TABLE IF EXISTS products CASCADE;

@@ -98,8 +98,26 @@ module.exports = (app, passport, db) => {
     });
   });
 
+  app.get('/__/stores', isLoggedIn, (req, res) => {
+    db.Store.getAll((err, stores) => {
+      if (err) return res.status(400).send(err);
+      return res.send(stores);
+    });
+  });
+
+  app.post('/__/stores', isLoggedIn, (req, res) => {
+    db.Store.create(req.body, (err, store) => {
+      if (err) return res.status(400).send(err);
+      return res.send(store);
+    });
+  });
+
   app.get('/__/categories', isLoggedIn, (req, res) => {
-    db.Category.getAll((err, categories) => {
+    const storeId = req.query.storeId;
+    if (!storeId) {
+      return res.status(400).send('storeId is required');
+    }
+    db.Category.getAll(storeId, (err, categories) => {
       if (err) return res.status(400).send(err);
       return res.send(categories);
     });
@@ -127,6 +145,9 @@ module.exports = (app, passport, db) => {
   });
 
   app.put('/__/categories_reorder', isLoggedIn, (req, res) => {
+    if (!req.body.storeId) {
+      return res.status(400).send('storeId is required');
+    }
     db.Category.reorder(req.body, (err, categories) => {
       if (err) return res.status(400).send(err);
       return res.send(categories);

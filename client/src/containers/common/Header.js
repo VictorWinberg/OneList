@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import onelisticon from '../../assets/icons/onelist.svg';
 import settingicon from '../../assets/icons/settings.svg';
+import HeaderStoreSelect from './HeaderStoreSelect';
 
 const Header = () => {
   const { t } = useTranslation();
@@ -12,14 +13,17 @@ const Header = () => {
       <div className="top">
         <img id="headericon" src={onelisticon} alt="Settings" height="30px" />
         <h1>OneList</h1>
-        <NavLink to="/settings">
-          <img
-            id="settingicon"
-            src={settingicon}
-            alt="Settings"
-            height="28px"
-          />
-        </NavLink>
+        <div className="top-actions">
+          <HeaderStoreSelect />
+          <NavLink to="/settings">
+            <img
+              id="settingicon"
+              src={settingicon}
+              alt="Settings"
+              height="28px"
+            />
+          </NavLink>
+        </div>
       </div>
       <nav>
         <ul>

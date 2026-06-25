@@ -3,34 +3,39 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { fetchProducts } from '../../actions/products';
-import { fetchCategories } from '../../actions/categories';
+import { fetchStores } from '../../actions/stores';
 
 class FetchDB extends Component {
   constructor() {
     super();
     this.interval = null;
-    this.update = () => {};
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const { user, updateProducts, updateCategories } = nextProps;
+  componentDidUpdate(prevProps) {
+    const { user, updateProducts, updateStores } = this.props;
     const { username } = user;
-    const { user: prevUser } = this.props;
-    this.update = () => {
-      updateProducts();
-      updateCategories();
-    };
-
-    const intervalUpdate = () => {
-      clearInterval(this.interval);
-      this.interval = setInterval(this.update, 5000);
-    };
+    const { user: prevUser } = prevProps;
 
     if (username !== prevUser.username) {
-      this.update();
+      const update = () => {
+        updateStores();
+        updateProducts();
+      };
+
+      const intervalUpdate = () => {
+        clearInterval(this.interval);
+        this.interval = setInterval(update, 5000);
+      };
+
+      update();
       intervalUpdate();
       window.onclick = intervalUpdate;
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+    window.onclick = null;
   }
 
   render() {
@@ -43,7 +48,7 @@ FetchDB.propTypes = {
     username: PropTypes.string,
   }).isRequired,
   updateProducts: PropTypes.func.isRequired,
-  updateCategories: PropTypes.func.isRequired,
+  updateStores: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -52,7 +57,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   updateProducts: fetchProducts,
-  updateCategories: fetchCategories,
+  updateStores: fetchStores,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FetchDB);

@@ -5,6 +5,7 @@ import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import LanguageSelector from './LanguageSelector';
+import StoreSelect from './StoreSelect';
 import { updateUser, submitUser } from '../../actions/user';
 
 const User = ({ user, update, submit, t }) => (
@@ -32,6 +33,7 @@ const User = ({ user, update, submit, t }) => (
       />
     </label>
     <LanguageSelector />
+    <StoreSelect />
     <br />
     <Link to="/history" className="history-link">
       {t('user.showHistory')}

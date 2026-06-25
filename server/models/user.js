@@ -1,4 +1,5 @@
-const valid = (key) => ['username', 'email', 'photo', 'language'].includes(key);
+const valid = (key) =>
+  ['username', 'email', 'photo', 'language', 'store'].includes(key);
 
 const entries = (user) => {
   const keys = Object.keys(user).filter(valid);
