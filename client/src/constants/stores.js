@@ -1,2 +1,1 @@
 export const FETCH_STORES = 'FETCH_STORES';
-export const SET_ACTIVE_STORE = 'SET_ACTIVE_STORE';

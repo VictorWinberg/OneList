@@ -8,7 +8,7 @@ import { setActiveStore } from '../../actions/stores';
 
 const HeaderStoreSelect = ({
   stores,
-  activeStoreId,
+  store,
   onSelectStore,
   t,
 }) => {
@@ -16,8 +16,7 @@ const HeaderStoreSelect = ({
     return null;
   }
 
-  const activeStore = stores.find(({ id }) => id === activeStoreId);
-  const initial = activeStore?.name?.charAt(0).toUpperCase() ?? '?';
+  const initial = store?.charAt(0).toUpperCase() ?? '?';
 
   return (
     <div className="header-store-select">
@@ -31,14 +30,12 @@ const HeaderStoreSelect = ({
         <span className="header-store-initial">{initial}</span>
       </span>
       <select
-        value={activeStoreId || ''}
+        value={store || ''}
         aria-label={t('stores.label')}
-        onChange={({ target }) =>
-          onSelectStore(parseInt(target.value, 10))
-        }
+        onChange={({ target }) => onSelectStore(target.value)}
       >
         {stores.map(({ id, name }) => (
-          <option key={id} value={id}>
+          <option key={id} value={name}>
             {name}
           </option>
         ))}
@@ -54,18 +51,18 @@ HeaderStoreSelect.propTypes = {
       name: PropTypes.string.isRequired,
     })
   ).isRequired,
-  activeStoreId: PropTypes.number,
+  store: PropTypes.string,
   onSelectStore: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
 };
 
 HeaderStoreSelect.defaultProps = {
-  activeStoreId: null,
+  store: null,
 };
 
 const mapStateToProps = (state) => ({
   stores: state.stores.list,
-  activeStoreId: state.stores.activeStoreId,
+  store: state.user.store,
 });
 
 const mapDispatchToProps = {

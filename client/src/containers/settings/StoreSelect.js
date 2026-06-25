@@ -28,7 +28,7 @@ class StoreSelect extends Component {
     }
 
     this.setState({ creating: false, newName: '' });
-    onSelectStore(parseInt(target.value, 10));
+    onSelectStore(target.value);
   };
 
   handleCreate = () => {
@@ -44,7 +44,7 @@ class StoreSelect extends Component {
   };
 
   render() {
-    const { stores, activeStoreId, t } = this.props;
+    const { stores, store, t } = this.props;
     const { creating, newName } = this.state;
     const showCreate = creating || !stores.length;
 
@@ -75,11 +75,11 @@ class StoreSelect extends Component {
         ) : (
           <select
             id="store-select"
-            value={activeStoreId || ''}
+            value={store || ''}
             onChange={this.handleSelectChange}
           >
             {stores.map(({ id, name }) => (
-              <option key={id} value={id}>
+              <option key={id} value={name}>
                 {name}
               </option>
             ))}
@@ -98,19 +98,19 @@ StoreSelect.propTypes = {
       name: PropTypes.string.isRequired,
     })
   ).isRequired,
-  activeStoreId: PropTypes.number,
+  store: PropTypes.string,
   onSelectStore: PropTypes.func.isRequired,
   onAdd: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
 };
 
 StoreSelect.defaultProps = {
-  activeStoreId: null,
+  store: null,
 };
 
 const mapStateToProps = (state) => ({
   stores: state.stores.list,
-  activeStoreId: state.stores.activeStoreId,
+  store: state.user.store,
 });
 
 const mapDispatchToProps = {

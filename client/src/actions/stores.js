@@ -1,30 +1,10 @@
-import { FETCH_STORES, SET_ACTIVE_STORE } from '../constants/stores';
+import { FETCH_STORES } from '../constants/stores';
+import { UPDATE_USER } from '../constants/user';
 import { fetchCategories } from './categories';
-import { persistUserStore } from './user';
 
-const resolveActiveStoreId = (stores, getState) => {
-  const { activeStoreId } = getState().stores;
-  const { store: userStoreName } = getState().user;
-
-  if (userStoreName) {
-    const match = stores.find(({ name }) => name === userStoreName);
-    if (match) return match.id;
-  }
-
-  const hasActive = stores.some(({ id }) => id === activeStoreId);
-  if (hasActive) return activeStoreId;
-
-  return stores[0]?.id ?? null;
-};
-
-export const setActiveStore = (storeId) => async (dispatch, getState) => {
-  const store = getState().stores.list.find(({ id }) => id === storeId);
-  dispatch({ type: SET_ACTIVE_STORE, storeId });
-  await dispatch(fetchCategories());
-  if (store?.name) {
-    return dispatch(persistUserStore(store.name));
-  }
-  return dispatch(persistUserStore(null));
+export const setActiveStore = (storeName) => async (dispatch) => {
+  dispatch({ type: UPDATE_USER, key: 'store', value: storeName });
+  return dispatch(fetchCategories());
 };
 
 export const fetchStores = () => async (dispatch, getState) => {
@@ -33,16 +13,15 @@ export const fetchStores = () => async (dispatch, getState) => {
     const stores = await res.json();
     dispatch({ type: FETCH_STORES, stores });
 
-    const { activeStoreId } = getState().stores;
-    const nextStoreId = resolveActiveStoreId(stores, getState);
+    const storeName = getState().user.store;
+    if (!storeName) return null;
 
-    if (nextStoreId && nextStoreId !== activeStoreId) {
-      return dispatch(setActiveStore(nextStoreId));
+    if (!stores.some((store) => store.name === storeName)) {
+      dispatch({ type: UPDATE_USER, key: 'store', value: null });
+      return null;
     }
-    if (nextStoreId) {
-      return dispatch(fetchCategories());
-    }
-    return null;
+
+    return dispatch(fetchCategories());
   } catch (err) {
     console.error(err);
     return null;
@@ -65,8 +44,8 @@ export const addStore =
       });
       const store = await res.json();
       await dispatch(fetchStores());
-      if (store?.id) {
-        return dispatch(setActiveStore(store.id));
+      if (store?.name) {
+        return dispatch(setActiveStore(store.name));
       }
       return null;
     } catch (err) {
@@ -95,16 +74,12 @@ export const editStore =
     }
   };
 
-export const removeStore = (id) => async (dispatch, getState) => {
+export const removeStore = (id) => async (dispatch) => {
   try {
     await fetch(`/__/stores/${id}`, {
       method: 'DELETE',
       credentials: 'include',
     });
-    const { activeStoreId } = getState().stores;
-    if (activeStoreId === id) {
-      dispatch({ type: SET_ACTIVE_STORE, storeId: null });
-    }
     return dispatch(fetchStores());
   } catch (err) {
     console.error(err);

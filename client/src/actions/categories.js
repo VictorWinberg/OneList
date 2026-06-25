@@ -1,7 +1,13 @@
 import { REORDER_CATEGORY, FETCH_CATEGORIES } from '../constants/categories';
 
+const getActiveStoreId = (getState) => {
+  const { store } = getState().user;
+  if (!store) return null;
+  return getState().stores.list.find(({ name }) => name === store)?.id ?? null;
+};
+
 export const fetchCategories = () => async (dispatch, getState) => {
-  const storeId = getState().stores.activeStoreId;
+  const storeId = getActiveStoreId(getState);
   if (!storeId) return null;
 
   try {
@@ -82,7 +88,7 @@ export const removeCategory = (id) => async (dispatch) => {
 export const reorderCategory =
   ({ startIndex, endIndex }) =>
   async (dispatch, getState) => {
-    const storeId = getState().stores.activeStoreId;
+    const storeId = getActiveStoreId(getState);
     if (!storeId) return null;
 
     dispatch({
