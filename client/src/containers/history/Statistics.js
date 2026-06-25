@@ -951,8 +951,6 @@ const ProductRestockPredictions = ({ data }) => {
           <thead>
             <tr>
               <th>{t('history.restockColumnProduct')}</th>
-              <th>{t('history.lastPurchase')}</th>
-              <th>{t('history.predictedRestockDate')}</th>
               <th>{t('history.status')}</th>
               <th>{t('history.restockColumnTimesBought')}</th>
               <th>{t('history.restockColumnAvgInterval')}</th>
@@ -969,13 +967,15 @@ const ProductRestockPredictions = ({ data }) => {
                 <td className="restock-cell-product">
                   <span className="restock-product-name">{item.name}</span>
                   {item.highlighted && (
-                    <span className="restock-frequent-badge">
-                      {t('history.restockFrequentBuy')}
+                    <span
+                      className="restock-frequent-badge"
+                      aria-label={t('history.restockFrequentBuy')}
+                      title={t('history.restockFrequentBuy')}
+                    >
+                      ★
                     </span>
                   )}
                 </td>
-                <td>{formatDate(item.lastPurchase)}</td>
-                <td>{formatDate(item.predictedRestockDate)}</td>
                 <td>
                   <span
                     className="restock-status-pill"
@@ -1004,7 +1004,6 @@ ProductRestockPredictions.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      lastPurchase: PropTypes.string.isRequired,
       avgDays: PropTypes.number.isRequired,
       predictedRestockDate: PropTypes.string.isRequired,
       status: PropTypes.string.isRequired,

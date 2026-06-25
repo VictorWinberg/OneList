@@ -474,12 +474,8 @@
 
 .restock-frequent-badge {
   display: inline-block;
-  font-size: 0.75em;
-  font-weight: bold;
-  padding: 0.2em 0.5em;
-  border-radius: 12px;
-  color: #b8860b;
-  background-color: rgba(255, 198, 88, 0.25);
+  font-size: 0.9em;
+  color: #f5c518;
   vertical-align: middle;
 }
 

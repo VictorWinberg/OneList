@@ -199,7 +199,7 @@
     "abandonedProductsDesc": "Registrerade produkter utan köp på 6+ månader.",
     "abandonedProductsTotal": "({{count}} totalt)",
     "abandonedProductsShowingTop": "({{total}} totalt, visar de {{shown}} äldsta)",
-    "addedToCatalog": "Tillagd i katalog",
+    "addedToCatalog": "Tillagd",
     "neverPurchased": "Aldrig köpt"
   }
 }

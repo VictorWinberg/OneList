@@ -199,7 +199,7 @@
     "abandonedProductsDesc": "Registered products not purchased in 6+ months.",
     "abandonedProductsTotal": "({{count}} total)",
     "abandonedProductsShowingTop": "({{total}} total, showing the {{shown}} oldest)",
-    "addedToCatalog": "Added to catalog",
+    "addedToCatalog": "Added",
     "neverPurchased": "Never purchased"
   }
 }
