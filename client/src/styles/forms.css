@@ -17,8 +17,6 @@
 .product input,
 .product select,
 .category input,
-.settings input,
-.settings select,
 #color-btn {
   border: black solid 1px;
   box-shadow: 0px 1px 8px 0px #777;

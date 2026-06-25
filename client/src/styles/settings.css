@@ -6,8 +6,8 @@
   float: right;
   margin: -0.48em 0.6em 0 0;
   border-radius: 4px;
-  box-shadow: 0px 1px 8px 0px #777;
-  width: calc(100% - 120px - 1.85em);
+  box-shadow: 0 1px 8px #777;
+  width: calc(100% - 120px - 2em);
   text-align: center;
 }
 
@@ -16,14 +16,53 @@
   width: 2em;
   height: 2em;
   display: inline-block;
-  box-shadow: 1px 1px 5px #888888;
+  box-shadow: 1px 1px 5px #888;
   border-radius: 35%;
   margin: 0.25em;
   padding: 0;
 }
 
 .settings {
+  --label-width: 120px;
+  --field-width: calc(100% - var(--label-width) - 2em);
+
   text-align: center;
+}
+
+.settings label span {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 20px;
+  width: var(--label-width);
+  clear: left;
+  float: left;
+  text-align: right;
+  padding: 0.6em 0.5em;
+}
+
+.settings input,
+.settings select {
+  box-sizing: border-box;
+  width: var(--field-width);
+  margin: 0.5em 0;
+  padding: 0.5em 0.3em;
+  border: black solid 1px;
+  box-shadow: 0 1px 8px #777;
+  border-radius: 4px;
+  float: left;
+  font-size: 16px;
+  text-align: left;
+}
+
+.settings input {
+  background-color: white;
+}
+
+.settings select {
+  appearance: none;
+  color: black;
+  padding-right: 1.4em;
+  background: white url('../assets/icons/chevron-down.svg') no-repeat right
+    0.3em center / 0.65em;
 }
 
 .userform img {
