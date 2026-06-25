@@ -59,6 +59,7 @@
 
 .settings select {
   appearance: none;
+  color: #333;
   padding-right: 1.4em;
   background: white url('../assets/icons/chevron-down.svg') no-repeat right
     0.3em center / 0.65em;
