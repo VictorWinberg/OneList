@@ -73,7 +73,7 @@ CategorySelect.propTypes = {
 
 const mapStateToProps = (state, { id }) => ({
   category: get('category', find({ id }, state.products)) || 0,
-  categories: sortBy('orderidx', state.categories),
+  categories: sortBy('name', state.categories),
 });
 
 export default connect(mapStateToProps)(withTranslation()(CategorySelect));
