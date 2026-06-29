@@ -62,55 +62,40 @@ module.exports = (client) => ({
       const start = parseInt(startIndex, 10);
       const end = parseInt(endIndex, 10);
 
+      if (start === end) {
+        return done(null, null);
+      }
+
       await client.query('BEGIN');
 
+      // Phase 1: write target positions as negative values so the unique
+      // (store_id, orderidx) constraint is never violated mid-update.
       await client.query(
-        `UPDATE category_store_order SET orderidx = 0
-         WHERE store_id = $1 AND orderidx = $2`,
-        [store, start]
+        `UPDATE category_store_order SET orderidx = -(
+           CASE
+             WHEN orderidx = $2 THEN $3
+             WHEN $2 > $3 AND orderidx >= $3 AND orderidx < $2 THEN orderidx + 1
+             WHEN $2 < $3 AND orderidx <= $3 AND orderidx > $2 THEN orderidx - 1
+             ELSE orderidx
+           END
+         )
+         WHERE store_id = $1
+           AND (
+             orderidx = $2
+             OR ($2 > $3 AND orderidx >= $3 AND orderidx < $2)
+             OR ($2 < $3 AND orderidx <= $3 AND orderidx > $2)
+           )`,
+        [store, start, end]
       );
 
-      if (start - end > 0) {
-        await client.query(
-          `UPDATE category_store_order SET orderidx = orderidx + 1
-           WHERE store_id = $1 AND orderidx >= $2 AND orderidx < $3`,
-          [store, end, start]
-        );
-      }
-
-      if (start - end < 0) {
-        await client.query(
-          `UPDATE category_store_order SET orderidx = orderidx - 1
-           WHERE store_id = $1 AND orderidx <= $2 AND orderidx > $3`,
-          [store, end, start]
-        );
-      }
-
+      // Phase 2: flip sign to final positive orderidx values.
       await client.query(
-        `UPDATE category_store_order SET orderidx = $1
-         WHERE store_id = $2 AND orderidx = 0`,
-        [end, store]
-      );
-
-      const {
-        rows: [{ unique }],
-      } = await client.query(
-        `SELECT CASE WHEN
-         COUNT(DISTINCT orderidx) = COUNT(orderidx)
-         THEN 1 ELSE 0 END AS unique
-         FROM category_store_order WHERE store_id = $1`,
+        `UPDATE category_store_order SET orderidx = -orderidx
+         WHERE store_id = $1 AND orderidx < 0`,
         [store]
       );
 
-      if (unique) {
-        await client.query('COMMIT');
-      } else {
-        await client.query('ROLLBACK');
-        return done(
-          new Error('Reorder operation would create duplicate orderidx values')
-        );
-      }
-
+      await client.query('COMMIT');
       done(null, null);
     } catch (error) {
       await client.query('ROLLBACK');
