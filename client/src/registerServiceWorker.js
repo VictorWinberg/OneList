@@ -18,22 +18,36 @@ const isLocalhost = Boolean(
     )
 );
 
+let refreshing = false;
+
+function applyUpdate(registration) {
+  if (registration.waiting) {
+    registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+  }
+}
+
 function registerValidSW(swUrl) {
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (refreshing) {
+      return;
+    }
+    refreshing = true;
+    window.location.reload();
+  });
+
   navigator.serviceWorker
     .register(swUrl)
     .then((registration) => {
       const reg = registration;
+      applyUpdate(reg);
+
       reg.onupdatefound = () => {
         const installingWorker = reg.installing;
         if (installingWorker) {
           installingWorker.onstatechange = () => {
             if (installingWorker.state === 'installed') {
               if (navigator.serviceWorker.controller) {
-                // At this point, the old content will have been purged and
-                // the fresh content will have been added to the cache.
-                // It's the perfect time to display a "New content is
-                // available; please refresh." message in your web app.
-                console.log('New content is available; please refresh.');
+                applyUpdate(reg);
               } else {
                 // At this point, everything has been precached.
                 // It's the perfect time to display a
@@ -44,6 +58,12 @@ function registerValidSW(swUrl) {
           };
         }
       };
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+          reg.update();
+        }
+      });
     })
     .catch((error) => {
       console.error('Error during service worker registration:', error);
