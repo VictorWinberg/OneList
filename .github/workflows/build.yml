@@ -18,12 +18,12 @@ jobs:
         node-version: [22.x]
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           fetch-depth: '0'
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v6.5.0
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -47,12 +47,12 @@ jobs:
         node-version: [22.x]
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           fetch-depth: '0'
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v6.5.0
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -74,7 +74,7 @@ jobs:
 
       - name: Install SSH key
         if: ${{ github.event_name == 'push' }}
-        uses: shimataro/ssh-key-action@v2
+        uses: shimataro/ssh-key-action@v2.8.1
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           name: id_rsa # optional
