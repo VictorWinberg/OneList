@@ -26,8 +26,10 @@ class Autosuggest extends Component {
           this.setState({ suggestions: getSuggestions(info.value) })
         }
         onSuggestionsClearRequested={() => this.setState({ suggestions: [] })}
-        getSuggestionValue={(suggestion) => suggestion}
-        getSectionSuggestions={(section) => section.suggestions}
+        getSuggestionValue={(suggestion) => suggestion.name}
+        getSectionSuggestions={(section) =>
+          section ? section.suggestions : []
+        }
         renderSuggestion={(suggestion) => (
           <div className="suggestions">
             <span>{suggestion.name}</span>
