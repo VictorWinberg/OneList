@@ -1,0 +1,14 @@
+services:
+  onelist:
+    build: .
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgres://postgres:password@host.docker.internal:5432/onelist
+      PORT: '3000'
+      NODE_ENV: production
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
