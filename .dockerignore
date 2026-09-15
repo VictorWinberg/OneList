@@ -1,0 +1,7 @@
+node_modules
+.git
+.env
+credentials.json
+client/node_modules
+client/build
+server/node_modules
