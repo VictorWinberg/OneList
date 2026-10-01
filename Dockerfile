@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM node:22-alpine AS build-client
+FROM --platform=$BUILDPLATFORM node:22.23.3-alpine AS build-client
 
 WORKDIR /app/client
 
@@ -8,7 +8,7 @@ RUN npm ci
 COPY client/ ./
 RUN npm run build
 
-FROM node:22-alpine
+FROM node:22.23.3-alpine
 
 WORKDIR /app
 
