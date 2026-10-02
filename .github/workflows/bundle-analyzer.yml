@@ -14,16 +14,16 @@ jobs:
         node-version: [22.x]
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v6.5.0
         with:
           node-version: ${{ matrix.node-version }}
 
-      - uses: preactjs/compressed-size-action@v2
+      - uses: preactjs/compressed-size-action@2.10.0
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           cwd: client
