@@ -4,7 +4,7 @@ import i18n from '../../i18n';
 
 import { toggleProductInactive } from '../../actions/products';
 import ProductList from '../../components/ProductList';
-import { selectRestockProductNames } from '../../selectors/history';
+import { mapProductListCommonState } from '../common/productListConnect';
 
 const active = (state, categoryId) => {
   const userId = state.user.isCollaboration ? 0 : state.user.id || 0;
@@ -29,18 +29,9 @@ const active = (state, categoryId) => {
 };
 
 const mapStateToProps = (state, { match, ...ownProps }) => ({
+  ...mapProductListCommonState(state, ownProps),
   active: active(state, Number(match.params.id)),
-  checked: [],
-  linkTo: (id) => `/products/${id}`,
   backUrl: `/categories/${match.params.id}`,
-  getData: (item) => ({
-    ...item,
-    userId: state.user.isCollaboration ? 0 : state.user.id || 0,
-  }),
-  ageFilter: ownProps.ageFilter,
-  sortOrder: ownProps.sortOrder || 'nameAsc',
-  restockFilter: ownProps.restockFilter,
-  restockProductNames: selectRestockProductNames(state),
 });
 
 const mapDispatchToProps = {

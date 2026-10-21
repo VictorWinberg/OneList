@@ -21,7 +21,7 @@ const Filter = ({
   onSortChange,
   restockFilter,
   onRestockFilterToggle,
-  restockFilterDisabled,
+  restockFilterDisabled = false,
 }) => {
   const { t } = useTranslation();
 
@@ -81,10 +81,6 @@ Filter.propTypes = {
   restockFilter: PropTypes.bool.isRequired,
   onRestockFilterToggle: PropTypes.func.isRequired,
   restockFilterDisabled: PropTypes.bool,
-};
-
-Filter.defaultProps = {
-  restockFilterDisabled: false,
 };
 
 export default Filter;

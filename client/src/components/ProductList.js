@@ -176,6 +176,8 @@ const ProductList = ({
     setDragDelta({ x: 0, y: 0 });
   };
 
+  const maxDays = parseAgeFilter(ageFilter);
+
   return (
     <div className={view}>
       <DndContext
@@ -189,7 +191,6 @@ const ProductList = ({
         <div>
           {active.map(({ value, color, items }) => {
             const ageFilteredItems = items.filter((item) => {
-              const maxDays = parseAgeFilter(ageFilter);
               if (!maxDays) return true;
 
               const days = countDays(item.updated_at);

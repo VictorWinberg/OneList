@@ -13,21 +13,28 @@ export const useProductListFilters = () => {
     (state) => state.history.productRestockPredictions
   );
 
-  const handleRestockFilterToggle = useCallback(() => {
-    const next = !restockFilter;
-    if (next && (productRestockPredictions || []).length === 0) {
-      dispatch(fetchStatistics());
-    }
-    setRestockFilter(next);
-  }, [restockFilter, productRestockPredictions, dispatch]);
+  const onRestockFilterToggle = useCallback(() => {
+    setRestockFilter((prev) => {
+      const next = !prev;
+      if (next && (productRestockPredictions || []).length === 0) {
+        dispatch(fetchStatistics());
+      }
+      return next;
+    });
+  }, [productRestockPredictions, dispatch]);
+
+  const restockFilterDisabled = !isLoggedIn;
 
   return {
-    ageFilter,
-    setAgeFilter,
-    sortOrder,
-    setSortOrder,
-    restockFilter,
-    onRestockFilterToggle: handleRestockFilterToggle,
-    restockFilterDisabled: !isLoggedIn,
+    filterProps: {
+      ageFilter,
+      sortOrder,
+      onAgeChange: setAgeFilter,
+      onSortChange: setSortOrder,
+      restockFilter,
+      onRestockFilterToggle,
+      restockFilterDisabled,
+    },
+    listFilterProps: { ageFilter, sortOrder, restockFilter },
   };
 };
