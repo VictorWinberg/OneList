@@ -49,13 +49,13 @@ const compareStrings = (a, b) =>
   a.localeCompare(b, undefined, { sensitivity: 'base' });
 const sorters = {
   nameAsc: (a, b) => compareStrings(a.value, b.value),
-  nameDesc: (a, b) => compareStrings(b.value, a.value),
-  dateAsc: (a, b) => getDays(b.updated_at) - getDays(a.updated_at),
   dateDesc: (a, b) => getDays(a.updated_at) - getDays(b.updated_at),
 };
 
-const sortItems = (items = [], sortOrder = 'nameAsc') =>
-  [...items].sort(sorters[sortOrder]);
+const sortItems = (items = [], sortOrder = 'nameAsc') => {
+  const key = sortOrder === 'dateDesc' ? 'dateDesc' : 'nameAsc';
+  return [...items].sort(sorters[key]);
+};
 
 const EMPTY_RESTOCK_NAMES = new Set();
 

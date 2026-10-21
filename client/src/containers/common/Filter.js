@@ -9,12 +9,18 @@ const AGE_OPTIONS = [
   ['1d', 1, 'day'],
   ['1w', 1, 'week'],
   ['1m', 1, 'month'],
-  ['3m', 3, 'months'],
-  ['6m', 6, 'months'],
+  ['3m', 3, 'month'],
+  ['6m', 6, 'month'],
   ['1y', 1, 'year'],
 ];
 
-const SORT_OPTIONS = ['nameAsc', 'nameDesc', 'dateDesc', 'dateAsc'];
+const ageOptionLabel = (count, unitKey, t) => {
+  const unit = t(`filter.ageUnits.${unitKey}`);
+  return count == null ? unit : `${count} ${unit}`;
+};
+
+const SORT_NAME = 'nameAsc';
+const SORT_DATE = 'dateDesc';
 
 const Filter = ({
   ageFilter,
@@ -26,6 +32,12 @@ const Filter = ({
   restockFilterDisabled = false,
 }) => {
   const { t } = useTranslation();
+  const isDateSort = sortOrder === SORT_DATE;
+  const sortMode = isDateSort ? SORT_DATE : SORT_NAME;
+
+  const onSortToggle = () => {
+    onSortChange(isDateSort ? SORT_NAME : SORT_DATE);
+  };
 
   return (
     <div className="filter-control">
@@ -37,23 +49,23 @@ const Filter = ({
       >
         {AGE_OPTIONS.map(([value, count, unitKey]) => (
           <option key={value} value={value}>
-            {`${count || ''} ${t(`filter.ageUnits.${unitKey}`)}`}
+            {ageOptionLabel(count, unitKey, t)}
           </option>
         ))}
       </select>
 
-      <label htmlFor="sortOrder">{t('filter.sortOrderLabel')}</label>
-      <select
-        id="sortOrder"
-        value={sortOrder}
-        onChange={(e) => onSortChange(e.target.value)}
+      <button
+        type="button"
+        className={`filter-sort-toggle${
+          isDateSort ? ' filter-sort-toggle--date' : ''
+        }`}
+        aria-pressed={isDateSort}
+        aria-label={t('filter.sortToggleLabel')}
+        title={t('filter.sortToggleLabel')}
+        onClick={onSortToggle}
       >
-        {SORT_OPTIONS.map((value) => (
-          <option key={value} value={value}>
-            {t(`filter.sortOptions.${value}`)}
-          </option>
-        ))}
-      </select>
+        {t(`filter.sortOptions.${sortMode}`)}
+      </button>
 
       <button
         type="button"

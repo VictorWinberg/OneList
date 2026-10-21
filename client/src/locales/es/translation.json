@@ -41,24 +41,19 @@
   "filter": {
     "ageFilterLabel": "Período:",
     "sortOrderLabel": "Ordenar:",
+    "sortToggleLabel": "Alternar orden entre nombre y fecha",
     "restockPredictions": "Reposición",
     "restockPredictionsLoginRequired": "Inicia sesión para ver predicciones de reposición",
     "ageUnits": {
       "all": "Todos",
       "day": "día",
-      "days": "días",
-      "week": "semana",
-      "weeks": "semanas",
+      "week": "sem",
       "month": "mes",
-      "months": "meses",
-      "year": "año",
-      "years": "años"
+      "year": "año"
     },
     "sortOptions": {
-      "nameAsc": "Nombre A-Z",
-      "nameDesc": "Nombre Z-A",
-      "dateDesc": "Fecha más reciente",
-      "dateAsc": "Fecha más antigua"
+      "nameAsc": "Nombre",
+      "dateDesc": "Reciente"
     }
   },
   "settings": {
