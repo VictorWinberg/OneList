@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 const AGE_OPTIONS = [
@@ -15,7 +14,15 @@ const AGE_OPTIONS = [
 
 const SORT_OPTIONS = ['nameAsc', 'nameDesc', 'dateDesc', 'dateAsc'];
 
-const Filter = ({ ageFilter, sortOrder, onAgeChange, onSortChange }) => {
+const Filter = ({
+  ageFilter,
+  sortOrder,
+  onAgeChange,
+  onSortChange,
+  restockFilter,
+  onRestockFilterToggle,
+  restockFilterDisabled,
+}) => {
   const { t } = useTranslation();
 
   return (
@@ -45,6 +52,23 @@ const Filter = ({ ageFilter, sortOrder, onAgeChange, onSortChange }) => {
           </option>
         ))}
       </select>
+
+      <button
+        type="button"
+        className={`filter-restock-toggle${
+          restockFilter ? ' filter-restock-toggle--active' : ''
+        }`}
+        aria-pressed={restockFilter}
+        disabled={restockFilterDisabled}
+        title={
+          restockFilterDisabled
+            ? t('filter.restockPredictionsLoginRequired')
+            : t('history.productRestockPredictionsDesc')
+        }
+        onClick={onRestockFilterToggle}
+      >
+        {t('filter.restockPredictions')}
+      </button>
     </div>
   );
 };
@@ -54,6 +78,13 @@ Filter.propTypes = {
   sortOrder: PropTypes.string.isRequired,
   onAgeChange: PropTypes.func.isRequired,
   onSortChange: PropTypes.func.isRequired,
+  restockFilter: PropTypes.bool.isRequired,
+  onRestockFilterToggle: PropTypes.func.isRequired,
+  restockFilterDisabled: PropTypes.bool,
 };
 
-export default connect()(Filter);
+Filter.defaultProps = {
+  restockFilterDisabled: false,
+};
+
+export default Filter;

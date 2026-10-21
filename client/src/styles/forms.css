@@ -95,6 +95,29 @@
   color: #333;
 }
 
+.filter-restock-toggle {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: #fff;
+  color: #333;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.filter-restock-toggle--active {
+  background-color: #c8eea0;
+  border-color: #333;
+}
+
+.filter-restock-toggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .delete-icon {
   float: right;
 }

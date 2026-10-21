@@ -57,6 +57,16 @@ const sorters = {
 const sortItems = (items = [], sortOrder = 'nameAsc') =>
   [...items].sort(sorters[sortOrder]);
 
+const EMPTY_RESTOCK_NAMES = new Set();
+
+const filterByRestock = (items, restockFilter, restockProductNames) => {
+  if (!restockFilter) return items;
+  return items.filter((item) => {
+    const name = (item.name || item.value || '').toLowerCase();
+    return restockProductNames.has(name);
+  });
+};
+
 const li = (
   item,
   onItemClick,
@@ -111,6 +121,8 @@ const ProductList = ({
   getData,
   ageFilter,
   sortOrder,
+  restockFilter = false,
+  restockProductNames = EMPTY_RESTOCK_NAMES,
   onDelete,
 }) => {
   const { t } = useTranslation();
@@ -176,13 +188,19 @@ const ProductList = ({
       >
         <div>
           {active.map(({ value, color, items }) => {
-            const filteredItems = items.filter((item) => {
+            const ageFilteredItems = items.filter((item) => {
               const maxDays = parseAgeFilter(ageFilter);
               if (!maxDays) return true;
 
               const days = countDays(item.updated_at);
               return days !== null && days <= maxDays;
             });
+
+            const filteredItems = filterByRestock(
+              ageFilteredItems,
+              restockFilter,
+              restockProductNames
+            );
 
             const sortedItems = sortItems(filteredItems, sortOrder);
 
@@ -256,6 +274,8 @@ ProductList.propTypes = {
   getData: PropTypes.func.isRequired,
   ageFilter: PropTypes.string,
   sortOrder: PropTypes.string,
+  restockFilter: PropTypes.bool,
+  restockProductNames: PropTypes.instanceOf(Set),
   onDelete: PropTypes.func,
 };
 

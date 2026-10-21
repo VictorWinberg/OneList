@@ -1,14 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import CategoryProductList from './CategoryProductList';
 import New from '../common/New';
 import Snackbar from '../common/Snackbar';
 import Filter from '../common/Filter';
 import { addProduct, removeProduct } from '../../actions/products';
+import { useProductListFilters } from '../../hooks/useProductListFilters';
 
 const CategoryProducts = (props) => {
-  const [ageFilter, setAgeFilter] = useState('1y');
-  const [sortOrder, setSortOrder] = useState('nameAsc');
+  const {
+    ageFilter,
+    setAgeFilter,
+    sortOrder,
+    setSortOrder,
+    restockFilter,
+    onRestockFilterToggle,
+    restockFilterDisabled,
+  } = useProductListFilters();
 
   return (
     <div>
@@ -23,12 +31,16 @@ const CategoryProducts = (props) => {
         sortOrder={sortOrder}
         onAgeChange={setAgeFilter}
         onSortChange={setSortOrder}
+        restockFilter={restockFilter}
+        onRestockFilterToggle={onRestockFilterToggle}
+        restockFilterDisabled={restockFilterDisabled}
       />
       <Snackbar />
       <CategoryProductList
         view="products"
         ageFilter={ageFilter}
         sortOrder={sortOrder}
+        restockFilter={restockFilter}
         {...props}
       />
     </div>

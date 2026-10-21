@@ -1,1 +1,2 @@
 export const FETCH_PRODUCTS = 'FETCH_PRODUCTS';
+export const RESTOCK_FILTER_TOP_N = 15;

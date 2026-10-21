@@ -174,29 +174,6 @@
   height: 100%;
 }
 
-/* Month Comparison Summary */
-.month-comparison-summary {
-  text-align: center;
-  margin-top: 0.5em;
-}
-
-.change-indicator {
-  font-size: 1.1em;
-  font-weight: bold;
-  padding: 0.25em 0.75em;
-  border-radius: 20px;
-}
-
-.change-indicator.positive {
-  color: #28a745;
-  background-color: rgba(40, 167, 69, 0.1);
-}
-
-.change-indicator.negative {
-  color: #dc3545;
-  background-color: rgba(220, 53, 69, 0.1);
-}
-
 /* Chart Description */
 .chart-description {
   font-size: 0.9em;
@@ -212,10 +189,6 @@
   margin: 1.5em 0 0.75em 0;
   padding-bottom: 0.35em;
   border-bottom: 2px solid #e0e0e0;
-}
-
-.adoption-cards {
-  margin-bottom: 0;
 }
 
 /* Shopping heatmap */
@@ -434,16 +407,20 @@
   border-bottom: none;
 }
 
-.restock-predictions-table tbody tr:hover {
-  background-color: #f5f9fd;
+.restock-row--filter-top {
+  background-color: #f2f9f2;
 }
 
-.restock-row--frequent {
-  background-color: #fffdf5;
+.restock-row--filter-top:hover {
+  background-color: #e6f3e6 !important;
 }
 
-.restock-row--frequent:hover {
-  background-color: #fff8e6 !important;
+.restock-row--filter-cut {
+  background-color: #fdf3f3;
+}
+
+.restock-row--filter-cut:hover {
+  background-color: #fae8e8 !important;
 }
 
 .restock-cell-product {
@@ -456,6 +433,33 @@
 .abandoned-products-table .restock-cell-product {
   max-width: none;
   width: 45%;
+}
+
+.abandoned-products-actions-header {
+  width: 6.5rem;
+  text-align: center;
+}
+
+.abandoned-products-actions-cell {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.abandoned-products-delete-btn {
+  cursor: pointer;
+  padding: 0.35em 0.65em;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.85em;
+  font-weight: 600;
+  border-radius: 3px;
+  border: 1px solid #333;
+  background-color: #fb9191;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.abandoned-products-delete-btn:disabled {
+  cursor: default;
+  opacity: 0.6;
 }
 
 .restock-product-name {

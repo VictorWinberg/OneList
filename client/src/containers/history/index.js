@@ -6,8 +6,14 @@ import { useTranslation } from 'react-i18next';
 import Statistics from './Statistics';
 import Snackbar from '../common/Snackbar';
 import { fetchStatistics } from '../../actions/history';
+import { removeProduct } from '../../actions/products';
 
-const History = ({ isLoggedIn, history, loadStatistics }) => {
+const History = ({
+  isLoggedIn,
+  history,
+  loadStatistics,
+  deleteAbandonedProduct,
+}) => {
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -21,7 +27,10 @@ const History = ({ isLoggedIn, history, loadStatistics }) => {
       <Snackbar />
       <h2>{t('history.title')}</h2>
       {isLoggedIn ? (
-        <Statistics history={history} />
+        <Statistics
+          history={history}
+          onDeleteAbandonedProduct={deleteAbandonedProduct}
+        />
       ) : (
         <p>{t('settings.unauthenticated')}</p>
       )}
@@ -33,6 +42,7 @@ History.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
   loadStatistics: PropTypes.func.isRequired,
+  deleteAbandonedProduct: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -42,6 +52,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   loadStatistics: fetchStatistics,
+  deleteAbandonedProduct: (id) => async (dispatch) => {
+    await dispatch(removeProduct(id));
+    return dispatch(fetchStatistics());
+  },
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(History);

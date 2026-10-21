@@ -4,6 +4,7 @@ import i18n from '../../i18n';
 
 import { toggleProductInactive } from '../../actions/products';
 import ProductList from '../../components/ProductList';
+import { selectRestockProductNames } from '../../selectors/history';
 
 const active = (state, categoryId) => {
   const userId = state.user.isCollaboration ? 0 : state.user.id || 0;
@@ -38,6 +39,8 @@ const mapStateToProps = (state, { match, ...ownProps }) => ({
   }),
   ageFilter: ownProps.ageFilter,
   sortOrder: ownProps.sortOrder || 'nameAsc',
+  restockFilter: ownProps.restockFilter,
+  restockProductNames: selectRestockProductNames(state),
 });
 
 const mapDispatchToProps = {
