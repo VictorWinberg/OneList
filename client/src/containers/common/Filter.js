@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
+import repeatIcon from '../../assets/icons/repeat.svg';
+
 const AGE_OPTIONS = [
   ['all', null, 'all'],
   ['1d', 1, 'day'],
@@ -59,6 +61,7 @@ const Filter = ({
           restockFilter ? ' filter-restock-toggle--active' : ''
         }`}
         aria-pressed={restockFilter}
+        aria-label={t('filter.restockPredictions')}
         disabled={restockFilterDisabled}
         title={
           restockFilterDisabled
@@ -67,7 +70,13 @@ const Filter = ({
         }
         onClick={onRestockFilterToggle}
       >
-        {t('filter.restockPredictions')}
+        <img
+          className="filter-restock-toggle__icon"
+          src={repeatIcon}
+          alt=""
+          width={20}
+          height={20}
+        />
       </button>
     </div>
   );

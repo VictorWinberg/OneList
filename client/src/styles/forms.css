@@ -96,16 +96,24 @@
 }
 
 .filter-restock-toggle {
-  padding: 0.5rem 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
   border: 1px solid #ccc;
   border-radius: 3px;
   background-color: #fff;
   color: #333;
-  font-family: 'Quicksand', sans-serif;
-  font-size: 14px;
-  font-weight: bold;
   cursor: pointer;
-  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.filter-restock-toggle__icon {
+  display: block;
+  pointer-events: none;
 }
 
 .filter-restock-toggle--active {
