@@ -8,8 +8,8 @@
     "client:build": "cd client && npm run build",
     "client:test": "cd client && npm test",
     "server:start": "cd server && npm start",
-    "env:pull": "scp git@192.168.0.100:www/onelist/.env .env",
-    "db:pull": "pg_dump --format=c -h 192.168.0.100 -U vicnie onelist | pg_restore --clean --no-owner -h localhost -d onelist"
+    "env:pull": "scp gha@codies.se:/opt/stacks/onelist/.env .env",
+    "db:pull": "ssh dev@codies.se \"docker exec postgres pg_dump --format=c -U vicnie onelist\" | docker exec -i private-postgres pg_restore --clean --no-owner -U postgres -d onelist"
   },
   "repository": {
     "type": "git",
